@@ -11,3 +11,423 @@
 2024-03-25 18:48:13,890 [INFO] Starting serial thread.
 2024-03-25 18:48:15,941 [INFO] sending cmd: get
 2024-03-25 19:25:09,789 [INFO] Program interrupted, serial port closed, thread ending
+2024-03-26 12:08:27,294 [INFO] SerialTester initialized for port: /dev/tty.usbmodem3552356B32321
+2024-03-26 12:10:13,441 [INFO] SerialTester initialized for port: /dev/tty.usbmodem3552356B32321
+2024-03-26 12:18:31,980 [INFO] SerialHandler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x12bb50440>
+2024-03-26 12:20:43,918 [INFO] SerialHandler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1247c8440>
+2024-03-26 12:21:06,045 [INFO] SerialHandler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11f02c440>
+2024-03-26 12:22:51,101 [INFO] SerialHandler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11c418440>
+2024-03-26 12:23:18,277 [INFO] SerialHandler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x126b74440>
+2024-03-26 12:23:42,521 [INFO] SerialHandler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x123fe4440>
+2024-03-26 12:24:25,325 [INFO] SerialHandler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x121e2c440>
+2024-03-26 12:26:13,714 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x11f9383b0> not open
+2024-03-26 12:31:53,721 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x126844440> not open
+2024-03-26 12:32:18,602 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x117e4c440> not open
+2024-03-26 12:32:51,123 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x1238403b0> not open
+2024-03-26 12:33:53,277 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x126ab0440> not open
+2024-03-26 12:35:03,442 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x123dbc3b0> not open
+2024-03-26 12:35:46,084 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x11eb68440> not open
+2024-03-26 12:36:25,918 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x11ae74440> not open
+2024-03-26 12:36:40,907 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x11b68c4d0> not open
+2024-03-26 12:37:05,718 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x11ab584d0> not open
+2024-03-26 12:37:52,277 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x1239ec440> not open
+2024-03-26 12:38:27,445 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x1252bc440> not open
+2024-03-26 12:40:20,869 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x125498440> not open
+2024-03-26 12:40:56,923 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x125f68440>
+2024-03-26 12:54:29,394 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1201e0440>
+2024-03-26 13:04:46,802 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1206643b0>
+2024-03-26 13:06:09,722 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x122cb43b0>
+2024-03-26 13:14:29,094 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1185303b0>
+2024-03-26 13:16:45,974 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1181103b0>
+2024-03-26 13:16:48,857 [INFO] Initiate data logging: %s
+2024-03-26 13:16:48,858 [INFO] Created new output file log: output.log_03-26-24_13:16.txt
+2024-03-26 13:16:48,859 [INFO] sending cmd: get
+2024-03-26 13:18:07,083 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x12383c3b0>
+2024-03-26 13:18:08,525 [INFO] Initiate data logging: %s
+2024-03-26 13:18:08,526 [INFO] Created new output file log: output.log_03-26-24_13:18.txt
+2024-03-26 13:18:08,526 [INFO] sending cmd: get
+2024-03-26 13:18:08,527 [INFO] sending cmd: status json
+2024-03-26 13:18:22,121 [INFO] Initiate data logging: %s
+2024-03-26 13:18:22,121 [INFO] Created new output file log: output.log_03-26-24_13:18.txt
+2024-03-26 13:18:22,122 [INFO] sending cmd: get
+2024-03-26 13:18:22,122 [INFO] sending cmd: status json
+2024-03-26 13:20:06,303 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x12282c440>
+2024-03-26 13:20:11,926 [INFO] Initiate data logging: %s
+2024-03-26 13:20:11,927 [INFO] Created new output file log: output.log_03-26-24_13:20.txt
+2024-03-26 13:20:11,927 [INFO] sending cmd: get
+2024-03-26 13:20:11,927 [INFO] sending cmd: status json
+2024-03-26 13:20:17,564 [INFO] sending cmd: status stop
+2024-03-26 13:20:17,564 [INFO] Finished logging
+2024-03-26 13:20:23,738 [INFO] Initiate data logging: %s
+2024-03-26 13:20:23,738 [INFO] Created new output file log: output.log_03-26-24_13:20.txt
+2024-03-26 13:20:23,738 [INFO] sending cmd: get
+2024-03-26 13:20:23,738 [INFO] sending cmd: status json
+2024-03-26 13:20:27,554 [INFO] sending cmd: status stop
+2024-03-26 13:20:27,555 [INFO] Finished logging
+2024-03-26 13:21:25,108 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x125c90440>
+2024-03-26 13:21:26,915 [INFO] Initiate data logging: %s
+2024-03-26 13:21:26,915 [INFO] Created new output file log: output.log_03-26-24_13:21.txt
+2024-03-26 13:21:26,916 [INFO] sending cmd: get
+2024-03-26 13:21:26,916 [INFO] sending cmd: status json
+2024-03-26 13:21:31,069 [INFO] sending cmd: status stop
+2024-03-26 13:21:31,069 [INFO] Finished logging
+2024-03-26 13:23:54,300 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1229f8440>
+2024-03-26 13:24:00,307 [INFO] Initiate data logging: %s
+2024-03-26 13:24:00,308 [INFO] Created new output file log: output.log_03-26-24_13:24.txt
+2024-03-26 13:24:00,308 [INFO] sending cmd: get
+2024-03-26 13:24:00,308 [INFO] sending cmd: status json
+2024-03-26 13:24:04,515 [INFO] sending cmd: status stop
+2024-03-26 13:24:04,515 [INFO] Finished logging
+2024-03-26 13:27:25,867 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x12248c4d0>
+2024-03-26 13:27:48,575 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x117d984d0>
+2024-03-26 13:28:14,270 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11fcdc4d0>
+2024-03-26 13:40:37,706 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11c370440>
+2024-03-26 13:43:05,431 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11fbac3b0>
+2024-03-26 13:44:51,455 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x123fa8440>
+2024-03-26 13:45:47,047 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1266cc440>
+2024-03-26 13:45:50,342 [INFO] cmd: sss
+2024-03-26 13:45:56,454 [INFO] cmd: get
+2024-03-26 13:46:03,709 [INFO] Initiate data logging: %s
+2024-03-26 13:46:03,710 [INFO] Created new output file log: output.log_03-26-24_13:46.txt
+2024-03-26 13:46:03,710 [INFO] sending cmd: get
+2024-03-26 13:46:03,710 [INFO] sending cmd: status json
+2024-03-26 13:46:05,779 [INFO] sending cmd: status stop
+2024-03-26 13:46:05,779 [INFO] Finished logging
+2024-03-26 13:46:12,278 [INFO] cmd: get
+2024-03-26 13:47:59,562 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11aba4440>
+2024-03-26 13:48:06,506 [INFO] cmd: slsl
+2024-03-26 13:48:12,458 [INFO] cmd: get
+2024-03-26 13:48:17,383 [INFO] Initiate data logging: %s
+2024-03-26 13:48:17,384 [INFO] Created new output file log: output.log_03-26-24_13:48.txt
+2024-03-26 13:48:17,384 [INFO] sending cmd: get
+2024-03-26 13:48:17,384 [INFO] sending cmd: status json
+2024-03-26 13:48:23,905 [INFO] sending cmd: status stop
+2024-03-26 13:48:23,905 [INFO] Finished logging
+2024-03-26 13:49:23,497 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x123b40440>
+2024-03-26 13:49:27,055 [INFO] cmd: get
+2024-03-26 13:49:35,238 [INFO] Initiate data logging: %s
+2024-03-26 13:49:35,238 [INFO] Created new output file log: output.log_03-26-24_13:49.txt
+2024-03-26 13:49:35,238 [INFO] sending cmd: get
+2024-03-26 13:49:35,238 [INFO] sending cmd: status json
+2024-03-26 13:49:37,273 [INFO] sending cmd: status stop
+2024-03-26 13:49:37,273 [INFO] Finished logging
+2024-03-26 13:50:06,755 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1221ec440>
+2024-03-26 13:50:13,072 [INFO] Initiate data logging: %s
+2024-03-26 13:50:13,073 [INFO] Created new output file log: output.log_03-26-24_13:50.txt
+2024-03-26 13:50:13,073 [INFO] sending cmd: get
+2024-03-26 13:50:13,073 [INFO] sending cmd: status json
+2024-03-26 13:50:14,819 [INFO] sending cmd: status stop
+2024-03-26 13:50:14,819 [INFO] Finished logging
+2024-03-26 13:51:17,043 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x117ca0440>
+2024-03-26 13:51:22,410 [INFO] cmd: get
+2024-03-26 13:51:42,569 [INFO] cmd: 
+2024-03-26 13:51:45,016 [INFO] Initiate data logging: %s
+2024-03-26 13:51:45,017 [INFO] Created new output file log: output.log_03-26-24_13:51.txt
+2024-03-26 13:51:45,017 [INFO] sending cmd: get
+2024-03-26 13:51:45,017 [INFO] sending cmd: status json
+2024-03-26 13:51:46,680 [INFO] sending cmd: status stop
+2024-03-26 13:51:46,681 [INFO] Finished logging
+2024-03-26 13:54:08,469 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x125bf0440>
+2024-03-26 13:54:13,788 [INFO] cmd: lslls
+2024-03-26 13:54:24,270 [INFO] Initiate data logging: %s
+2024-03-26 13:54:24,270 [INFO] Created new output file log: output.log_03-26-24_13:54.txt
+2024-03-26 13:54:24,270 [INFO] sending cmd: get
+2024-03-26 13:54:24,270 [INFO] sending cmd: status json
+2024-03-26 13:54:26,890 [INFO] sending cmd: status stop
+2024-03-26 13:54:26,890 [INFO] Finished logging
+2024-03-26 13:55:52,512 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11d9f8440>
+2024-03-26 13:55:57,320 [INFO] cmd: get
+2024-03-26 13:56:10,975 [INFO] cmd: 
+2024-03-26 13:56:20,390 [INFO] Initiate data logging: %s
+2024-03-26 13:56:20,391 [INFO] Created new output file log: output.log_03-26-24_13:56.txt
+2024-03-26 13:56:20,391 [INFO] sending cmd: get
+2024-03-26 13:56:20,391 [INFO] sending cmd: status json
+2024-03-26 13:56:23,438 [INFO] sending cmd: status stop
+2024-03-26 13:56:23,439 [INFO] Finished logging
+2024-03-26 13:57:06,735 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x124e08440>
+2024-03-26 13:57:12,916 [INFO] cmd: get
+2024-03-26 13:57:39,978 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11dc48440>
+2024-03-26 13:57:41,562 [INFO] Initiate data logging: %s
+2024-03-26 13:57:41,563 [INFO] Created new output file log: output.log_03-26-24_13:57.txt
+2024-03-26 13:57:41,563 [INFO] sending cmd: get
+2024-03-26 13:57:41,563 [INFO] sending cmd: status json
+2024-03-26 13:57:48,732 [INFO] sending cmd: status stop
+2024-03-26 13:57:48,734 [INFO] Finished logging
+2024-03-26 14:00:31,990 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x12537c440>
+2024-03-26 14:00:38,805 [INFO] cmd: cmd
+2024-03-26 14:01:11,528 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x117b48440>
+2024-03-26 14:01:30,811 [INFO] cmd: cmd
+2024-03-26 14:02:55,239 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11c90c440>
+2024-03-26 14:05:15,521 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11810c440>
+2024-03-26 14:05:19,187 [INFO] sending cmd: get
+2024-03-26 14:06:11,348 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11a9b4440>
+2024-03-26 14:06:15,248 [INFO] sending cmd: get
+2024-03-26 14:11:06,321 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11de28440>
+2024-03-26 14:11:54,609 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x117214440>
+2024-03-26 14:11:59,524 [INFO] sending cmd: get
+2024-03-26 14:12:24,031 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x116ea8440>
+2024-03-26 14:12:25,216 [INFO] sending cmd: get
+2024-03-26 14:13:22,163 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x124cb4440>
+2024-03-26 14:13:24,179 [INFO] sending cmd: get
+2024-03-26 14:14:02,713 [INFO] cmd: get
+2024-03-26 14:14:13,537 [INFO] cmd: get vbus
+2024-03-26 14:14:54,917 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1190703b0>
+2024-03-26 14:15:02,119 [INFO] cmd: get vbus
+2024-03-26 14:15:02,119 [INFO] sending cmd: get vbus
+2024-03-26 17:19:34,494 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1258f03b0>
+2024-03-26 17:19:49,896 [INFO] cmd: thing
+2024-03-26 17:19:49,896 [INFO] sending cmd: thing
+2024-03-26 17:20:10,443 [INFO] Initiate data logging: %s
+2024-03-26 17:20:10,444 [INFO] Created new output file log: output.log_03-26-24_17:20.txt
+2024-03-26 17:20:10,444 [INFO] sending cmd: get
+2024-03-26 17:20:10,444 [INFO] sending cmd: status json
+2024-03-26 17:20:19,284 [INFO] sending cmd: status stop
+2024-03-26 17:20:19,284 [INFO] Finished logging
+2024-03-26 17:20:33,743 [INFO] cmd: get vbus
+2024-03-26 17:20:33,743 [INFO] sending cmd: get vbus
+2024-03-26 17:20:55,973 [INFO] cmd: get
+2024-03-26 17:20:55,974 [INFO] sending cmd: get
+2024-03-26 17:24:47,636 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x120778440>
+2024-03-26 17:24:54,834 [INFO] cmd: get
+2024-03-26 17:24:54,835 [INFO] sending cmd: get
+2024-03-26 17:26:11,572 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11ec54440>
+2024-03-26 17:26:14,600 [INFO] cmd: cmd
+2024-03-26 17:26:14,600 [INFO] sending cmd: cmd
+2024-03-26 17:26:20,664 [INFO] cmd: get
+2024-03-26 17:26:20,664 [INFO] sending cmd: get
+2024-03-26 17:26:49,048 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x116f48440>
+2024-03-26 17:26:54,781 [INFO] cmd: get
+2024-03-26 17:26:54,781 [INFO] sending cmd: get
+2024-03-26 17:27:20,199 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x12380c440>
+2024-03-26 17:27:23,949 [INFO] cmd: get
+2024-03-26 17:27:23,949 [INFO] sending cmd: get
+2024-03-26 17:27:40,302 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11b5d8440>
+2024-03-26 17:27:42,948 [INFO] cmd: get
+2024-03-26 17:27:42,948 [INFO] sending cmd: get
+2024-03-26 17:28:57,347 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11e150440>
+2024-03-26 17:28:59,752 [INFO] cmd: get
+2024-03-26 17:28:59,752 [INFO] sending cmd: get
+2024-03-26 17:32:11,215 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11cca0440>
+2024-03-26 17:32:15,560 [INFO] cmd: get
+2024-03-26 17:32:15,561 [INFO] sending cmd: get
+2024-03-26 17:33:25,852 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x124d88440>
+2024-03-26 17:33:28,661 [INFO] cmd: get
+2024-03-26 17:33:28,661 [INFO] sending cmd: get
+2024-03-26 17:34:02,849 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x118cfc440>
+2024-03-26 17:34:05,621 [INFO] cmd: get
+2024-03-26 17:34:05,622 [INFO] sending cmd: get
+2024-03-26 17:34:57,380 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x117288440>
+2024-03-26 17:35:00,106 [INFO] cmd: get
+2024-03-26 17:35:00,106 [INFO] sending cmd: get
+2024-03-26 17:36:05,007 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x123074440>
+2024-03-26 17:36:07,366 [INFO] cmd: get
+2024-03-26 17:36:07,366 [INFO] sending cmd: get
+2024-03-26 17:36:47,627 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x120db4440>
+2024-03-26 17:36:50,460 [INFO] cmd: get
+2024-03-26 17:36:50,460 [INFO] sending cmd: get
+2024-03-26 17:37:35,887 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x12498c440>
+2024-03-26 17:37:39,706 [INFO] cmd: get
+2024-03-26 17:37:39,706 [INFO] sending cmd: get
+2024-03-26 17:38:22,037 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x124e4c440>
+2024-03-26 17:38:25,512 [INFO] cmd: get
+2024-03-26 17:38:25,512 [INFO] sending cmd: get
+2024-03-26 17:38:52,802 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x124db0440>
+2024-03-26 17:38:54,879 [INFO] cmd: get
+2024-03-26 17:38:54,880 [INFO] sending cmd: get
+2024-03-26 17:40:44,518 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1198a83b0>
+2024-03-26 17:40:47,641 [INFO] cmd: get
+2024-03-26 17:40:47,641 [INFO] sending cmd: get
+2024-03-26 17:41:00,268 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11ad703b0>
+2024-03-26 17:41:02,721 [INFO] cmd: get
+2024-03-26 17:41:02,721 [INFO] sending cmd: get
+2024-03-26 17:41:26,876 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x117e683b0>
+2024-03-26 17:41:29,321 [INFO] cmd: get
+2024-03-26 17:41:29,321 [INFO] sending cmd: get
+2024-03-26 17:42:07,494 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11e5643b0>
+2024-03-26 17:42:11,182 [INFO] cmd: get
+2024-03-26 17:42:11,182 [INFO] sending cmd: get
+2024-03-26 17:43:00,646 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11a2243b0>
+2024-03-26 17:43:06,468 [INFO] cmd: thing
+2024-03-26 17:43:06,469 [INFO] sending cmd: thing
+2024-03-26 17:43:19,236 [INFO] cmd: get
+2024-03-26 17:43:19,236 [INFO] sending cmd: get
+2024-03-26 17:43:38,195 [INFO] cmd: get vbus
+2024-03-26 17:43:38,195 [INFO] sending cmd: get vbus
+2024-03-26 17:44:01,225 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1297f43b0>
+2024-03-26 17:44:04,825 [INFO] cmd: get
+2024-03-26 17:44:04,825 [INFO] sending cmd: get
+2024-03-26 17:44:22,073 [INFO] cmd: llsls
+2024-03-26 17:44:22,073 [INFO] sending cmd: llsls
+2024-03-26 17:45:58,996 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1170003b0>
+2024-03-26 17:46:04,780 [INFO] cmd: get
+2024-03-26 17:46:04,781 [INFO] sending cmd: get
+2024-03-26 17:47:26,838 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11aba4440>
+2024-03-26 17:47:29,658 [INFO] cmd: get
+2024-03-26 17:47:29,658 [INFO] sending cmd: get
+2024-03-26 17:48:07,949 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11e1b43b0>
+2024-03-26 17:48:10,695 [INFO] cmd: get
+2024-03-26 17:48:10,696 [INFO] sending cmd: get
+2024-03-26 17:48:20,900 [INFO] cmd: ls
+2024-03-26 17:48:20,900 [INFO] sending cmd: ls
+2024-03-26 17:48:34,838 [INFO] cmd: status json
+2024-03-26 17:48:34,838 [INFO] sending cmd: status json
+2024-03-26 17:48:49,277 [INFO] cmd: status stop
+2024-03-26 17:48:49,277 [INFO] sending cmd: status stop
+2024-03-26 17:49:08,277 [INFO] cmd: get vbus
+2024-03-26 17:49:08,277 [INFO] sending cmd: get vbus
+2024-03-26 17:50:01,512 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x118e303b0>
+2024-03-26 17:50:04,170 [INFO] cmd: get
+2024-03-26 17:50:04,170 [INFO] sending cmd: get
+2024-03-26 17:50:13,425 [INFO] cmd: get
+2024-03-26 17:50:13,425 [INFO] sending cmd: get
+2024-03-26 17:51:25,755 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x119d943b0>
+2024-03-26 17:51:30,919 [INFO] cmd: get vbus
+2024-03-26 17:51:30,919 [INFO] sending cmd: get vbus
+2024-03-26 17:52:32,847 [INFO] sending cmd: get
+2024-03-26 18:05:24,496 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x121e24440>
+2024-03-26 18:05:29,798 [INFO] Initiate data logging: %s
+2024-03-26 18:05:29,798 [INFO] Created new output file log: output.log_03-26-24_18:05.txt
+2024-03-26 18:05:29,798 [INFO] sending cmd: get
+2024-03-26 18:05:29,798 [INFO] sending cmd: status json
+2024-03-26 18:05:34,036 [INFO] sending cmd: status stop
+2024-03-26 18:05:34,036 [INFO] Finished logging
+2024-03-26 18:06:06,137 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x129518440>
+2024-03-26 18:06:08,926 [INFO] Initiate data logging: %s
+2024-03-26 18:06:08,927 [INFO] Created new output file log: output.log_03-26-24_18:06.txt
+2024-03-26 18:06:08,927 [INFO] sending cmd: get
+2024-03-26 18:06:08,927 [INFO] sending cmd: status json
+2024-03-26 18:06:13,341 [INFO] sending cmd: status stop
+2024-03-26 18:06:13,342 [INFO] Finished logging
+2024-03-26 18:07:28,927 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11e8b4440>
+2024-03-26 18:07:30,373 [INFO] Initiate data logging: %s
+2024-03-26 18:07:30,373 [INFO] Created new output file log: output.log_03-26-24_18:07.txt
+2024-03-26 18:07:30,373 [INFO] sending cmd: get
+2024-03-26 18:07:30,373 [INFO] sending cmd: status json
+2024-03-26 18:07:33,378 [INFO] sending cmd: status stop
+2024-03-26 18:07:33,378 [INFO] Finished logging
+2024-03-26 18:08:06,067 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x125540440>
+2024-03-26 18:08:07,379 [INFO] Initiate data logging: %s
+2024-03-26 18:08:07,379 [INFO] Created new output file log: output.log_03-26-24_18:08.txt
+2024-03-26 18:08:07,380 [INFO] sending cmd: get
+2024-03-26 18:08:07,380 [INFO] sending cmd: status json
+2024-03-26 18:08:10,911 [INFO] sending cmd: status stop
+2024-03-26 18:08:10,911 [INFO] Finished logging
+2024-03-26 18:09:43,453 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11ca60440>
+2024-03-26 18:09:44,959 [INFO] Initiate data logging: %s
+2024-03-26 18:09:44,960 [INFO] Created new output file log: output.log_03-26-24_18:09.txt
+2024-03-26 18:09:44,960 [INFO] sending cmd: get
+2024-03-26 18:09:44,960 [INFO] sending cmd: status json
+2024-03-26 18:09:47,546 [INFO] sending cmd: status stop
+2024-03-26 18:09:47,547 [INFO] Finished logging
+2024-03-26 18:10:26,795 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1190c0440>
+2024-03-26 18:10:27,516 [INFO] Initiate data logging: %s
+2024-03-26 18:10:27,516 [INFO] Created new output file log: output.log_03-26-24_18:10.txt
+2024-03-26 18:10:27,516 [INFO] sending cmd: get
+2024-03-26 18:10:27,516 [INFO] sending cmd: status json
+2024-03-26 18:10:31,481 [INFO] sending cmd: status stop
+2024-03-26 18:10:31,481 [INFO] Finished logging
+2024-03-26 18:11:52,402 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11d1b03b0>
+2024-03-26 18:11:53,881 [INFO] Initiate data logging: %s
+2024-03-26 18:11:53,881 [INFO] Created new output file log: output.log_03-26-24_18:11.txt
+2024-03-26 18:11:53,881 [INFO] sending cmd: get
+2024-03-26 18:11:53,881 [INFO] sending cmd: status json
+2024-03-26 18:11:58,060 [INFO] sending cmd: status stop
+2024-03-26 18:11:58,060 [INFO] Finished logging
+2024-03-26 18:25:35,730 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11f6d19a0>
+2024-03-26 18:26:16,315 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1262d5910>
+2024-03-26 18:27:05,331 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11e269910>
+2024-03-26 18:33:35,056 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11ba29910>
+2024-03-26 18:42:17,898 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x120805880>
+2024-03-26 18:43:27,677 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11bc51880>
+2024-03-26 18:44:16,263 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x125a11880>
+2024-03-26 18:45:13,870 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x120b29880>
+2024-03-26 18:45:53,181 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x122699880>
+2024-03-26 18:46:16,445 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1172e9880>
+2024-03-26 18:46:17,901 [INFO] Initiate data logging: %s
+2024-03-26 18:46:17,901 [INFO] Created new output file log: output.log_03-26-24_18:46.txt
+2024-03-26 18:46:17,901 [INFO] sending cmd: get
+2024-03-26 18:46:17,901 [INFO] sending cmd: status json
+2024-03-26 18:46:19,552 [INFO] sending cmd: status stop
+2024-03-26 18:46:19,552 [INFO] Finished logging
+2024-03-26 18:47:01,908 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x125f8d880>
+2024-03-26 18:47:03,176 [INFO] Initiate data logging: %s
+2024-03-26 18:47:03,176 [INFO] Created new output file log: output.log_03-26-24_18:47.txt
+2024-03-26 18:47:03,176 [INFO] sending cmd: get
+2024-03-26 18:47:03,176 [INFO] sending cmd: status json
+2024-03-26 18:47:04,761 [INFO] sending cmd: status stop
+2024-03-26 18:47:04,761 [INFO] Finished logging
+2024-03-26 18:49:04,887 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11e9c5880>
+2024-03-26 18:49:05,840 [INFO] Initiate data logging: %s
+2024-03-26 18:49:05,840 [INFO] Created new output file log: output.log_03-26-24_18:49.txt
+2024-03-26 18:49:05,840 [INFO] sending cmd: get
+2024-03-26 18:49:05,841 [INFO] sending cmd: status json
+2024-03-26 18:49:07,541 [INFO] sending cmd: status stop
+2024-03-26 18:49:07,542 [INFO] Finished logging
+2024-03-26 18:49:35,316 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11e5a1880>
+2024-03-26 18:49:36,669 [INFO] Initiate data logging: %s
+2024-03-26 18:49:36,669 [INFO] Created new output file log: output.log_03-26-24_18:49.txt
+2024-03-26 18:49:36,669 [INFO] sending cmd: get
+2024-03-26 18:49:36,669 [INFO] sending cmd: status json
+2024-03-26 18:49:38,788 [INFO] sending cmd: status stop
+2024-03-26 18:49:38,788 [INFO] Finished logging
+2024-03-26 18:50:56,896 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1188b1880>
+2024-03-26 18:50:59,125 [INFO] Initiate data logging: %s
+2024-03-26 18:50:59,125 [INFO] Created new output file log: output.log_03-26-24_18:50.txt
+2024-03-26 18:50:59,125 [INFO] sending cmd: get
+2024-03-26 18:50:59,125 [INFO] sending cmd: status json
+2024-03-26 18:51:01,849 [INFO] sending cmd: status stop
+2024-03-26 18:51:01,850 [INFO] Finished logging
+2024-03-26 18:53:41,869 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x12383d880>
+2024-03-26 18:53:44,929 [INFO] Initiate data logging: %s
+2024-03-26 18:53:44,930 [INFO] Created new output file log: output.log_03-26-24_18:53.txt
+2024-03-26 18:53:44,930 [INFO] sending cmd: get
+2024-03-26 18:53:44,930 [INFO] sending cmd: status json
+2024-03-26 18:53:50,176 [INFO] sending cmd: status stop
+2024-03-26 18:53:50,176 [INFO] Finished logging
+2024-03-26 18:55:12,887 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x124e99880>
+2024-03-26 18:55:14,504 [INFO] Initiate data logging: %s
+2024-03-26 18:55:14,504 [INFO] Created new output file log: output.log_03-26-24_18:55.txt
+2024-03-26 18:55:14,505 [INFO] sending cmd: get
+2024-03-26 18:55:14,505 [INFO] sending cmd: status json
+2024-03-26 18:55:17,884 [INFO] sending cmd: status stop
+2024-03-26 18:55:17,885 [INFO] Finished logging
+2024-03-26 18:56:24,338 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11c565880>
+2024-03-26 18:57:47,026 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x117a41880>
+2024-03-26 18:58:05,314 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x119dfd880>
+2024-03-26 18:58:34,761 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1219b1880>
+2024-03-26 18:58:56,373 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11f9b5880>
+2024-03-26 18:59:36,869 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x125a69880>
+2024-03-26 19:00:25,176 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1232a9880>
+2024-03-26 19:01:12,347 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x12442d880>
+2024-03-26 19:02:04,774 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1242b9880>
+2024-03-26 19:02:17,881 [INFO] Initiate data logging: %s
+2024-03-26 19:02:17,881 [INFO] Created new output file log: output.log_03-26-24_19:02.txt
+2024-03-26 19:02:17,881 [INFO] sending cmd: get
+2024-03-26 19:02:17,883 [INFO] sending cmd: status json
+2024-03-26 19:02:19,608 [INFO] sending cmd: status stop
+2024-03-26 19:02:19,608 [INFO] Finished logging
+2024-03-26 19:04:34,811 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x126549880>
+2024-03-26 19:04:37,868 [INFO] Initiate data logging: %s
+2024-03-26 19:04:37,868 [INFO] Created new output file log: output.log_03-26-24_19:04.txt
+2024-03-26 19:04:37,868 [INFO] sending cmd: get
+2024-03-26 19:04:37,868 [INFO] sending cmd: status json
+2024-03-26 19:04:42,672 [INFO] sending cmd: status stop
+2024-03-26 19:04:42,672 [INFO] Finished logging
+2024-03-26 19:21:04,385 [INFO] Initiate data logging: %s
+2024-03-26 19:21:04,388 [INFO] Created new output file log: output.log_03-26-24_19:21.txt
+2024-03-26 19:21:04,388 [INFO] sending cmd: get
+2024-03-26 19:21:04,389 [INFO] sending cmd: status json
+2024-03-26 19:21:12,400 [INFO] sending cmd: status stop
+2024-03-26 19:21:12,400 [INFO] Finished logging
+2024-03-26 19:21:55,384 [INFO] sending cmd: get
+2024-03-26 19:26:26,342 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x116ea5880>
+2024-03-26 19:27:29,348 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-26 19:33:29,620 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-26 19:34:52,276 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-26 19:37:52,744 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-26 19:37:56,606 [INFO] Initiate data logging: %s
+2024-03-26 19:37:56,607 [INFO] Created new output file log: output.log_03-26-24_19:37.txt
+2024-03-26 19:37:56,607 [INFO] sending cmd: get
+2024-03-26 19:37:56,607 [INFO] sending cmd: status json
+2024-03-26 19:37:58,816 [INFO] sending cmd: status stop
+2024-03-26 19:37:58,816 [INFO] Finished logging

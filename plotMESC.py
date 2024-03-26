@@ -83,8 +83,7 @@ class PlotMESCOutput:
                 rect_width = int(len(df['ehz']) * .04) 
                 rect_height = df['ehz'].max()
 
-                rect = Rectangle((rect_x, rect_y), rect_width, rect_height,
-                                 linewidth=1, edgecolor='y', facecolor='y')
+                # rect = Rectangle((rect_x, rect_y), rect_width, rect_height, linewidth=1, edgecolor='y', facecolor='y')
 
         ax1 = host.twinx()
         ax2 = host.twinx()
@@ -109,9 +108,8 @@ class PlotMESCOutput:
         host.plot(t, df[datatype], color=color, label = datatype)
         fig.legend(loc = "upper left")
 
-
         # Add the rectangle patch to the plot
-        host.add_patch(rect)
+        # host.add_patch(rect)
 
         datatype = datatypes[1]
         span = df[datatype].max() - df[datatype].min()
@@ -195,9 +193,9 @@ def main():
     plt.show()
     plt.close(fig)
 
-# on command line, run:
-# ./plot.py -d output.log_03-21-24_20:57.txt -o output_file
-# where output.log_03-21-24_20:57.txt contains results from collecting MESC data
+    # on command line, run:
+    # ./plot.py -d output.log_03-21-24_20:57.txt -o output_file
+    # where output.log_03-21-24_20:57.txt contains results from collecting MESC data
 
 if __name__ == "__main__":
     main()

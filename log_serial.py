@@ -1,5 +1,10 @@
 #! /usr/bin/env python3
 
+# this was a test application that sits on an RPI, opens serial connections to both the MESC controller
+#   and a user's android. User is able to send commands to the on their phone to the MESC contoller, 
+#   and this app handles logging data from the MESC. 
+# Mostly used for testing, it is still incomplete, does not upload data to anywhere. 
+
 import serial
 import logging
 import threading
@@ -7,7 +12,7 @@ import Payload
 import time
 import sys
 import re
-import plot
+import plotMESC
 from datetime import datetime
 import GoogleHandler
 
@@ -201,9 +206,11 @@ class SerialHandler:
 def main():
     port_name = '/dev/tty.usbmodem3552356B32321'
 
+    # this serial should be connecting from RPI to MESC
     ser = SerialHandler(port_name, "one")
     ser.openPort()
 
+    # this serial should connects from RPI to android
     port_name = '/dev/cu.usbmodem3552356B32321'
     BTser = SerialHandler(port_name, "two")
 
@@ -211,6 +218,7 @@ def main():
     oname = 'scrap'
 
     try:
+        # the connection to MESC is threaded
         reader_thread = threading.Thread(target=ser.serialReader, daemon=True)
         ser.logger.info("Starting serial thread.")
         reader_thread.start()
