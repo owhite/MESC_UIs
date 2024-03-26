@@ -1,0 +1,13 @@
+2024-03-25 18:42:37,782 [INFO] SerialTester initialized for port: /dev/tty.usbmodem3552356B32321
+2024-03-25 18:42:37,783 [ERROR] Error opening the serial port: [Errno 2] could not open port /dev/tty.usbmodem3552356B32321: [Errno 2] No such file or directory: '/dev/tty.usbmodem3552356B32321'
+2024-03-25 18:42:37,783 [INFO] Starting serial thread.
+2024-03-25 18:43:01,514 [INFO] Program interrupted, serial port closed, thread ending
+2024-03-25 18:48:05,760 [INFO] SerialTester initialized for port: /dev/tty.usbmodem3552356B32321
+2024-03-25 18:48:05,764 [INFO] SerialHandler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-25 18:48:05,764 [INFO] Starting serial thread.
+2024-03-25 18:48:08,822 [INFO] Program interrupted, serial port closed, thread ending
+2024-03-25 18:48:13,887 [INFO] SerialTester initialized for port: /dev/tty.usbmodem3552356B32321
+2024-03-25 18:48:13,890 [INFO] SerialHandler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-25 18:48:13,890 [INFO] Starting serial thread.
+2024-03-25 18:48:15,941 [INFO] sending cmd: get
+2024-03-25 19:25:09,789 [INFO] Program interrupted, serial port closed, thread ending
