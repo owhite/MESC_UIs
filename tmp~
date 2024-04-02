@@ -1,0 +1,5 @@
+curl 'https://api.twilio.com/2010-04-01/Accounts/AC037ea2458a0a6e16f3a157d1497715b3/Messages.json' -X POST \
+--data-urlencode 'To=+13019435994' \
+--data-urlencode 'From=+18559564992' \
+--data-urlencode 'Body=Hello from Twilio' \
+-u AC037ea2458a0a6e16f3a157d1497715b3:[AuthToken]

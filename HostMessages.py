@@ -1,29 +1,12 @@
-#!/usr/bin/env python3
+#! /usr/bin/env python3
+
+# this handles two forms of logging:
+#  1) it opens up system logs that sit on the host computer
+#  2) it also handles various serial operations like opening/closing the port
 
 import sys
-import os
-import time
-import logging
-import HostMessages
-import time, math, colorsys
-
-import GoogleHandler
-
-import matplotlib
-matplotlib.use('Qt5Agg')  # This chooses the appropriate backend for the RPI 
-
-from PyQt5 import QtCore
-from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QPushButton, QHBoxLayout, QVBoxLayout
-from PyQt5.QtWidgets import QMainWindow, QSizePolicy, QLabel, QLineEdit, QTextEdit, QTabWidget
-from PyQt5.QtCore import Qt, QEvent, QTimer, pyqtSignal
-from PyQt5.QtGui import QTextCursor, QPixmap, QFont
-
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.figure import Figure
-
-# remove this later
 import re
+import logging
 import plotMESC
 from datetime import datetime
 import Payload
@@ -31,116 +14,7 @@ import Payload
 from PyQt5 import QtCore
 from PyQt5.QtSerialPort import QSerialPort, QSerialPortInfo
 
-# the goal of this code is to basically handle all the UI elements, while
-#   cutting over the other serial stuff and logging stuff to other code
-#   python classes. No idea how well that worked here. 
-
-class TopApplication(QMainWindow):
-    def __init__(self):
-        super().__init__()
-
-        self.output_data_file = 'MESC_logdata.txt'
-        self.output_plot_file = 'MESC_plt.png'
-
-        self.button_w = 600 - 20
-        self.button_h = 80
-
-        self.setGeometry(1, 1, self.button_w + 20, 350)
-        self.setWindowTitle('MESC logger')
-
-        # self.msgs = HostMessages.Log_Handler(self)
-        self.msgs = Log_Handler(self)
-
-        # Create a QTabWidget to hold the tabs
-        self.tabs = QTabWidget()
-
-        # Create the tabs for the application
-        self.serialOutTab = SerialOutTab()
-
-        new_handler2 = self.serialOutTab
-        self.msgs.serial_msgs.addHandler(new_handler2)
-
-        # Add each tab to the QTabWidget
-        self.tabs.addTab(self.serialOutTab, "SER")
-
-        self.setCentralWidget(self.tabs)
-
-        # Install event filter to handle key events
-        self.installEventFilter(self)
-
-        ##############################
-        if sys.platform.startswith('darwin'):
-            self.msgs.logger.info("macOS detected")
-            self.portName = '/dev/tty.usbmodem3552356B32321'
-            account_file = "/Users/owhite/mesc-data-logging-ae144bcc6287.json"
-        elif sys.platform.startswith('linux'):
-            account_file = "/home/pi/mesc-data-logging-083b86e157cf.json"
-            self.portName = '/dev/ttyACM0'
-            self.msgs.logger.info("linux detected")
-        else:
-            self.msgs.logger.info("Unknown operating system")
-            sys.exit()
-
-        self.msgs.openPort(self.portName)
-
-        # sometimes it's streaming so shut it off
-        self.msgs.sendToPort('status stop')
-
-        # manage the uploader
-        self.drive = GoogleHandler.handler(self.msgs.logger, account_file)
-        self.msgs.logger.info("GoogleHandler initiated")
-
-
-    def keyPressEvent(self, event):
-        key = event.key()
-        # print(f"Key Pressed in Main Window: {key}")
-
-# the HostMessaging class creates system logs and opens the serial to talk to controller
-#  this tab takes output from the serial log
-class SerialOutTab(QMainWindow, logging.Handler):
-    def __init__(self):
-        super().__init__()
-
-        self.setWindowTitle("Log Viewer")
-        self.setGeometry(100, 100, 800, 600)
-
-        self.text_edit = QTextEdit()
-        self.text_edit.setReadOnly(True)
-        self.text_edit.setLineWrapMode(QTextEdit.LineWrapMode.NoWrap)
-
-        layout = QVBoxLayout()
-        layout.addWidget(self.text_edit)
-
-        # self.timer = QTimer(self)
-        # self.timer.timeout.connect(self.ping)
-        # self.timer.start(50)
-
-        widget = QWidget()
-        widget.setLayout(layout)
-        self.setCentralWidget(widget)
-
-        # Set initial buffer size
-        self.max_buffer_size = 100
-        self.current_buffer_size = 0
-        self.counter = 0
-
-    def append_text(self, text):
-        self.text_edit.append(text)
-        self.current_buffer_size += len(text)
-        if self.current_buffer_size > self.max_buffer_size:
-            current_text = self.text_edit.toPlainText()
-            excess_text = self.current_buffer_size - self.max_buffer_size
-            trim_index = 0
-            for i, c in enumerate(current_text):
-                excess_text -= sys.getsizeof(c.encode())
-                if excess_text <= 0:
-                    trim_index = i
-                    break
-            trimmed_text = current_text[trim_index:]
-            self.text_edit.setPlainText(trimmed_text)
-            self.current_buffer_size = len(trimmed_text)
-
-class Log_Handler():
+class LogHandler():
     def __init__(self, parent):
         self.parent = parent
 
@@ -241,8 +115,7 @@ class Log_Handler():
                     self.json_collect_flag = False
                 self.data_logger.info(f"{t}")
             else:
-                # self.serial_msgs.info(f"{t}")
-                pass
+                self.serial_msgs.info(f"{t}")
 
             self.serialPayload.resetTimer() 
 
@@ -267,8 +140,7 @@ class Log_Handler():
                     else:
                         t = t + line + '\n'
 
-                print("PRINT SOMETHING OUT", t)
-                # self.serial_msgs.info(f"t")
+                self.serial_msgs.info(t)
 
             self.serialPayload.resetString()
             r = ''
@@ -277,10 +149,58 @@ class Log_Handler():
             
         self.serialPayload.setString(remaining_text)
 
+    def initDataLogging(self, file_name):
+        self.logger.info("Initiate data logging: %s")
+
+        self.datafile_name = file_name
+        if self.data_logger:
+            for handler in self.data_logger.handlers[:]:
+                self.data_logger.removeHandler(handler)
+                print("Deleted logger 'output_log'.")
+                handler.close()
+            self.data_logger = None
+
+        # Create a new logger for output.log (overwriting the file each time)
+        self.data_logger = logging.getLogger('output_log')
+        self.data_logger.setLevel(logging.INFO)
+
+        formatter = logging.Formatter('%(message)s')
+        file_handler = logging.FileHandler(self.datafile_name, mode="w") 
+        file_handler.setFormatter(formatter)
+
+        self.data_logger.addHandler(file_handler)
+        self.logger.info(f"Created new output file log: {self.datafile_name}")
+
+        self.term_collect_str = ''
+
+        self.term_collect_flag = True
+        self.json_collect_flag = True
+
+        self.sendToPort('get')
+        self.sendToPort('status json')
+
+    def endDataLogging(self, plot_file):
+        self.sendToPort('status stop')
+        self.plot_file = plot_file
+        self.term_collect_flag = False
+        self.json_collect_flag = False
+
+        if self.data_logger:
+            for handler in self.data_logger.handlers[:]:
+                self.data_logger.removeHandler(handler)
+                handler.close()
+            self.data_logger = None
+            self.logger.info("Finished logging")
+
+            datatypes = ('ehz', 'phaseA', 'iqreq', 'vbus')
+            p = plotMESC.PlotMESCOutput()
+            (plt, fig) = p.generatePlot(self.datafile_name, datatypes)
+            self.logger.info(F"Created plot: {self.plot_file}")
+            plt.savefig(self.plot_file)
+
+def main():
+    pass
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = TopApplication()
-    window.show()
-    sys.exit(app.exec_())
+    main()
 

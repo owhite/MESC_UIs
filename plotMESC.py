@@ -54,10 +54,13 @@ class PlotMESCOutput:
         return(d)
 
     # pass the file that serves as source of data
-    #  and some text that appears in lower right hand corner
-    def generatePlot(self, data_file, datatypes, text):
+    def generatePlot(self, data_file, datatypes):
         dict = self.openFile(data_file)
 
+        if not dict.get("JSON BLOCK"):
+            print("something is wrong with json, returning")
+            return()
+                
         df = self.loadDataFrame(dict["JSON BLOCK"])
         # this is what comes back from a "get" call to Jens term
         results = self.loadGetResults(dict["get"])
@@ -94,7 +97,7 @@ class PlotMESCOutput:
         title = ("{0}A, FW={1}".format(int(float(results['curr_max'][2])),
                                             int(float(results['fw_curr'][0]))))
         plt.title(title)
-        plt.figtext(0.85, 0.01, text, fontsize=12, color='black', ha='right')
+        # plt.figtext(0.85, 0.01, text, fontsize=12, color='black', ha='right')
 
         text = F"peak tmos={peak_tmos}\npeak tmot={peak_tmot}\npeak Amps={peak_amps}"
         plt.figtext(0.01, 0.01, text, fontsize=12, color='black', ha='left')

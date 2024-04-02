@@ -1,433 +1,841 @@
-2024-03-25 18:42:37,782 [INFO] SerialTester initialized for port: /dev/tty.usbmodem3552356B32321
-2024-03-25 18:42:37,783 [ERROR] Error opening the serial port: [Errno 2] could not open port /dev/tty.usbmodem3552356B32321: [Errno 2] No such file or directory: '/dev/tty.usbmodem3552356B32321'
-2024-03-25 18:42:37,783 [INFO] Starting serial thread.
-2024-03-25 18:43:01,514 [INFO] Program interrupted, serial port closed, thread ending
-2024-03-25 18:48:05,760 [INFO] SerialTester initialized for port: /dev/tty.usbmodem3552356B32321
-2024-03-25 18:48:05,764 [INFO] SerialHandler opened for port: /dev/tty.usbmodem3552356B32321
-2024-03-25 18:48:05,764 [INFO] Starting serial thread.
-2024-03-25 18:48:08,822 [INFO] Program interrupted, serial port closed, thread ending
-2024-03-25 18:48:13,887 [INFO] SerialTester initialized for port: /dev/tty.usbmodem3552356B32321
-2024-03-25 18:48:13,890 [INFO] SerialHandler opened for port: /dev/tty.usbmodem3552356B32321
-2024-03-25 18:48:13,890 [INFO] Starting serial thread.
-2024-03-25 18:48:15,941 [INFO] sending cmd: get
-2024-03-25 19:25:09,789 [INFO] Program interrupted, serial port closed, thread ending
-2024-03-26 12:08:27,294 [INFO] SerialTester initialized for port: /dev/tty.usbmodem3552356B32321
-2024-03-26 12:10:13,441 [INFO] SerialTester initialized for port: /dev/tty.usbmodem3552356B32321
-2024-03-26 12:18:31,980 [INFO] SerialHandler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x12bb50440>
-2024-03-26 12:20:43,918 [INFO] SerialHandler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1247c8440>
-2024-03-26 12:21:06,045 [INFO] SerialHandler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11f02c440>
-2024-03-26 12:22:51,101 [INFO] SerialHandler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11c418440>
-2024-03-26 12:23:18,277 [INFO] SerialHandler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x126b74440>
-2024-03-26 12:23:42,521 [INFO] SerialHandler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x123fe4440>
-2024-03-26 12:24:25,325 [INFO] SerialHandler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x121e2c440>
-2024-03-26 12:26:13,714 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x11f9383b0> not open
-2024-03-26 12:31:53,721 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x126844440> not open
-2024-03-26 12:32:18,602 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x117e4c440> not open
-2024-03-26 12:32:51,123 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x1238403b0> not open
-2024-03-26 12:33:53,277 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x126ab0440> not open
-2024-03-26 12:35:03,442 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x123dbc3b0> not open
-2024-03-26 12:35:46,084 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x11eb68440> not open
-2024-03-26 12:36:25,918 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x11ae74440> not open
-2024-03-26 12:36:40,907 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x11b68c4d0> not open
-2024-03-26 12:37:05,718 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x11ab584d0> not open
-2024-03-26 12:37:52,277 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x1239ec440> not open
-2024-03-26 12:38:27,445 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x1252bc440> not open
-2024-03-26 12:40:20,869 [INFO] Log Handler port: <PyQt5.QtSerialPort.QSerialPort object at 0x125498440> not open
-2024-03-26 12:40:56,923 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x125f68440>
-2024-03-26 12:54:29,394 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1201e0440>
-2024-03-26 13:04:46,802 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1206643b0>
-2024-03-26 13:06:09,722 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x122cb43b0>
-2024-03-26 13:14:29,094 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1185303b0>
-2024-03-26 13:16:45,974 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1181103b0>
-2024-03-26 13:16:48,857 [INFO] Initiate data logging: %s
-2024-03-26 13:16:48,858 [INFO] Created new output file log: output.log_03-26-24_13:16.txt
-2024-03-26 13:16:48,859 [INFO] sending cmd: get
-2024-03-26 13:18:07,083 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x12383c3b0>
-2024-03-26 13:18:08,525 [INFO] Initiate data logging: %s
-2024-03-26 13:18:08,526 [INFO] Created new output file log: output.log_03-26-24_13:18.txt
-2024-03-26 13:18:08,526 [INFO] sending cmd: get
-2024-03-26 13:18:08,527 [INFO] sending cmd: status json
-2024-03-26 13:18:22,121 [INFO] Initiate data logging: %s
-2024-03-26 13:18:22,121 [INFO] Created new output file log: output.log_03-26-24_13:18.txt
-2024-03-26 13:18:22,122 [INFO] sending cmd: get
-2024-03-26 13:18:22,122 [INFO] sending cmd: status json
-2024-03-26 13:20:06,303 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x12282c440>
-2024-03-26 13:20:11,926 [INFO] Initiate data logging: %s
-2024-03-26 13:20:11,927 [INFO] Created new output file log: output.log_03-26-24_13:20.txt
-2024-03-26 13:20:11,927 [INFO] sending cmd: get
-2024-03-26 13:20:11,927 [INFO] sending cmd: status json
-2024-03-26 13:20:17,564 [INFO] sending cmd: status stop
-2024-03-26 13:20:17,564 [INFO] Finished logging
-2024-03-26 13:20:23,738 [INFO] Initiate data logging: %s
-2024-03-26 13:20:23,738 [INFO] Created new output file log: output.log_03-26-24_13:20.txt
-2024-03-26 13:20:23,738 [INFO] sending cmd: get
-2024-03-26 13:20:23,738 [INFO] sending cmd: status json
-2024-03-26 13:20:27,554 [INFO] sending cmd: status stop
-2024-03-26 13:20:27,555 [INFO] Finished logging
-2024-03-26 13:21:25,108 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x125c90440>
-2024-03-26 13:21:26,915 [INFO] Initiate data logging: %s
-2024-03-26 13:21:26,915 [INFO] Created new output file log: output.log_03-26-24_13:21.txt
-2024-03-26 13:21:26,916 [INFO] sending cmd: get
-2024-03-26 13:21:26,916 [INFO] sending cmd: status json
-2024-03-26 13:21:31,069 [INFO] sending cmd: status stop
-2024-03-26 13:21:31,069 [INFO] Finished logging
-2024-03-26 13:23:54,300 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1229f8440>
-2024-03-26 13:24:00,307 [INFO] Initiate data logging: %s
-2024-03-26 13:24:00,308 [INFO] Created new output file log: output.log_03-26-24_13:24.txt
-2024-03-26 13:24:00,308 [INFO] sending cmd: get
-2024-03-26 13:24:00,308 [INFO] sending cmd: status json
-2024-03-26 13:24:04,515 [INFO] sending cmd: status stop
-2024-03-26 13:24:04,515 [INFO] Finished logging
-2024-03-26 13:27:25,867 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x12248c4d0>
-2024-03-26 13:27:48,575 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x117d984d0>
-2024-03-26 13:28:14,270 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11fcdc4d0>
-2024-03-26 13:40:37,706 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11c370440>
-2024-03-26 13:43:05,431 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11fbac3b0>
-2024-03-26 13:44:51,455 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x123fa8440>
-2024-03-26 13:45:47,047 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1266cc440>
-2024-03-26 13:45:50,342 [INFO] cmd: sss
-2024-03-26 13:45:56,454 [INFO] cmd: get
-2024-03-26 13:46:03,709 [INFO] Initiate data logging: %s
-2024-03-26 13:46:03,710 [INFO] Created new output file log: output.log_03-26-24_13:46.txt
-2024-03-26 13:46:03,710 [INFO] sending cmd: get
-2024-03-26 13:46:03,710 [INFO] sending cmd: status json
-2024-03-26 13:46:05,779 [INFO] sending cmd: status stop
-2024-03-26 13:46:05,779 [INFO] Finished logging
-2024-03-26 13:46:12,278 [INFO] cmd: get
-2024-03-26 13:47:59,562 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11aba4440>
-2024-03-26 13:48:06,506 [INFO] cmd: slsl
-2024-03-26 13:48:12,458 [INFO] cmd: get
-2024-03-26 13:48:17,383 [INFO] Initiate data logging: %s
-2024-03-26 13:48:17,384 [INFO] Created new output file log: output.log_03-26-24_13:48.txt
-2024-03-26 13:48:17,384 [INFO] sending cmd: get
-2024-03-26 13:48:17,384 [INFO] sending cmd: status json
-2024-03-26 13:48:23,905 [INFO] sending cmd: status stop
-2024-03-26 13:48:23,905 [INFO] Finished logging
-2024-03-26 13:49:23,497 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x123b40440>
-2024-03-26 13:49:27,055 [INFO] cmd: get
-2024-03-26 13:49:35,238 [INFO] Initiate data logging: %s
-2024-03-26 13:49:35,238 [INFO] Created new output file log: output.log_03-26-24_13:49.txt
-2024-03-26 13:49:35,238 [INFO] sending cmd: get
-2024-03-26 13:49:35,238 [INFO] sending cmd: status json
-2024-03-26 13:49:37,273 [INFO] sending cmd: status stop
-2024-03-26 13:49:37,273 [INFO] Finished logging
-2024-03-26 13:50:06,755 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1221ec440>
-2024-03-26 13:50:13,072 [INFO] Initiate data logging: %s
-2024-03-26 13:50:13,073 [INFO] Created new output file log: output.log_03-26-24_13:50.txt
-2024-03-26 13:50:13,073 [INFO] sending cmd: get
-2024-03-26 13:50:13,073 [INFO] sending cmd: status json
-2024-03-26 13:50:14,819 [INFO] sending cmd: status stop
-2024-03-26 13:50:14,819 [INFO] Finished logging
-2024-03-26 13:51:17,043 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x117ca0440>
-2024-03-26 13:51:22,410 [INFO] cmd: get
-2024-03-26 13:51:42,569 [INFO] cmd: 
-2024-03-26 13:51:45,016 [INFO] Initiate data logging: %s
-2024-03-26 13:51:45,017 [INFO] Created new output file log: output.log_03-26-24_13:51.txt
-2024-03-26 13:51:45,017 [INFO] sending cmd: get
-2024-03-26 13:51:45,017 [INFO] sending cmd: status json
-2024-03-26 13:51:46,680 [INFO] sending cmd: status stop
-2024-03-26 13:51:46,681 [INFO] Finished logging
-2024-03-26 13:54:08,469 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x125bf0440>
-2024-03-26 13:54:13,788 [INFO] cmd: lslls
-2024-03-26 13:54:24,270 [INFO] Initiate data logging: %s
-2024-03-26 13:54:24,270 [INFO] Created new output file log: output.log_03-26-24_13:54.txt
-2024-03-26 13:54:24,270 [INFO] sending cmd: get
-2024-03-26 13:54:24,270 [INFO] sending cmd: status json
-2024-03-26 13:54:26,890 [INFO] sending cmd: status stop
-2024-03-26 13:54:26,890 [INFO] Finished logging
-2024-03-26 13:55:52,512 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11d9f8440>
-2024-03-26 13:55:57,320 [INFO] cmd: get
-2024-03-26 13:56:10,975 [INFO] cmd: 
-2024-03-26 13:56:20,390 [INFO] Initiate data logging: %s
-2024-03-26 13:56:20,391 [INFO] Created new output file log: output.log_03-26-24_13:56.txt
-2024-03-26 13:56:20,391 [INFO] sending cmd: get
-2024-03-26 13:56:20,391 [INFO] sending cmd: status json
-2024-03-26 13:56:23,438 [INFO] sending cmd: status stop
-2024-03-26 13:56:23,439 [INFO] Finished logging
-2024-03-26 13:57:06,735 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x124e08440>
-2024-03-26 13:57:12,916 [INFO] cmd: get
-2024-03-26 13:57:39,978 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11dc48440>
-2024-03-26 13:57:41,562 [INFO] Initiate data logging: %s
-2024-03-26 13:57:41,563 [INFO] Created new output file log: output.log_03-26-24_13:57.txt
-2024-03-26 13:57:41,563 [INFO] sending cmd: get
-2024-03-26 13:57:41,563 [INFO] sending cmd: status json
-2024-03-26 13:57:48,732 [INFO] sending cmd: status stop
-2024-03-26 13:57:48,734 [INFO] Finished logging
-2024-03-26 14:00:31,990 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x12537c440>
-2024-03-26 14:00:38,805 [INFO] cmd: cmd
-2024-03-26 14:01:11,528 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x117b48440>
-2024-03-26 14:01:30,811 [INFO] cmd: cmd
-2024-03-26 14:02:55,239 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11c90c440>
-2024-03-26 14:05:15,521 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11810c440>
-2024-03-26 14:05:19,187 [INFO] sending cmd: get
-2024-03-26 14:06:11,348 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11a9b4440>
-2024-03-26 14:06:15,248 [INFO] sending cmd: get
-2024-03-26 14:11:06,321 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11de28440>
-2024-03-26 14:11:54,609 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x117214440>
-2024-03-26 14:11:59,524 [INFO] sending cmd: get
-2024-03-26 14:12:24,031 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x116ea8440>
-2024-03-26 14:12:25,216 [INFO] sending cmd: get
-2024-03-26 14:13:22,163 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x124cb4440>
-2024-03-26 14:13:24,179 [INFO] sending cmd: get
-2024-03-26 14:14:02,713 [INFO] cmd: get
-2024-03-26 14:14:13,537 [INFO] cmd: get vbus
-2024-03-26 14:14:54,917 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1190703b0>
-2024-03-26 14:15:02,119 [INFO] cmd: get vbus
-2024-03-26 14:15:02,119 [INFO] sending cmd: get vbus
-2024-03-26 17:19:34,494 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1258f03b0>
-2024-03-26 17:19:49,896 [INFO] cmd: thing
-2024-03-26 17:19:49,896 [INFO] sending cmd: thing
-2024-03-26 17:20:10,443 [INFO] Initiate data logging: %s
-2024-03-26 17:20:10,444 [INFO] Created new output file log: output.log_03-26-24_17:20.txt
-2024-03-26 17:20:10,444 [INFO] sending cmd: get
-2024-03-26 17:20:10,444 [INFO] sending cmd: status json
-2024-03-26 17:20:19,284 [INFO] sending cmd: status stop
-2024-03-26 17:20:19,284 [INFO] Finished logging
-2024-03-26 17:20:33,743 [INFO] cmd: get vbus
-2024-03-26 17:20:33,743 [INFO] sending cmd: get vbus
-2024-03-26 17:20:55,973 [INFO] cmd: get
-2024-03-26 17:20:55,974 [INFO] sending cmd: get
-2024-03-26 17:24:47,636 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x120778440>
-2024-03-26 17:24:54,834 [INFO] cmd: get
-2024-03-26 17:24:54,835 [INFO] sending cmd: get
-2024-03-26 17:26:11,572 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11ec54440>
-2024-03-26 17:26:14,600 [INFO] cmd: cmd
-2024-03-26 17:26:14,600 [INFO] sending cmd: cmd
-2024-03-26 17:26:20,664 [INFO] cmd: get
-2024-03-26 17:26:20,664 [INFO] sending cmd: get
-2024-03-26 17:26:49,048 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x116f48440>
-2024-03-26 17:26:54,781 [INFO] cmd: get
-2024-03-26 17:26:54,781 [INFO] sending cmd: get
-2024-03-26 17:27:20,199 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x12380c440>
-2024-03-26 17:27:23,949 [INFO] cmd: get
-2024-03-26 17:27:23,949 [INFO] sending cmd: get
-2024-03-26 17:27:40,302 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11b5d8440>
-2024-03-26 17:27:42,948 [INFO] cmd: get
-2024-03-26 17:27:42,948 [INFO] sending cmd: get
-2024-03-26 17:28:57,347 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11e150440>
-2024-03-26 17:28:59,752 [INFO] cmd: get
-2024-03-26 17:28:59,752 [INFO] sending cmd: get
-2024-03-26 17:32:11,215 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11cca0440>
-2024-03-26 17:32:15,560 [INFO] cmd: get
-2024-03-26 17:32:15,561 [INFO] sending cmd: get
-2024-03-26 17:33:25,852 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x124d88440>
-2024-03-26 17:33:28,661 [INFO] cmd: get
-2024-03-26 17:33:28,661 [INFO] sending cmd: get
-2024-03-26 17:34:02,849 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x118cfc440>
-2024-03-26 17:34:05,621 [INFO] cmd: get
-2024-03-26 17:34:05,622 [INFO] sending cmd: get
-2024-03-26 17:34:57,380 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x117288440>
-2024-03-26 17:35:00,106 [INFO] cmd: get
-2024-03-26 17:35:00,106 [INFO] sending cmd: get
-2024-03-26 17:36:05,007 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x123074440>
-2024-03-26 17:36:07,366 [INFO] cmd: get
-2024-03-26 17:36:07,366 [INFO] sending cmd: get
-2024-03-26 17:36:47,627 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x120db4440>
-2024-03-26 17:36:50,460 [INFO] cmd: get
-2024-03-26 17:36:50,460 [INFO] sending cmd: get
-2024-03-26 17:37:35,887 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x12498c440>
-2024-03-26 17:37:39,706 [INFO] cmd: get
-2024-03-26 17:37:39,706 [INFO] sending cmd: get
-2024-03-26 17:38:22,037 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x124e4c440>
-2024-03-26 17:38:25,512 [INFO] cmd: get
-2024-03-26 17:38:25,512 [INFO] sending cmd: get
-2024-03-26 17:38:52,802 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x124db0440>
-2024-03-26 17:38:54,879 [INFO] cmd: get
-2024-03-26 17:38:54,880 [INFO] sending cmd: get
-2024-03-26 17:40:44,518 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1198a83b0>
-2024-03-26 17:40:47,641 [INFO] cmd: get
-2024-03-26 17:40:47,641 [INFO] sending cmd: get
-2024-03-26 17:41:00,268 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11ad703b0>
-2024-03-26 17:41:02,721 [INFO] cmd: get
-2024-03-26 17:41:02,721 [INFO] sending cmd: get
-2024-03-26 17:41:26,876 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x117e683b0>
-2024-03-26 17:41:29,321 [INFO] cmd: get
-2024-03-26 17:41:29,321 [INFO] sending cmd: get
-2024-03-26 17:42:07,494 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11e5643b0>
-2024-03-26 17:42:11,182 [INFO] cmd: get
-2024-03-26 17:42:11,182 [INFO] sending cmd: get
-2024-03-26 17:43:00,646 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11a2243b0>
-2024-03-26 17:43:06,468 [INFO] cmd: thing
-2024-03-26 17:43:06,469 [INFO] sending cmd: thing
-2024-03-26 17:43:19,236 [INFO] cmd: get
-2024-03-26 17:43:19,236 [INFO] sending cmd: get
-2024-03-26 17:43:38,195 [INFO] cmd: get vbus
-2024-03-26 17:43:38,195 [INFO] sending cmd: get vbus
-2024-03-26 17:44:01,225 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1297f43b0>
-2024-03-26 17:44:04,825 [INFO] cmd: get
-2024-03-26 17:44:04,825 [INFO] sending cmd: get
-2024-03-26 17:44:22,073 [INFO] cmd: llsls
-2024-03-26 17:44:22,073 [INFO] sending cmd: llsls
-2024-03-26 17:45:58,996 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1170003b0>
-2024-03-26 17:46:04,780 [INFO] cmd: get
-2024-03-26 17:46:04,781 [INFO] sending cmd: get
-2024-03-26 17:47:26,838 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11aba4440>
-2024-03-26 17:47:29,658 [INFO] cmd: get
-2024-03-26 17:47:29,658 [INFO] sending cmd: get
-2024-03-26 17:48:07,949 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11e1b43b0>
-2024-03-26 17:48:10,695 [INFO] cmd: get
-2024-03-26 17:48:10,696 [INFO] sending cmd: get
-2024-03-26 17:48:20,900 [INFO] cmd: ls
-2024-03-26 17:48:20,900 [INFO] sending cmd: ls
-2024-03-26 17:48:34,838 [INFO] cmd: status json
-2024-03-26 17:48:34,838 [INFO] sending cmd: status json
-2024-03-26 17:48:49,277 [INFO] cmd: status stop
-2024-03-26 17:48:49,277 [INFO] sending cmd: status stop
-2024-03-26 17:49:08,277 [INFO] cmd: get vbus
-2024-03-26 17:49:08,277 [INFO] sending cmd: get vbus
-2024-03-26 17:50:01,512 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x118e303b0>
-2024-03-26 17:50:04,170 [INFO] cmd: get
-2024-03-26 17:50:04,170 [INFO] sending cmd: get
-2024-03-26 17:50:13,425 [INFO] cmd: get
-2024-03-26 17:50:13,425 [INFO] sending cmd: get
-2024-03-26 17:51:25,755 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x119d943b0>
-2024-03-26 17:51:30,919 [INFO] cmd: get vbus
-2024-03-26 17:51:30,919 [INFO] sending cmd: get vbus
-2024-03-26 17:52:32,847 [INFO] sending cmd: get
-2024-03-26 18:05:24,496 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x121e24440>
-2024-03-26 18:05:29,798 [INFO] Initiate data logging: %s
-2024-03-26 18:05:29,798 [INFO] Created new output file log: output.log_03-26-24_18:05.txt
-2024-03-26 18:05:29,798 [INFO] sending cmd: get
-2024-03-26 18:05:29,798 [INFO] sending cmd: status json
-2024-03-26 18:05:34,036 [INFO] sending cmd: status stop
-2024-03-26 18:05:34,036 [INFO] Finished logging
-2024-03-26 18:06:06,137 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x129518440>
-2024-03-26 18:06:08,926 [INFO] Initiate data logging: %s
-2024-03-26 18:06:08,927 [INFO] Created new output file log: output.log_03-26-24_18:06.txt
-2024-03-26 18:06:08,927 [INFO] sending cmd: get
-2024-03-26 18:06:08,927 [INFO] sending cmd: status json
-2024-03-26 18:06:13,341 [INFO] sending cmd: status stop
-2024-03-26 18:06:13,342 [INFO] Finished logging
-2024-03-26 18:07:28,927 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11e8b4440>
-2024-03-26 18:07:30,373 [INFO] Initiate data logging: %s
-2024-03-26 18:07:30,373 [INFO] Created new output file log: output.log_03-26-24_18:07.txt
-2024-03-26 18:07:30,373 [INFO] sending cmd: get
-2024-03-26 18:07:30,373 [INFO] sending cmd: status json
-2024-03-26 18:07:33,378 [INFO] sending cmd: status stop
-2024-03-26 18:07:33,378 [INFO] Finished logging
-2024-03-26 18:08:06,067 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x125540440>
-2024-03-26 18:08:07,379 [INFO] Initiate data logging: %s
-2024-03-26 18:08:07,379 [INFO] Created new output file log: output.log_03-26-24_18:08.txt
-2024-03-26 18:08:07,380 [INFO] sending cmd: get
-2024-03-26 18:08:07,380 [INFO] sending cmd: status json
-2024-03-26 18:08:10,911 [INFO] sending cmd: status stop
-2024-03-26 18:08:10,911 [INFO] Finished logging
-2024-03-26 18:09:43,453 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11ca60440>
-2024-03-26 18:09:44,959 [INFO] Initiate data logging: %s
-2024-03-26 18:09:44,960 [INFO] Created new output file log: output.log_03-26-24_18:09.txt
-2024-03-26 18:09:44,960 [INFO] sending cmd: get
-2024-03-26 18:09:44,960 [INFO] sending cmd: status json
-2024-03-26 18:09:47,546 [INFO] sending cmd: status stop
-2024-03-26 18:09:47,547 [INFO] Finished logging
-2024-03-26 18:10:26,795 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1190c0440>
-2024-03-26 18:10:27,516 [INFO] Initiate data logging: %s
-2024-03-26 18:10:27,516 [INFO] Created new output file log: output.log_03-26-24_18:10.txt
-2024-03-26 18:10:27,516 [INFO] sending cmd: get
-2024-03-26 18:10:27,516 [INFO] sending cmd: status json
-2024-03-26 18:10:31,481 [INFO] sending cmd: status stop
-2024-03-26 18:10:31,481 [INFO] Finished logging
-2024-03-26 18:11:52,402 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11d1b03b0>
-2024-03-26 18:11:53,881 [INFO] Initiate data logging: %s
-2024-03-26 18:11:53,881 [INFO] Created new output file log: output.log_03-26-24_18:11.txt
-2024-03-26 18:11:53,881 [INFO] sending cmd: get
-2024-03-26 18:11:53,881 [INFO] sending cmd: status json
-2024-03-26 18:11:58,060 [INFO] sending cmd: status stop
-2024-03-26 18:11:58,060 [INFO] Finished logging
-2024-03-26 18:25:35,730 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11f6d19a0>
-2024-03-26 18:26:16,315 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1262d5910>
-2024-03-26 18:27:05,331 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11e269910>
-2024-03-26 18:33:35,056 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11ba29910>
-2024-03-26 18:42:17,898 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x120805880>
-2024-03-26 18:43:27,677 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11bc51880>
-2024-03-26 18:44:16,263 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x125a11880>
-2024-03-26 18:45:13,870 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x120b29880>
-2024-03-26 18:45:53,181 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x122699880>
-2024-03-26 18:46:16,445 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1172e9880>
-2024-03-26 18:46:17,901 [INFO] Initiate data logging: %s
-2024-03-26 18:46:17,901 [INFO] Created new output file log: output.log_03-26-24_18:46.txt
-2024-03-26 18:46:17,901 [INFO] sending cmd: get
-2024-03-26 18:46:17,901 [INFO] sending cmd: status json
-2024-03-26 18:46:19,552 [INFO] sending cmd: status stop
-2024-03-26 18:46:19,552 [INFO] Finished logging
-2024-03-26 18:47:01,908 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x125f8d880>
-2024-03-26 18:47:03,176 [INFO] Initiate data logging: %s
-2024-03-26 18:47:03,176 [INFO] Created new output file log: output.log_03-26-24_18:47.txt
-2024-03-26 18:47:03,176 [INFO] sending cmd: get
-2024-03-26 18:47:03,176 [INFO] sending cmd: status json
-2024-03-26 18:47:04,761 [INFO] sending cmd: status stop
-2024-03-26 18:47:04,761 [INFO] Finished logging
-2024-03-26 18:49:04,887 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11e9c5880>
-2024-03-26 18:49:05,840 [INFO] Initiate data logging: %s
-2024-03-26 18:49:05,840 [INFO] Created new output file log: output.log_03-26-24_18:49.txt
-2024-03-26 18:49:05,840 [INFO] sending cmd: get
-2024-03-26 18:49:05,841 [INFO] sending cmd: status json
-2024-03-26 18:49:07,541 [INFO] sending cmd: status stop
-2024-03-26 18:49:07,542 [INFO] Finished logging
-2024-03-26 18:49:35,316 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11e5a1880>
-2024-03-26 18:49:36,669 [INFO] Initiate data logging: %s
-2024-03-26 18:49:36,669 [INFO] Created new output file log: output.log_03-26-24_18:49.txt
-2024-03-26 18:49:36,669 [INFO] sending cmd: get
-2024-03-26 18:49:36,669 [INFO] sending cmd: status json
-2024-03-26 18:49:38,788 [INFO] sending cmd: status stop
-2024-03-26 18:49:38,788 [INFO] Finished logging
-2024-03-26 18:50:56,896 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1188b1880>
-2024-03-26 18:50:59,125 [INFO] Initiate data logging: %s
-2024-03-26 18:50:59,125 [INFO] Created new output file log: output.log_03-26-24_18:50.txt
-2024-03-26 18:50:59,125 [INFO] sending cmd: get
-2024-03-26 18:50:59,125 [INFO] sending cmd: status json
-2024-03-26 18:51:01,849 [INFO] sending cmd: status stop
-2024-03-26 18:51:01,850 [INFO] Finished logging
-2024-03-26 18:53:41,869 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x12383d880>
-2024-03-26 18:53:44,929 [INFO] Initiate data logging: %s
-2024-03-26 18:53:44,930 [INFO] Created new output file log: output.log_03-26-24_18:53.txt
-2024-03-26 18:53:44,930 [INFO] sending cmd: get
-2024-03-26 18:53:44,930 [INFO] sending cmd: status json
-2024-03-26 18:53:50,176 [INFO] sending cmd: status stop
-2024-03-26 18:53:50,176 [INFO] Finished logging
-2024-03-26 18:55:12,887 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x124e99880>
-2024-03-26 18:55:14,504 [INFO] Initiate data logging: %s
-2024-03-26 18:55:14,504 [INFO] Created new output file log: output.log_03-26-24_18:55.txt
-2024-03-26 18:55:14,505 [INFO] sending cmd: get
-2024-03-26 18:55:14,505 [INFO] sending cmd: status json
-2024-03-26 18:55:17,884 [INFO] sending cmd: status stop
-2024-03-26 18:55:17,885 [INFO] Finished logging
-2024-03-26 18:56:24,338 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11c565880>
-2024-03-26 18:57:47,026 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x117a41880>
-2024-03-26 18:58:05,314 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x119dfd880>
-2024-03-26 18:58:34,761 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1219b1880>
-2024-03-26 18:58:56,373 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x11f9b5880>
-2024-03-26 18:59:36,869 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x125a69880>
-2024-03-26 19:00:25,176 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1232a9880>
-2024-03-26 19:01:12,347 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x12442d880>
-2024-03-26 19:02:04,774 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x1242b9880>
-2024-03-26 19:02:17,881 [INFO] Initiate data logging: %s
-2024-03-26 19:02:17,881 [INFO] Created new output file log: output.log_03-26-24_19:02.txt
-2024-03-26 19:02:17,881 [INFO] sending cmd: get
-2024-03-26 19:02:17,883 [INFO] sending cmd: status json
-2024-03-26 19:02:19,608 [INFO] sending cmd: status stop
-2024-03-26 19:02:19,608 [INFO] Finished logging
-2024-03-26 19:04:34,811 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x126549880>
-2024-03-26 19:04:37,868 [INFO] Initiate data logging: %s
-2024-03-26 19:04:37,868 [INFO] Created new output file log: output.log_03-26-24_19:04.txt
-2024-03-26 19:04:37,868 [INFO] sending cmd: get
-2024-03-26 19:04:37,868 [INFO] sending cmd: status json
-2024-03-26 19:04:42,672 [INFO] sending cmd: status stop
-2024-03-26 19:04:42,672 [INFO] Finished logging
-2024-03-26 19:21:04,385 [INFO] Initiate data logging: %s
-2024-03-26 19:21:04,388 [INFO] Created new output file log: output.log_03-26-24_19:21.txt
-2024-03-26 19:21:04,388 [INFO] sending cmd: get
-2024-03-26 19:21:04,389 [INFO] sending cmd: status json
-2024-03-26 19:21:12,400 [INFO] sending cmd: status stop
-2024-03-26 19:21:12,400 [INFO] Finished logging
-2024-03-26 19:21:55,384 [INFO] sending cmd: get
-2024-03-26 19:26:26,342 [INFO] Log Handler opened for port: <PyQt5.QtSerialPort.QSerialPort object at 0x116ea5880>
-2024-03-26 19:27:29,348 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
-2024-03-26 19:33:29,620 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
-2024-03-26 19:34:52,276 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
-2024-03-26 19:37:52,744 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
-2024-03-26 19:37:56,606 [INFO] Initiate data logging: %s
-2024-03-26 19:37:56,607 [INFO] Created new output file log: output.log_03-26-24_19:37.txt
-2024-03-26 19:37:56,607 [INFO] sending cmd: get
-2024-03-26 19:37:56,607 [INFO] sending cmd: status json
-2024-03-26 19:37:58,816 [INFO] sending cmd: status stop
-2024-03-26 19:37:58,816 [INFO] Finished logging
+2024-03-31 14:06:55,934 [INFO] INITIALIZING LOGGER
+2024-03-31 14:06:55,952 [INFO] macOS detected
+2024-03-31 14:06:55,958 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:06:56,188 [INFO] GoogleHandler initiated
+2024-03-31 14:07:03,827 [INFO] sending cmd: status stop
+2024-03-31 14:08:59,665 [INFO] INITIALIZING LOGGER
+2024-03-31 14:08:59,666 [INFO] macOS detected
+2024-03-31 14:08:59,671 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:08:59,933 [INFO] GoogleHandler initiated
+2024-03-31 14:09:23,136 [INFO] Initiate data logging: %s
+2024-03-31 14:09:23,136 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 14:09:23,137 [INFO] sending cmd: get
+2024-03-31 14:09:23,137 [INFO] sending cmd: status json
+2024-03-31 14:09:40,514 [INFO] sending cmd: status stop
+2024-03-31 14:09:40,515 [INFO] Finished logging
+2024-03-31 14:09:40,576 [INFO] Created plot: MESC_plt.png
+2024-03-31 14:09:53,599 [INFO] Uploading initiated
+2024-03-31 14:09:55,252 [INFO] file url https://drive.google.com/file/d/10IMJBqqA8YEhl73_bgZ09sHxgFKLG4Vp/view?usp=sharing
+2024-03-31 14:09:55,252 [INFO] Setting permissions on 10IMJBqqA8YEhl73_bgZ09sHxgFKLG4Vp
+2024-03-31 14:09:56,060 [INFO] Uploading initiated
+2024-03-31 14:09:58,050 [INFO] file url https://drive.google.com/file/d/1hPFrx9dCqCscDHdDI1UXmYbm-T97IUa2/view?usp=sharing
+2024-03-31 14:09:58,050 [INFO] Setting permissions on 1hPFrx9dCqCscDHdDI1UXmYbm-T97IUa2
+2024-03-31 14:10:00,290 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
+2024-03-31 14:10:00,293 [INFO] File 'MESC_logdata.txt' deleted successfully.
+2024-03-31 14:10:00,294 [INFO] File 'MESC_plt.png' deleted successfully.
+2024-03-31 14:15:56,233 [INFO] INITIALIZING LOGGER
+2024-03-31 14:15:56,251 [INFO] macOS detected
+2024-03-31 14:15:56,255 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:15:56,479 [INFO] GoogleHandler initiated
+2024-03-31 14:18:19,954 [INFO] INITIALIZING LOGGER
+2024-03-31 14:18:19,972 [INFO] macOS detected
+2024-03-31 14:18:19,976 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:18:20,177 [INFO] GoogleHandler initiated
+2024-03-31 14:19:01,548 [INFO] INITIALIZING LOGGER
+2024-03-31 14:19:01,565 [INFO] macOS detected
+2024-03-31 14:19:01,571 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:19:01,782 [INFO] GoogleHandler initiated
+2024-03-31 14:20:15,524 [INFO] INITIALIZING LOGGER
+2024-03-31 14:20:15,541 [INFO] macOS detected
+2024-03-31 14:20:15,545 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:20:15,767 [INFO] GoogleHandler initiated
+2024-03-31 14:20:36,541 [INFO] INITIALIZING LOGGER
+2024-03-31 14:20:36,560 [INFO] macOS detected
+2024-03-31 14:20:36,566 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:20:36,780 [INFO] GoogleHandler initiated
+2024-03-31 14:22:49,295 [INFO] INITIALIZING LOGGER
+2024-03-31 14:22:49,313 [INFO] macOS detected
+2024-03-31 14:22:49,318 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:22:49,537 [INFO] GoogleHandler initiated
+2024-03-31 14:24:47,209 [INFO] INITIALIZING LOGGER
+2024-03-31 14:24:47,227 [INFO] macOS detected
+2024-03-31 14:24:47,233 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:24:47,439 [INFO] GoogleHandler initiated
+2024-03-31 14:26:22,677 [INFO] Initiate data logging: %s
+2024-03-31 14:26:22,677 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 14:26:22,677 [INFO] sending cmd: get
+2024-03-31 14:26:22,678 [INFO] sending cmd: status json
+2024-03-31 14:26:28,366 [INFO] sending cmd: status stop
+2024-03-31 14:26:28,366 [INFO] Finished logging
+2024-03-31 14:26:28,429 [INFO] Created plot: MESC_plt.png
+2024-03-31 14:26:37,040 [INFO] Uploading initiated
+2024-03-31 14:26:39,047 [INFO] file url https://drive.google.com/file/d/1DHx2O4jAOQ0yhWDDoQRXQfZye5kKJOFg/view?usp=sharing
+2024-03-31 14:26:39,048 [INFO] Setting permissions on 1DHx2O4jAOQ0yhWDDoQRXQfZye5kKJOFg
+2024-03-31 14:26:39,870 [INFO] Uploading initiated
+2024-03-31 14:26:41,445 [INFO] file url https://drive.google.com/file/d/1GLhjiifgmQVH6hbNPAP_zVpap0MbpHYm/view?usp=sharing
+2024-03-31 14:26:41,446 [INFO] Setting permissions on 1GLhjiifgmQVH6hbNPAP_zVpap0MbpHYm
+2024-03-31 14:26:43,457 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
+2024-03-31 14:26:43,461 [INFO] File 'MESC_logdata.txt' deleted successfully.
+2024-03-31 14:26:43,461 [INFO] File 'MESC_plt.png' deleted successfully.
+2024-03-31 14:31:35,807 [INFO] INITIALIZING LOGGER
+2024-03-31 14:31:35,826 [INFO] macOS detected
+2024-03-31 14:31:35,831 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:31:36,069 [INFO] GoogleHandler initiated
+2024-03-31 14:35:08,485 [INFO] INITIALIZING LOGGER
+2024-03-31 14:35:08,503 [INFO] macOS detected
+2024-03-31 14:35:08,507 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:35:08,707 [INFO] GoogleHandler initiated
+2024-03-31 14:35:59,926 [INFO] INITIALIZING LOGGER
+2024-03-31 14:35:59,944 [INFO] macOS detected
+2024-03-31 14:35:59,947 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:36:00,156 [INFO] GoogleHandler initiated
+2024-03-31 14:36:48,802 [INFO] INITIALIZING LOGGER
+2024-03-31 14:36:48,820 [INFO] macOS detected
+2024-03-31 14:36:48,824 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:36:49,017 [INFO] GoogleHandler initiated
+2024-03-31 14:37:24,103 [INFO] INITIALIZING LOGGER
+2024-03-31 14:37:24,121 [INFO] macOS detected
+2024-03-31 14:37:24,126 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:37:24,318 [INFO] GoogleHandler initiated
+2024-03-31 14:38:27,481 [INFO] INITIALIZING LOGGER
+2024-03-31 14:38:27,499 [INFO] macOS detected
+2024-03-31 14:38:27,503 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:38:27,706 [INFO] GoogleHandler initiated
+2024-03-31 14:38:46,121 [INFO] INITIALIZING LOGGER
+2024-03-31 14:38:46,139 [INFO] macOS detected
+2024-03-31 14:38:46,142 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:38:46,345 [INFO] GoogleHandler initiated
+2024-03-31 14:39:00,176 [INFO] INITIALIZING LOGGER
+2024-03-31 14:39:00,194 [INFO] macOS detected
+2024-03-31 14:39:00,199 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:39:00,379 [INFO] GoogleHandler initiated
+2024-03-31 14:39:17,187 [INFO] Initiate data logging: %s
+2024-03-31 14:39:17,188 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 14:39:17,188 [INFO] sending cmd: get
+2024-03-31 14:39:17,188 [INFO] sending cmd: status json
+2024-03-31 14:39:18,476 [INFO] sending cmd: status stop
+2024-03-31 14:39:18,476 [INFO] Finished logging
+2024-03-31 14:39:18,534 [INFO] Created plot: MESC_plt.png
+2024-03-31 14:39:54,269 [INFO] INITIALIZING LOGGER
+2024-03-31 14:40:07,817 [INFO] INITIALIZING LOGGER
+2024-03-31 14:40:07,836 [INFO] macOS detected
+2024-03-31 14:40:07,840 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:40:08,096 [INFO] GoogleHandler initiated
+2024-03-31 14:41:00,241 [INFO] INITIALIZING LOGGER
+2024-03-31 14:41:00,260 [INFO] macOS detected
+2024-03-31 14:41:00,263 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:41:00,534 [INFO] GoogleHandler initiated
+2024-03-31 14:41:19,234 [INFO] INITIALIZING LOGGER
+2024-03-31 14:41:19,252 [INFO] macOS detected
+2024-03-31 14:41:19,258 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:41:19,455 [INFO] GoogleHandler initiated
+2024-03-31 14:41:44,257 [INFO] INITIALIZING LOGGER
+2024-03-31 14:41:44,274 [INFO] macOS detected
+2024-03-31 14:41:44,280 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:41:44,512 [INFO] GoogleHandler initiated
+2024-03-31 14:42:02,375 [INFO] INITIALIZING LOGGER
+2024-03-31 14:42:02,393 [INFO] macOS detected
+2024-03-31 14:42:02,398 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:42:02,598 [INFO] GoogleHandler initiated
+2024-03-31 14:43:41,629 [INFO] INITIALIZING LOGGER
+2024-03-31 14:43:41,647 [INFO] macOS detected
+2024-03-31 14:43:41,651 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:43:41,853 [INFO] GoogleHandler initiated
+2024-03-31 14:45:07,541 [INFO] INITIALIZING LOGGER
+2024-03-31 14:45:24,899 [INFO] INITIALIZING LOGGER
+2024-03-31 14:46:06,626 [INFO] INITIALIZING LOGGER
+2024-03-31 14:46:06,653 [INFO] macOS detected
+2024-03-31 14:46:06,657 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:46:06,865 [INFO] GoogleHandler initiated
+2024-03-31 14:46:36,824 [INFO] INITIALIZING LOGGER
+2024-03-31 14:46:36,845 [INFO] macOS detected
+2024-03-31 14:46:36,849 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:46:37,025 [INFO] GoogleHandler initiated
+2024-03-31 14:49:55,870 [INFO] INITIALIZING LOGGER
+2024-03-31 14:49:55,892 [INFO] macOS detected
+2024-03-31 14:49:55,895 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:49:56,099 [INFO] GoogleHandler initiated
+2024-03-31 14:49:59,132 [INFO] sending cmd: thing
+2024-03-31 14:49:59,133 [INFO] Initiate data logging: %s
+2024-03-31 14:49:59,134 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 14:49:59,134 [INFO] sending cmd: get
+2024-03-31 14:49:59,134 [INFO] sending cmd: status json
+2024-03-31 14:50:06,429 [INFO] sending cmd: 
+2024-03-31 14:50:06,430 [INFO] sending cmd: status stop
+2024-03-31 14:50:06,430 [INFO] Finished logging
+2024-03-31 14:50:06,490 [INFO] Created plot: MESC_plt.png
+2024-03-31 14:52:12,088 [INFO] INITIALIZING LOGGER
+2024-03-31 14:52:12,109 [INFO] macOS detected
+2024-03-31 14:52:12,113 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:52:12,331 [INFO] GoogleHandler initiated
+2024-03-31 14:52:33,176 [INFO] sending cmd: thing
+2024-03-31 14:52:33,176 [INFO] Initiate data logging: %s
+2024-03-31 14:52:33,177 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 14:52:33,177 [INFO] sending cmd: get
+2024-03-31 14:52:33,177 [INFO] sending cmd: status json
+2024-03-31 14:58:21,842 [INFO] INITIALIZING LOGGER
+2024-03-31 14:58:21,865 [INFO] macOS detected
+2024-03-31 14:58:21,869 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:58:22,086 [INFO] GoogleHandler initiated
+2024-03-31 14:58:28,485 [INFO] sending cmd: status stop
+2024-03-31 14:58:28,485 [INFO] Initiate data logging: %s
+2024-03-31 14:58:28,487 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 14:58:28,487 [INFO] sending cmd: get
+2024-03-31 14:58:28,487 [INFO] sending cmd: status json
+2024-03-31 14:58:31,531 [INFO] sending cmd: status stop
+2024-03-31 14:58:31,532 [INFO] Finished logging
+2024-03-31 14:58:34,922 [INFO] INITIALIZING LOGGER
+2024-03-31 14:58:34,943 [INFO] macOS detected
+2024-03-31 14:58:34,947 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:58:35,138 [INFO] GoogleHandler initiated
+2024-03-31 14:58:39,803 [INFO] Initiate data logging: %s
+2024-03-31 14:58:39,804 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 14:58:39,804 [INFO] sending cmd: get
+2024-03-31 14:58:39,804 [INFO] sending cmd: status json
+2024-03-31 14:58:41,872 [INFO] sending cmd: status stop
+2024-03-31 14:58:41,872 [INFO] Finished logging
+2024-03-31 14:58:41,929 [INFO] Created plot: MESC_plt.png
+2024-03-31 14:59:04,765 [INFO] INITIALIZING LOGGER
+2024-03-31 14:59:04,786 [INFO] macOS detected
+2024-03-31 14:59:04,790 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 14:59:04,987 [INFO] GoogleHandler initiated
+2024-03-31 15:00:39,618 [INFO] INITIALIZING LOGGER
+2024-03-31 15:00:39,639 [INFO] macOS detected
+2024-03-31 15:00:39,643 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:00:39,831 [INFO] GoogleHandler initiated
+2024-03-31 15:00:55,727 [INFO] INITIALIZING LOGGER
+2024-03-31 15:00:55,748 [INFO] macOS detected
+2024-03-31 15:00:55,752 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:00:55,940 [INFO] GoogleHandler initiated
+2024-03-31 15:02:20,292 [INFO] INITIALIZING LOGGER
+2024-03-31 15:02:20,313 [INFO] macOS detected
+2024-03-31 15:02:20,317 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:02:20,526 [INFO] GoogleHandler initiated
+2024-03-31 15:03:18,025 [INFO] INITIALIZING LOGGER
+2024-03-31 15:03:18,048 [INFO] macOS detected
+2024-03-31 15:03:18,051 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:03:18,325 [INFO] GoogleHandler initiated
+2024-03-31 15:04:55,715 [INFO] INITIALIZING LOGGER
+2024-03-31 15:04:55,736 [INFO] macOS detected
+2024-03-31 15:04:55,740 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:04:58,428 [INFO] GoogleHandler initiated
+2024-03-31 15:05:20,790 [INFO] sending cmd: 
+2024-03-31 15:05:57,730 [INFO] INITIALIZING LOGGER
+2024-03-31 15:05:57,751 [INFO] macOS detected
+2024-03-31 15:05:57,755 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:05:57,945 [INFO] GoogleHandler initiated
+2024-03-31 15:07:55,601 [INFO] INITIALIZING LOGGER
+2024-03-31 15:07:55,622 [INFO] macOS detected
+2024-03-31 15:07:55,627 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:07:55,846 [INFO] GoogleHandler initiated
+2024-03-31 15:08:10,577 [INFO] sending cmd: hings
+2024-03-31 15:09:35,886 [INFO] sending cmd: ssss
+2024-03-31 15:09:40,360 [INFO] sending cmd: 
+2024-03-31 15:10:11,667 [INFO] INITIALIZING LOGGER
+2024-03-31 15:10:11,687 [INFO] macOS detected
+2024-03-31 15:10:11,692 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:10:11,909 [INFO] GoogleHandler initiated
+2024-03-31 15:10:38,908 [INFO] sending cmd: 
+2024-03-31 15:14:33,650 [INFO] Initiate data logging: %s
+2024-03-31 15:14:33,651 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 15:14:33,652 [INFO] sending cmd: get
+2024-03-31 15:14:33,652 [INFO] sending cmd: status json
+2024-03-31 15:14:38,921 [INFO] sending cmd: status stop
+2024-03-31 15:14:38,922 [INFO] Finished logging
+2024-03-31 15:14:53,703 [INFO] INITIALIZING LOGGER
+2024-03-31 15:14:53,727 [INFO] macOS detected
+2024-03-31 15:14:53,731 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:14:53,956 [INFO] GoogleHandler initiated
+2024-03-31 15:15:06,441 [INFO] sending cmd: status stop
+2024-03-31 15:15:40,831 [INFO] Initiate data logging: %s
+2024-03-31 15:15:40,832 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 15:15:40,832 [INFO] sending cmd: get
+2024-03-31 15:15:40,833 [INFO] sending cmd: status json
+2024-03-31 15:15:45,704 [INFO] sending cmd: status stop
+2024-03-31 15:15:45,704 [INFO] Finished logging
+2024-03-31 15:15:45,754 [INFO] Created plot: MESC_plt.png
+2024-03-31 15:17:40,017 [INFO] INITIALIZING LOGGER
+2024-03-31 15:17:40,038 [INFO] macOS detected
+2024-03-31 15:17:40,041 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:17:40,212 [INFO] GoogleHandler initiated
+2024-03-31 15:17:51,604 [INFO] sending cmd: thing
+2024-03-31 15:21:07,990 [INFO] INITIALIZING LOGGER
+2024-03-31 15:21:07,990 [INFO] macOS detected
+2024-03-31 15:21:07,995 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:21:58,802 [INFO] INITIALIZING LOGGER
+2024-03-31 15:21:58,802 [INFO] macOS detected
+2024-03-31 15:21:58,808 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:21:59,018 [INFO] GoogleHandler initiated
+2024-03-31 15:22:35,959 [INFO] INITIALIZING LOGGER
+2024-03-31 15:22:35,959 [INFO] macOS detected
+2024-03-31 15:22:35,965 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:22:36,224 [INFO] GoogleHandler initiated
+2024-03-31 15:23:39,664 [INFO] INITIALIZING LOGGER
+2024-03-31 15:23:39,691 [INFO] macOS detected
+2024-03-31 15:23:39,696 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:23:39,889 [INFO] GoogleHandler initiated
+2024-03-31 15:25:18,286 [INFO] INITIALIZING LOGGER
+2024-03-31 15:25:18,316 [INFO] macOS detected
+2024-03-31 15:25:18,322 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:25:18,533 [INFO] GoogleHandler initiated
+2024-03-31 15:25:23,665 [INFO] Initiate data logging: %s
+2024-03-31 15:25:23,666 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 15:25:23,666 [INFO] sending cmd: get
+2024-03-31 15:25:23,666 [INFO] sending cmd: status json
+2024-03-31 15:25:26,901 [INFO] sending cmd: status stop
+2024-03-31 15:25:26,902 [INFO] Finished logging
+2024-03-31 15:25:26,958 [INFO] Created plot: MESC_plt.png
+2024-03-31 15:29:24,944 [INFO] INITIALIZING LOGGER
+2024-03-31 15:29:24,972 [INFO] macOS detected
+2024-03-31 15:29:24,977 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:29:24,978 [INFO] sending cmd: status stop
+2024-03-31 15:29:25,188 [INFO] GoogleHandler initiated
+2024-03-31 15:29:39,779 [INFO] Initiate data logging: %s
+2024-03-31 15:29:39,780 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 15:29:39,780 [INFO] sending cmd: get
+2024-03-31 15:29:43,603 [INFO] sending cmd: status stop
+2024-03-31 15:29:43,603 [INFO] Finished logging
+2024-03-31 15:31:30,005 [INFO] INITIALIZING LOGGER
+2024-03-31 15:31:30,032 [INFO] macOS detected
+2024-03-31 15:31:30,039 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:31:30,039 [INFO] sending cmd: status stop
+2024-03-31 15:31:30,334 [INFO] GoogleHandler initiated
+2024-03-31 15:31:31,891 [INFO] Initiate data logging: %s
+2024-03-31 15:31:31,891 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 15:31:31,892 [INFO] sending cmd: get
+2024-03-31 15:31:38,115 [INFO] sending cmd: status stop
+2024-03-31 15:31:38,115 [INFO] Finished logging
+2024-03-31 15:31:54,114 [INFO] INITIALIZING LOGGER
+2024-03-31 15:31:54,141 [INFO] macOS detected
+2024-03-31 15:31:54,147 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:31:54,148 [INFO] sending cmd: status stop
+2024-03-31 15:31:54,360 [INFO] GoogleHandler initiated
+2024-03-31 15:32:07,441 [INFO] INITIALIZING LOGGER
+2024-03-31 15:32:07,468 [INFO] macOS detected
+2024-03-31 15:32:07,474 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:32:07,475 [INFO] sending cmd: status stop
+2024-03-31 15:32:07,720 [INFO] GoogleHandler initiated
+2024-03-31 15:32:09,067 [INFO] Initiate data logging: %s
+2024-03-31 15:32:09,067 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 15:32:09,068 [INFO] sending cmd: get
+2024-03-31 15:32:15,626 [INFO] sending cmd: status stop
+2024-03-31 15:32:15,626 [INFO] Finished logging
+2024-03-31 15:33:01,682 [INFO] INITIALIZING LOGGER
+2024-03-31 15:33:01,709 [INFO] macOS detected
+2024-03-31 15:33:01,715 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:33:01,716 [INFO] sending cmd: status stop
+2024-03-31 15:33:01,901 [INFO] GoogleHandler initiated
+2024-03-31 15:33:06,190 [INFO] sending cmd: status json
+2024-03-31 15:33:17,582 [INFO] sending cmd: status stop
+2024-03-31 15:33:43,294 [INFO] Initiate data logging: %s
+2024-03-31 15:33:43,294 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 15:33:43,295 [INFO] sending cmd: get
+2024-03-31 15:34:06,950 [INFO] sending cmd: status stop
+2024-03-31 15:34:06,950 [INFO] Finished logging
+2024-03-31 15:35:17,121 [INFO] INITIALIZING LOGGER
+2024-03-31 15:35:17,147 [INFO] macOS detected
+2024-03-31 15:35:17,153 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:35:17,372 [INFO] GoogleHandler initiated
+2024-03-31 15:35:19,664 [INFO] Initiate data logging: %s
+2024-03-31 15:35:19,665 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 15:35:19,665 [INFO] sending cmd: get
+2024-03-31 15:35:26,581 [INFO] sending cmd: status stop
+2024-03-31 15:35:26,581 [INFO] Finished logging
+2024-03-31 15:36:39,032 [INFO] INITIALIZING LOGGER
+2024-03-31 15:36:39,055 [INFO] macOS detected
+2024-03-31 15:36:39,059 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:36:39,263 [INFO] GoogleHandler initiated
+2024-03-31 15:36:40,212 [INFO] Initiate data logging: %s
+2024-03-31 15:36:40,213 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 15:36:40,213 [INFO] sending cmd: get
+2024-03-31 15:36:43,971 [INFO] sending cmd: status stop
+2024-03-31 15:36:43,971 [INFO] Finished logging
+2024-03-31 15:38:39,486 [INFO] INITIALIZING LOGGER
+2024-03-31 15:38:39,507 [INFO] macOS detected
+2024-03-31 15:38:39,512 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:38:39,975 [INFO] GoogleHandler initiated
+2024-03-31 15:38:41,958 [INFO] Initiate data logging: %s
+2024-03-31 15:38:41,958 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 15:38:41,958 [INFO] sending cmd: get
+2024-03-31 15:38:48,163 [INFO] sending cmd: status stop
+2024-03-31 15:38:48,164 [INFO] Finished logging
+2024-03-31 15:39:07,787 [INFO] INITIALIZING LOGGER
+2024-03-31 15:39:07,808 [INFO] macOS detected
+2024-03-31 15:39:07,813 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:39:08,005 [INFO] GoogleHandler initiated
+2024-03-31 15:39:09,056 [INFO] Initiate data logging: %s
+2024-03-31 15:39:09,057 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 15:39:09,057 [INFO] sending cmd: get
+2024-03-31 15:39:15,355 [INFO] sending cmd: status stop
+2024-03-31 15:39:15,356 [INFO] Finished logging
+2024-03-31 15:40:00,782 [INFO] INITIALIZING LOGGER
+2024-03-31 15:40:00,803 [INFO] macOS detected
+2024-03-31 15:40:00,808 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:40:01,007 [INFO] GoogleHandler initiated
+2024-03-31 15:40:02,368 [INFO] Initiate data logging: %s
+2024-03-31 15:40:02,369 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 15:40:02,369 [INFO] sending cmd: get
+2024-03-31 15:42:32,881 [INFO] INITIALIZING LOGGER
+2024-03-31 15:42:32,902 [INFO] macOS detected
+2024-03-31 15:42:32,905 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:42:33,127 [INFO] GoogleHandler initiated
+2024-03-31 15:42:34,571 [INFO] Initiate data logging: %s
+2024-03-31 15:42:34,571 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 15:42:34,572 [INFO] sending cmd: get
+2024-03-31 15:42:34,572 [INFO] sending cmd: status json
+2024-03-31 15:42:39,154 [INFO] sending cmd: status stop
+2024-03-31 15:42:39,154 [INFO] Finished logging
+2024-03-31 15:42:39,214 [INFO] Created plot: MESC_plt.png
+2024-03-31 15:45:09,917 [INFO] INITIALIZING LOGGER
+2024-03-31 15:45:52,128 [INFO] INITIALIZING LOGGER
+2024-03-31 15:45:52,154 [INFO] macOS detected
+2024-03-31 15:45:52,161 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:45:52,161 [INFO] sending cmd: status stop
+2024-03-31 15:45:52,362 [INFO] GoogleHandler initiated
+2024-03-31 15:45:58,492 [INFO] Initiate data logging: %s
+2024-03-31 15:45:58,493 [INFO] Created new output file log: MESC_logdata.txt
+2024-03-31 15:45:58,493 [INFO] sending cmd: get
+2024-03-31 15:45:58,493 [INFO] sending cmd: status json
+2024-03-31 15:46:00,918 [INFO] sending cmd: status stop
+2024-03-31 15:46:00,919 [INFO] Finished logging
+2024-03-31 15:46:00,974 [INFO] Created plot: MESC_plt.png
+2024-03-31 15:46:56,481 [INFO] INITIALIZING LOGGER
+2024-03-31 15:46:56,510 [INFO] macOS detected
+2024-03-31 15:46:56,516 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 15:46:56,516 [INFO] sending cmd: status stop
+2024-03-31 15:46:56,716 [INFO] GoogleHandler initiated
+2024-03-31 15:47:14,076 [INFO] sending cmd: status json
+2024-03-31 15:47:24,772 [INFO] sending cmd: status stop
+2024-03-31 16:06:28,058 [INFO] INITIALIZING LOGGER
+2024-03-31 16:07:42,191 [INFO] INITIALIZING LOGGER
+2024-03-31 16:07:42,218 [INFO] macOS detected
+2024-03-31 16:07:42,226 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 16:07:42,226 [INFO] sending cmd: status stop
+2024-03-31 16:07:42,487 [INFO] GoogleHandler initiated
+2024-03-31 16:09:05,366 [INFO] INITIALIZING LOGGER
+2024-03-31 16:09:40,767 [INFO] INITIALIZING LOGGER
+2024-03-31 16:10:12,689 [INFO] INITIALIZING LOGGER
+2024-03-31 16:11:12,128 [INFO] INITIALIZING LOGGER
+2024-03-31 16:11:12,155 [INFO] macOS detected
+2024-03-31 16:11:12,161 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 16:11:12,161 [INFO] sending cmd: status stop
+2024-03-31 16:11:12,386 [INFO] GoogleHandler initiated
+2024-03-31 16:13:43,775 [INFO] INITIALIZING LOGGER
+2024-03-31 16:13:43,803 [INFO] macOS detected
+2024-03-31 16:13:43,809 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 16:13:43,809 [INFO] sending cmd: status stop
+2024-03-31 16:13:44,035 [INFO] GoogleHandler initiated
+2024-03-31 16:14:40,671 [INFO] INITIALIZING LOGGER
+2024-03-31 16:14:40,699 [INFO] macOS detected
+2024-03-31 16:14:40,705 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 16:14:40,705 [INFO] sending cmd: status stop
+2024-03-31 16:14:40,915 [INFO] GoogleHandler initiated
+2024-03-31 16:15:11,136 [INFO] INITIALIZING LOGGER
+2024-03-31 16:15:11,163 [INFO] macOS detected
+2024-03-31 16:15:11,170 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 16:15:11,170 [INFO] sending cmd: status stop
+2024-03-31 16:15:11,352 [INFO] GoogleHandler initiated
+2024-03-31 16:35:45,707 [INFO] INITIALIZING LOGGER
+2024-03-31 16:35:45,751 [INFO] macOS detected
+2024-03-31 16:35:45,758 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-03-31 16:35:45,758 [INFO] sending cmd: status stop
+2024-03-31 16:35:45,989 [INFO] GoogleHandler initiated
+2024-04-01 15:18:54,706 [INFO] INITIALIZING LOGGER
+2024-04-01 15:18:54,736 [INFO] macOS detected
+2024-04-01 15:18:54,743 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 15:18:54,743 [INFO] sending cmd: status stop
+2024-04-01 15:19:00,753 [INFO] GoogleHandler initiated
+2024-04-01 15:19:15,765 [INFO] sending cmd: thing
+2024-04-01 15:27:31,778 [INFO] INITIALIZING LOGGER
+2024-04-01 15:27:31,804 [INFO] macOS detected
+2024-04-01 15:27:31,808 [INFO] Log Handler port: /dev/tty.usbmodem3552356B32321 not open
+2024-04-01 15:27:31,808 [INFO] cant send cmd: status stop port not open
+2024-04-01 15:27:32,020 [INFO] GoogleHandler initiated
+2024-04-01 15:27:37,803 [INFO] Initiate data logging: %s
+2024-04-01 15:27:37,805 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-01 15:27:37,805 [INFO] cant send cmd: get port not open
+2024-04-01 15:27:37,806 [INFO] cant send cmd: status json port not open
+2024-04-01 15:27:39,745 [INFO] cant send cmd: status stop port not open
+2024-04-01 15:27:39,745 [INFO] Finished logging
+2024-04-01 15:27:51,006 [INFO] INITIALIZING LOGGER
+2024-04-01 15:27:51,033 [INFO] macOS detected
+2024-04-01 15:27:51,037 [INFO] Log Handler port: /dev/tty.usbmodem3552356B32321 not open
+2024-04-01 15:27:51,037 [INFO] cant send cmd: status stop port not open
+2024-04-01 15:27:51,234 [INFO] GoogleHandler initiated
+2024-04-01 15:27:52,593 [INFO] Initiate data logging: %s
+2024-04-01 15:27:52,594 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-01 15:27:52,594 [INFO] cant send cmd: get port not open
+2024-04-01 15:27:52,594 [INFO] cant send cmd: status json port not open
+2024-04-01 15:27:56,343 [INFO] cant send cmd: status stop port not open
+2024-04-01 15:27:56,344 [INFO] Finished logging
+2024-04-01 15:28:14,557 [INFO] INITIALIZING LOGGER
+2024-04-01 15:28:14,584 [INFO] macOS detected
+2024-04-01 15:28:14,587 [INFO] Log Handler port: /dev/tty.usbmodem3552356B32321 not open
+2024-04-01 15:28:14,588 [INFO] cant send cmd: status stop port not open
+2024-04-01 15:28:14,793 [INFO] GoogleHandler initiated
+2024-04-01 15:28:17,715 [INFO] Initiate data logging: %s
+2024-04-01 15:28:17,715 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-01 15:28:17,715 [INFO] cant send cmd: get port not open
+2024-04-01 15:28:17,715 [INFO] cant send cmd: status json port not open
+2024-04-01 15:29:00,755 [INFO] INITIALIZING LOGGER
+2024-04-01 15:29:00,782 [INFO] macOS detected
+2024-04-01 15:29:00,785 [INFO] Log Handler port: /dev/tty.usbmodem3552356B32321 not open
+2024-04-01 15:29:00,786 [INFO] cant send cmd: status stop port not open
+2024-04-01 15:29:00,982 [INFO] GoogleHandler initiated
+2024-04-01 15:29:06,414 [INFO] cant send cmd: get port not open
+2024-04-01 15:30:35,223 [INFO] Initiate data logging: %s
+2024-04-01 15:30:35,246 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-01 15:30:35,246 [INFO] cant send cmd: get port not open
+2024-04-01 15:30:35,247 [INFO] cant send cmd: status json port not open
+2024-04-01 15:30:44,416 [INFO] cant send cmd: status stop port not open
+2024-04-01 15:30:44,416 [INFO] Finished logging
+2024-04-01 15:32:47,582 [INFO] INITIALIZING LOGGER
+2024-04-01 15:32:47,610 [INFO] macOS detected
+2024-04-01 15:32:47,616 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 15:32:47,617 [INFO] sending cmd: status stop
+2024-04-01 15:32:47,908 [INFO] GoogleHandler initiated
+2024-04-01 15:32:55,068 [INFO] sending cmd: get
+2024-04-01 15:44:51,205 [INFO] INITIALIZING LOGGER
+2024-04-01 15:44:51,232 [INFO] macOS detected
+2024-04-01 15:51:04,003 [INFO] INITIALIZING LOGGER
+2024-04-01 15:51:50,452 [INFO] INITIALIZING LOGGER
+2024-04-01 15:52:21,628 [INFO] INITIALIZING LOGGER
+2024-04-01 15:55:27,449 [INFO] INITIALIZING LOGGER
+2024-04-01 15:57:57,036 [INFO] macOS detected
+2024-04-01 15:57:57,041 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 15:57:57,041 [INFO] sending cmd: status stop
+2024-04-01 15:57:57,334 [INFO] GoogleHandler initiated
+2024-04-01 15:58:01,313 [INFO] Initiate data logging: %s
+2024-04-01 15:58:01,314 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-01 15:58:01,314 [INFO] sending cmd: get
+2024-04-01 15:58:01,314 [INFO] sending cmd: status json
+2024-04-01 15:58:13,933 [INFO] sending cmd: status stop
+2024-04-01 15:58:13,934 [INFO] Finished logging
+2024-04-01 15:58:14,035 [INFO] Created plot: MESC_plt.png
+2024-04-01 16:34:20,321 [INFO] macOS detected
+2024-04-01 16:34:20,327 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 16:34:20,327 [INFO] sending cmd: status stop
+2024-04-01 16:34:20,551 [INFO] GoogleHandler initiated
+2024-04-01 16:39:04,455 [INFO] macOS detected
+2024-04-01 16:39:04,461 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 16:39:04,461 [INFO] sending cmd: status stop
+2024-04-01 16:39:04,713 [INFO] GoogleHandler initiated
+2024-04-01 16:39:14,923 [INFO] INITIALIZING LOGGER
+2024-04-01 16:44:15,454 [INFO] INITIALIZING LOGGER
+2024-04-01 16:44:23,042 [INFO] macOS detected
+2024-04-01 16:44:23,048 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 16:44:23,048 [INFO] sending cmd: status stop
+2024-04-01 16:44:23,332 [INFO] GoogleHandler initiated
+2024-04-01 16:49:21,269 [INFO] macOS detected
+2024-04-01 16:49:50,809 [INFO] macOS detected
+2024-04-01 16:49:59,102 [INFO] macOS detected
+2024-04-01 16:50:40,381 [INFO] macOS detected
+2024-04-01 16:51:35,243 [INFO] macOS detected
+2024-04-01 16:53:45,504 [INFO] macOS detected
+2024-04-01 16:53:45,511 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 16:53:45,511 [INFO] sending cmd: status stop
+2024-04-01 16:53:45,784 [INFO] GoogleHandler initiated
+2024-04-01 16:55:16,182 [INFO] macOS detected
+2024-04-01 16:55:33,644 [INFO] macOS detected
+2024-04-01 16:56:31,364 [INFO] macOS detected
+2024-04-01 16:57:05,847 [INFO] macOS detected
+2024-04-01 16:57:30,505 [INFO] macOS detected
+2024-04-01 16:57:30,511 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 16:57:30,512 [INFO] sending cmd: status stop
+2024-04-01 16:57:30,792 [INFO] GoogleHandler initiated
+2024-04-01 16:57:34,661 [INFO] Initiate data logging: %s
+2024-04-01 16:57:34,664 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-01 16:57:34,664 [INFO] sending cmd: get
+2024-04-01 16:57:34,665 [INFO] sending cmd: status json
+2024-04-01 16:58:18,714 [INFO] macOS detected
+2024-04-01 16:58:18,720 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 16:58:18,720 [INFO] sending cmd: status stop
+2024-04-01 16:58:18,958 [INFO] GoogleHandler initiated
+2024-04-01 17:00:00,542 [INFO] macOS detected
+2024-04-01 17:00:00,547 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 17:00:00,547 [INFO] sending cmd: status stop
+2024-04-01 17:00:00,829 [INFO] GoogleHandler initiated
+2024-04-01 17:00:07,516 [INFO] sending cmd: get
+2024-04-01 17:00:20,867 [INFO] sending cmd: status json
+2024-04-01 17:00:27,539 [INFO] sending cmd: status stop
+2024-04-01 18:40:00,843 [INFO] macOS detected
+2024-04-01 18:40:00,851 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 18:40:00,851 [INFO] sending cmd: status stop
+2024-04-01 18:40:01,076 [INFO] GoogleHandler initiated
+2024-04-01 18:41:51,827 [INFO] macOS detected
+2024-04-01 18:41:51,833 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 18:41:51,834 [INFO] sending cmd: status stop
+2024-04-01 18:41:52,040 [INFO] GoogleHandler initiated
+2024-04-01 18:41:59,815 [INFO] sending cmd: get
+2024-04-01 18:44:03,308 [INFO] macOS detected
+2024-04-01 18:44:03,314 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 18:44:03,315 [INFO] sending cmd: status stop
+2024-04-01 18:44:03,503 [INFO] GoogleHandler initiated
+2024-04-01 18:44:07,790 [INFO] sending cmd: get
+2024-04-01 18:44:55,341 [INFO] macOS detected
+2024-04-01 18:44:55,348 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 18:44:55,349 [INFO] sending cmd: status stop
+2024-04-01 18:44:55,553 [INFO] GoogleHandler initiated
+2024-04-01 18:45:50,682 [INFO] INITIALIZING LOGGER
+2024-04-01 18:51:03,831 [INFO] macOS detected
+2024-04-01 18:51:03,838 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 18:51:03,839 [INFO] sending cmd: status stop
+2024-04-01 18:51:04,101 [INFO] GoogleHandler initiated
+2024-04-01 18:56:25,759 [INFO] macOS detected
+2024-04-01 18:56:25,765 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 18:56:25,765 [INFO] sending cmd: status stop
+2024-04-01 18:56:26,014 [INFO] GoogleHandler initiated
+2024-04-01 18:59:30,448 [INFO] macOS detected
+2024-04-01 18:59:30,455 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 18:59:30,455 [INFO] sending cmd: status stop
+2024-04-01 18:59:30,683 [INFO] GoogleHandler initiated
+2024-04-01 18:59:43,079 [INFO] macOS detected
+2024-04-01 18:59:43,086 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 18:59:43,087 [INFO] sending cmd: status stop
+2024-04-01 18:59:43,281 [INFO] GoogleHandler initiated
+2024-04-01 19:00:53,599 [INFO] macOS detected
+2024-04-01 19:00:53,605 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:00:53,606 [INFO] sending cmd: status stop
+2024-04-01 19:00:55,451 [INFO] GoogleHandler initiated
+2024-04-01 19:05:08,646 [INFO] macOS detected
+2024-04-01 19:05:08,650 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:05:08,650 [INFO] sending cmd: status stop
+2024-04-01 19:05:08,854 [INFO] GoogleHandler initiated
+2024-04-01 19:13:07,713 [INFO] macOS detected
+2024-04-01 19:13:07,717 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:13:07,718 [INFO] sending cmd: status stop
+2024-04-01 19:13:07,934 [INFO] GoogleHandler initiated
+2024-04-01 19:14:48,684 [INFO] macOS detected
+2024-04-01 19:14:48,688 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:14:48,688 [INFO] sending cmd: status stop
+2024-04-01 19:14:48,886 [INFO] GoogleHandler initiated
+2024-04-01 19:15:34,345 [INFO] macOS detected
+2024-04-01 19:15:34,351 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:15:34,351 [INFO] sending cmd: status stop
+2024-04-01 19:15:34,564 [INFO] GoogleHandler initiated
+2024-04-01 19:18:13,760 [INFO] macOS detected
+2024-04-01 19:18:13,767 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:18:13,767 [INFO] sending cmd: status stop
+2024-04-01 19:18:17,123 [INFO] macOS detected
+2024-04-01 19:18:17,129 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:18:17,130 [INFO] sending cmd: status stop
+2024-04-01 19:18:17,329 [INFO] GoogleHandler initiated
+2024-04-01 19:18:37,635 [INFO] macOS detected
+2024-04-01 19:18:37,641 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:18:37,641 [INFO] sending cmd: status stop
+2024-04-01 19:18:37,873 [INFO] GoogleHandler initiated
+2024-04-01 19:19:09,838 [INFO] macOS detected
+2024-04-01 19:19:09,846 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:19:09,846 [INFO] sending cmd: status stop
+2024-04-01 19:19:10,098 [INFO] GoogleHandler initiated
+2024-04-01 19:19:30,979 [INFO] macOS detected
+2024-04-01 19:19:30,984 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:19:30,985 [INFO] sending cmd: status stop
+2024-04-01 19:19:31,202 [INFO] GoogleHandler initiated
+2024-04-01 19:20:37,554 [INFO] macOS detected
+2024-04-01 19:20:37,560 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:20:37,561 [INFO] sending cmd: status stop
+2024-04-01 19:20:37,777 [INFO] GoogleHandler initiated
+2024-04-01 19:23:36,613 [INFO] macOS detected
+2024-04-01 19:23:36,619 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:23:36,620 [INFO] sending cmd: status stop
+2024-04-01 19:23:36,862 [INFO] GoogleHandler initiated
+2024-04-01 19:23:51,130 [INFO] macOS detected
+2024-04-01 19:23:51,135 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:23:51,136 [INFO] sending cmd: status stop
+2024-04-01 19:23:51,368 [INFO] GoogleHandler initiated
+2024-04-01 19:23:56,395 [INFO] sending cmd: get
+2024-04-01 19:24:34,845 [INFO] macOS detected
+2024-04-01 19:24:34,851 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:24:34,851 [INFO] sending cmd: status stop
+2024-04-01 19:24:35,076 [INFO] GoogleHandler initiated
+2024-04-01 19:24:37,945 [INFO] sending cmd: get
+2024-04-01 19:25:15,164 [INFO] macOS detected
+2024-04-01 19:25:15,170 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:25:15,170 [INFO] sending cmd: status stop
+2024-04-01 19:25:15,385 [INFO] GoogleHandler initiated
+2024-04-01 19:25:18,815 [INFO] sending cmd: get
+2024-04-01 19:25:30,207 [INFO] sending cmd: status json
+2024-04-01 19:25:53,302 [INFO] sending cmd: status stop
+2024-04-01 19:28:10,934 [INFO] macOS detected
+2024-04-01 19:28:10,939 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:28:10,940 [INFO] sending cmd: status stop
+2024-04-01 19:28:11,134 [INFO] GoogleHandler initiated
+2024-04-01 19:28:14,684 [INFO] sending cmd: status json
+2024-04-01 19:28:29,411 [INFO] sending cmd: status stop
+2024-04-01 19:28:36,042 [INFO] sending cmd: get vbus
+2024-04-01 19:32:06,242 [INFO] macOS detected
+2024-04-01 19:32:06,247 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:32:06,248 [INFO] sending cmd: status stop
+2024-04-01 19:32:06,605 [INFO] GoogleHandler initiated
+2024-04-01 19:33:32,307 [INFO] sending cmd: thing
+2024-04-01 19:43:34,402 [INFO] macOS detected
+2024-04-01 19:43:34,409 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:43:34,409 [INFO] sending cmd: status stop
+2024-04-01 19:43:34,652 [INFO] GoogleHandler initiated
+2024-04-01 19:44:28,916 [INFO] macOS detected
+2024-04-01 19:44:28,923 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:44:28,924 [INFO] sending cmd: status stop
+2024-04-01 19:44:30,153 [INFO] GoogleHandler initiated
+2024-04-01 19:45:08,169 [INFO] macOS detected
+2024-04-01 19:45:08,176 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:45:08,177 [INFO] sending cmd: status stop
+2024-04-01 19:45:08,364 [INFO] GoogleHandler initiated
+2024-04-01 19:45:13,103 [INFO] sending cmd: get
+2024-04-01 19:46:39,680 [INFO] Initiate data logging: %s
+2024-04-01 19:46:39,681 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-01 19:46:39,682 [INFO] sending cmd: get
+2024-04-01 19:46:39,682 [INFO] sending cmd: status json
+2024-04-01 19:46:51,239 [INFO] sending cmd: status stop
+2024-04-01 19:46:51,239 [INFO] Finished logging
+2024-04-01 19:46:51,337 [INFO] Created plot: MESC_plt.png
+2024-04-01 19:49:52,076 [INFO] macOS detected
+2024-04-01 19:49:52,084 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:49:52,085 [INFO] sending cmd: status stop
+2024-04-01 19:49:52,409 [INFO] GoogleHandler initiated
+2024-04-01 19:49:53,643 [INFO] Initiate data logging: %s
+2024-04-01 19:49:53,644 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-01 19:49:53,644 [INFO] sending cmd: get
+2024-04-01 19:49:53,645 [INFO] sending cmd: status json
+2024-04-01 19:49:58,665 [INFO] sending cmd: status stop
+2024-04-01 19:49:58,666 [INFO] Finished logging
+2024-04-01 19:49:58,751 [INFO] Created plot: MESC_plt.png
+2024-04-01 19:54:15,700 [INFO] macOS detected
+2024-04-01 19:54:15,709 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 19:54:15,709 [INFO] sending cmd: status stop
+2024-04-01 19:54:15,981 [INFO] GoogleHandler initiated
+2024-04-01 19:54:17,547 [INFO] Initiate data logging: %s
+2024-04-01 19:54:17,548 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-01 19:54:17,548 [INFO] sending cmd: get
+2024-04-01 19:54:17,549 [INFO] sending cmd: status json
+2024-04-01 19:54:21,390 [INFO] sending cmd: status stop
+2024-04-01 19:54:21,390 [INFO] Finished logging
+2024-04-01 19:54:21,474 [INFO] Created plot: MESC_plt.png
+2024-04-01 19:54:23,341 [INFO] Uploading initiated
+2024-04-01 19:54:25,288 [INFO] file url https://drive.google.com/file/d/1_Rm60rh_DIE_wxz_7RncLkhU18qCvIk1/view?usp=sharing
+2024-04-01 19:54:25,289 [INFO] Setting permissions on 1_Rm60rh_DIE_wxz_7RncLkhU18qCvIk1
+2024-04-01 19:54:27,427 [INFO] Uploading initiated
+2024-04-01 19:54:28,974 [INFO] file url https://drive.google.com/file/d/1mN97tu9w0cuOfDOJ9cMOD-GToI889ZMS/view?usp=sharing
+2024-04-01 19:54:28,974 [INFO] Setting permissions on 1mN97tu9w0cuOfDOJ9cMOD-GToI889ZMS
+2024-04-01 19:54:31,178 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
+2024-04-01 19:54:31,181 [INFO] File 'MESC_logdata.txt' deleted successfully.
+2024-04-01 19:54:31,181 [INFO] File 'MESC_plt.png' deleted successfully.
+2024-04-01 19:55:13,651 [INFO] MESC_logdata.txt missing
+2024-04-01 19:55:16,267 [INFO] MESC_logdata.txt missing
+2024-04-01 19:59:15,603 [INFO] Initiate data logging: %s
+2024-04-01 19:59:15,605 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-01 19:59:15,605 [INFO] sending cmd: get
+2024-04-01 19:59:15,605 [INFO] sending cmd: status json
+2024-04-01 19:59:21,565 [INFO] sending cmd: status stop
+2024-04-01 19:59:21,566 [INFO] Finished logging
+2024-04-01 19:59:21,613 [INFO] Created plot: MESC_plt.png
+2024-04-01 19:59:29,845 [INFO] Initiate data logging: %s
+2024-04-01 19:59:29,846 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-01 19:59:29,847 [INFO] sending cmd: get
+2024-04-01 19:59:29,847 [INFO] sending cmd: status json
+2024-04-01 19:59:36,997 [INFO] sending cmd: status stop
+2024-04-01 19:59:36,998 [INFO] Finished logging
+2024-04-01 19:59:37,044 [INFO] Created plot: MESC_plt.png
+2024-04-01 19:59:44,817 [INFO] Uploading initiated
+2024-04-01 19:59:51,046 [INFO] file url https://drive.google.com/file/d/1OFwY8XwQmXmeCM_3Fpb0focsn-CS397b/view?usp=sharing
+2024-04-01 19:59:51,047 [INFO] Setting permissions on 1OFwY8XwQmXmeCM_3Fpb0focsn-CS397b
+2024-04-01 19:59:51,721 [INFO] Uploading initiated
+2024-04-01 19:59:53,557 [INFO] file url https://drive.google.com/file/d/1KKn01YC1u7cZZu8jDdgnfWhbPlvlKEtS/view?usp=sharing
+2024-04-01 19:59:53,557 [INFO] Setting permissions on 1KKn01YC1u7cZZu8jDdgnfWhbPlvlKEtS
+2024-04-01 19:59:55,457 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
+2024-04-01 19:59:55,458 [INFO] File 'MESC_logdata.txt' deleted successfully.
+2024-04-01 19:59:55,459 [INFO] File 'MESC_plt.png' deleted successfully.
+2024-04-01 20:11:04,006 [INFO] macOS detected
+2024-04-01 20:11:04,009 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 20:11:04,010 [INFO] sending cmd: status stop
+2024-04-01 20:11:04,310 [INFO] GoogleHandler initiated
+2024-04-01 20:12:46,849 [INFO] Initiate data logging: %s
+2024-04-01 20:12:46,849 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-01 20:12:46,849 [INFO] sending cmd: get
+2024-04-01 20:12:46,850 [INFO] sending cmd: status json
+2024-04-01 20:12:57,714 [INFO] sending cmd: status stop
+2024-04-01 20:12:57,715 [INFO] Finished logging
+2024-04-01 20:12:57,779 [INFO] Created plot: MESC_plt.png
+2024-04-01 20:14:35,386 [INFO] Uploading initiated
+2024-04-01 20:14:35,665 [INFO] Uploading initiated
+2024-04-01 20:15:31,319 [INFO] Initiate data logging: %s
+2024-04-01 20:15:31,319 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-01 20:15:31,319 [INFO] sending cmd: get
+2024-04-01 20:15:31,320 [INFO] sending cmd: status json
+2024-04-01 20:15:36,974 [INFO] sending cmd: status stop
+2024-04-01 20:15:36,975 [INFO] Finished logging
+2024-04-01 20:15:37,019 [INFO] Created plot: MESC_plt.png
+2024-04-01 20:15:42,480 [INFO] Uploading initiated
+2024-04-01 20:15:43,790 [INFO] file url https://drive.google.com/file/d/1C6jL1PhhPy7fwnXdJ9HafvWLcQLtwqXp/view?usp=sharing
+2024-04-01 20:15:43,790 [INFO] Setting permissions on 1C6jL1PhhPy7fwnXdJ9HafvWLcQLtwqXp
+2024-04-01 20:15:44,449 [INFO] Uploading initiated
+2024-04-01 20:15:45,811 [INFO] file url https://drive.google.com/file/d/1vcwzz-k7UCy-90VDDEaBk5c9Skzw4jeQ/view?usp=sharing
+2024-04-01 20:15:45,812 [INFO] Setting permissions on 1vcwzz-k7UCy-90VDDEaBk5c9Skzw4jeQ
+2024-04-01 20:15:47,547 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
+2024-04-01 20:15:47,550 [INFO] File 'MESC_logdata.txt' deleted successfully.
+2024-04-01 20:15:47,550 [INFO] File 'MESC_plt.png' deleted successfully.
+2024-04-01 20:15:59,328 [INFO] MESC_logdata.txt missing
+2024-04-01 20:22:45,998 [INFO] macOS detected
+2024-04-01 20:22:46,001 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 20:22:46,001 [INFO] sending cmd: status stop
+2024-04-01 20:22:46,297 [INFO] GoogleHandler initiated
+2024-04-01 20:24:16,565 [INFO] macOS detected
+2024-04-01 20:24:16,570 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 20:24:16,570 [INFO] sending cmd: status stop
+2024-04-01 20:24:16,839 [INFO] GoogleHandler initiated
+2024-04-01 20:26:07,583 [INFO] macOS detected
+2024-04-01 20:26:07,586 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 20:26:07,586 [INFO] sending cmd: status stop
+2024-04-01 20:26:07,836 [INFO] GoogleHandler initiated
+2024-04-01 20:27:43,087 [INFO] macOS detected
+2024-04-01 20:27:43,091 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 20:27:43,091 [INFO] sending cmd: status stop
+2024-04-01 20:27:43,384 [INFO] GoogleHandler initiated
+2024-04-01 20:27:47,840 [INFO] MESC_logdata.txt missing
+2024-04-01 20:28:01,434 [INFO] macOS detected
+2024-04-01 20:28:01,438 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 20:28:01,438 [INFO] sending cmd: status stop
+2024-04-01 20:28:01,695 [INFO] GoogleHandler initiated
+2024-04-01 20:28:03,553 [INFO] Initiate data logging: %s
+2024-04-01 20:28:03,553 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-01 20:28:03,554 [INFO] sending cmd: get
+2024-04-01 20:28:03,554 [INFO] sending cmd: status json
+2024-04-01 20:28:11,361 [INFO] sending cmd: status stop
+2024-04-01 20:28:11,362 [INFO] Finished logging
+2024-04-01 20:28:11,423 [INFO] Created plot: MESC_plt.png
+2024-04-01 20:28:16,686 [INFO] Uploading initiated
+2024-04-01 20:28:18,611 [INFO] file url https://drive.google.com/file/d/1H7Zg7FRJ6tNvhwlqMlBiuwV8Cpy9lI3i/view?usp=sharing
+2024-04-01 20:28:18,611 [INFO] Setting permissions on 1H7Zg7FRJ6tNvhwlqMlBiuwV8Cpy9lI3i
+2024-04-01 20:28:20,763 [INFO] Uploading initiated
+2024-04-01 20:28:22,306 [INFO] file url https://drive.google.com/file/d/1IttJbfkhSQdEKPCouGBT2eo4VD1PhfYz/view?usp=sharing
+2024-04-01 20:28:22,306 [INFO] Setting permissions on 1IttJbfkhSQdEKPCouGBT2eo4VD1PhfYz
+2024-04-01 20:28:24,062 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
+2024-04-01 20:28:24,066 [INFO] File 'MESC_logdata.txt' deleted successfully.
+2024-04-01 20:28:24,067 [INFO] File 'MESC_plt.png' deleted successfully.
+2024-04-01 20:29:31,209 [INFO] macOS detected
+2024-04-01 20:29:31,214 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 20:29:31,214 [INFO] sending cmd: status stop
+2024-04-01 20:29:31,460 [INFO] GoogleHandler initiated
+2024-04-01 20:29:32,960 [INFO] Initiate data logging: %s
+2024-04-01 20:29:32,960 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-01 20:29:32,961 [INFO] sending cmd: get
+2024-04-01 20:29:32,961 [INFO] sending cmd: status json
+2024-04-01 20:29:41,228 [INFO] sending cmd: status stop
+2024-04-01 20:29:41,229 [INFO] Finished logging
+2024-04-01 20:29:41,286 [INFO] Created plot: MESC_plt.png
+2024-04-01 20:29:42,330 [INFO] Uploading initiated
+2024-04-01 20:29:44,008 [INFO] file url https://drive.google.com/file/d/1izcJ_jsazGINXlA9-tY4PBORNsWTt3f-/view?usp=sharing
+2024-04-01 20:29:44,009 [INFO] Setting permissions on 1izcJ_jsazGINXlA9-tY4PBORNsWTt3f-
+2024-04-01 20:29:44,931 [INFO] Uploading initiated
+2024-04-01 20:29:46,721 [INFO] file url https://drive.google.com/file/d/1YMJjHF7LtquJ-M3GFKXq8Sdr4xCY_gfy/view?usp=sharing
+2024-04-01 20:29:46,722 [INFO] Setting permissions on 1YMJjHF7LtquJ-M3GFKXq8Sdr4xCY_gfy
+2024-04-01 20:31:07,070 [INFO] macOS detected
+2024-04-01 20:31:07,075 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-01 20:31:07,075 [INFO] sending cmd: status stop
+2024-04-01 20:31:07,315 [INFO] GoogleHandler initiated
+2024-04-01 20:31:10,195 [INFO] Initiate data logging: %s
+2024-04-01 20:31:10,196 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-01 20:31:10,196 [INFO] sending cmd: get
+2024-04-01 20:31:10,196 [INFO] sending cmd: status json
+2024-04-01 20:31:17,502 [INFO] sending cmd: status stop
+2024-04-01 20:31:17,502 [INFO] Finished logging
+2024-04-01 20:31:17,560 [INFO] Created plot: MESC_plt.png
+2024-04-01 20:31:22,006 [INFO] Uploading initiated
+2024-04-01 20:31:23,859 [INFO] file url https://drive.google.com/file/d/1aW6edfvI9eLul0uBxj7rS2aO_BlklX64/view?usp=sharing
+2024-04-01 20:31:23,860 [INFO] Setting permissions on 1aW6edfvI9eLul0uBxj7rS2aO_BlklX64
+2024-04-01 20:31:24,947 [INFO] Uploading initiated
+2024-04-01 20:31:26,494 [INFO] file url https://drive.google.com/file/d/1vReKsFhD1AvspnCdB3swGSYtutkZtv5p/view?usp=sharing
+2024-04-01 20:31:26,494 [INFO] Setting permissions on 1vReKsFhD1AvspnCdB3swGSYtutkZtv5p
+2024-04-01 20:31:28,200 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
+2024-04-01 20:31:28,203 [INFO] File 'MESC_logdata.txt' deleted successfully.
+2024-04-01 20:31:28,204 [INFO] File 'MESC_plt.png' deleted successfully.

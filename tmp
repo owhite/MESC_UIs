@@ -1,0 +1,177 @@
+        if key == Qt.Key_Down:
+            if self.current_index == 0:
+                self.current_index = 2
+            elif self.current_index == 1:
+                self.current_index = 3
+            elif self.current_index == 2:
+                self.current_index = 0
+            elif self.current_index == 3:
+                self.current_index = 1
+            self.highlight_button()
+            return True
+        elif key == Qt.Key_Up:
+            if self.current_index == 0:
+                self.current_index = 2
+            elif self.current_index == 1:
+                self.current_index = 3
+            elif self.current_index == 2:
+                self.current_index = 0
+            elif self.current_index == 3:
+                self.current_index = 1
+            self.highlight_button()
+            return True
+        elif key == Qt.Key_Right:
+            if self.current_index == 0:
+                self.current_index = 1
+            elif self.current_index == 1:
+                self.current_index = 2
+            elif self.current_index == 2:
+                self.current_index = 3
+            elif self.current_index == 3:
+                self.current_index = 0
+            self.highlight_button()
+            return True
+        elif key == Qt.Key_Left:
+            if self.current_index == 0:
+                self.current_index = 3
+            elif self.current_index == 1:
+                self.current_index = 0
+            elif self.current_index == 2:
+                self.current_index = 1
+            elif self.current_index == 3:
+                self.current_index = 2
+            self.highlight_button()
+            return True
+        elif key == Qt.Key_Return:
+            if self.current_index == 3 and self.line_edit.hasFocus():
+                self.line_edit.clearFocus()
+            else:
+                self.trigger_button()
+            return True
+
+
+
+
+class UI_Handler(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.normal_color = "#FDFEFE"
+        self.normal_border = "#BDC3C7"
+        self.highlight_color = "#85C1E9" 
+        self.highlight_border = "#229954"
+        self.current_index = 0;
+        self.index_to_button = {};
+
+        self.button_w = 600 - 20
+        self.button_h = 80
+
+        self.output_data_file = 'MESC_logdata.txt'
+        self.output_plot_file = 'MESC_plt.png'
+
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.checkStatus)
+        self.timer.start(50)
+        self.log_is_on = False
+        self.upload_thread = None
+
+        self.logger = None
+
+        self.init_ui()
+
+    def init_ui(self):
+        # Set window geometry
+        self.setGeometry(1, 1, self.button_w + 20, 350)
+        self.setWindowTitle('MESC logger')
+
+        # Label at top to display stuff
+        self.status_label = QLabel('MESC Logger', self)
+        self.status_label.setAlignment(Qt.AlignCenter)
+        font = self.status_label.font()
+        font.setPointSize(40)
+        self.status_label.setFont(font)
+
+        # Create the four buttons with larger font size
+        self.log_button = QPushButton('LOG', self)
+        font = self.log_button.font()
+        font.setPointSize(60)
+        self.log_button.setFont(font)
+        # self.log_button.setFixedSize(self.button_w, self.button_h)
+        self.log_button.setFocusPolicy(Qt.NoFocus)
+        self.log_button.clicked.connect(self.log_button_clicked)
+        self.index_to_button[0] = self.log_button
+
+        self.plot_button = QPushButton('PLOT', self)
+        font = self.plot_button.font()
+        font.setPointSize(60)
+        self.plot_button.setFont(font)
+        # self.plot_button.setFixedSize(self.button_w, self.button_h)
+        self.plot_button.setFocusPolicy(Qt.NoFocus)
+        self.plot_button.clicked.connect(self.plot_button_clicked)
+        self.index_to_button[1] = self.plot_button
+
+        self.upload_button = QPushButton('UPLOAD', self)
+        font = self.upload_button.font()
+        font.setPointSize(60)
+        self.upload_button.setFont(font)
+        # self.upload_button.setFixedSize(self.button_w, self.button_h)
+        self.upload_button.setFocusPolicy(Qt.NoFocus)
+        self.upload_button.clicked.connect(self.upload_button_clicked)
+        self.index_to_button[2] = self.upload_button
+
+        self.cmd_button = QPushButton('CMD', self)
+        font = self.cmd_button.font()
+        font.setPointSize(60)
+        self.cmd_button.setFont(font)
+        # self.cmd_button.setFixedSize(self.button_w, self.button_h)
+        self.cmd_button.setFocusPolicy(Qt.NoFocus)
+        self.cmd_button.clicked.connect(self.cmd_button_clicked)
+        self.index_to_button[3] = self.cmd_button
+
+        self.buttons = [self.log_button, self.plot_button, self.upload_button, self.cmd_button]
+
+        # Create a line edit for text input (hidden by default)
+        self.line_edit = QLineEdit(self)
+        self.line_edit.setPlaceholderText("Enter text here")
+        self.line_edit.returnPressed.connect(self.save_text)
+        self.line_edit.hide()
+
+        self.buttons = [self.log_button, self.plot_button, self.upload_button, self.cmd_button]
+        self.highlight_button()
+
+        layout = QGridLayout()
+
+        # Add Widgets to Layouts
+        layout.addWidget(self.status_label, 0, 0, 1, 2)  # span two columns
+        layout.addWidget(self.log_button, 1, 0)
+        layout.addWidget(self.plot_button, 1, 1)
+        layout.addWidget(self.upload_button, 2, 0)
+        layout.addWidget(self.cmd_button, 2, 1)
+        layout.addWidget(self.line_edit, 3, 0, 1, 2)
+
+        layout.setColumnStretch(0, 1)
+        layout.setColumnStretch(1, 1)
+        layout.setRowStretch(1, 1)
+        layout.setRowStretch(2, 1)
+
+        self.log_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.plot_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.upload_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.cmd_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
+        self.setLayout(layout)
+-----
+
+
+        
+        c = cmd.split()
+        today = datetime.today()
+        current_time = datetime.now()
+        military_time = current_time.strftime("%H:%M")
+        formatted_date = today.strftime("%m-%d-%y")
+
+        self.output_file = self.serial_log_file + "_" + formatted_date + "_" + military_time + ".txt"
+
+        if len(c) == 2:
+            self.output_file = c[1] + "-" + formatted_date + "_" + military_time + ".txt"
+

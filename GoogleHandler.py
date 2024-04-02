@@ -1,7 +1,13 @@
 #! /usr/bin/env python3
 
-
 import os, io
+import threading
+from datetime import datetime
+import plotMESC
+
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from google.auth.exceptions import GoogleAuthError
@@ -9,15 +15,14 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.http import MediaIoBaseUpload
 
 class handler:
-    def __init__(self, logger=None):
+    def __init__(self, logger=None, account_file=None):
 
         self.logger = logger
         # Define the Google Drive API scopes and service account file path
         SCOPES = ['https://www.googleapis.com/auth/drive']
-        SERVICE_ACCOUNT_FILE = "/Users/owhite/mesc-data-logging-1c3a9751c983.json"
 
         # Create credentials using the service account file
-        self.credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+        self.credentials = service_account.Credentials.from_service_account_file(account_file, scopes=SCOPES)
 
         # Build the Google Drive service
         self.drive_service = build('drive', 'v3', credentials=self.credentials)
@@ -127,6 +132,95 @@ class handler:
             self.logger.info(f"Setting permissions on {file_id}")
 
         self.drive_service.permissions().create(fileId=file_id, body=permission).execute()
+
+    def add_row_to_spreadsheet(self, plot_url, data_url, timestamp, note):
+        # Define the scope and credentials
+        scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+        client = gspread.authorize(self.credentials)
+
+        # Use a pre-existing spreadsheet, here
+        # https://docs.google.com/spreadsheets/d/1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c/
+        spreadsheet_id = '1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c'
+        worksheet_name = 'MESC_UPLOADS'  # Change to your worksheet name
+
+        try:
+            spreadsheet = client.open_by_key(spreadsheet_id)
+            worksheet = client.open_by_key(spreadsheet_id).worksheet(worksheet_name)
+            # Add a new row of data to the end of the worksheet
+            new_data = [plot_url, data_url, timestamp, note]
+            worksheet.append_row(new_data, value_input_option='USER_ENTERED')
+
+            if self.logger:
+                self.logger.info(f"Added row to spreadsheet with id = {spreadsheet_id}")
+
+        except Exception as e:
+            self.logger.info(f"Error attempting row addition to spreadsheet_id = {spreadsheet_id}")
+            return None
+
+class uploadThread(threading.Thread):
+    def __init__(self, parent, files, note):
+        super().__init__()
+        self.parent = parent
+        self.status_label = self.parent.status_label
+        self.logger = self.parent.msgs
+        self.drive = self.parent.drive
+        self.files = files
+        self.note = note
+        self.stopped = threading.Event()
+        self.plot_file = files
+
+    def run(self):
+        for file_path in self.files:
+            if not os.path.exists(file_path):
+                self.status_label.setText(F"{file_path} missing")
+                self.logger.logger.info(f"{file_path} missing")
+                self.stop()
+                return()
+
+        self.status_label.setText(F"Upload log file")
+        file_url = self.uploadToDrive(self.files[0], 'thing.txt')
+        self.status_label.setText(F"Upload plot")
+        plot_url = self.uploadToDrive(self.files[1], 'thing.png')
+        self.status_label.setText(F"Insert into spreadsheet")
+
+        u1 = (F"=hyperlink(\"{plot_url}\", \"PLOT\")")
+        u2 = (F"=hyperlink(\"{file_url}\", \"DATA\")")
+        today = datetime.today()
+        current_time = datetime.now()
+        military_time = current_time.strftime("%H:%M")
+        formatted_date = today.strftime("%m-%d-%y") + " " + military_time
+        self.drive.add_row_to_spreadsheet(u1, u2, formatted_date, self.note)
+        self.status_label.setText(F"Done with upload")
+        for file_path in self.files:
+            try:
+                os.remove(file_path)
+                self.logger.logger.info(f"File '{file_path}' deleted successfully.")
+            except OSError as e:
+                self.logger.logger.info(f"Error deleting the file '{file_path}': {e}")
+                self.delete(file_path)
+        self.stop()
+
+    def stop(self):
+        self.stopped.set()
+
+    def uploadToDrive(self, output_file, dest_name):
+        self.logger.logger.info("Uploading initiated")
+
+        # List folders and files
+        l = self.drive.list_files()
+
+        want_to_delete = False
+        for item in l:
+            if item['name'] == dest_name and want_to_delete:
+                self.drive.delete_files(item['id']) # good for testing
+                self.logger.logger.info(F"DELETING {item} {item['id']}")
+
+        file_id, file_url =  self.drive.upload_file(output_file, dest_name)
+        self.logger.logger.info(F"file url {file_url}")
+
+        self.drive.set_permissions(file_id)
+
+        return(file_url)
 
 if __name__ == '__main__':
     # Example usage:
