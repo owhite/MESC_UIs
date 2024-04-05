@@ -1,26 +1,30 @@
 #!/usr/bin/env python3
 
-import sys
-import os
-import time
+import colorsys
 import logging
-import HostMessages
-import time, math, colorsys
-
-import GoogleHandler
+import math
+import os
+import subprocess
+import sys
+import time
 
 import matplotlib
+
+import GoogleHandler
+import HostMessages
+
 matplotlib.use('Qt5Agg')  # This chooses the appropriate backend for the RPI 
 
-from PyQt5 import QtCore
-from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QPushButton, QHBoxLayout, QVBoxLayout
-from PyQt5.QtWidgets import QMainWindow, QSizePolicy, QLabel, QLineEdit, QTextEdit, QTabWidget
-from PyQt5.QtCore import Qt, QEvent, QTimer, pyqtSignal
-from PyQt5.QtGui import QTextCursor, QPixmap, QFont
-
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt5agg import \
+    FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
+from PyQt5 import QtCore
+from PyQt5.QtCore import QEvent, QEventLoop, Qt, QTimer, QUrl, pyqtSignal
+from PyQt5.QtGui import QFont, QPixmap, QTextCursor
+from PyQt5.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLabel,
+                             QLineEdit, QMainWindow, QPushButton, QSizePolicy,
+                             QTabWidget, QTextEdit, QVBoxLayout, QWidget)
 
 # the goal of this code is to basically handle all the UI elements, while
 #   cutting over the other serial stuff and logging stuff to other
@@ -46,6 +50,8 @@ class TopApplication(QMainWindow):
         else:
             self.msgs.logger.info("Unknown operating system")
             sys.exit()
+    
+        self.internet = GoogleHandler.PingInternet(self.msgs.logger)
 
         # open port, sometimes it's already streaming, shut it off
         self.msgs.openPort(self.portName)
@@ -54,6 +60,8 @@ class TopApplication(QMainWindow):
         # manage the uploader
         self.drive = GoogleHandler.handler(self.msgs.logger, account_file)
         self.msgs.logger.info("GoogleHandler initiated")
+        if self.drive.test_connection(): 
+            self.msgs.logger.info("google drive ping is working")
 
         self.output_data_file = 'MESC_logdata.txt'
         self.output_plot_file = 'MESC_plt.png'
@@ -65,10 +73,20 @@ class TopApplication(QMainWindow):
         self.setWindowTitle('MESC logger')
 
         self.tabs = QTabWidget()
+        self.tabs.currentChanged.connect(self.tab_changed)
 
-        self.tab1 = firstTab(self)
-        self.systemsTab = SystemsTab()
+        self.current_tab_index = 0
+        self.tab_count = 3
+
+        self.tab1 = mainTab(self)
+        self.systemsTab = SystemsTab(self)
         self.serialOutTab = SerialOutTab(self)
+        self.statusTab = StatusTab(self)
+
+        self.tab1.setFocusPolicy(Qt.StrongFocus)
+        self.systemsTab.setFocusPolicy(Qt.StrongFocus)
+        self.serialOutTab.setFocusPolicy(Qt.StrongFocus)
+        self.statusTab.setFocusPolicy(Qt.StrongFocus)
 
         # now that tabs are made you can pass messages to them
         handler1 = self.systemsTab
@@ -81,139 +99,33 @@ class TopApplication(QMainWindow):
         self.tabs.addTab(self.tab1, "LOG")
         self.tabs.addTab(self.serialOutTab, "SER")
         self.tabs.addTab(self.systemsTab, "MSGS")
+        self.tabs.addTab(self.statusTab, "STAT")
 
         self.setCentralWidget(self.tabs)
 
         # Install event filter to handle key events
         self.installEventFilter(self)
 
+    def tab_changed(self, index):
+        if self.tabs.widget(index) == self.statusTab:
+            self.statusTab.update_stats()
 
     def keyPressEvent(self, event):
         key = event.key()
         print(f"Key Pressed in Main Window: {key}")
-
-# the HostMessaging class creates system logs and opens the serial to talk to controller
-#  this tab takes output from the serial messages that are not used in logging
-class SerialOutTab(QMainWindow, logging.Handler):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.parent = parent
-        self.msgs = self.parent.msgs
-
-        self.setWindowTitle("Log Viewer")
-
-        self.text_edit = QTextEdit()
-        self.text_edit.setReadOnly(True)
-        self.text_edit.setLineWrapMode(QTextEdit.LineWrapMode.NoWrap)
-
-        layout = QVBoxLayout()
-        layout.addWidget(self.text_edit)
-
-        # Input text that will be used as comments of log
-        self.line_edit = QLineEdit(self)
-        self.line_edit.setFont(QFont("Arial", 30))
-        self.line_edit.setFixedHeight(40)
-        self.line_edit.setPlaceholderText("Serial cmd")
-        self.line_edit.returnPressed.connect(self.process_input_text)
-        self.line_edit.mousePressEvent = self.on_line_edit_click
-
-        layout.addWidget(self.line_edit)
-
-        widget = QWidget()
-        widget.setLayout(layout)
-        self.current_buffer_size = 0
-        self.max_buffer_size = 4000
-
-        self.setCentralWidget(widget)
-
-    def on_line_edit_click(self, event):
-        print("Line Edit clicked!")
-
-        super().mousePressEvent(event)
-
-    def process_input_text(self):
-        text = self.line_edit.text()
-        self.line_edit.clear()
-        self.msgs.sendToPort(text)
-
-    def emit(self, record):
-        msg = self.format(record)
-        self.append_text(msg)
-
-    def append_text(self, text):
-        self.text_edit.append(text)
-        self.current_buffer_size += len(text)
-        if self.current_buffer_size > self.max_buffer_size:
-            current_text = self.text_edit.toPlainText()
-            excess_text = self.current_buffer_size - self.max_buffer_size
-            trim_index = 0
-            for i, c in enumerate(current_text):
-                excess_text -= sys.getsizeof(c.encode())
-                if excess_text <= 0:
-                    trim_index = i
-                    break
-            trimmed_text = current_text[trim_index:]
-            self.text_edit.setPlainText(trimmed_text)
-            self.current_buffer_size = len(trimmed_text)
         
-        # Move cursor to the end of the document
-        cursor = self.text_edit.textCursor()
-        cursor.movePosition(QTextCursor.End)
-        self.text_edit.setTextCursor(cursor)
+        # print ("T: ", self.tabs.currentIndex())
+        self.tabs.setCurrentIndex(self.tabs.currentIndex())
 
-# the HostMessaging class creates system logs and opens the serial to talk to controller
-#  this tab takes output from the SYSTEMS log
-class SystemsTab(QMainWindow, logging.Handler):
-    def __init__(self):
-        super().__init__()
-
-        self.setWindowTitle("Log Viewer")
-        self.setGeometry(100, 100, 800, 600)
-
-        self.text_edit = QTextEdit()
-        self.text_edit.setReadOnly(True)
-        self.text_edit.setLineWrapMode(QTextEdit.LineWrapMode.NoWrap)
-
-        layout = QVBoxLayout()
-        layout.addWidget(self.text_edit)
-
-        widget = QWidget()
-        widget.setLayout(layout)
-        self.current_buffer_size = 0
-        self.max_buffer_size = 4000
-
-        self.setCentralWidget(widget)
-
-    def emit(self, record):
-        msg = self.format(record)
-        self.append_text(msg)
-
-    def append_text(self, text):
-        self.text_edit.append(text)
-        self.current_buffer_size += len(text)
-        if self.current_buffer_size > self.max_buffer_size:
-            current_text = self.text_edit.toPlainText()
-            excess_text = self.current_buffer_size - self.max_buffer_size
-            trim_index = 0
-            for i, c in enumerate(current_text):
-                excess_text -= sys.getsizeof(c.encode())
-                if excess_text <= 0:
-                    trim_index = i
-                    break
-            trimmed_text = current_text[trim_index:]
-            self.text_edit.setPlainText(trimmed_text)
-            self.current_buffer_size = len(trimmed_text)
-        
-        # Move cursor to the end of the document
-        cursor = self.text_edit.textCursor()
-        cursor.movePosition(QTextCursor.End)
-        self.text_edit.setTextCursor(cursor)
-
-class firstTab(QMainWindow):
+class mainTab(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
 
         self.parent = parent
+        self.tabs = parent.tabs
+        self.internet = self.parent.internet
+        self.current_tab_index = self.parent.current_tab_index
+        self.tab_count = self.parent.tab_count
         self.button_w = self.parent.button_w
         self.button_h = self.parent.button_h
         self.output_data_file = self.parent.output_data_file
@@ -228,6 +140,7 @@ class firstTab(QMainWindow):
         self.normal_border = "#BDC3C7"
         self.highlight_color = "#85C1E9" 
         self.highlight_border = "#229954"
+        self.highlight_row = 1;
         self.current_index = 0;
         self.index_to_widget = {}
 
@@ -248,6 +161,14 @@ class firstTab(QMainWindow):
         # Central widget for main layout
         central_widget = QWidget(self)
         self.setCentralWidget(central_widget)
+
+        # Label displays internet status
+        self.wifi_label = QLabel('wifi', self)
+        self.wifi_label.setAlignment(Qt.AlignCenter)
+        font = self.wifi_label.font()
+        font.setPointSize(30)
+        font.setBold(True)
+        self.wifi_label.setFont(font)
 
         # Label at top to display stuff
         self.status_label = QLabel('MESC Logger', self)
@@ -288,9 +209,11 @@ class firstTab(QMainWindow):
         self.line_edit.setPlaceholderText("Logging note")
         self.line_edit.returnPressed.connect(self.process_input_text)
         self.line_edit.mousePressEvent = self.on_line_edit_click
+        self.line_edit.hide()
 
         layout = QGridLayout()
 
+        # layout.addWidget(self.wifi_label, 0, 0)
         layout.addWidget(self.status_label, 0, 0, 1, 3)
         layout.addWidget(self.log_button, 1, 0)
         layout.addWidget(self.show_button, 1, 1)
@@ -316,63 +239,87 @@ class firstTab(QMainWindow):
 
     def keyPressEvent(self, event):
         key = event.key()
-        print(f"Key Pressed in Log Tab: {key}")
+        
+        # print(f"Key Pressed in Log Tab: {key} button: {self.current_index} row: {self.highlight_row}")
+        if key == Qt.Key_Escape: # resets the settings of th tab
+            self.line_edit.hide()
+            self.current_index = 0
+            self.highlight_row = 1
+            self.highlight_widget()
+        elif key == Qt.Key_PageUp:
+            pass
+        elif key == Qt.Key_PageDown:
+            pass
+        elif key == Qt.Key_Home:
+            pass
+        elif key == Qt.Key_End:
+            pass
 
-        if key == Qt.Key_Down:
-            if self.current_index == 0:
-                self.current_index = 2
-            elif self.current_index == 1:
-                self.current_index = 3
-            elif self.current_index == 2:
+        if self.highlight_row == 0:
+            if key == Qt.Key_Left:
+                self.current_index = -1 # deselects all buttons
+                current_tab_index = self.tabs.currentIndex()
+                next_tab_index = (current_tab_index - 1) % self.tabs.count()
+                self.tabs.setCurrentIndex(next_tab_index)
+                self.highlight_widget()
+            elif key == Qt.Key_Right:
+                self.current_index = -1 # deselects all buttons
+                current_tab_index = self.tabs.currentIndex()
+                next_tab_index = (current_tab_index + 1) % self.tabs.count()
+                self.tabs.setCurrentIndex(next_tab_index)
+                self.highlight_widget()
+            elif key == Qt.Key_Down:
                 self.current_index = 0
-            elif self.current_index == 3:
-                self.current_index = 1
-            self.highlight_widget()
-        elif key == Qt.Key_Up:
-            if self.current_index == 0:
-                self.current_index = 2
-            elif self.current_index == 1:
-                self.current_index = 3
-            elif self.current_index == 2:
-                self.current_index = 0
-            elif self.current_index == 3:
-                self.current_index = 1
-            self.highlight_widget()
-        elif key == Qt.Key_Right:
-            if self.current_index == 0:
-                self.current_index = 1
-            elif self.current_index == 1:
-                self.current_index = 2
-            elif self.current_index == 2:
-                self.current_index = 3
-            elif self.current_index == 3:
-                self.current_index = 0
-            self.highlight_widget()
-        elif key == Qt.Key_Left:
-            if self.current_index == 0:
-                self.current_index = 3
-            elif self.current_index == 1:
-                self.current_index = 0
-            elif self.current_index == 2:
-                self.current_index = 1
-            elif self.current_index == 3:
-                self.current_index = 2
-            self.highlight_widget()
-        elif key == Qt.Key_Return:
-            if self.line_edit.hasFocus():
-                # self.line_edit.clear()
-                print(F"line edit: {self.line_edit.text()}")
-
-            if self.current_index == 3 and self.line_edit.hasFocus():
-                self.current_index = 0
+                self.highlight_row = 1
+                self.highlight_widget()
+        else:
+            if key == Qt.Key_Up:
+                self.highlight_row = 0
                 self.line_edit.clearFocus()
-            else:
-                self.trigger_button()
+                self.current_index = -1
+                self.highlight_widget()
+            elif key == Qt.Key_Down:
+                self.current_index = -1
+                self.line_edit.show()
+                self.line_edit.setFocus()
+                self.highlight_widget()
+            elif key == Qt.Key_Right:
+                self.current_index = (self.current_index + 1) % len(self.widgets)
+                self.highlight_widget()
+            elif key == Qt.Key_Left:
+                self.current_index = (self.current_index - 1) % len(self.widgets)
+                self.highlight_widget()
+            elif key == Qt.Key_Return:
+                if self.line_edit.hasFocus():
+                    self.log_button.setFocus()
+                    self.line_edit.clear()
+                    self.line_edit.clearFocus()
+                    self.line_edit.hide()
+                    QTimer.singleShot(0, self.set_button_focus)
+                    self.current_index = -1
+                    self.highlight_widget()
+
+                else:
+                    self.trigger_button()
+                    self.highlight_widget()
+
+        event.accept()
+
+    def set_button_focus(self):
+        self.current_index = -1
+        self.highlight_row = 1
+        self.log_button.setFocus()
+        self.log_button.setFocusPolicy(Qt.ClickFocus)
 
     def handle_second_window_close(self):
         self.activateWindow()
 
     def checkStatus(self):
+        if self.internet.status():
+            self.wifi_label.setStyleSheet("color: blue;")
+        else:
+            self.wifi_label.setStyleSheet("color: black;")
+
         self.highlight_widget()
         if self.msgs and not self.msgs.port.isOpen():
             self.status_label.setText('Port open: error')
@@ -410,6 +357,7 @@ class firstTab(QMainWindow):
 
     def trigger_button(self):
         focused_button = self.index_to_widget[self.current_index]
+        self.highlight_row = 1
         if focused_button == self.log_button:
             self.log_button_clicked()
         elif focused_button == self.show_button:
@@ -433,7 +381,7 @@ class firstTab(QMainWindow):
 
     def process_input_text(self):
         text = self.line_edit.text()
-        self.status_label.setText(f"entered: {text}")
+        self.status_label.setText(f"note entered: {text}")
 
     def upload_button_clicked(self):
         self.current_index = 2
@@ -443,8 +391,6 @@ class firstTab(QMainWindow):
             self.status_label.setText("No log file to upload")
         else:
             self.status_label.setText(F"Making plot")
-            print(F"STARTING THREAD {self.line_edit.text()}")
-
             self.upload_thread = GoogleHandler.uploadThread(self, [self.output_data_file, self.output_plot_file], self.line_edit.text())
             self.upload_thread.start()
 
@@ -458,18 +404,262 @@ class firstTab(QMainWindow):
         if not self.output_data_file or self.output_data_file == '':
             self.status_label.setText("No log file to plot")
         else:
-            # xxx
             self.plot_window = PlotWindow(self.output_plot_file)
             self.plot_window.closing.connect(self.handle_plot_window_close)
             self.plot_window.show()
 
+# the HostMessaging class creates system logs and opens the serial to talk to controller
+#  this tab takes output from the serial messages that are not used in logging
+class SerialOutTab(QMainWindow, logging.Handler):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.parent = parent
+        self.tabs = self.parent.tabs
+        self.msgs = self.parent.msgs
+
+        self.setWindowTitle("Log Viewer")
+
+        self.text_edit = QTextEdit()
+        self.text_edit.setReadOnly(True)
+        self.text_edit.setLineWrapMode(QTextEdit.LineWrapMode.NoWrap)
+
+        # Ensure this receives key events
+        self.setFocusPolicy(Qt.StrongFocus)
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.text_edit)
+
+        # Input text that will be used as comments of log
+        self.line_edit = QLineEdit(self)
+        self.line_edit.setFont(QFont("Arial", 30))
+        self.line_edit.setFixedHeight(40)
+        self.line_edit.setPlaceholderText("Serial cmd")
+        self.line_edit.returnPressed.connect(self.process_input_text)
+        self.line_edit.mousePressEvent = self.on_line_edit_click
+
+        layout.addWidget(self.line_edit)
+
+        widget = QWidget()
+        widget.setLayout(layout)
+        self.current_buffer_size = 0
+        self.max_buffer_size = 4000
+
+        self.setCentralWidget(widget)
+
+    def keyPressEvent(self, event):
+        key = event.key()
+
+        current_tab_index = self.tabs.currentIndex()
+
+        if key == Qt.Key_Escape:
+            self.line_edit.hide()
+        elif key == Qt.Key_Left:
+            next_tab_index = (current_tab_index - 1) % self.tabs.count()
+            self.tabs.setCurrentIndex(next_tab_index)
+        elif key == Qt.Key_Right:
+            next_tab_index = (current_tab_index + 1) % self.tabs.count()
+            self.tabs.setCurrentIndex(next_tab_index)
+
+    def on_line_edit_click(self, event):
+        super().mousePressEvent(event)
+
+    def process_input_text(self):
+        text = self.line_edit.text()
+        self.line_edit.clear()
+        self.msgs.sendToPort(text)
+
+    def emit(self, record):
+        msg = self.format(record)
+        self.append_text(msg)
+
+    def append_text(self, text):
+        self.text_edit.append(text)
+        self.current_buffer_size += len(text)
+        if self.current_buffer_size > self.max_buffer_size:
+            current_text = self.text_edit.toPlainText()
+            excess_text = self.current_buffer_size - self.max_buffer_size
+            trim_index = 0
+            for i, c in enumerate(current_text):
+                excess_text -= sys.getsizeof(c.encode())
+                if excess_text <= 0:
+                    trim_index = i
+                    break
+            trimmed_text = current_text[trim_index:]
+            self.text_edit.setPlainText(trimmed_text)
+            self.current_buffer_size = len(trimmed_text)
+        
+        # Move cursor to the end of the document
+        cursor = self.text_edit.textCursor()
+        cursor.movePosition(QTextCursor.End)
+        self.text_edit.setTextCursor(cursor)
+
+# the HostMessaging class creates system logs and opens the serial to talk to controller
+#  this tab takes output from the SYSTEMS log
+class SystemsTab(QMainWindow, logging.Handler):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+        self.parent = parent
+        self.tabs = self.parent.tabs
+        self.setWindowTitle("Log Viewer")
+        self.setGeometry(100, 100, 800, 600)
+
+        self.text_edit = QTextEdit()
+        self.text_edit.setReadOnly(True)
+        self.text_edit.setLineWrapMode(QTextEdit.LineWrapMode.NoWrap)
+
+        self.setFocusPolicy(Qt.StrongFocus)
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.text_edit)
+
+        widget = QWidget()
+        widget.setLayout(layout)
+        self.current_buffer_size = 0
+        self.max_buffer_size = 4000
+
+        self.setCentralWidget(widget)
+
+    def emit(self, record):
+        msg = self.format(record)
+        self.append_text(msg)
+
+    def keyPressEvent(self, event):
+        key = event.key()
+
+        current_tab_index = self.tabs.currentIndex()
+
+        if key == Qt.Key_Escape:
+            self.line_edit.hide()
+        elif key == Qt.Key_Left:
+            next_tab_index = (current_tab_index - 1) % self.tabs.count()
+            self.tabs.setCurrentIndex(next_tab_index)
+        elif key == Qt.Key_Right:
+            next_tab_index = (current_tab_index + 1) % self.tabs.count()
+            self.tabs.setCurrentIndex(next_tab_index)
+
+    def append_text(self, text):
+        self.text_edit.append(text)
+        self.current_buffer_size += len(text)
+        if self.current_buffer_size > self.max_buffer_size:
+            current_text = self.text_edit.toPlainText()
+            excess_text = self.current_buffer_size - self.max_buffer_size
+            trim_index = 0
+            for i, c in enumerate(current_text):
+                excess_text -= sys.getsizeof(c.encode())
+                if excess_text <= 0:
+                    trim_index = i
+                    break
+            trimmed_text = current_text[trim_index:]
+            self.text_edit.setPlainText(trimmed_text)
+            self.current_buffer_size = len(trimmed_text)
+        
+        # Move cursor to the end of the document
+        cursor = self.text_edit.textCursor()
+        cursor.movePosition(QTextCursor.End)
+        self.text_edit.setTextCursor(cursor)
+
+#  tab to set preferences and show status
+class StatusTab(QMainWindow):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.parent = parent
+        self.tabs = self.parent.tabs
+        self.drive = self.parent.drive
+        self.internet = self.parent.internet
+        self.msgs = self.parent.msgs
+        self.portName = self.parent.portName
+
+        self.setWindowTitle("Log Viewer")
+        self.setGeometry(100, 100, 800, 600)
+
+        self.text_edit = QTextEdit()
+        self.text_edit.setReadOnly(True)
+        self.text_edit.setLineWrapMode(QTextEdit.LineWrapMode.NoWrap)
+
+        self.setFocusPolicy(Qt.StrongFocus)
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.text_edit)
+
+        widget = QWidget()
+        widget.setLayout(layout)
+        self.current_buffer_size = 0
+        self.max_buffer_size = 4000
+
+        self.setCentralWidget(widget)
+        
+    def keyPressEvent(self, event):
+        key = event.key()
+
+        current_tab_index = self.tabs.currentIndex()
+
+        if key == Qt.Key_Escape:
+            self.line_edit.hide()
+        elif key == Qt.Key_Left:
+            next_tab_index = (current_tab_index - 1) % self.tabs.count()
+            self.tabs.setCurrentIndex(next_tab_index)
+        elif key == Qt.Key_Right:
+            next_tab_index = (current_tab_index + 1) % self.tabs.count()
+            self.tabs.setCurrentIndex(next_tab_index)
+
+    def update_stats(self):
+        text =  "UPDATE STATS\n"
+        if self.msgs:
+            text += "message handler is not none\n"
+        else:
+            text += "message handler is none (that's bad)\n"
+            
+        if self.drive and self.drive.test_connection(): 
+            text += "google drive connected\n"
+        else:
+            text += "google drive ping not working\n"
+
+        if self.internet and self.internet.check_internet_connection(): 
+            text += "internet connected\n"
+        else:
+            text += "internet not working\n"
+            
+        text += (F"internet name: {self.get_wifi_name()}\n")
+
+        if self.portName:
+            text += (F"serial port name: {self.portName}\n")
+        else:
+            text += (F"no serial port name: {self.portName}\n")
+
+        self.text_edit.setText(text)
+
+    def get_wifi_name(self):
+        if sys.platform.startswith('darwin'):
+
+            process = subprocess.Popen(['/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport','-I'], stdout=subprocess.PIPE)
+            out, err = process.communicate()
+            process.wait()
+
+            network_info_str = out.decode('utf-8')
+            lines = network_info_str.split('\n')
+
+            # Iterate through each line
+            d = {}
+            for line in lines:
+                line = line.lstrip()
+                if ":" in line:
+                    l = line.split(':')
+                    d[l[0].lstrip()] = l[1].lstrip()
+
+            if d.get('SSID'):
+                return d['SSID']
+            else:
+                return None
+        else:
+            return None
+
+# a simple popup to show the graph
 class PlotWindow(QWidget):
     closing = pyqtSignal()
 
     def __init__(self, input_file):
         super().__init__()
-
-        print(self)
         self.setWindowTitle('New Window')
         self.setGeometry(1, 1, 500, 200)
 
@@ -496,40 +686,6 @@ class PlotWindow(QWidget):
     def closeEvent(self, event):
         self.closing.emit()
         super().closeEvent(event)
-
-class CmdWindow(QWidget):
-    closing = pyqtSignal()
-
-    def __init__(self):
-        super().__init__()
-
-        self.setWindowTitle('Second Window')
-        self.setGeometry(1, 1, 800, 200)
-
-        layout = QVBoxLayout()
-
-        self.text_edit = QTextEdit()
-        self.text_edit.setReadOnly(True)
-        layout.addWidget(self.text_edit)
-
-        self.setLayout(layout)
-
-    def set_text(self, text):
-        self.text_edit.setPlainText(text)
-        cursor = self.text_edit.textCursor()
-        cursor.movePosition(QTextCursor.Start)
-        self.text_edit.setTextCursor(cursor)
-
-    def keyPressEvent(self, event):
-        if event.key() == Qt.Key_Escape:
-            self.close()
-        if event.key() == Qt.Key_Return:
-            self.close()
-
-    def closeEvent(self, event):
-        self.closing.emit()
-        super().closeEvent(event)
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

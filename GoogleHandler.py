@@ -1,18 +1,22 @@
 #! /usr/bin/env python3
 
-import os, io
+import io
+import os
 import threading
 from datetime import datetime
-import plotMESC
 
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
-
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
+import requests
 from google.auth.exceptions import GoogleAuthError
+from google.oauth2 import service_account
 from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload
+from oauth2client.service_account import ServiceAccountCredentials
+from PyQt5.QtCore import QTimer
+
+import plotMESC
+
 
 class handler:
     def __init__(self, logger=None, account_file=None):
@@ -21,8 +25,10 @@ class handler:
         # Define the Google Drive API scopes and service account file path
         SCOPES = ['https://www.googleapis.com/auth/drive']
 
+        print(account_file)
         # Create credentials using the service account file
         self.credentials = service_account.Credentials.from_service_account_file(account_file, scopes=SCOPES)
+
 
         # Build the Google Drive service
         self.drive_service = build('drive', 'v3', credentials=self.credentials)
@@ -156,6 +162,66 @@ class handler:
         except Exception as e:
             self.logger.info(f"Error attempting row addition to spreadsheet_id = {spreadsheet_id}")
             return None
+
+    def test_connection(self):
+        try:
+            # Call the list files API to test the connection
+            results = self.drive_service.files().list(
+                pageSize=10, fields="nextPageToken, files(id, name)").execute()
+            files = results.get('files', [])
+
+            if not files:
+                self.logger.info('testing google drive, no files found.')
+            else:
+                for file in files:
+                    # self.logger.info(f"{file['name']} ({file['id']})")                    
+                    pass # not needed
+            return True  # Connection is open
+
+        except Exception as e:
+            # Handle any exceptions
+            self.logger.error(f"Error testing connection: {e}")
+            return False  # Connection is closed or invalid
+
+class PingInternet(): # not really a google service but whatevs
+    def __init__(self, logger = None):
+        super().__init__()
+        self.logger = logger
+        # self.timer = QTimer(self)
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.check_internet_connection)
+        self.timer.start(1000)
+        self.internet_status = False
+
+    def check_internet_connection(self):
+        url = "http://www.google.com"
+        timeout = 5  # Timeout in seconds
+    
+        try:
+            response = requests.get(url, timeout=timeout)
+            response.raise_for_status()  # Raise an exception for HTTP errors
+            if not self.internet_status:
+                self.logger.info("Connected to the internet!")
+            self.internet_status = True
+            return True
+        except requests.ConnectionError:
+            if self.internet_status:
+                self.logger.info("No internet connection.")
+            self.internet_status = False
+            return False
+        except requests.Timeout:
+            if self.internet_status:
+                self.logger.info("Timeout occurred.")
+            self.internet_status = False
+            return False
+        except requests.HTTPError as e:
+            if self.internet_status:
+                self.logger.info(f"HTTP error occurred: {e}")
+            self.internet_status = False
+            return False
+
+    def status(self):
+        return(self.internet_status)
 
 class uploadThread(threading.Thread):
     def __init__(self, parent, files, note):

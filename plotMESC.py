@@ -1,11 +1,15 @@
 #! /usr/bin/env python3
 
+import getopt
 import json
-import sys, getopt, os
-import pandas as pd
+import os
+import sys
+
 import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle
 import numpy as np
+import pandas as pd
+from matplotlib.patches import Rectangle
+
 
 class PlotMESCOutput:
     def __init__(self):

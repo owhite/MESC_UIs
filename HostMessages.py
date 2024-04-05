@@ -4,15 +4,17 @@
 #  1) it opens up system logs that sit on the host computer
 #  2) it also handles various serial operations like opening/closing the port
 
-import sys
-import re
 import logging
-import plotMESC
+import re
+import sys
 from datetime import datetime
-import Payload
 
 from PyQt5 import QtCore
 from PyQt5.QtSerialPort import QSerialPort, QSerialPortInfo
+
+import Payload
+import plotMESC
+
 
 class LogHandler():
     def __init__(self, parent):

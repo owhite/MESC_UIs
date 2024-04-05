@@ -839,3 +839,1262 @@
 2024-04-01 20:31:28,200 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
 2024-04-01 20:31:28,203 [INFO] File 'MESC_logdata.txt' deleted successfully.
 2024-04-01 20:31:28,204 [INFO] File 'MESC_plt.png' deleted successfully.
+2024-04-02 15:17:40,170 [INFO] macOS detected
+2024-04-02 15:17:40,175 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 15:17:40,175 [INFO] sending cmd: status stop
+2024-04-02 15:17:40,407 [INFO] GoogleHandler initiated
+2024-04-02 15:20:09,209 [INFO] macOS detected
+2024-04-02 15:20:09,213 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 15:20:09,213 [INFO] sending cmd: status stop
+2024-04-02 15:20:09,444 [INFO] GoogleHandler initiated
+2024-04-02 15:21:11,175 [INFO] macOS detected
+2024-04-02 15:21:11,178 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 15:21:11,179 [INFO] sending cmd: status stop
+2024-04-02 15:21:11,397 [INFO] GoogleHandler initiated
+2024-04-02 15:29:35,884 [INFO] macOS detected
+2024-04-02 15:29:35,887 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 15:29:35,887 [INFO] sending cmd: status stop
+2024-04-02 15:29:36,101 [INFO] GoogleHandler initiated
+2024-04-02 15:29:51,057 [INFO] macOS detected
+2024-04-02 15:29:51,063 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 15:29:51,064 [INFO] sending cmd: status stop
+2024-04-02 15:29:51,259 [INFO] GoogleHandler initiated
+2024-04-02 15:32:23,602 [INFO] macOS detected
+2024-04-02 15:32:23,607 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 15:32:23,608 [INFO] sending cmd: status stop
+2024-04-02 15:32:23,845 [INFO] GoogleHandler initiated
+2024-04-02 15:33:06,111 [INFO] macOS detected
+2024-04-02 15:33:06,115 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 15:33:06,116 [INFO] sending cmd: status stop
+2024-04-02 15:33:06,314 [INFO] GoogleHandler initiated
+2024-04-02 16:11:40,743 [INFO] macOS detected
+2024-04-02 16:11:40,748 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:11:40,749 [INFO] sending cmd: status stop
+2024-04-02 16:11:41,001 [INFO] GoogleHandler initiated
+2024-04-02 16:13:19,686 [INFO] macOS detected
+2024-04-02 16:13:19,691 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:13:19,691 [INFO] sending cmd: status stop
+2024-04-02 16:16:57,631 [INFO] macOS detected
+2024-04-02 16:16:57,636 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:16:57,636 [INFO] sending cmd: status stop
+2024-04-02 16:16:57,853 [INFO] GoogleHandler initiated
+2024-04-02 16:18:46,224 [INFO] macOS detected
+2024-04-02 16:18:46,230 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:18:46,230 [INFO] sending cmd: status stop
+2024-04-02 16:18:46,515 [INFO] GoogleHandler initiated
+2024-04-02 16:19:10,298 [INFO] macOS detected
+2024-04-02 16:19:10,302 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:19:10,302 [INFO] sending cmd: status stop
+2024-04-02 16:19:10,479 [INFO] GoogleHandler initiated
+2024-04-02 16:20:57,787 [INFO] macOS detected
+2024-04-02 16:20:57,792 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:20:57,793 [INFO] sending cmd: status stop
+2024-04-02 16:20:58,001 [INFO] GoogleHandler initiated
+2024-04-02 16:21:21,844 [INFO] macOS detected
+2024-04-02 16:21:21,851 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:21:21,851 [INFO] sending cmd: status stop
+2024-04-02 16:21:23,560 [INFO] GoogleHandler initiated
+2024-04-02 16:26:26,309 [INFO] macOS detected
+2024-04-02 16:26:26,313 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:26:26,313 [INFO] sending cmd: status stop
+2024-04-02 16:26:26,628 [INFO] GoogleHandler initiated
+2024-04-02 16:28:41,948 [INFO] macOS detected
+2024-04-02 16:28:41,952 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:28:41,953 [INFO] sending cmd: status stop
+2024-04-02 16:28:42,180 [INFO] GoogleHandler initiated
+2024-04-02 16:29:13,209 [INFO] macOS detected
+2024-04-02 16:29:13,214 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:29:13,214 [INFO] sending cmd: status stop
+2024-04-02 16:29:13,398 [INFO] GoogleHandler initiated
+2024-04-02 16:36:03,600 [INFO] macOS detected
+2024-04-02 16:36:03,603 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:36:03,604 [INFO] sending cmd: status stop
+2024-04-02 16:36:04,123 [INFO] GoogleHandler initiated
+2024-04-02 16:36:27,050 [INFO] macOS detected
+2024-04-02 16:36:27,056 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:36:27,057 [INFO] sending cmd: status stop
+2024-04-02 16:36:27,255 [INFO] GoogleHandler initiated
+2024-04-02 16:39:21,206 [INFO] macOS detected
+2024-04-02 16:39:21,218 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:39:21,219 [INFO] sending cmd: status stop
+2024-04-02 16:39:21,407 [INFO] GoogleHandler initiated
+2024-04-02 16:40:17,492 [INFO] macOS detected
+2024-04-02 16:40:17,496 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:40:17,497 [INFO] sending cmd: status stop
+2024-04-02 16:40:17,690 [INFO] GoogleHandler initiated
+2024-04-02 16:41:15,481 [INFO] macOS detected
+2024-04-02 16:41:15,485 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:41:15,485 [INFO] sending cmd: status stop
+2024-04-02 16:41:15,673 [INFO] GoogleHandler initiated
+2024-04-02 16:41:48,949 [INFO] macOS detected
+2024-04-02 16:41:48,954 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:41:48,954 [INFO] sending cmd: status stop
+2024-04-02 16:41:49,625 [INFO] GoogleHandler initiated
+2024-04-02 16:42:21,494 [INFO] macOS detected
+2024-04-02 16:42:21,498 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:42:21,498 [INFO] sending cmd: status stop
+2024-04-02 16:42:21,690 [INFO] GoogleHandler initiated
+2024-04-02 16:43:52,977 [INFO] macOS detected
+2024-04-02 16:43:52,981 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:43:52,982 [INFO] sending cmd: status stop
+2024-04-02 16:43:53,220 [INFO] GoogleHandler initiated
+2024-04-02 16:49:03,488 [INFO] macOS detected
+2024-04-02 16:49:03,494 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:49:03,494 [INFO] sending cmd: status stop
+2024-04-02 16:49:03,717 [INFO] GoogleHandler initiated
+2024-04-02 16:49:30,023 [INFO] macOS detected
+2024-04-02 16:49:30,027 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:49:30,027 [INFO] sending cmd: status stop
+2024-04-02 16:49:30,219 [INFO] GoogleHandler initiated
+2024-04-02 16:50:51,603 [INFO] macOS detected
+2024-04-02 16:50:51,609 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:50:51,609 [INFO] sending cmd: status stop
+2024-04-02 16:50:51,810 [INFO] GoogleHandler initiated
+2024-04-02 16:53:24,223 [INFO] macOS detected
+2024-04-02 16:53:24,226 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:53:24,226 [INFO] sending cmd: status stop
+2024-04-02 16:53:24,439 [INFO] GoogleHandler initiated
+2024-04-02 16:53:45,478 [INFO] macOS detected
+2024-04-02 16:53:45,483 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:53:45,483 [INFO] sending cmd: status stop
+2024-04-02 16:53:45,673 [INFO] GoogleHandler initiated
+2024-04-02 16:54:48,080 [INFO] macOS detected
+2024-04-02 16:54:48,084 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:54:48,084 [INFO] sending cmd: status stop
+2024-04-02 16:54:48,366 [INFO] GoogleHandler initiated
+2024-04-02 16:57:04,805 [INFO] Initiate data logging: %s
+2024-04-02 16:57:04,805 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-02 16:57:04,806 [INFO] sending cmd: get
+2024-04-02 16:57:04,806 [INFO] sending cmd: status json
+2024-04-02 16:57:09,918 [INFO] macOS detected
+2024-04-02 16:57:09,921 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:57:09,921 [INFO] sending cmd: status stop
+2024-04-02 16:57:10,113 [INFO] GoogleHandler initiated
+2024-04-02 16:57:26,246 [INFO] macOS detected
+2024-04-02 16:57:26,252 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:57:26,252 [INFO] sending cmd: status stop
+2024-04-02 16:57:26,457 [INFO] GoogleHandler initiated
+2024-04-02 16:59:54,427 [INFO] macOS detected
+2024-04-02 16:59:54,431 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 16:59:54,431 [INFO] sending cmd: status stop
+2024-04-02 16:59:54,630 [INFO] GoogleHandler initiated
+2024-04-02 17:02:27,867 [INFO] macOS detected
+2024-04-02 17:02:27,870 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 17:02:27,871 [INFO] sending cmd: status stop
+2024-04-02 17:02:28,081 [INFO] GoogleHandler initiated
+2024-04-02 17:03:06,024 [INFO] macOS detected
+2024-04-02 17:03:06,027 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 17:03:06,028 [INFO] sending cmd: status stop
+2024-04-02 17:03:06,248 [INFO] GoogleHandler initiated
+2024-04-02 17:04:34,716 [INFO] macOS detected
+2024-04-02 17:04:34,721 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 17:04:34,721 [INFO] sending cmd: status stop
+2024-04-02 17:04:34,941 [INFO] GoogleHandler initiated
+2024-04-02 17:05:13,116 [INFO] macOS detected
+2024-04-02 17:05:13,121 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 17:05:13,121 [INFO] sending cmd: status stop
+2024-04-02 17:05:13,331 [INFO] GoogleHandler initiated
+2024-04-02 17:06:06,732 [INFO] macOS detected
+2024-04-02 17:06:06,739 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 17:06:06,739 [INFO] sending cmd: status stop
+2024-04-02 17:06:06,929 [INFO] GoogleHandler initiated
+2024-04-02 17:08:50,656 [INFO] macOS detected
+2024-04-02 17:08:50,660 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 17:08:50,660 [INFO] sending cmd: status stop
+2024-04-02 17:08:51,808 [INFO] GoogleHandler initiated
+2024-04-02 17:10:53,663 [INFO] macOS detected
+2024-04-02 17:10:53,669 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 17:10:53,669 [INFO] sending cmd: status stop
+2024-04-02 17:10:53,896 [INFO] GoogleHandler initiated
+2024-04-02 17:11:55,734 [INFO] macOS detected
+2024-04-02 17:11:55,739 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 17:11:55,739 [INFO] sending cmd: status stop
+2024-04-02 17:11:55,920 [INFO] GoogleHandler initiated
+2024-04-02 17:12:39,997 [INFO] macOS detected
+2024-04-02 17:12:40,001 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 17:12:40,001 [INFO] sending cmd: status stop
+2024-04-02 17:12:40,207 [INFO] GoogleHandler initiated
+2024-04-02 17:14:54,836 [INFO] macOS detected
+2024-04-02 17:14:54,841 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 17:14:54,841 [INFO] sending cmd: status stop
+2024-04-02 17:14:55,037 [INFO] GoogleHandler initiated
+2024-04-02 17:15:35,138 [INFO] Initiate data logging: %s
+2024-04-02 17:15:35,139 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-02 17:15:35,139 [INFO] sending cmd: get
+2024-04-02 17:15:35,139 [INFO] sending cmd: status json
+2024-04-02 17:15:36,540 [INFO] sending cmd: status stop
+2024-04-02 17:15:36,541 [INFO] Finished logging
+2024-04-02 17:15:36,643 [INFO] Created plot: MESC_plt.png
+2024-04-02 17:16:25,052 [INFO] macOS detected
+2024-04-02 17:16:25,055 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 17:16:25,055 [INFO] sending cmd: status stop
+2024-04-02 17:16:25,264 [INFO] GoogleHandler initiated
+2024-04-02 17:16:37,565 [INFO] Uploading initiated
+2024-04-02 17:16:39,235 [INFO] file url https://drive.google.com/file/d/1CiQsSD6ma2TGFloZ7IHesgtGOSc5HC3e/view?usp=sharing
+2024-04-02 17:16:39,235 [INFO] Setting permissions on 1CiQsSD6ma2TGFloZ7IHesgtGOSc5HC3e
+2024-04-02 17:16:42,332 [INFO] Uploading initiated
+2024-04-02 17:16:43,882 [INFO] file url https://drive.google.com/file/d/1rv_x18WAMLz3XpwsVt8laovrPdiG_q_z/view?usp=sharing
+2024-04-02 17:16:43,883 [INFO] Setting permissions on 1rv_x18WAMLz3XpwsVt8laovrPdiG_q_z
+2024-04-02 17:16:46,463 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
+2024-04-02 17:16:46,466 [INFO] File 'MESC_logdata.txt' deleted successfully.
+2024-04-02 17:16:46,466 [INFO] File 'MESC_plt.png' deleted successfully.
+2024-04-02 17:17:54,986 [INFO] macOS detected
+2024-04-02 17:17:54,991 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 17:17:54,991 [INFO] sending cmd: status stop
+2024-04-02 17:17:55,258 [INFO] GoogleHandler initiated
+2024-04-02 17:19:29,814 [INFO] macOS detected
+2024-04-02 17:19:29,820 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 17:19:29,821 [INFO] sending cmd: status stop
+2024-04-02 17:19:29,999 [INFO] GoogleHandler initiated
+2024-04-02 17:22:22,386 [INFO] macOS detected
+2024-04-02 17:22:22,390 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 17:22:22,390 [INFO] sending cmd: status stop
+2024-04-02 17:22:22,640 [INFO] GoogleHandler initiated
+2024-04-02 17:24:31,056 [INFO] macOS detected
+2024-04-02 17:24:31,060 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 17:24:31,060 [INFO] sending cmd: status stop
+2024-04-02 17:24:31,296 [INFO] GoogleHandler initiated
+2024-04-02 17:24:47,260 [INFO] macOS detected
+2024-04-02 17:24:47,265 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 17:24:47,265 [INFO] sending cmd: status stop
+2024-04-02 17:24:47,459 [INFO] GoogleHandler initiated
+2024-04-02 17:25:20,383 [INFO] macOS detected
+2024-04-02 17:25:20,388 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 17:25:20,388 [INFO] sending cmd: status stop
+2024-04-02 17:25:20,598 [INFO] GoogleHandler initiated
+2024-04-02 17:27:39,433 [INFO] macOS detected
+2024-04-02 17:27:39,436 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 17:27:39,437 [INFO] sending cmd: status stop
+2024-04-02 17:27:39,634 [INFO] GoogleHandler initiated
+2024-04-02 17:30:18,800 [INFO] macOS detected
+2024-04-02 17:30:18,804 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 17:30:18,804 [INFO] sending cmd: status stop
+2024-04-02 17:30:19,022 [INFO] GoogleHandler initiated
+2024-04-02 18:07:57,002 [INFO] macOS detected
+2024-04-02 18:07:57,008 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:07:57,008 [INFO] sending cmd: status stop
+2024-04-02 18:07:57,215 [INFO] GoogleHandler initiated
+2024-04-02 18:08:04,807 [INFO] Initiate data logging: %s
+2024-04-02 18:08:04,808 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-02 18:08:04,808 [INFO] sending cmd: get
+2024-04-02 18:08:04,809 [INFO] sending cmd: status json
+2024-04-02 18:08:05,508 [INFO] sending cmd: status stop
+2024-04-02 18:08:05,508 [INFO] Finished logging
+2024-04-02 18:08:05,572 [INFO] Created plot: MESC_plt.png
+2024-04-02 18:08:39,113 [INFO] macOS detected
+2024-04-02 18:08:39,118 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:08:39,118 [INFO] sending cmd: status stop
+2024-04-02 18:08:39,305 [INFO] GoogleHandler initiated
+2024-04-02 18:09:04,014 [INFO] Initiate data logging: %s
+2024-04-02 18:09:04,014 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-02 18:09:04,015 [INFO] sending cmd: get
+2024-04-02 18:09:04,015 [INFO] sending cmd: status json
+2024-04-02 18:09:06,648 [INFO] sending cmd: status stop
+2024-04-02 18:09:06,648 [INFO] Finished logging
+2024-04-02 18:09:06,705 [INFO] Created plot: MESC_plt.png
+2024-04-02 18:10:41,408 [INFO] macOS detected
+2024-04-02 18:10:41,413 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:10:41,413 [INFO] sending cmd: status stop
+2024-04-02 18:10:41,673 [INFO] GoogleHandler initiated
+2024-04-02 18:11:07,927 [INFO] Initiate data logging: %s
+2024-04-02 18:11:07,928 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-02 18:11:07,928 [INFO] sending cmd: get
+2024-04-02 18:11:07,928 [INFO] sending cmd: status json
+2024-04-02 18:11:09,948 [INFO] sending cmd: status stop
+2024-04-02 18:11:09,949 [INFO] Finished logging
+2024-04-02 18:11:10,008 [INFO] Created plot: MESC_plt.png
+2024-04-02 18:11:40,659 [INFO] Initiate data logging: %s
+2024-04-02 18:11:40,660 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-02 18:11:40,660 [INFO] sending cmd: get
+2024-04-02 18:11:40,660 [INFO] sending cmd: status json
+2024-04-02 18:11:47,267 [INFO] sending cmd: status stop
+2024-04-02 18:11:47,268 [INFO] Finished logging
+2024-04-02 18:11:47,313 [INFO] Created plot: MESC_plt.png
+2024-04-02 18:15:04,170 [INFO] macOS detected
+2024-04-02 18:15:04,174 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:15:04,175 [INFO] sending cmd: status stop
+2024-04-02 18:15:04,434 [INFO] GoogleHandler initiated
+2024-04-02 18:17:08,200 [INFO] macOS detected
+2024-04-02 18:17:08,204 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:17:08,204 [INFO] sending cmd: status stop
+2024-04-02 18:17:08,408 [INFO] GoogleHandler initiated
+2024-04-02 18:18:05,221 [INFO] macOS detected
+2024-04-02 18:18:05,226 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:18:05,227 [INFO] sending cmd: status stop
+2024-04-02 18:18:05,506 [INFO] GoogleHandler initiated
+2024-04-02 18:19:01,000 [INFO] macOS detected
+2024-04-02 18:19:01,004 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:19:01,004 [INFO] sending cmd: status stop
+2024-04-02 18:19:01,201 [INFO] GoogleHandler initiated
+2024-04-02 18:19:50,375 [INFO] macOS detected
+2024-04-02 18:19:50,379 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:19:50,379 [INFO] sending cmd: status stop
+2024-04-02 18:19:50,558 [INFO] GoogleHandler initiated
+2024-04-02 18:21:55,686 [INFO] macOS detected
+2024-04-02 18:21:55,690 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:21:55,690 [INFO] sending cmd: status stop
+2024-04-02 18:21:55,891 [INFO] GoogleHandler initiated
+2024-04-02 18:25:15,215 [INFO] macOS detected
+2024-04-02 18:25:15,219 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:25:15,219 [INFO] sending cmd: status stop
+2024-04-02 18:25:15,440 [INFO] GoogleHandler initiated
+2024-04-02 18:25:44,431 [INFO] macOS detected
+2024-04-02 18:25:44,435 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:25:44,435 [INFO] sending cmd: status stop
+2024-04-02 18:25:44,645 [INFO] GoogleHandler initiated
+2024-04-02 18:27:10,830 [INFO] macOS detected
+2024-04-02 18:27:10,835 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:27:10,835 [INFO] sending cmd: status stop
+2024-04-02 18:27:11,022 [INFO] GoogleHandler initiated
+2024-04-02 18:28:32,789 [INFO] macOS detected
+2024-04-02 18:28:32,795 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:28:32,795 [INFO] sending cmd: status stop
+2024-04-02 18:28:32,989 [INFO] GoogleHandler initiated
+2024-04-02 18:31:10,359 [INFO] macOS detected
+2024-04-02 18:31:10,364 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:31:10,365 [INFO] sending cmd: status stop
+2024-04-02 18:31:10,570 [INFO] GoogleHandler initiated
+2024-04-02 18:31:23,348 [INFO] macOS detected
+2024-04-02 18:31:23,353 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:31:23,353 [INFO] sending cmd: status stop
+2024-04-02 18:31:23,532 [INFO] GoogleHandler initiated
+2024-04-02 18:31:56,671 [INFO] macOS detected
+2024-04-02 18:31:56,675 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:31:56,675 [INFO] sending cmd: status stop
+2024-04-02 18:31:56,868 [INFO] GoogleHandler initiated
+2024-04-02 18:32:29,689 [INFO] Initiate data logging: %s
+2024-04-02 18:32:29,691 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-02 18:32:29,691 [INFO] sending cmd: get
+2024-04-02 18:32:29,691 [INFO] sending cmd: status json
+2024-04-02 18:33:42,878 [INFO] macOS detected
+2024-04-02 18:33:42,883 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:33:42,884 [INFO] sending cmd: status stop
+2024-04-02 18:33:44,166 [INFO] GoogleHandler initiated
+2024-04-02 18:33:49,479 [INFO] Initiate data logging: %s
+2024-04-02 18:33:49,480 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-02 18:33:49,480 [INFO] sending cmd: get
+2024-04-02 18:33:49,481 [INFO] sending cmd: status json
+2024-04-02 18:34:35,902 [INFO] macOS detected
+2024-04-02 18:34:35,905 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:34:35,905 [INFO] sending cmd: status stop
+2024-04-02 18:34:36,129 [INFO] GoogleHandler initiated
+2024-04-02 18:35:19,121 [INFO] macOS detected
+2024-04-02 18:35:19,126 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:35:19,126 [INFO] sending cmd: status stop
+2024-04-02 18:35:19,314 [INFO] GoogleHandler initiated
+2024-04-02 18:36:10,128 [INFO] Initiate data logging: %s
+2024-04-02 18:36:10,129 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-02 18:36:10,129 [INFO] sending cmd: get
+2024-04-02 18:36:10,130 [INFO] sending cmd: status json
+2024-04-02 18:36:14,532 [INFO] sending cmd: status stop
+2024-04-02 18:36:14,532 [INFO] Finished logging
+2024-04-02 18:36:14,592 [INFO] Created plot: MESC_plt.png
+2024-04-02 18:39:38,282 [INFO] macOS detected
+2024-04-02 18:39:38,286 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:39:38,286 [INFO] sending cmd: status stop
+2024-04-02 18:39:38,502 [INFO] GoogleHandler initiated
+2024-04-02 18:39:51,629 [INFO] macOS detected
+2024-04-02 18:39:51,633 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:39:51,634 [INFO] sending cmd: status stop
+2024-04-02 18:39:51,817 [INFO] GoogleHandler initiated
+2024-04-02 18:41:35,292 [INFO] macOS detected
+2024-04-02 18:41:35,297 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:41:35,297 [INFO] sending cmd: status stop
+2024-04-02 18:41:35,477 [INFO] GoogleHandler initiated
+2024-04-02 18:42:50,153 [INFO] macOS detected
+2024-04-02 18:42:50,159 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:42:50,159 [INFO] sending cmd: status stop
+2024-04-02 18:42:50,361 [INFO] GoogleHandler initiated
+2024-04-02 18:44:55,086 [INFO] macOS detected
+2024-04-02 18:44:55,091 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:44:55,091 [INFO] sending cmd: status stop
+2024-04-02 18:44:55,300 [INFO] GoogleHandler initiated
+2024-04-02 18:45:53,997 [INFO] macOS detected
+2024-04-02 18:45:54,002 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:45:54,002 [INFO] sending cmd: status stop
+2024-04-02 18:45:54,186 [INFO] GoogleHandler initiated
+2024-04-02 18:50:48,210 [INFO] macOS detected
+2024-04-02 18:50:48,215 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:50:48,215 [INFO] sending cmd: status stop
+2024-04-02 18:50:48,621 [INFO] GoogleHandler initiated
+2024-04-02 18:51:38,468 [INFO] macOS detected
+2024-04-02 18:51:38,472 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 18:51:38,472 [INFO] sending cmd: status stop
+2024-04-02 18:51:38,729 [INFO] GoogleHandler initiated
+2024-04-02 18:54:20,409 [INFO] Initiate data logging: %s
+2024-04-02 18:54:20,412 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-02 18:54:20,412 [INFO] sending cmd: get
+2024-04-02 18:54:20,413 [INFO] sending cmd: status json
+2024-04-02 18:54:28,153 [INFO] sending cmd: status stop
+2024-04-02 18:54:28,154 [INFO] Finished logging
+2024-04-02 18:54:28,215 [INFO] Created plot: MESC_plt.png
+2024-04-02 18:54:34,223 [INFO] Uploading initiated
+2024-04-02 18:54:36,068 [INFO] file url https://drive.google.com/file/d/1dNEcMpu6PqopP_3Xe87Am-v_-HbPOK2n/view?usp=sharing
+2024-04-02 18:54:36,069 [INFO] Setting permissions on 1dNEcMpu6PqopP_3Xe87Am-v_-HbPOK2n
+2024-04-02 18:54:37,947 [INFO] Uploading initiated
+2024-04-02 18:54:39,519 [INFO] file url https://drive.google.com/file/d/1lGD9tbibJ2KLINtaz41aUGcZYVF4IIB9/view?usp=sharing
+2024-04-02 18:54:39,520 [INFO] Setting permissions on 1lGD9tbibJ2KLINtaz41aUGcZYVF4IIB9
+2024-04-02 18:54:41,435 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
+2024-04-02 18:54:41,437 [INFO] File 'MESC_logdata.txt' deleted successfully.
+2024-04-02 18:54:41,438 [INFO] File 'MESC_plt.png' deleted successfully.
+2024-04-02 19:15:05,050 [INFO] macOS detected
+2024-04-02 19:15:05,054 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 19:15:05,055 [INFO] sending cmd: status stop
+2024-04-02 19:15:05,351 [INFO] GoogleHandler initiated
+2024-04-02 19:16:30,162 [INFO] macOS detected
+2024-04-02 19:16:30,166 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 19:16:30,166 [INFO] sending cmd: status stop
+2024-04-02 19:16:30,438 [INFO] GoogleHandler initiated
+2024-04-02 19:19:33,754 [INFO] macOS detected
+2024-04-02 19:19:33,757 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 19:19:33,757 [INFO] sending cmd: status stop
+2024-04-02 19:19:34,022 [INFO] GoogleHandler initiated
+2024-04-02 19:20:09,466 [INFO] macOS detected
+2024-04-02 19:20:09,469 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 19:20:09,469 [INFO] sending cmd: status stop
+2024-04-02 19:20:09,693 [INFO] GoogleHandler initiated
+2024-04-02 19:20:50,230 [INFO] MESC_logdata.txt missing
+2024-04-02 19:26:36,519 [INFO] macOS detected
+2024-04-02 19:26:36,523 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 19:26:36,523 [INFO] sending cmd: status stop
+2024-04-02 19:26:36,789 [INFO] GoogleHandler initiated
+2024-04-02 19:26:52,515 [INFO] sending cmd: get vbus
+2024-04-02 20:08:37,593 [INFO] macOS detected
+2024-04-02 20:08:37,599 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 20:08:37,599 [INFO] sending cmd: status stop
+2024-04-02 20:08:37,829 [INFO] GoogleHandler initiated
+2024-04-02 20:09:59,200 [INFO] macOS detected
+2024-04-02 20:09:59,204 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 20:09:59,205 [INFO] sending cmd: status stop
+2024-04-02 20:09:59,389 [INFO] GoogleHandler initiated
+2024-04-02 20:11:19,485 [INFO] macOS detected
+2024-04-02 20:11:19,491 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 20:11:19,491 [INFO] sending cmd: status stop
+2024-04-02 20:11:19,727 [INFO] GoogleHandler initiated
+2024-04-02 20:12:01,129 [INFO] macOS detected
+2024-04-02 20:12:01,132 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 20:12:01,132 [INFO] sending cmd: status stop
+2024-04-02 20:12:01,654 [INFO] GoogleHandler initiated
+2024-04-02 20:12:21,577 [INFO] Initiate data logging: %s
+2024-04-02 20:12:21,577 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-02 20:12:21,578 [INFO] sending cmd: get
+2024-04-02 20:12:21,578 [INFO] sending cmd: status json
+2024-04-02 20:12:22,378 [INFO] sending cmd: status stop
+2024-04-02 20:12:22,378 [INFO] Finished logging
+2024-04-02 20:12:22,435 [INFO] Created plot: MESC_plt.png
+2024-04-02 20:15:51,933 [INFO] macOS detected
+2024-04-02 20:15:51,937 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 20:15:51,937 [INFO] sending cmd: status stop
+2024-04-02 20:15:52,206 [INFO] GoogleHandler initiated
+2024-04-02 20:20:10,870 [INFO] macOS detected
+2024-04-02 20:20:31,974 [INFO] macOS detected
+2024-04-02 20:20:31,990 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 20:20:31,990 [INFO] sending cmd: status stop
+2024-04-02 20:20:32,224 [INFO] GoogleHandler initiated
+2024-04-02 20:21:49,001 [INFO] macOS detected
+2024-04-02 20:22:29,350 [INFO] macOS detected
+2024-04-02 20:22:29,356 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 20:22:29,356 [INFO] sending cmd: status stop
+2024-04-02 20:22:29,560 [INFO] GoogleHandler initiated
+2024-04-02 20:23:00,598 [INFO] macOS detected
+2024-04-02 20:23:00,603 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 20:23:00,604 [INFO] sending cmd: status stop
+2024-04-02 20:23:09,436 [INFO] GoogleHandler initiated
+2024-04-02 20:27:22,712 [INFO] macOS detected
+2024-04-02 20:27:44,968 [INFO] macOS detected
+2024-04-02 20:28:26,558 [INFO] macOS detected
+2024-04-02 20:34:40,746 [INFO] macOS detected
+2024-04-02 20:35:40,397 [INFO] macOS detected
+2024-04-02 20:36:19,974 [INFO] macOS detected
+2024-04-02 20:36:19,980 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 20:36:19,980 [INFO] sending cmd: status stop
+2024-04-02 20:36:20,201 [INFO] GoogleHandler initiated
+2024-04-02 20:36:51,175 [INFO] macOS detected
+2024-04-02 20:36:51,181 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 20:36:51,181 [INFO] sending cmd: status stop
+2024-04-02 20:36:51,369 [INFO] GoogleHandler initiated
+2024-04-02 20:37:02,899 [INFO] Initiate data logging: %s
+2024-04-02 20:37:02,901 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-02 20:37:02,902 [INFO] sending cmd: get
+2024-04-02 20:37:02,902 [INFO] sending cmd: status json
+2024-04-02 20:37:04,146 [INFO] sending cmd: status stop
+2024-04-02 20:37:04,147 [INFO] Finished logging
+2024-04-02 20:37:04,204 [INFO] Created plot: MESC_plt.png
+2024-04-02 20:37:19,368 [INFO] macOS detected
+2024-04-02 20:45:13,376 [INFO] macOS detected
+2024-04-02 20:45:35,429 [INFO] macOS detected
+2024-04-02 20:47:13,844 [INFO] macOS detected
+2024-04-02 20:52:26,466 [INFO] macOS detected
+2024-04-02 21:07:34,123 [INFO] macOS detected
+2024-04-02 21:07:45,378 [INFO] macOS detected
+2024-04-02 21:08:03,137 [INFO] macOS detected
+2024-04-02 21:08:45,223 [INFO] macOS detected
+2024-04-02 21:09:00,072 [INFO] macOS detected
+2024-04-02 21:09:00,076 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 21:09:00,076 [INFO] sending cmd: status stop
+2024-04-02 21:09:00,276 [INFO] GoogleHandler initiated
+2024-04-02 21:09:17,250 [INFO] macOS detected
+2024-04-02 21:09:17,257 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 21:09:17,258 [INFO] sending cmd: status stop
+2024-04-02 21:09:17,450 [INFO] GoogleHandler initiated
+2024-04-02 21:11:20,451 [INFO] macOS detected
+2024-04-02 21:11:20,455 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-02 21:11:20,455 [INFO] sending cmd: status stop
+2024-04-02 21:11:20,647 [INFO] GoogleHandler initiated
+2024-04-02 21:11:21,608 [INFO] Connected to the internet!
+2024-04-02 21:11:22,677 [INFO] Connected to the internet!
+2024-04-02 21:11:23,646 [INFO] Connected to the internet!
+2024-04-02 21:11:24,680 [INFO] Connected to the internet!
+2024-04-02 21:11:25,660 [INFO] Connected to the internet!
+2024-04-02 21:11:26,704 [INFO] Connected to the internet!
+2024-04-02 21:11:27,708 [INFO] Connected to the internet!
+2024-04-03 12:25:00,689 [INFO] macOS detected
+2024-04-03 12:25:00,694 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 12:25:00,695 [INFO] sending cmd: status stop
+2024-04-03 12:25:00,723 [INFO] GoogleHandler initiated
+2024-04-03 12:25:01,820 [INFO] Connected to the internet!
+2024-04-03 12:31:33,080 [INFO] macOS detected
+2024-04-03 12:33:58,969 [INFO] macOS detected
+2024-04-03 12:35:47,225 [INFO] macOS detected
+2024-04-03 12:35:47,230 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 12:35:47,230 [INFO] sending cmd: status stop
+2024-04-03 12:35:47,264 [INFO] GoogleHandler initiated
+2024-04-03 12:36:16,891 [INFO] macOS detected
+2024-04-03 12:36:16,895 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 12:36:16,896 [INFO] sending cmd: status stop
+2024-04-03 12:36:16,902 [INFO] GoogleHandler initiated
+2024-04-03 12:36:18,096 [INFO] Connected to the internet!
+2024-04-03 12:36:45,201 [INFO] macOS detected
+2024-04-03 12:36:45,205 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 12:36:45,205 [INFO] sending cmd: status stop
+2024-04-03 12:36:45,210 [INFO] GoogleHandler initiated
+2024-04-03 12:36:46,507 [INFO] Connected to the internet!
+2024-04-03 12:36:46,507 [INFO] Connected to the internet!
+2024-04-03 12:36:47,552 [INFO] Connected to the internet!
+2024-04-03 12:36:48,871 [INFO] Connected to the internet!
+2024-04-03 12:36:49,576 [INFO] Connected to the internet!
+2024-04-03 12:36:50,575 [INFO] Connected to the internet!
+2024-04-03 12:39:17,111 [INFO] macOS detected
+2024-04-03 12:39:17,114 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 12:39:17,114 [INFO] sending cmd: status stop
+2024-04-03 12:39:17,120 [INFO] GoogleHandler initiated
+2024-04-03 12:39:18,143 [INFO] Connected to the internet!
+2024-04-03 12:42:16,044 [INFO] macOS detected
+2024-04-03 12:42:16,065 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 12:42:16,065 [INFO] sending cmd: status stop
+2024-04-03 12:42:16,069 [INFO] GoogleHandler initiated
+2024-04-03 12:42:59,312 [INFO] macOS detected
+2024-04-03 12:42:59,315 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 12:42:59,315 [INFO] sending cmd: status stop
+2024-04-03 12:42:59,321 [INFO] GoogleHandler initiated
+2024-04-03 12:43:00,433 [INFO] Connected to the internet!
+2024-04-03 12:43:34,130 [INFO] macOS detected
+2024-04-03 12:43:34,135 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 12:43:34,135 [INFO] sending cmd: status stop
+2024-04-03 12:43:34,139 [INFO] GoogleHandler initiated
+2024-04-03 12:43:35,171 [INFO] Connected to the internet!
+2024-04-03 12:43:47,484 [INFO] macOS detected
+2024-04-03 12:43:47,488 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 12:43:47,488 [INFO] sending cmd: status stop
+2024-04-03 12:43:47,493 [INFO] GoogleHandler initiated
+2024-04-03 12:43:48,873 [INFO] Connected to the internet!
+2024-04-03 12:45:46,631 [INFO] macOS detected
+2024-04-03 12:46:20,867 [INFO] macOS detected
+2024-04-03 12:46:20,871 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 12:46:20,871 [INFO] sending cmd: status stop
+2024-04-03 12:46:20,894 [INFO] GoogleHandler initiated
+2024-04-03 12:46:21,992 [INFO] Connected to the internet!
+2024-04-03 12:46:41,671 [INFO] macOS detected
+2024-04-03 12:46:41,675 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 12:46:41,676 [INFO] sending cmd: status stop
+2024-04-03 12:46:41,680 [INFO] GoogleHandler initiated
+2024-04-03 12:46:42,878 [INFO] Connected to the internet!
+2024-04-03 12:48:09,080 [INFO] macOS detected
+2024-04-03 12:48:09,084 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 12:48:09,084 [INFO] sending cmd: status stop
+2024-04-03 12:48:09,089 [INFO] GoogleHandler initiated
+2024-04-03 12:48:10,276 [INFO] Connected to the internet!
+2024-04-03 12:48:32,253 [INFO] macOS detected
+2024-04-03 12:48:32,257 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 12:48:32,257 [INFO] sending cmd: status stop
+2024-04-03 12:48:32,262 [INFO] GoogleHandler initiated
+2024-04-03 12:48:33,283 [INFO] Connected to the internet!
+2024-04-03 13:28:22,456 [INFO] macOS detected
+2024-04-03 13:28:22,460 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 13:28:22,460 [INFO] sending cmd: status stop
+2024-04-03 13:28:22,494 [INFO] GoogleHandler initiated
+2024-04-03 13:29:55,788 [INFO] macOS detected
+2024-04-03 13:29:55,793 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 13:29:55,793 [INFO] sending cmd: status stop
+2024-04-03 13:29:55,814 [INFO] GoogleHandler initiated
+2024-04-03 13:29:56,845 [INFO] Connected to the internet!
+2024-04-03 13:35:01,671 [INFO] macOS detected
+2024-04-03 13:35:01,675 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 13:35:01,676 [INFO] sending cmd: status stop
+2024-04-03 13:35:01,681 [INFO] GoogleHandler initiated
+2024-04-03 13:35:14,546 [INFO] macOS detected
+2024-04-03 13:35:14,550 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 13:35:14,550 [INFO] sending cmd: status stop
+2024-04-03 13:35:14,554 [INFO] GoogleHandler initiated
+2024-04-03 13:35:30,112 [INFO] macOS detected
+2024-04-03 13:35:30,117 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 13:35:30,117 [INFO] sending cmd: status stop
+2024-04-03 13:35:30,122 [INFO] GoogleHandler initiated
+2024-04-03 13:35:31,236 [INFO] Connected to the internet!
+2024-04-03 13:38:23,001 [INFO] macOS detected
+2024-04-03 13:38:23,006 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 13:38:23,006 [INFO] sending cmd: status stop
+2024-04-03 13:38:23,012 [INFO] GoogleHandler initiated
+2024-04-03 13:38:24,178 [INFO] Connected to the internet!
+2024-04-03 13:38:52,416 [INFO] macOS detected
+2024-04-03 13:38:52,420 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 13:38:52,420 [INFO] sending cmd: status stop
+2024-04-03 13:38:52,425 [INFO] GoogleHandler initiated
+2024-04-03 13:38:53,594 [INFO] Connected to the internet!
+2024-04-03 13:39:29,895 [INFO] macOS detected
+2024-04-03 13:39:29,899 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 13:39:29,899 [INFO] sending cmd: status stop
+2024-04-03 13:39:29,904 [INFO] GoogleHandler initiated
+2024-04-03 13:39:30,988 [INFO] Connected to the internet!
+2024-04-03 13:39:53,821 [INFO] macOS detected
+2024-04-03 13:39:53,826 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 13:39:53,826 [INFO] sending cmd: status stop
+2024-04-03 13:39:53,830 [INFO] GoogleHandler initiated
+2024-04-03 13:42:28,483 [INFO] macOS detected
+2024-04-03 13:42:28,489 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 13:42:28,489 [INFO] sending cmd: status stop
+2024-04-03 13:42:28,495 [INFO] GoogleHandler initiated
+2024-04-03 13:42:29,857 [INFO] Connected to the internet!
+2024-04-03 13:42:50,755 [INFO] macOS detected
+2024-04-03 13:42:50,759 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 13:42:50,759 [INFO] sending cmd: status stop
+2024-04-03 13:42:50,763 [INFO] GoogleHandler initiated
+2024-04-03 13:43:00,048 [INFO] macOS detected
+2024-04-03 13:43:00,053 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 13:43:00,053 [INFO] sending cmd: status stop
+2024-04-03 13:43:00,058 [INFO] GoogleHandler initiated
+2024-04-03 13:43:01,217 [INFO] Connected to the internet!
+2024-04-03 13:44:21,775 [INFO] macOS detected
+2024-04-03 13:44:21,780 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 13:44:21,780 [INFO] sending cmd: status stop
+2024-04-03 13:44:21,785 [INFO] GoogleHandler initiated
+2024-04-03 13:44:22,963 [INFO] Connected to the internet!
+2024-04-03 13:55:44,090 [INFO] macOS detected
+2024-04-03 13:55:44,094 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 13:55:44,095 [INFO] sending cmd: status stop
+2024-04-03 13:55:44,116 [INFO] GoogleHandler initiated
+2024-04-03 13:55:44,214 [ERROR] Error testing connection: ('invalid_grant: Invalid grant: account not found', {'error': 'invalid_grant', 'error_description': 'Invalid grant: account not found'})
+2024-04-03 13:55:58,897 [INFO] macOS detected
+2024-04-03 13:55:58,901 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 13:55:58,901 [INFO] sending cmd: status stop
+2024-04-03 13:55:58,906 [INFO] GoogleHandler initiated
+2024-04-03 13:56:34,143 [INFO] macOS detected
+2024-04-03 13:56:34,147 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 13:56:34,147 [INFO] sending cmd: status stop
+2024-04-03 13:56:34,151 [INFO] GoogleHandler initiated
+2024-04-03 13:56:35,283 [INFO] Connected to the internet!
+2024-04-03 13:56:36,355 [INFO] Initiate data logging: %s
+2024-04-03 13:56:36,376 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-03 13:56:36,376 [INFO] sending cmd: get
+2024-04-03 13:56:36,377 [INFO] sending cmd: status json
+2024-04-03 13:56:42,329 [INFO] sending cmd: status stop
+2024-04-03 13:56:42,329 [INFO] Finished logging
+2024-04-03 13:56:42,791 [INFO] Created plot: MESC_plt.png
+2024-04-03 13:56:44,581 [INFO] Uploading initiated
+2024-04-03 13:59:31,143 [INFO] Uploading initiated
+2024-04-03 14:04:28,713 [INFO] macOS detected
+2024-04-03 14:04:28,717 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:04:28,717 [INFO] sending cmd: status stop
+2024-04-03 14:04:28,740 [INFO] GoogleHandler initiated
+2024-04-03 14:04:29,800 [INFO] Connected to the internet!
+2024-04-03 14:04:30,550 [INFO] Initiate data logging: %s
+2024-04-03 14:04:30,556 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-03 14:04:30,556 [INFO] sending cmd: get
+2024-04-03 14:04:30,557 [INFO] sending cmd: status json
+2024-04-03 14:04:36,432 [INFO] sending cmd: status stop
+2024-04-03 14:04:36,432 [INFO] Finished logging
+2024-04-03 14:04:48,000 [INFO] macOS detected
+2024-04-03 14:04:48,004 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:04:48,005 [INFO] sending cmd: status stop
+2024-04-03 14:04:48,010 [INFO] GoogleHandler initiated
+2024-04-03 14:04:49,145 [INFO] Connected to the internet!
+2024-04-03 14:04:51,469 [INFO] Initiate data logging: %s
+2024-04-03 14:04:51,470 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-03 14:04:51,470 [INFO] sending cmd: get
+2024-04-03 14:04:51,470 [INFO] sending cmd: status json
+2024-04-03 14:04:56,663 [INFO] sending cmd: status stop
+2024-04-03 14:04:56,663 [INFO] Finished logging
+2024-04-03 14:04:56,801 [INFO] Created plot: MESC_plt.png
+2024-04-03 14:04:58,917 [INFO] Uploading initiated
+2024-04-03 14:05:00,673 [INFO] file url https://drive.google.com/file/d/1zbRyLuVLDhale4jZkCatIXcuuyvoUN_i/view?usp=sharing
+2024-04-03 14:05:00,674 [INFO] Setting permissions on 1zbRyLuVLDhale4jZkCatIXcuuyvoUN_i
+2024-04-03 14:05:01,361 [INFO] Uploading initiated
+2024-04-03 14:05:03,352 [INFO] file url https://drive.google.com/file/d/1fst2aboPLOKSF4EsryG-TkoRktmKnOG2/view?usp=sharing
+2024-04-03 14:05:03,353 [INFO] Setting permissions on 1fst2aboPLOKSF4EsryG-TkoRktmKnOG2
+2024-04-03 14:05:05,278 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
+2024-04-03 14:05:05,280 [INFO] File 'MESC_logdata.txt' deleted successfully.
+2024-04-03 14:05:05,281 [INFO] File 'MESC_plt.png' deleted successfully.
+2024-04-03 14:05:28,020 [INFO] macOS detected
+2024-04-03 14:05:28,024 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:05:28,024 [INFO] sending cmd: status stop
+2024-04-03 14:05:28,028 [INFO] GoogleHandler initiated
+2024-04-03 14:05:28,384 [INFO] Files:
+2024-04-03 14:05:28,384 [INFO] thing.png (1fst2aboPLOKSF4EsryG-TkoRktmKnOG2)
+2024-04-03 14:05:28,384 [INFO] thing.txt (1zbRyLuVLDhale4jZkCatIXcuuyvoUN_i)
+2024-04-03 14:05:28,384 [INFO] thing.png (1lGD9tbibJ2KLINtaz41aUGcZYVF4IIB9)
+2024-04-03 14:05:28,384 [INFO] thing.txt (1dNEcMpu6PqopP_3Xe87Am-v_-HbPOK2n)
+2024-04-03 14:05:28,384 [INFO] thing.png (1rv_x18WAMLz3XpwsVt8laovrPdiG_q_z)
+2024-04-03 14:05:28,384 [INFO] thing.txt (1CiQsSD6ma2TGFloZ7IHesgtGOSc5HC3e)
+2024-04-03 14:05:28,384 [INFO] thing.png (1vReKsFhD1AvspnCdB3swGSYtutkZtv5p)
+2024-04-03 14:05:28,384 [INFO] thing.txt (1aW6edfvI9eLul0uBxj7rS2aO_BlklX64)
+2024-04-03 14:05:28,384 [INFO] thing.png (1YMJjHF7LtquJ-M3GFKXq8Sdr4xCY_gfy)
+2024-04-03 14:05:28,384 [INFO] thing.txt (1izcJ_jsazGINXlA9-tY4PBORNsWTt3f-)
+2024-04-03 14:05:29,137 [INFO] Connected to the internet!
+2024-04-03 14:07:09,760 [INFO] macOS detected
+2024-04-03 14:07:09,765 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:07:09,765 [INFO] sending cmd: status stop
+2024-04-03 14:07:09,771 [INFO] GoogleHandler initiated
+2024-04-03 14:07:10,154 [INFO] Files:
+2024-04-03 14:07:10,154 [INFO] google drive ping is working
+2024-04-03 14:07:10,801 [INFO] Connected to the internet!
+2024-04-03 14:11:47,572 [INFO] macOS detected
+2024-04-03 14:11:47,578 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:11:47,578 [INFO] sending cmd: status stop
+2024-04-03 14:11:47,583 [INFO] GoogleHandler initiated
+2024-04-03 14:11:48,215 [INFO] google drive ping is working
+2024-04-03 14:11:48,881 [INFO] Connected to the internet!
+2024-04-03 14:12:02,721 [INFO] macOS detected
+2024-04-03 14:12:02,726 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:12:02,726 [INFO] sending cmd: status stop
+2024-04-03 14:12:02,731 [INFO] GoogleHandler initiated
+2024-04-03 14:12:03,274 [INFO] google drive ping is working
+2024-04-03 14:12:03,784 [INFO] Connected to the internet!
+2024-04-03 14:12:22,109 [INFO] macOS detected
+2024-04-03 14:12:22,114 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:12:22,114 [INFO] sending cmd: status stop
+2024-04-03 14:12:22,119 [INFO] GoogleHandler initiated
+2024-04-03 14:12:22,481 [INFO] google drive ping is working
+2024-04-03 14:12:23,229 [INFO] Connected to the internet!
+2024-04-03 14:14:37,790 [INFO] macOS detected
+2024-04-03 14:14:37,794 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:14:37,795 [INFO] sending cmd: status stop
+2024-04-03 14:14:37,801 [INFO] GoogleHandler initiated
+2024-04-03 14:14:38,450 [INFO] google drive ping is working
+2024-04-03 14:14:38,820 [INFO] Connected to the internet!
+2024-04-03 14:18:10,020 [INFO] macOS detected
+2024-04-03 14:18:10,023 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:18:10,023 [INFO] sending cmd: status stop
+2024-04-03 14:18:10,056 [INFO] GoogleHandler initiated
+2024-04-03 14:18:10,712 [INFO] google drive ping is working
+2024-04-03 14:18:11,142 [INFO] Connected to the internet!
+2024-04-03 14:20:25,310 [INFO] macOS detected
+2024-04-03 14:20:25,315 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:20:25,315 [INFO] sending cmd: status stop
+2024-04-03 14:20:25,321 [INFO] GoogleHandler initiated
+2024-04-03 14:20:25,887 [INFO] google drive ping is working
+2024-04-03 14:20:26,342 [INFO] Connected to the internet!
+2024-04-03 14:21:00,445 [INFO] macOS detected
+2024-04-03 14:21:00,448 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:21:00,448 [INFO] sending cmd: status stop
+2024-04-03 14:21:00,453 [INFO] GoogleHandler initiated
+2024-04-03 14:21:00,785 [INFO] google drive ping is working
+2024-04-03 14:21:01,753 [INFO] Connected to the internet!
+2024-04-03 14:37:25,329 [INFO] macOS detected
+2024-04-03 14:37:25,333 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:37:25,333 [INFO] sending cmd: status stop
+2024-04-03 14:37:25,363 [INFO] GoogleHandler initiated
+2024-04-03 14:37:25,755 [INFO] google drive ping is working
+2024-04-03 14:37:26,379 [INFO] Connected to the internet!
+2024-04-03 14:38:14,381 [INFO] macOS detected
+2024-04-03 14:38:14,386 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:38:14,386 [INFO] sending cmd: status stop
+2024-04-03 14:38:14,392 [INFO] GoogleHandler initiated
+2024-04-03 14:38:14,955 [INFO] google drive ping is working
+2024-04-03 14:38:15,416 [INFO] Connected to the internet!
+2024-04-03 14:38:24,216 [INFO] macOS detected
+2024-04-03 14:38:24,220 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:38:24,221 [INFO] sending cmd: status stop
+2024-04-03 14:38:24,225 [INFO] GoogleHandler initiated
+2024-04-03 14:38:24,571 [INFO] google drive ping is working
+2024-04-03 14:38:25,342 [INFO] Connected to the internet!
+2024-04-03 14:39:50,080 [INFO] macOS detected
+2024-04-03 14:39:50,084 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:39:50,084 [INFO] sending cmd: status stop
+2024-04-03 14:39:50,088 [INFO] GoogleHandler initiated
+2024-04-03 14:39:50,461 [INFO] google drive ping is working
+2024-04-03 14:39:51,199 [INFO] Connected to the internet!
+2024-04-03 14:40:32,211 [INFO] macOS detected
+2024-04-03 14:40:32,215 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:40:32,215 [INFO] sending cmd: status stop
+2024-04-03 14:40:32,219 [INFO] GoogleHandler initiated
+2024-04-03 14:40:32,566 [INFO] google drive ping is working
+2024-04-03 14:40:33,344 [INFO] Connected to the internet!
+2024-04-03 14:40:33,344 [INFO] Connected to the internet!
+2024-04-03 14:40:34,372 [INFO] Connected to the internet!
+2024-04-03 14:40:35,392 [INFO] Connected to the internet!
+2024-04-03 14:40:36,379 [INFO] Connected to the internet!
+2024-04-03 14:40:37,372 [INFO] Connected to the internet!
+2024-04-03 14:40:37,697 [INFO] Connected to the internet!
+2024-04-03 14:40:38,391 [INFO] Connected to the internet!
+2024-04-03 14:40:39,376 [INFO] Connected to the internet!
+2024-04-03 14:40:40,376 [INFO] Connected to the internet!
+2024-04-03 14:40:41,375 [INFO] Connected to the internet!
+2024-04-03 14:40:42,376 [INFO] Connected to the internet!
+2024-04-03 14:40:43,376 [INFO] Connected to the internet!
+2024-04-03 14:40:44,388 [INFO] Connected to the internet!
+2024-04-03 14:40:45,385 [INFO] Connected to the internet!
+2024-04-03 14:40:46,538 [INFO] Connected to the internet!
+2024-04-03 14:40:47,534 [INFO] Connected to the internet!
+2024-04-03 14:40:48,537 [INFO] Connected to the internet!
+2024-04-03 14:40:49,538 [INFO] Connected to the internet!
+2024-04-03 14:40:50,532 [INFO] Connected to the internet!
+2024-04-03 14:40:51,534 [INFO] Connected to the internet!
+2024-04-03 14:40:52,533 [INFO] Connected to the internet!
+2024-04-03 14:40:53,724 [INFO] Connected to the internet!
+2024-04-03 14:40:54,541 [INFO] Connected to the internet!
+2024-04-03 14:40:55,537 [INFO] Connected to the internet!
+2024-04-03 14:40:56,532 [INFO] Connected to the internet!
+2024-04-03 14:40:57,554 [INFO] Connected to the internet!
+2024-04-03 14:40:58,572 [INFO] Connected to the internet!
+2024-04-03 14:40:59,535 [INFO] Connected to the internet!
+2024-04-03 14:41:00,534 [INFO] Connected to the internet!
+2024-04-03 14:41:01,795 [INFO] Connected to the internet!
+2024-04-03 14:41:02,534 [INFO] Connected to the internet!
+2024-04-03 14:41:03,589 [INFO] Connected to the internet!
+2024-04-03 14:41:04,555 [INFO] Connected to the internet!
+2024-04-03 14:41:05,556 [INFO] Connected to the internet!
+2024-04-03 14:41:06,533 [INFO] Connected to the internet!
+2024-04-03 14:41:07,536 [INFO] Connected to the internet!
+2024-04-03 14:41:08,544 [INFO] Connected to the internet!
+2024-04-03 14:41:11,889 [INFO] macOS detected
+2024-04-03 14:41:11,893 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:41:11,893 [INFO] sending cmd: status stop
+2024-04-03 14:41:11,897 [INFO] GoogleHandler initiated
+2024-04-03 14:41:12,542 [INFO] google drive ping is working
+2024-04-03 14:41:13,084 [INFO] Connected to the internet!
+2024-04-03 14:41:13,084 [INFO] Connected to the internet!
+2024-04-03 14:41:14,031 [INFO] Connected to the internet!
+2024-04-03 14:41:15,432 [INFO] Connected to the internet!
+2024-04-03 14:41:15,723 [INFO] Connected to the internet!
+2024-04-03 14:41:16,034 [INFO] Connected to the internet!
+2024-04-03 14:41:17,031 [INFO] Connected to the internet!
+2024-04-03 14:41:18,037 [INFO] Connected to the internet!
+2024-04-03 14:41:19,034 [INFO] Connected to the internet!
+2024-04-03 14:41:20,032 [INFO] Connected to the internet!
+2024-04-03 14:41:21,035 [INFO] Connected to the internet!
+2024-04-03 14:41:22,030 [INFO] Connected to the internet!
+2024-04-03 14:41:23,029 [INFO] Connected to the internet!
+2024-04-03 14:41:24,079 [INFO] Connected to the internet!
+2024-04-03 14:41:25,053 [INFO] Connected to the internet!
+2024-04-03 14:41:26,032 [INFO] Connected to the internet!
+2024-04-03 14:41:27,031 [INFO] Connected to the internet!
+2024-04-03 14:41:28,134 [INFO] Connected to the internet!
+2024-04-03 14:41:29,032 [INFO] Connected to the internet!
+2024-04-03 14:41:30,030 [INFO] Connected to the internet!
+2024-04-03 14:41:31,033 [INFO] Connected to the internet!
+2024-04-03 14:41:32,764 [INFO] Connected to the internet!
+2024-04-03 14:41:33,428 [INFO] Connected to the internet!
+2024-04-03 14:41:34,052 [INFO] Connected to the internet!
+2024-04-03 14:41:35,044 [INFO] Connected to the internet!
+2024-04-03 14:41:36,038 [INFO] Connected to the internet!
+2024-04-03 14:41:37,032 [INFO] Connected to the internet!
+2024-04-03 14:41:38,050 [INFO] Connected to the internet!
+2024-04-03 14:41:39,036 [INFO] Connected to the internet!
+2024-04-03 14:41:40,031 [INFO] Connected to the internet!
+2024-04-03 14:41:41,030 [INFO] Connected to the internet!
+2024-04-03 14:41:42,031 [INFO] Connected to the internet!
+2024-04-03 14:41:43,048 [INFO] Connected to the internet!
+2024-04-03 14:41:44,048 [INFO] Connected to the internet!
+2024-04-03 14:41:45,062 [INFO] Connected to the internet!
+2024-04-03 14:41:46,054 [INFO] Connected to the internet!
+2024-04-03 14:41:47,052 [INFO] Connected to the internet!
+2024-04-03 14:41:48,052 [INFO] Connected to the internet!
+2024-04-03 14:41:49,037 [INFO] Connected to the internet!
+2024-04-03 14:41:50,033 [INFO] Connected to the internet!
+2024-04-03 14:41:51,055 [INFO] Connected to the internet!
+2024-04-03 14:41:52,031 [INFO] Connected to the internet!
+2024-04-03 14:41:53,052 [INFO] Connected to the internet!
+2024-04-03 14:41:54,058 [INFO] Connected to the internet!
+2024-04-03 14:41:55,031 [INFO] Connected to the internet!
+2024-04-03 14:41:56,038 [INFO] Connected to the internet!
+2024-04-03 14:41:57,033 [INFO] Connected to the internet!
+2024-04-03 14:41:58,036 [INFO] Connected to the internet!
+2024-04-03 14:41:59,330 [INFO] Connected to the internet!
+2024-04-03 14:42:00,029 [INFO] Connected to the internet!
+2024-04-03 14:42:01,065 [INFO] Connected to the internet!
+2024-04-03 14:42:06,465 [INFO] Connected to the internet!
+2024-04-03 14:42:07,463 [INFO] Connected to the internet!
+2024-04-03 14:42:10,725 [INFO] macOS detected
+2024-04-03 14:42:10,730 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:42:10,730 [INFO] sending cmd: status stop
+2024-04-03 14:42:10,735 [INFO] GoogleHandler initiated
+2024-04-03 14:42:11,087 [INFO] google drive ping is working
+2024-04-03 14:42:12,312 [INFO] Connected to the internet!
+2024-04-03 14:45:35,010 [INFO] Initiate data logging: %s
+2024-04-03 14:45:35,011 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-03 14:45:35,011 [INFO] sending cmd: get
+2024-04-03 14:45:35,012 [INFO] sending cmd: status json
+2024-04-03 14:45:45,691 [INFO] sending cmd: status stop
+2024-04-03 14:45:45,691 [INFO] Finished logging
+2024-04-03 14:45:45,975 [INFO] Created plot: MESC_plt.png
+2024-04-03 14:45:56,723 [INFO] Uploading initiated
+2024-04-03 14:45:58,108 [INFO] file url https://drive.google.com/file/d/17kRsA1rMXPHZho9TWGrFZ1n1oIz-sKdB/view?usp=sharing
+2024-04-03 14:45:58,109 [INFO] Setting permissions on 17kRsA1rMXPHZho9TWGrFZ1n1oIz-sKdB
+2024-04-03 14:45:58,919 [INFO] Uploading initiated
+2024-04-03 14:46:00,305 [INFO] file url https://drive.google.com/file/d/1VvVRYMYGeg4ljRN4i21hwhab8vQ-P66w/view?usp=sharing
+2024-04-03 14:46:00,306 [INFO] Setting permissions on 1VvVRYMYGeg4ljRN4i21hwhab8vQ-P66w
+2024-04-03 14:46:02,165 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
+2024-04-03 14:46:02,168 [INFO] File 'MESC_logdata.txt' deleted successfully.
+2024-04-03 14:46:02,169 [INFO] File 'MESC_plt.png' deleted successfully.
+2024-04-03 14:46:11,904 [INFO] macOS detected
+2024-04-03 14:46:11,909 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:46:11,909 [INFO] sending cmd: status stop
+2024-04-03 14:46:11,927 [INFO] GoogleHandler initiated
+2024-04-03 14:46:12,245 [INFO] google drive ping is working
+2024-04-03 14:46:13,109 [INFO] Connected to the internet!
+2024-04-03 14:46:13,721 [INFO] Initiate data logging: %s
+2024-04-03 14:46:13,722 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-03 14:46:13,722 [INFO] sending cmd: get
+2024-04-03 14:46:13,722 [INFO] sending cmd: status json
+2024-04-03 14:46:19,759 [INFO] sending cmd: status stop
+2024-04-03 14:46:19,760 [INFO] Finished logging
+2024-04-03 14:46:27,052 [INFO] macOS detected
+2024-04-03 14:46:27,057 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:46:27,057 [INFO] sending cmd: status stop
+2024-04-03 14:46:27,061 [INFO] GoogleHandler initiated
+2024-04-03 14:46:27,613 [INFO] google drive ping is working
+2024-04-03 14:46:28,353 [INFO] Connected to the internet!
+2024-04-03 14:46:29,275 [INFO] Initiate data logging: %s
+2024-04-03 14:46:29,276 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-03 14:46:29,277 [INFO] sending cmd: get
+2024-04-03 14:46:29,277 [INFO] sending cmd: status json
+2024-04-03 14:46:48,548 [INFO] sending cmd: status stop
+2024-04-03 14:46:48,549 [INFO] Finished logging
+2024-04-03 14:47:14,310 [INFO] macOS detected
+2024-04-03 14:47:14,315 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:47:14,316 [INFO] sending cmd: status stop
+2024-04-03 14:47:14,320 [INFO] GoogleHandler initiated
+2024-04-03 14:47:14,639 [INFO] google drive ping is working
+2024-04-03 14:47:15,424 [INFO] Connected to the internet!
+2024-04-03 14:47:23,881 [INFO] sending cmd: status stop
+2024-04-03 14:47:27,481 [INFO] Initiate data logging: %s
+2024-04-03 14:47:27,482 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-03 14:47:27,482 [INFO] sending cmd: get
+2024-04-03 14:47:27,482 [INFO] sending cmd: status json
+2024-04-03 14:47:33,626 [INFO] sending cmd: status stop
+2024-04-03 14:47:33,626 [INFO] Finished logging
+2024-04-03 14:47:33,714 [INFO] Created plot: MESC_plt.png
+2024-04-03 14:48:08,162 [INFO] macOS detected
+2024-04-03 14:48:08,165 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:48:08,166 [INFO] sending cmd: status stop
+2024-04-03 14:48:08,172 [INFO] GoogleHandler initiated
+2024-04-03 14:48:08,548 [INFO] google drive ping is working
+2024-04-03 14:48:09,336 [INFO] Connected to the internet!
+2024-04-03 14:48:10,807 [INFO] Initiate data logging: %s
+2024-04-03 14:48:10,808 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-03 14:48:10,808 [INFO] sending cmd: status stop
+2024-04-03 14:48:10,809 [INFO] sending cmd: get
+2024-04-03 14:48:10,809 [INFO] sending cmd: status json
+2024-04-03 14:48:18,160 [INFO] sending cmd: status stop
+2024-04-03 14:48:18,160 [INFO] Finished logging
+2024-04-03 14:51:34,114 [INFO] macOS detected
+2024-04-03 14:51:34,119 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:51:34,119 [INFO] sending cmd: status stop
+2024-04-03 14:51:34,123 [INFO] GoogleHandler initiated
+2024-04-03 14:51:34,512 [INFO] google drive ping is working
+2024-04-03 14:51:35,289 [INFO] Connected to the internet!
+2024-04-03 14:51:36,561 [INFO] Initiate data logging: %s
+2024-04-03 14:51:36,562 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-03 14:51:36,562 [INFO] sending cmd: status stop
+2024-04-03 14:51:36,562 [INFO] sending cmd: get
+2024-04-03 14:51:36,563 [INFO] sending cmd: status json
+2024-04-03 14:51:39,163 [INFO] sending cmd: status stop
+2024-04-03 14:51:39,164 [INFO] Finished logging
+2024-04-03 14:52:05,613 [INFO] macOS detected
+2024-04-03 14:52:05,618 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:52:05,618 [INFO] sending cmd: status stop
+2024-04-03 14:52:05,623 [INFO] GoogleHandler initiated
+2024-04-03 14:52:05,983 [INFO] google drive ping is working
+2024-04-03 14:52:06,784 [INFO] Connected to the internet!
+2024-04-03 14:52:07,851 [INFO] Initiate data logging: %s
+2024-04-03 14:52:07,852 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-03 14:52:07,853 [INFO] sending cmd: status stop
+2024-04-03 14:52:07,853 [INFO] sending cmd: get
+2024-04-03 14:52:07,853 [INFO] sending cmd: status json
+2024-04-03 14:52:10,575 [INFO] sending cmd: status stop
+2024-04-03 14:52:10,576 [INFO] Finished logging
+2024-04-03 14:52:43,724 [INFO] macOS detected
+2024-04-03 14:52:43,730 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:52:43,730 [INFO] sending cmd: status stop
+2024-04-03 14:52:43,735 [INFO] GoogleHandler initiated
+2024-04-03 14:52:44,302 [INFO] google drive ping is working
+2024-04-03 14:52:44,893 [INFO] Connected to the internet!
+2024-04-03 14:52:47,731 [INFO] Initiate data logging: %s
+2024-04-03 14:52:47,732 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-03 14:52:47,733 [INFO] sending cmd: status stop
+2024-04-03 14:52:47,733 [INFO] sending cmd: get
+2024-04-03 14:52:47,733 [INFO] sending cmd: status json
+2024-04-03 14:52:50,723 [INFO] sending cmd: status stop
+2024-04-03 14:52:50,724 [INFO] Finished logging
+2024-04-03 14:55:15,133 [INFO] macOS detected
+2024-04-03 14:55:15,139 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:55:15,139 [INFO] sending cmd: status stop
+2024-04-03 14:55:15,143 [INFO] GoogleHandler initiated
+2024-04-03 14:55:15,514 [INFO] google drive ping is working
+2024-04-03 14:55:16,318 [INFO] Connected to the internet!
+2024-04-03 14:55:17,168 [INFO] Initiate data logging: %s
+2024-04-03 14:55:17,169 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-03 14:55:17,169 [INFO] sending cmd: status stop
+2024-04-03 14:55:17,169 [INFO] sending cmd: get
+2024-04-03 14:55:17,169 [INFO] sending cmd: status json
+2024-04-03 14:55:22,549 [INFO] sending cmd: status stop
+2024-04-03 14:55:22,550 [INFO] Finished logging
+2024-04-03 14:55:46,117 [INFO] macOS detected
+2024-04-03 14:55:46,122 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:55:46,123 [INFO] sending cmd: status stop
+2024-04-03 14:55:46,127 [INFO] GoogleHandler initiated
+2024-04-03 14:55:46,457 [INFO] google drive ping is working
+2024-04-03 14:55:47,293 [INFO] Connected to the internet!
+2024-04-03 14:55:49,760 [INFO] Initiate data logging: %s
+2024-04-03 14:55:49,761 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-03 14:55:49,761 [INFO] sending cmd: status stop
+2024-04-03 14:55:49,761 [INFO] sending cmd: get
+2024-04-03 14:55:49,762 [INFO] sending cmd: status json
+2024-04-03 14:55:54,966 [INFO] sending cmd: status stop
+2024-04-03 14:55:54,967 [INFO] Finished logging
+2024-04-03 14:55:55,069 [INFO] Created plot: MESC_plt.png
+2024-04-03 14:56:59,527 [INFO] macOS detected
+2024-04-03 14:56:59,531 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:56:59,531 [INFO] sending cmd: status stop
+2024-04-03 14:56:59,535 [INFO] GoogleHandler initiated
+2024-04-03 14:56:59,896 [INFO] google drive ping is working
+2024-04-03 14:57:00,814 [INFO] Connected to the internet!
+2024-04-03 14:57:03,653 [INFO] Initiate data logging: %s
+2024-04-03 14:57:03,654 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-03 14:57:03,655 [INFO] sending cmd: status stop
+2024-04-03 14:57:03,655 [INFO] sending cmd: get
+2024-04-03 14:57:03,655 [INFO] sending cmd: status json
+2024-04-03 14:57:06,177 [INFO] sending cmd: status stop
+2024-04-03 14:57:06,177 [INFO] Finished logging
+2024-04-03 14:59:08,147 [INFO] macOS detected
+2024-04-03 14:59:08,152 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 14:59:08,152 [INFO] sending cmd: status stop
+2024-04-03 14:59:08,157 [INFO] GoogleHandler initiated
+2024-04-03 14:59:08,549 [INFO] google drive ping is working
+2024-04-03 14:59:09,288 [INFO] Connected to the internet!
+2024-04-03 14:59:09,998 [INFO] Initiate data logging: %s
+2024-04-03 14:59:09,999 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-03 14:59:10,000 [INFO] sending cmd: status stop
+2024-04-03 14:59:10,000 [INFO] sending cmd: get
+2024-04-03 14:59:10,000 [INFO] sending cmd: status json
+2024-04-03 14:59:14,727 [INFO] sending cmd: status stop
+2024-04-03 14:59:14,728 [INFO] Finished logging
+2024-04-03 15:00:41,009 [INFO] macOS detected
+2024-04-03 15:00:41,017 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 15:00:41,017 [INFO] sending cmd: status stop
+2024-04-03 15:00:41,036 [INFO] GoogleHandler initiated
+2024-04-03 15:00:41,622 [INFO] google drive ping is working
+2024-04-03 15:00:42,033 [INFO] Connected to the internet!
+2024-04-03 15:00:43,134 [INFO] Initiate data logging: %s
+2024-04-03 15:00:43,138 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-03 15:00:43,139 [INFO] sending cmd: status stop
+2024-04-03 15:00:43,139 [INFO] sending cmd: get
+2024-04-03 15:00:43,139 [INFO] sending cmd: status json
+2024-04-03 15:00:47,964 [INFO] sending cmd: status stop
+2024-04-03 15:00:47,965 [INFO] Finished logging
+2024-04-03 15:00:48,084 [INFO] Created plot: MESC_plt.png
+2024-04-03 15:01:28,367 [INFO] macOS detected
+2024-04-03 15:01:28,371 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 15:01:28,372 [INFO] sending cmd: status stop
+2024-04-03 15:01:28,376 [INFO] GoogleHandler initiated
+2024-04-03 15:01:29,071 [INFO] google drive ping is working
+2024-04-03 15:01:29,398 [INFO] Connected to the internet!
+2024-04-03 15:01:30,673 [INFO] Initiate data logging: %s
+2024-04-03 15:01:30,674 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-03 15:01:30,675 [INFO] sending cmd: status stop
+2024-04-03 15:01:30,675 [INFO] sending cmd: get
+2024-04-03 15:01:30,675 [INFO] sending cmd: status json
+2024-04-03 15:01:35,652 [INFO] sending cmd: status stop
+2024-04-03 15:01:35,652 [INFO] Finished logging
+2024-04-03 15:02:03,545 [INFO] macOS detected
+2024-04-03 15:02:03,550 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 15:02:03,550 [INFO] sending cmd: status stop
+2024-04-03 15:02:03,555 [INFO] GoogleHandler initiated
+2024-04-03 15:02:04,172 [INFO] google drive ping is working
+2024-04-03 15:02:04,670 [INFO] Connected to the internet!
+2024-04-03 15:02:07,238 [INFO] Initiate data logging: %s
+2024-04-03 15:02:07,239 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-03 15:02:07,239 [INFO] sending cmd: get
+2024-04-03 15:02:07,240 [INFO] sending cmd: status json
+2024-04-03 15:02:10,621 [INFO] sending cmd: status stop
+2024-04-03 15:02:10,622 [INFO] Finished logging
+2024-04-03 15:02:10,702 [INFO] Created plot: MESC_plt.png
+2024-04-03 15:02:13,893 [INFO] Initiate data logging: %s
+2024-04-03 15:02:13,894 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-03 15:02:13,894 [INFO] sending cmd: get
+2024-04-03 15:02:13,894 [INFO] sending cmd: status json
+2024-04-03 15:02:18,643 [INFO] sending cmd: status stop
+2024-04-03 15:02:18,643 [INFO] Finished logging
+2024-04-03 15:02:18,701 [INFO] Created plot: MESC_plt.png
+2024-04-03 15:27:01,078 [INFO] Initiate data logging: %s
+2024-04-03 15:27:01,088 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-03 15:27:01,088 [INFO] sending cmd: get
+2024-04-03 15:27:01,088 [INFO] sending cmd: status json
+2024-04-03 15:27:10,464 [INFO] sending cmd: status stop
+2024-04-03 15:27:10,464 [INFO] Finished logging
+2024-04-03 15:27:10,527 [INFO] Created plot: MESC_plt.png
+2024-04-03 15:29:38,203 [INFO] macOS detected
+2024-04-03 15:29:38,206 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 15:29:38,207 [INFO] sending cmd: status stop
+2024-04-03 15:29:38,237 [INFO] GoogleHandler initiated
+2024-04-03 15:29:38,719 [INFO] google drive ping is working
+2024-04-03 15:29:39,345 [INFO] Connected to the internet!
+2024-04-03 15:29:52,992 [INFO] sending cmd: get vbus
+2024-04-03 15:52:18,802 [INFO] macOS detected
+2024-04-03 15:52:18,807 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 15:52:18,808 [INFO] sending cmd: status stop
+2024-04-03 15:52:18,827 [INFO] GoogleHandler initiated
+2024-04-03 15:52:19,198 [INFO] google drive ping is working
+2024-04-03 15:52:19,923 [INFO] Connected to the internet!
+2024-04-03 15:55:42,951 [INFO] macOS detected
+2024-04-03 15:55:42,954 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-03 15:55:42,954 [INFO] sending cmd: status stop
+2024-04-03 15:55:42,959 [INFO] GoogleHandler initiated
+2024-04-03 15:55:43,359 [INFO] google drive ping is working
+2024-04-03 15:55:44,051 [INFO] Connected to the internet!
+2024-04-05 18:51:04,703 [INFO] macOS detected
+2024-04-05 18:51:04,709 [INFO] Log Handler port: /dev/tty.usbmodem3552356B32321 not open
+2024-04-05 18:51:04,710 [INFO] cant send cmd: status stop port not open
+2024-04-05 18:52:39,453 [INFO] macOS detected
+2024-04-05 18:52:39,454 [INFO] Log Handler port: /dev/tty.usbmodem3552356B32321 not open
+2024-04-05 18:52:39,454 [INFO] cant send cmd: status stop port not open
+2024-04-05 18:53:41,605 [INFO] macOS detected
+2024-04-05 18:53:41,610 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 18:53:41,610 [INFO] sending cmd: status stop
+2024-04-05 18:53:44,923 [INFO] macOS detected
+2024-04-05 18:53:44,926 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 18:53:44,927 [INFO] sending cmd: status stop
+2024-04-05 18:54:51,621 [INFO] macOS detected
+2024-04-05 18:54:51,624 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 18:54:51,625 [INFO] sending cmd: status stop
+2024-04-05 18:54:51,925 [INFO] GoogleHandler initiated
+2024-04-05 18:54:52,622 [INFO] google drive ping is working
+2024-04-05 18:54:52,914 [INFO] Connected to the internet!
+2024-04-05 18:56:37,034 [INFO] macOS detected
+2024-04-05 18:56:37,038 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 18:56:37,038 [INFO] sending cmd: status stop
+2024-04-05 18:56:37,213 [INFO] GoogleHandler initiated
+2024-04-05 18:56:37,969 [INFO] google drive ping is working
+2024-04-05 18:56:38,167 [INFO] Connected to the internet!
+2024-04-05 18:56:49,711 [INFO] Initiate data logging: %s
+2024-04-05 18:56:49,712 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-05 18:56:49,712 [INFO] sending cmd: get
+2024-04-05 18:56:49,712 [INFO] sending cmd: status json
+2024-04-05 18:56:59,599 [INFO] sending cmd: status stop
+2024-04-05 18:56:59,599 [INFO] Finished logging
+2024-04-05 18:57:16,424 [INFO] macOS detected
+2024-04-05 18:57:16,428 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 18:57:16,428 [INFO] sending cmd: status stop
+2024-04-05 18:57:16,624 [INFO] GoogleHandler initiated
+2024-04-05 18:57:17,089 [INFO] google drive ping is working
+2024-04-05 18:57:17,591 [INFO] Connected to the internet!
+2024-04-05 18:57:34,089 [INFO] sending cmd: status stop
+2024-04-05 19:01:44,105 [INFO] macOS detected
+2024-04-05 19:01:44,109 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 19:01:44,109 [INFO] sending cmd: status stop
+2024-04-05 19:01:44,297 [INFO] GoogleHandler initiated
+2024-04-05 19:01:44,870 [INFO] google drive ping is working
+2024-04-05 19:01:45,152 [INFO] Connected to the internet!
+2024-04-05 19:15:49,434 [INFO] macOS detected
+2024-04-05 19:15:49,438 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 19:15:49,439 [INFO] sending cmd: status stop
+2024-04-05 19:15:49,692 [INFO] GoogleHandler initiated
+2024-04-05 19:15:50,250 [INFO] google drive ping is working
+2024-04-05 19:15:50,543 [INFO] Connected to the internet!
+2024-04-05 19:17:07,273 [INFO] macOS detected
+2024-04-05 19:17:07,277 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 19:17:07,277 [INFO] sending cmd: status stop
+2024-04-05 19:17:07,517 [INFO] GoogleHandler initiated
+2024-04-05 19:17:08,177 [INFO] google drive ping is working
+2024-04-05 19:17:08,445 [INFO] Connected to the internet!
+2024-04-05 19:17:38,477 [INFO] macOS detected
+2024-04-05 19:17:38,483 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 19:17:38,483 [INFO] sending cmd: status stop
+2024-04-05 19:17:38,679 [INFO] GoogleHandler initiated
+2024-04-05 19:17:39,192 [INFO] google drive ping is working
+2024-04-05 19:17:39,538 [INFO] Connected to the internet!
+2024-04-05 19:21:35,618 [INFO] macOS detected
+2024-04-05 19:21:35,624 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 19:21:35,624 [INFO] sending cmd: status stop
+2024-04-05 19:21:35,846 [INFO] GoogleHandler initiated
+2024-04-05 19:21:36,375 [INFO] google drive ping is working
+2024-04-05 19:21:36,668 [INFO] Connected to the internet!
+2024-04-05 19:33:30,145 [INFO] macOS detected
+2024-04-05 19:33:30,149 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 19:33:30,149 [INFO] sending cmd: status stop
+2024-04-05 19:33:30,483 [INFO] GoogleHandler initiated
+2024-04-05 19:33:31,047 [INFO] google drive ping is working
+2024-04-05 19:34:02,135 [INFO] macOS detected
+2024-04-05 19:34:02,139 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 19:34:02,139 [INFO] sending cmd: status stop
+2024-04-05 19:34:02,360 [INFO] GoogleHandler initiated
+2024-04-05 19:34:31,207 [INFO] macOS detected
+2024-04-05 19:34:31,212 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 19:34:31,212 [INFO] sending cmd: status stop
+2024-04-05 19:34:31,428 [INFO] GoogleHandler initiated
+2024-04-05 19:34:31,971 [INFO] google drive ping is working
+2024-04-05 19:34:32,275 [INFO] Connected to the internet!
+2024-04-05 19:35:00,878 [INFO] macOS detected
+2024-04-05 19:35:00,884 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 19:35:00,885 [INFO] sending cmd: status stop
+2024-04-05 19:35:01,087 [INFO] GoogleHandler initiated
+2024-04-05 19:35:01,665 [INFO] google drive ping is working
+2024-04-05 19:35:02,038 [INFO] Connected to the internet!
+2024-04-05 19:35:47,669 [INFO] macOS detected
+2024-04-05 19:35:47,675 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 19:35:47,675 [INFO] sending cmd: status stop
+2024-04-05 19:35:47,880 [INFO] GoogleHandler initiated
+2024-04-05 19:35:48,561 [INFO] google drive ping is working
+2024-04-05 19:35:48,782 [INFO] Connected to the internet!
+2024-04-05 19:36:15,004 [INFO] macOS detected
+2024-04-05 19:36:15,009 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 19:36:15,009 [INFO] sending cmd: status stop
+2024-04-05 19:36:15,202 [INFO] GoogleHandler initiated
+2024-04-05 19:36:15,799 [INFO] google drive ping is working
+2024-04-05 19:36:16,093 [INFO] Connected to the internet!
+2024-04-05 19:36:48,714 [INFO] macOS detected
+2024-04-05 19:36:48,720 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 19:36:48,720 [INFO] sending cmd: status stop
+2024-04-05 19:36:48,899 [INFO] GoogleHandler initiated
+2024-04-05 19:36:49,488 [INFO] google drive ping is working
+2024-04-05 19:36:49,765 [INFO] Connected to the internet!
+2024-04-05 19:38:48,385 [INFO] macOS detected
+2024-04-05 19:38:48,390 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 19:38:48,390 [INFO] sending cmd: status stop
+2024-04-05 19:38:48,588 [INFO] GoogleHandler initiated
+2024-04-05 19:38:49,140 [INFO] google drive ping is working
+2024-04-05 19:38:49,543 [INFO] Connected to the internet!
+2024-04-05 19:40:13,336 [INFO] macOS detected
+2024-04-05 19:40:13,341 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 19:40:13,341 [INFO] sending cmd: status stop
+2024-04-05 19:40:13,538 [INFO] GoogleHandler initiated
+2024-04-05 19:40:14,038 [INFO] google drive ping is working
+2024-04-05 19:40:14,502 [INFO] Connected to the internet!
+2024-04-05 19:43:07,572 [INFO] macOS detected
+2024-04-05 19:43:07,577 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 19:43:07,577 [INFO] sending cmd: status stop
+2024-04-05 19:43:07,775 [INFO] GoogleHandler initiated
+2024-04-05 19:43:08,345 [INFO] google drive ping is working
+2024-04-05 19:43:08,664 [INFO] Connected to the internet!
+2024-04-05 19:45:00,207 [INFO] macOS detected
+2024-04-05 19:45:00,211 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 19:45:00,211 [INFO] sending cmd: status stop
+2024-04-05 19:45:00,406 [INFO] GoogleHandler initiated
+2024-04-05 19:45:00,976 [INFO] google drive ping is working
+2024-04-05 19:45:01,249 [INFO] Connected to the internet!
+2024-04-05 19:46:17,378 [INFO] macOS detected
+2024-04-05 19:46:17,382 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-05 19:46:17,382 [INFO] sending cmd: status stop
+2024-04-05 19:46:17,699 [INFO] GoogleHandler initiated
+2024-04-05 19:46:18,301 [INFO] google drive ping is working
+2024-04-05 19:46:18,549 [INFO] Connected to the internet!
