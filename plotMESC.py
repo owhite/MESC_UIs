@@ -41,6 +41,8 @@ class PlotMESCOutput:
             return(data_dict)
 
     def loadDataFrame(self, d):
+        # These creep in for squirrely reasons
+        d = d.replace("}{", "}\n{") 
         json_lines = d.strip().split('\n')
         data = [json.loads(line) for line in json_lines]
         df = pd.DataFrame(data)
@@ -63,10 +65,14 @@ class PlotMESCOutput:
 
         if not dict.get("JSON BLOCK"):
             print("something is wrong with json, returning")
-            return()
+            return(None, None)
                 
         df = self.loadDataFrame(dict["JSON BLOCK"])
+
         # this is what comes back from a "get" call to Jens term
+        if not dict.get("get"):
+            print("something is wrong with get, returning")
+            return(None, None)
         results = self.loadGetResults(dict["get"])
 
         df['phaseA'] = np.sqrt( (df['id'] * df['id']) + (df['iq'] * df['iq']) )

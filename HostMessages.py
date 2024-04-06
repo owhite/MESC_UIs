@@ -197,8 +197,11 @@ class LogHandler():
             datatypes = ('ehz', 'phaseA', 'iqreq', 'vbus')
             p = plotMESC.PlotMESCOutput()
             (plt, fig) = p.generatePlot(self.datafile_name, datatypes)
-            self.logger.info(F"Created plot: {self.plot_file}")
-            plt.savefig(self.plot_file)
+            if plt is not None and fig is not None:
+                self.logger.info(F"Created plot: {self.plot_file}")
+                plt.savefig(self.plot_file)
+            else:
+                self.logger.info(F"No plot saved")
 
 def main():
     pass

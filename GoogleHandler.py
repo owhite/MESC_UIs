@@ -139,7 +139,7 @@ class handler:
 
         self.drive_service.permissions().create(fileId=file_id, body=permission).execute()
 
-    def add_row_to_spreadsheet(self, plot_url, data_url, timestamp, note):
+    def add_row_to_spreadsheet(self, plot_url, data_url, size, timestamp, note):
         # Define the scope and credentials
         scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
         client = gspread.authorize(self.credentials)
@@ -153,7 +153,7 @@ class handler:
             spreadsheet = client.open_by_key(spreadsheet_id)
             worksheet = client.open_by_key(spreadsheet_id).worksheet(worksheet_name)
             # Add a new row of data to the end of the worksheet
-            new_data = [plot_url, data_url, timestamp, note]
+            new_data = [plot_url, data_url, size, timestamp, note]
             worksheet.append_row(new_data, value_input_option='USER_ENTERED')
 
             if self.logger:
@@ -249,13 +249,15 @@ class uploadThread(threading.Thread):
         plot_url = self.uploadToDrive(self.files[1], 'thing.png')
         self.status_label.setText(F"Insert into spreadsheet")
 
+        data_length = self.dataLength(self.files[0])
+
         u1 = (F"=hyperlink(\"{plot_url}\", \"PLOT\")")
         u2 = (F"=hyperlink(\"{file_url}\", \"DATA\")")
         today = datetime.today()
         current_time = datetime.now()
         military_time = current_time.strftime("%H:%M")
         formatted_date = today.strftime("%m-%d-%y") + " " + military_time
-        self.drive.add_row_to_spreadsheet(u1, u2, formatted_date, self.note)
+        self.drive.add_row_to_spreadsheet(u1, u2, data_length, formatted_date, self.note)
         self.status_label.setText(F"Done with upload")
         for file_path in self.files:
             try:
@@ -287,6 +289,43 @@ class uploadThread(threading.Thread):
         self.drive.set_permissions(file_id)
 
         return(file_url)
+
+    def dataLength(self, data_file):
+        dict = self.openFile(data_file)
+
+        if not dict.get("JSON BLOCK"):
+            print("something is wrong with json, returning")
+            return(None)
+        d = dict["JSON BLOCK"]
+        d = d.replace("}{", "}\n{") 
+        json_lines = d.strip().split('\n')
+        return(len(json_lines))
+
+    def openFile(self, dname):
+        data_dict = {}
+
+        with open(dname, 'r') as file:
+            key = None
+            value = []
+
+            for line in file:
+                line = line.strip()
+
+                # Check if the line starts with '[' and ends with ']'
+                if line.startswith('[') and line.endswith(']'):
+                    if key is not None:
+                        data_dict[key] = "\n".join(value)
+                        value = []
+
+                    key = line[1:-1]  # Remove brackets
+                else:
+                    value.append(line)
+
+            if key is not None:
+                data_dict[key] = "\n".join(value)
+
+            return(data_dict)
+
 
 if __name__ == '__main__':
     # Example usage:
