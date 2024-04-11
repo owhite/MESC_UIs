@@ -15,6 +15,14 @@ class PlotMESCOutput:
     def __init__(self):
         pass
 
+    def rawPrint(self, file_path):
+        with open(file_path, 'r') as file:
+            key = None
+            value = []
+
+            for line in file:
+                print(line)
+        
     def openFile(self, dname):
         data_dict = {}
 
@@ -61,6 +69,8 @@ class PlotMESCOutput:
 
     # pass the file that serves as source of data
     def generatePlot(self, data_file, datatypes):
+        # self.rawPrint(data_file)
+
         dict = self.openFile(data_file)
 
         if not dict.get("JSON BLOCK"):
@@ -104,6 +114,7 @@ class PlotMESCOutput:
         ax2.spines.right.set_position(("axes", 1.1))
         ax3.spines.right.set_position(("axes", 1.2))
     
+        # xxx
         title = ("{0}A, FW={1}".format(int(float(results['curr_max'][2])),
                                             int(float(results['fw_curr'][0]))))
         plt.title(title)

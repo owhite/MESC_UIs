@@ -11,6 +11,7 @@ from datetime import datetime
 
 from PyQt5 import QtCore
 from PyQt5.QtSerialPort import QSerialPort, QSerialPortInfo
+from PyQt5.QtWidgets import QLabel
 
 import Payload
 import plotMESC
@@ -52,6 +53,16 @@ class LogHandler():
 
         self.json_collect_str = ''
         self.json_collect_flag = False
+        self.hostStatusText = None
+
+
+    def initHostStatusLabel(self, label):
+        if isinstance(label, QLabel):
+            self.hostStatusText = label
+
+    def setStatusText(self, text):
+        if self.hostStatusText and isinstance(self.hostStatusText, QLabel):
+            self.hostStatusText.setText(text)
 
     def closePort(self):
         if self.serial:
@@ -69,14 +80,14 @@ class LogHandler():
             r = self.port.open(QtCore.QIODevice.ReadWrite)
             if not r:
                 self.logger.info("Log Handler port: %s not open", self.portName)
-                # self.statusText.setText('Port open: error')
+                # self.setStatusText('Port open: error')
             else:
                 self.logger.info("Log Handler opened for port: %s", self.portName)
-                # self.statusText.setText('Port opened')
+                # self.setStatusText('Port opened')
                 self.port.readyRead.connect(self.parseStream)
         else:
             self.port.close()
-            # self.statusText.setText('Port closed')
+            # self.setStatusText('Port closed')
 
     def sendToPort(self, text):
         if not self.port.isOpen():
@@ -193,14 +204,17 @@ class LogHandler():
                 handler.close()
             self.data_logger = None
             self.logger.info("Finished logging")
+            self.setStatusText("Finished logging")
 
             datatypes = ('ehz', 'phaseA', 'iqreq', 'vbus')
             p = plotMESC.PlotMESCOutput()
             (plt, fig) = p.generatePlot(self.datafile_name, datatypes)
             if plt is not None and fig is not None:
                 self.logger.info(F"Created plot: {self.plot_file}")
+                self.setStatusText("Created plot file")
                 plt.savefig(self.plot_file)
             else:
+                self.setStatusText("No plot saved")
                 self.logger.info(F"No plot saved")
 
 def main():

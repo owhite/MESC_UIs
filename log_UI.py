@@ -4,6 +4,7 @@ import colorsys
 import logging
 import math
 import os
+import glob
 import subprocess
 import sys
 import time
@@ -41,7 +42,10 @@ class TopApplication(QMainWindow):
         # collect up some things
         if sys.platform.startswith('darwin'):
             self.msgs.logger.info("macOS detected")
-            self.portName = '/dev/tty.usbmodem3552356B32321'
+            matches = glob.glob('/dev/tty.usbmodem*')
+            if len(matches) == 1:
+                self.portName = matches[0]
+            # this is stupid AF, but...
             account_file = "/Users/owhite/mesc-data-logging-ae144bcc6287.json"
         elif sys.platform.startswith('linux'):
             account_file = "/home/pi/mesc-data-logging-083b86e157cf.json"
@@ -55,6 +59,7 @@ class TopApplication(QMainWindow):
 
         # open port, sometimes it's already streaming, shut it off
         self.msgs.openPort(self.portName)
+        self.msgs.sendToPort('su -g') # totally safe
         self.msgs.sendToPort('status stop') 
 
         # manage the uploader
@@ -78,12 +83,12 @@ class TopApplication(QMainWindow):
         self.current_tab_index = 0
         self.tab_count = 3
 
-        self.tab1 = mainTab(self)
+        self.mainTab = mainTab(self)
         self.systemsTab = SystemsTab(self)
         self.serialOutTab = SerialOutTab(self)
         self.statusTab = StatusTab(self)
 
-        self.tab1.setFocusPolicy(Qt.StrongFocus)
+        self.mainTab.setFocusPolicy(Qt.StrongFocus)
         self.systemsTab.setFocusPolicy(Qt.StrongFocus)
         self.serialOutTab.setFocusPolicy(Qt.StrongFocus)
         self.statusTab.setFocusPolicy(Qt.StrongFocus)
@@ -95,27 +100,30 @@ class TopApplication(QMainWindow):
         handler2 = self.serialOutTab
         self.msgs.serial_msgs.addHandler(handler2)
 
+        self.mainTab.installEventFilter(self.mainTab)
+        self.serialOutTab.installEventFilter(self.serialOutTab)
+        self.systemsTab.installEventFilter(self.systemsTab)
+        self.statusTab.installEventFilter(self.statusTab)
+
         # Add each tab to the QTabWidget
-        self.tabs.addTab(self.tab1, "LOG")
+        self.tabs.addTab(self.mainTab, "LOG")
         self.tabs.addTab(self.serialOutTab, "SER")
         self.tabs.addTab(self.systemsTab, "MSGS")
         self.tabs.addTab(self.statusTab, "STAT")
 
         self.setCentralWidget(self.tabs)
 
-        # Install event filter to handle key events
-        self.installEventFilter(self)
-
     def tab_changed(self, index):
         if self.tabs.widget(index) == self.statusTab:
             self.statusTab.update_stats()
 
-    def keyPressEvent(self, event):
-        key = event.key()
-        print(f"Key Pressed in Main Window: {key}")
-        
-        # print ("T: ", self.tabs.currentIndex())
-        self.tabs.setCurrentIndex(self.tabs.currentIndex())
+    def eventFilter(self, obj, event):
+        # Custom event handling for MainWindow
+        if event.type() == QEvent.KeyPress:
+            key = event.key()
+            print(f"KEY PRESS NOT CAPTURED: {key}")
+            return True
+        return False
 
 class mainTab(QMainWindow):
     def __init__(self, parent=None):
@@ -155,6 +163,78 @@ class mainTab(QMainWindow):
 
         self.init_ui()
 
+    def eventFilter(self, obj, event):
+        # Custom event handling for MainWindow
+        if event.type() == QEvent.KeyPress:
+            key = event.key()
+            event.accept()
+            # print(f"Key Pressed in Log Tab: {key} button: {self.current_index} row: {self.highlight_row}")
+            if key == Qt.Key_Escape: # resets the settings of th tab
+                self.line_edit.hide()
+                self.current_index = 0
+                self.highlight_row = 1
+                self.highlight_widget()
+            elif key == Qt.Key_PageUp:
+                pass
+            elif key == Qt.Key_PageDown:
+                pass
+            elif key == Qt.Key_Home:
+                pass
+            elif key == Qt.Key_End:
+                pass
+
+            if self.highlight_row == 0:
+                if key == Qt.Key_Left:
+                    self.current_index = -1 # deselects all buttons
+                    current_tab_index = self.tabs.currentIndex()
+                    next_tab_index = (current_tab_index - 1) % self.tabs.count()
+                    self.tabs.setCurrentIndex(next_tab_index)
+                    self.highlight_widget()
+                elif key == Qt.Key_Right:
+                    self.current_index = -1 # deselects all buttons
+                    current_tab_index = self.tabs.currentIndex()
+                    next_tab_index = (current_tab_index + 1) % self.tabs.count()
+                    self.tabs.setCurrentIndex(next_tab_index)
+                    self.highlight_widget()
+                elif key == Qt.Key_Down:
+                    self.current_index = 0
+                    self.highlight_row = 1
+                    self.highlight_widget()
+            else:
+                if key == Qt.Key_Up:
+                    self.highlight_row = 0
+                    self.line_edit.clearFocus()
+                    self.current_index = -1
+                    self.highlight_widget()
+                elif key == Qt.Key_Down:
+                    self.current_index = -1
+                    self.line_edit.show()
+                    self.line_edit.setFocus()
+                    self.highlight_widget()
+                elif key == Qt.Key_Right:
+                    self.current_index = (self.current_index + 1) % len(self.widgets)
+                    self.highlight_widget()
+                elif key == Qt.Key_Left:
+                    self.current_index = (self.current_index - 1) % len(self.widgets)
+                    self.highlight_widget()
+                elif key == Qt.Key_Return:
+                    if self.line_edit.hasFocus():
+                        self.log_button.setFocus()
+                        self.line_edit.clear()
+                        self.line_edit.clearFocus()
+                        self.line_edit.hide()
+                        QTimer.singleShot(0, self.set_button_focus)
+                        self.current_index = -1
+                        self.highlight_widget()
+                    else:
+                        self.trigger_button()
+                        self.highlight_widget()
+
+
+            print(f"Key Pressed in main tab: {key}")
+            return True
+        return False
+
     def init_ui(self):
         # Set window geometry
 
@@ -176,6 +256,9 @@ class mainTab(QMainWindow):
         font = self.status_label.font()
         font.setPointSize(40)
         self.status_label.setFont(font)
+
+        # xxx
+        self.msgs.initHostStatusLabel(self.status_label)
 
         # Create the four buttons with larger font size
         self.log_button = QPushButton('LOG', self)
@@ -237,73 +320,6 @@ class mainTab(QMainWindow):
         self.checkStatus()
         super().mousePressEvent(event)
 
-    def keyPressEvent(self, event):
-        key = event.key()
-        
-        # print(f"Key Pressed in Log Tab: {key} button: {self.current_index} row: {self.highlight_row}")
-        if key == Qt.Key_Escape: # resets the settings of th tab
-            self.line_edit.hide()
-            self.current_index = 0
-            self.highlight_row = 1
-            self.highlight_widget()
-        elif key == Qt.Key_PageUp:
-            pass
-        elif key == Qt.Key_PageDown:
-            pass
-        elif key == Qt.Key_Home:
-            pass
-        elif key == Qt.Key_End:
-            pass
-
-        if self.highlight_row == 0:
-            if key == Qt.Key_Left:
-                self.current_index = -1 # deselects all buttons
-                current_tab_index = self.tabs.currentIndex()
-                next_tab_index = (current_tab_index - 1) % self.tabs.count()
-                self.tabs.setCurrentIndex(next_tab_index)
-                self.highlight_widget()
-            elif key == Qt.Key_Right:
-                self.current_index = -1 # deselects all buttons
-                current_tab_index = self.tabs.currentIndex()
-                next_tab_index = (current_tab_index + 1) % self.tabs.count()
-                self.tabs.setCurrentIndex(next_tab_index)
-                self.highlight_widget()
-            elif key == Qt.Key_Down:
-                self.current_index = 0
-                self.highlight_row = 1
-                self.highlight_widget()
-        else:
-            if key == Qt.Key_Up:
-                self.highlight_row = 0
-                self.line_edit.clearFocus()
-                self.current_index = -1
-                self.highlight_widget()
-            elif key == Qt.Key_Down:
-                self.current_index = -1
-                self.line_edit.show()
-                self.line_edit.setFocus()
-                self.highlight_widget()
-            elif key == Qt.Key_Right:
-                self.current_index = (self.current_index + 1) % len(self.widgets)
-                self.highlight_widget()
-            elif key == Qt.Key_Left:
-                self.current_index = (self.current_index - 1) % len(self.widgets)
-                self.highlight_widget()
-            elif key == Qt.Key_Return:
-                if self.line_edit.hasFocus():
-                    self.log_button.setFocus()
-                    self.line_edit.clear()
-                    self.line_edit.clearFocus()
-                    self.line_edit.hide()
-                    QTimer.singleShot(0, self.set_button_focus)
-                    self.current_index = -1
-                    self.highlight_widget()
-
-                else:
-                    self.trigger_button()
-                    self.highlight_widget()
-
-        event.accept()
 
     def set_button_focus(self):
         self.current_index = -1
@@ -370,11 +386,13 @@ class mainTab(QMainWindow):
         if self.log_is_on:
             self.msgs.endDataLogging(self.output_plot_file)
         else:
+            self.status_label.setText("Logging initiated")
             self.msgs.initDataLogging(self.output_data_file)
 
         self.log_is_on = not self.log_is_on
         self.highlight_widget()
-        self.status_label.setText("Logging initiated")
+        print("Logging initiated")
+        print(self.status_label)
 
     def handle_plot_window_close(self):
         self.activateWindow()
@@ -407,6 +425,7 @@ class mainTab(QMainWindow):
             self.plot_window = PlotWindow(self.output_plot_file)
             self.plot_window.closing.connect(self.handle_plot_window_close)
             self.plot_window.show()
+
 
 # the HostMessaging class creates system logs and opens the serial to talk to controller
 #  this tab takes output from the serial messages that are not used in logging
@@ -446,19 +465,26 @@ class SerialOutTab(QMainWindow, logging.Handler):
 
         self.setCentralWidget(widget)
 
-    def keyPressEvent(self, event):
-        key = event.key()
+    def eventFilter(self, obj, event):
+        # Custom event handling for MainWindow
+        if event.type() == QEvent.KeyPress:
+            key = event.key()
+            current_tab_index = self.tabs.currentIndex()
 
-        current_tab_index = self.tabs.currentIndex()
+            if key == Qt.Key_Escape:
+                self.line_edit.hide()
+            elif key == Qt.Key_Left:
+                next_tab_index = (current_tab_index - 1) % self.tabs.count()
+                self.tabs.setCurrentIndex(next_tab_index)
+            elif key == Qt.Key_Right:
+                next_tab_index = (current_tab_index + 1) % self.tabs.count()
+                self.tabs.setCurrentIndex(next_tab_index)
 
-        if key == Qt.Key_Escape:
-            self.line_edit.hide()
-        elif key == Qt.Key_Left:
-            next_tab_index = (current_tab_index - 1) % self.tabs.count()
-            self.tabs.setCurrentIndex(next_tab_index)
-        elif key == Qt.Key_Right:
-            next_tab_index = (current_tab_index + 1) % self.tabs.count()
-            self.tabs.setCurrentIndex(next_tab_index)
+            print(f"Key Pressed in serial out tab: {key}")
+            event.accept()
+            return True
+        event.accept()
+        return False
 
     def on_line_edit_click(self, event):
         super().mousePressEvent(event)
@@ -524,19 +550,25 @@ class SystemsTab(QMainWindow, logging.Handler):
         msg = self.format(record)
         self.append_text(msg)
 
-    def keyPressEvent(self, event):
-        key = event.key()
+    def eventFilter(self, obj, event):
+        # Custom event handling for MainWindow
+        if event.type() == QEvent.KeyPress:
+            key = event.key()
+            event.accept()
+            current_tab_index = self.tabs.currentIndex()
 
-        current_tab_index = self.tabs.currentIndex()
+            if key == Qt.Key_Escape:
+                self.line_edit.hide()
+            elif key == Qt.Key_Left:
+                next_tab_index = (current_tab_index - 1) % self.tabs.count()
+                self.tabs.setCurrentIndex(next_tab_index)
+            elif key == Qt.Key_Right:
+                next_tab_index = (current_tab_index + 1) % self.tabs.count()
+                self.tabs.setCurrentIndex(next_tab_index)
 
-        if key == Qt.Key_Escape:
-            self.line_edit.hide()
-        elif key == Qt.Key_Left:
-            next_tab_index = (current_tab_index - 1) % self.tabs.count()
-            self.tabs.setCurrentIndex(next_tab_index)
-        elif key == Qt.Key_Right:
-            next_tab_index = (current_tab_index + 1) % self.tabs.count()
-            self.tabs.setCurrentIndex(next_tab_index)
+            print(f"Key Pressed in systems tab: {key}")
+            return True
+        return False
 
     def append_text(self, text):
         self.text_edit.append(text)
@@ -589,19 +621,24 @@ class StatusTab(QMainWindow):
 
         self.setCentralWidget(widget)
         
-    def keyPressEvent(self, event):
-        key = event.key()
+    def eventFilter(self, obj, event):
+        # Custom event handling for MainWindow
+        if event.type() == QEvent.KeyPress:
+            key = event.key()
+            event.accept()
+            current_tab_index = self.tabs.currentIndex()
+            if key == Qt.Key_Escape:
+                self.line_edit.hide()
+            elif key == Qt.Key_Left:
+                next_tab_index = (current_tab_index - 1) % self.tabs.count()
+                self.tabs.setCurrentIndex(next_tab_index)
+            elif key == Qt.Key_Right:
+                next_tab_index = (current_tab_index + 1) % self.tabs.count()
+                self.tabs.setCurrentIndex(next_tab_index)
 
-        current_tab_index = self.tabs.currentIndex()
-
-        if key == Qt.Key_Escape:
-            self.line_edit.hide()
-        elif key == Qt.Key_Left:
-            next_tab_index = (current_tab_index - 1) % self.tabs.count()
-            self.tabs.setCurrentIndex(next_tab_index)
-        elif key == Qt.Key_Right:
-            next_tab_index = (current_tab_index + 1) % self.tabs.count()
-            self.tabs.setCurrentIndex(next_tab_index)
+            print(f"Key Pressed in status tab: {key}")
+            return True
+        return False
 
     def update_stats(self):
         text =  "UPDATE STATS\n"
