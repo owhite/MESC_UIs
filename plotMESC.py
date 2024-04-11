@@ -82,6 +82,7 @@ class PlotMESCOutput:
         # this is what comes back from a "get" call to Jens term
         if not dict.get("get"):
             print("something is wrong with get, returning")
+            self.rawPrint(data_file)
             return(None, None)
         results = self.loadGetResults(dict["get"])
 
