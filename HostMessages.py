@@ -80,14 +80,14 @@ class LogHandler():
             r = self.port.open(QtCore.QIODevice.ReadWrite)
             if not r:
                 self.logger.info("Log Handler port: %s not open", self.portName)
-                # self.setStatusText('Port open: error')
+                self.setStatusText('Port open: error')
             else:
                 self.logger.info("Log Handler opened for port: %s", self.portName)
-                # self.setStatusText('Port opened')
+                self.setStatusText('Port opened')
                 self.port.readyRead.connect(self.parseStream)
         else:
             self.port.close()
-            # self.setStatusText('Port closed')
+            self.setStatusText('Port closed')
 
     def sendToPort(self, text):
         if not self.port.isOpen():
@@ -188,6 +188,8 @@ class LogHandler():
 
         self.term_collect_flag = True
         self.json_collect_flag = True
+
+        self.sendToPort('status stop')
 
         self.sendToPort('get')
         self.sendToPort('status json')
