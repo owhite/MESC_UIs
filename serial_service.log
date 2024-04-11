@@ -2354,3 +2354,10 @@
 2024-04-06 09:43:03,984 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
 2024-04-06 09:43:03,986 [INFO] File 'MESC_logdata.txt' deleted successfully.
 2024-04-06 09:43:03,987 [INFO] File 'MESC_plt.png' deleted successfully.
+2024-04-06 11:14:44,881 [INFO] macOS detected
+2024-04-06 11:14:44,883 [INFO] Log Handler port: /dev/tty.usbmodem3552356B32321 not open
+2024-04-06 11:14:44,883 [INFO] cant send cmd: status stop port not open
+2024-04-06 11:14:45,150 [INFO] GoogleHandler initiated
+2024-04-06 11:14:45,785 [INFO] google drive ping is working
+2024-04-06 11:14:46,034 [INFO] Connected to the internet!
+2024-04-06 11:15:08,130 [INFO] cant send cmd: thing port not open
