@@ -189,8 +189,8 @@ class LogHandler():
         self.term_collect_flag = True
         self.json_collect_flag = True
 
+        # owen change
         self.sendToPort('status stop')
-
         self.sendToPort('get')
         self.sendToPort('status json')
 
