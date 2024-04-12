@@ -21,6 +21,7 @@ class PlotMESCOutput:
             value = []
 
             for line in file:
+                line = line.strip()
                 print(line)
         
     def openFile(self, dname):

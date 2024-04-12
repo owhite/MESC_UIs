@@ -297,7 +297,10 @@ class uploadThread(threading.Thread):
             print("something is wrong with json, returning")
             return(None)
         d = dict["JSON BLOCK"]
-        d = d.replace("}{", "}\n{") 
+        if "}{" in d:
+            print("FIX THIS, SHOULD BE REMOVED NOW") 
+            d = d.replace("}{", "}\n{") 
+            
         json_lines = d.strip().split('\n')
         return(len(json_lines))
 

@@ -1,0 +1,39 @@
+        # hoping this means we have a complete block from terminal
+        if remaining_text.endswith("@MESC>"):
+            print("PACKET<\n", remaining_text, ">PACKET")
+
+        if len(json_text) > 0:
+            t = json_text
+            # here is where the stream gets split to either go to self.data_logger or self.serial_msgs
+            if self.data_logger:
+                if self.json_collect_flag:
+                    self.data_logger.info("[JSON BLOCK]")
+                    self.json_collect_flag = False
+                self.data_logger.info(f"{t}")
+            else:
+                self.serial_msgs.info(f"{t}")
+
+            self.serialPayload.resetTimer() 
+
+        # hoping this means we have a complete block from terminal
+        if remaining_text.endswith("@MESC>"):
+            s = self.serialPayload.reportString()
+            cmd = s.split("\n")
+
+            # also where the stream gets split
+            if self.data_logger:
+                if len(cmd) > 2:
+                    self.data_logger.info("[{0}]\n{1}".format(cmd[0],"\n".join(cmd[1:])))
+                else:
+                    self.data_logger.info("[{0}]\n{1}".format(cmd[0],self.serialPayload.reportString()))
+            else:
+                t = ''
+                for line in self.serialPayload.reportString().split('\n'):
+                    if line.count('\t') == 4:
+                        l = line.split('\t')
+                        w = l[0]
+                        t = t + w[:10] + '\t' + l[1] + '\n'
+                    else:
+                        t = t + line + '\n'
+
+                self.serial_msgs.info(t)

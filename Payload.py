@@ -32,6 +32,7 @@ class Payload:
 
     def resetString(self):
         """set string to empty"""
+        print("PAYLOAD reset")
         if self._string is None:
             raise PayloadError(f"init string to reset it")
 

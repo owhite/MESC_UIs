@@ -57,10 +57,7 @@ class TopApplication(QMainWindow):
     
         self.internet = GoogleHandler.PingInternet(self.msgs.logger)
 
-        # open port, sometimes it's already streaming, shut it off
         self.msgs.openPort(self.portName)
-        self.msgs.sendToPort('su -g') # totally safe
-        self.msgs.sendToPort('status stop') 
 
         # manage the uploader
         self.drive = GoogleHandler.handler(self.msgs.logger, account_file)
@@ -389,10 +386,17 @@ class mainTab(QMainWindow):
             self.status_label.setText("Logging initiated")
             self.msgs.initDataLogging(self.output_data_file)
 
+        self.log_button.setEnabled(False)
+        timer = QTimer(self)
+        timer.setSingleShot(True)  # Trigger only once
+        timer.timeout.connect(lambda: self.log_button.setEnabled(True))  # Directly connect to setEnabled
+        timer.start(200)  # Start the timer with
+
         self.log_is_on = not self.log_is_on
         self.highlight_widget()
-        print("Logging initiated")
-        print(self.status_label)
+
+    def enableButton(self):
+        self.button.setEnabled(True)
 
     def handle_plot_window_close(self):
         self.activateWindow()

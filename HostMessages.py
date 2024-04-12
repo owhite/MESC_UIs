@@ -10,6 +10,7 @@ import sys
 from datetime import datetime
 
 from PyQt5 import QtCore
+from PyQt5.QtCore import QTimer
 from PyQt5.QtSerialPort import QSerialPort, QSerialPortInfo
 from PyQt5.QtWidgets import QLabel
 
@@ -68,6 +69,7 @@ class LogHandler():
         if self.serial:
             self.serial.close()
 
+        
     def openPort(self, name):
         self.portName = name
         if not self.port.isOpen():
@@ -79,12 +81,15 @@ class LogHandler():
             self.port.setFlowControl( 0 ) 
             r = self.port.open(QtCore.QIODevice.ReadWrite)
             if not r:
-                self.logger.info("Log Handler port: %s not open", self.portName)
+                self.logger.info(F"Log Handler port: {self.portName} not open")
                 self.setStatusText('Port open: error')
             else:
-                self.logger.info("Log Handler opened for port: %s", self.portName)
+                self.logger.info(F"Log Handler opened for port: {self.portName}")
                 self.setStatusText('Port opened')
                 self.port.readyRead.connect(self.parseStream)
+                self.sendToPort('su -g') # totally safe
+                self.sendToPort('status stop')
+
         else:
             self.port.close()
             self.setStatusText('Port closed')
@@ -95,72 +100,59 @@ class LogHandler():
         else:
             self.logger.info("sending cmd: {0}".format(text))
             text = text + '\r\n'
-            self.serialPayload.resetString()
             self.port.write( text.encode() )
 
+    # treat this function as a state machine
     def parseStream(self):
         data = self.port.readAll().data().decode()
 
         # strip vt100 chars
-        ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+        ansi_escape = re.compile(r'\x1b[^m]*m|\x1b[^m]*$|^\x1b[^m]*')
         data = ansi_escape.sub('', data)
         data = re.sub('\\| ', '\t', data)
 
         # get current buffer, add the data
-        r = self.serialPayload.reportString() + data
+        self.serialPayload.concatString(data)
         
-        # Extract json strings from input buffer
-        text_inside_braces = ''
-        pattern = r'(\{[^}]+\}\r\n)'            # find text between "{.*}\r\n"
-        matches = re.findall(pattern, r)        # get all matches
-        text_inside_braces = ''.join(matches)   # concatenate all matches
-        remaining_text = re.sub(pattern, '', r) # remove these
-        pattern = r'(\r)'                       # more purification
-        remaining_text = re.sub(pattern, '', remaining_text)
+        remaining_text = ''
+        s = self.serialPayload.reportString()
 
-        if len(text_inside_braces) > 0:
-            t = text_inside_braces.replace('\r', '').replace('\n', '')
-            # here is where the stream gets split to either go to self.data_logger or self.serial_msgs
+        json_text = ''
+        if re.search("{.*}", s):
+            s = s.replace('\r', '')
+            s = s.replace("\x00", '')
+            pattern = r'\{(.*?)\}\n'
+            pattern = r'(\{.*\})\n'
+            matches = re.findall(pattern, s, re.DOTALL)
+            remaining_text = re.sub(pattern, '', s)
+            self.serialPayload.setString(remaining_text)
+            json_text = ''.join(matches)
+            json_text = json_text.replace('\r', '').replace('\n', '')
+            json_text = json_text.replace("}{", "}\n{") 
+
+        if len(json_text) > 0:
+            # split json to go to self.data_logger or self.serial_msgs
             if self.data_logger:
-                # t = text_inside_braces.replace('\r', '').replace('\n', '')
                 if self.json_collect_flag:
                     self.data_logger.info("[JSON BLOCK]")
                     self.json_collect_flag = False
-                self.data_logger.info(f"{t}")
+                self.data_logger.info(f"{json_text}")
             else:
-                self.serial_msgs.info(f"{t}")
+                self.serial_msgs.info(f"{json_text}")
 
             self.serialPayload.resetTimer() 
 
-        # hoping this means we have a complete block from terminal
-        if remaining_text.endswith("@MESC>"):
-            s = self.serialPayload.reportString()
-            cmd = s.split("\n")
+        s = self.serialPayload.reportString()
+        if "usb@MESC>" in s:
+            pass
+            # print(">>>>>>")
+            # print(s)
+            # print("<<<<<<")
+            # s = self.serialPayload.resetString()
 
-            # also where the stream gets split
-            if self.data_logger:
-                if len(cmd) > 2:
-                    self.data_logger.info("[{0}]\n{1}".format(cmd[0],"\n".join(cmd[1:])))
-                else:
-                    self.data_logger.info("[{0}]\n{1}".format(cmd[0],self.serialPayload.reportString()))
-            else:
-                t = ''
-                for line in self.serialPayload.reportString().split('\n'):
-                    if line.count('\t') == 4:
-                        l = line.split('\t')
-                        w = l[0]
-                        t = t + w[:10] + '\t' + l[1] + '\n'
-                    else:
-                        t = t + line + '\n'
+        # data = ''
+        # remaining_text = ''
 
-                self.serial_msgs.info(t)
-
-            self.serialPayload.resetString()
-            r = ''
-            data = ''
-            remaining_text = ''
-            
-        self.serialPayload.setString(remaining_text)
 
     def initDataLogging(self, file_name):
         self.logger.info("Initiate data logging: %s")
@@ -189,10 +181,10 @@ class LogHandler():
         self.term_collect_flag = True
         self.json_collect_flag = True
 
-        # owen change
-        self.sendToPort('status stop')
         self.sendToPort('get')
+        self.serialPayload.resetTimer() 
         self.sendToPort('status json')
+
 
     def endDataLogging(self, plot_file):
         self.sendToPort('status stop')
