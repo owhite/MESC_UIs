@@ -102,6 +102,39 @@ class LogHandler():
             text = text + '\r\n'
             self.port.write( text.encode() )
 
+    def chow_block(self, text, token):
+        flag = False
+
+        t = text
+        # not really intuitive but remove the token if at beginning of string
+        #  the idea is the remainder will get save for the next round of parsing
+        if text.startswith(token):
+            t = text.replace(token, '', 1)
+
+        if len(t) == 0: # you get this if string was empty or was just a prompt
+            return False, t, t
+
+        l = t.split(token)
+        payload = ''
+        remainder = ''
+        if len(l) == 1: # no token, everything goes in remainder
+            remainder = l[0]
+        elif len(l) == 2:
+            payload = l[0]
+        elif len(l) > 2:
+            flag = True
+            payload = l[0]
+            remainder = token.join(l[1:])
+        else:
+            print("chow_block: unforseen parsing condition")
+            payload = "chow_block: unforseen parsing condition"
+
+        # fakes the user out by showing the prompt at the beginning of the payload
+        if len(payload) > 0:
+            payload = token + payload
+
+        return flag, payload, remainder
+
     # treat this function as a state machine
     def parseStream(self):
         data = self.port.readAll().data().decode()
@@ -143,16 +176,17 @@ class LogHandler():
             self.serialPayload.resetTimer() 
 
         s = self.serialPayload.reportString()
-        if "usb@MESC>" in s:
-            pass
-            # print(">>>>>>")
-            # print(s)
-            # print("<<<<<<")
-            # s = self.serialPayload.resetString()
+        token = "usb@MESC>"
 
-        # data = ''
-        # remaining_text = ''
+        result, first_block, second_block = self.chow_block(s, token)
+        while(result):    
+            print("BLOCK 1: " + first_block)
+            result, first_block, second_block = self.chow_block(second_block, token)
 
+        if len(first_block)!= 0:
+            print ("BLOCK 2: " + first_block)
+
+        self.serialPayload.setString(second_block)
 
     def initDataLogging(self, file_name):
         self.logger.info("Initiate data logging: %s")
