@@ -81,11 +81,11 @@ class PlotMESCOutput:
         df = self.loadDataFrame(dict["JSON BLOCK"])
 
         # this is what comes back from a "get" call to Jens term
-        if not dict.get("get"):
+        if not dict.get("GET"):
             print("something is wrong with get, returning")
             self.rawPrint(data_file)
             return(None, None)
-        results = self.loadGetResults(dict["get"])
+        results = self.loadGetResults(dict["GET"])
 
         df['phaseA'] = np.sqrt( (df['id'] * df['id']) + (df['iq'] * df['iq']) )
 

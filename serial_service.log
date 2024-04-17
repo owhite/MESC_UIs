@@ -4480,3 +4480,1062 @@
 2024-04-14 20:18:10,332 [INFO] sending cmd: get vbus
 2024-04-14 20:18:17,228 [INFO] sending cmd: get vbus
 2024-04-14 20:18:35,980 [INFO] sending cmd: 
+2024-04-14 20:34:14,682 [INFO] macOS detected
+2024-04-14 20:34:14,686 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-14 20:34:14,686 [INFO] sending cmd: su -g
+2024-04-14 20:34:14,686 [INFO] sending cmd: status stop
+2024-04-14 20:34:14,894 [INFO] GoogleHandler initiated
+2024-04-14 20:34:15,382 [INFO] google drive ping is working
+2024-04-14 20:34:15,858 [INFO] Connected to the internet!
+2024-04-14 20:34:35,670 [INFO] sending cmd: get
+2024-04-14 20:34:57,518 [INFO] Initiate data logging: %s
+2024-04-14 20:34:57,518 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-14 20:34:57,519 [INFO] sending cmd: get
+2024-04-14 20:34:57,519 [INFO] sending cmd: status json
+2024-04-14 20:34:59,764 [INFO] sending cmd: status stop
+2024-04-14 20:34:59,765 [INFO] Finished logging
+2024-04-14 20:34:59,767 [INFO] No plot saved
+2024-04-14 20:35:16,472 [INFO] macOS detected
+2024-04-14 20:35:16,476 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-14 20:35:16,476 [INFO] sending cmd: su -g
+2024-04-14 20:35:16,476 [INFO] sending cmd: status stop
+2024-04-14 20:35:16,653 [INFO] GoogleHandler initiated
+2024-04-14 20:35:17,146 [INFO] google drive ping is working
+2024-04-14 20:35:17,523 [INFO] Connected to the internet!
+2024-04-14 20:35:21,127 [INFO] Initiate data logging: %s
+2024-04-14 20:35:21,128 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-14 20:35:21,128 [INFO] sending cmd: get
+2024-04-14 20:35:21,128 [INFO] sending cmd: status json
+2024-04-14 20:35:23,114 [INFO] sending cmd: status stop
+2024-04-14 20:35:23,115 [INFO] Finished logging
+2024-04-14 20:35:23,116 [INFO] No plot saved
+2024-04-14 20:37:18,530 [INFO] macOS detected
+2024-04-14 20:37:18,535 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-14 20:37:18,535 [INFO] sending cmd: su -g
+2024-04-14 20:37:18,535 [INFO] sending cmd: status stop
+2024-04-14 20:37:18,761 [INFO] GoogleHandler initiated
+2024-04-14 20:37:19,283 [INFO] google drive ping is working
+2024-04-14 20:37:19,578 [INFO] Connected to the internet!
+2024-04-14 20:37:38,659 [INFO] sending cmd: get vbus
+2024-04-14 20:37:51,461 [INFO] sending cmd: get vbus
+2024-04-14 20:37:56,938 [INFO] sending cmd: get vbus
+2024-04-14 20:38:09,064 [INFO] Initiate data logging: %s
+2024-04-14 20:38:09,064 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-14 20:38:09,065 [INFO] sending cmd: get
+2024-04-14 20:38:09,065 [INFO] sending cmd: status json
+2024-04-14 20:39:21,856 [INFO] macOS detected
+2024-04-14 20:39:21,861 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-14 20:39:21,861 [INFO] sending cmd: su -g
+2024-04-14 20:39:21,861 [INFO] sending cmd: status stop
+2024-04-14 20:39:22,066 [INFO] GoogleHandler initiated
+2024-04-14 20:39:22,576 [INFO] google drive ping is working
+2024-04-14 20:39:22,962 [INFO] Connected to the internet!
+2024-04-14 20:39:26,758 [INFO] Initiate data logging: %s
+2024-04-14 20:39:26,759 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-14 20:39:26,759 [INFO] sending cmd: get
+2024-04-14 20:39:26,760 [INFO] sending cmd: status json
+2024-04-14 20:40:49,797 [INFO] macOS detected
+2024-04-14 20:40:49,802 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-14 20:40:49,802 [INFO] sending cmd: su -g
+2024-04-14 20:40:49,802 [INFO] sending cmd: status stop
+2024-04-14 20:40:50,005 [INFO] GoogleHandler initiated
+2024-04-14 20:40:50,532 [INFO] google drive ping is working
+2024-04-14 20:40:51,357 [INFO] Connected to the internet!
+2024-04-14 20:41:01,631 [INFO] sending cmd: get vbus
+2024-04-14 20:41:06,751 [INFO] sending cmd: get vbus
+2024-04-14 20:41:11,736 [INFO] sending cmd: get vbus
+2024-04-14 20:41:27,609 [INFO] Initiate data logging: %s
+2024-04-14 20:41:27,609 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-14 20:41:27,609 [INFO] sending cmd: get
+2024-04-14 20:41:27,610 [INFO] sending cmd: status json
+2024-04-14 20:41:44,703 [INFO] sending cmd: status stop
+2024-04-14 20:41:44,703 [INFO] Finished logging
+2024-04-14 20:41:44,706 [INFO] No plot saved
+2024-04-14 20:41:44,953 [INFO] Initiate data logging: %s
+2024-04-14 20:41:44,954 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-14 20:41:44,954 [INFO] sending cmd: get
+2024-04-14 20:41:44,954 [INFO] sending cmd: status json
+2024-04-14 20:41:45,014 [INFO] sending cmd: status stop
+2024-04-14 20:41:45,014 [INFO] Finished logging
+2024-04-14 20:41:45,014 [INFO] No plot saved
+2024-04-14 20:41:45,166 [INFO] Initiate data logging: %s
+2024-04-14 20:41:45,166 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-14 20:41:45,166 [INFO] sending cmd: get
+2024-04-14 20:41:45,167 [INFO] sending cmd: status json
+2024-04-14 20:41:45,352 [INFO] sending cmd: status stop
+2024-04-14 20:41:45,353 [INFO] Finished logging
+2024-04-14 20:41:45,353 [INFO] No plot saved
+2024-04-14 20:41:45,503 [INFO] Initiate data logging: %s
+2024-04-14 20:41:45,503 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-14 20:41:45,503 [INFO] sending cmd: get
+2024-04-14 20:41:45,504 [INFO] sending cmd: status json
+2024-04-14 20:42:07,385 [INFO] macOS detected
+2024-04-14 20:42:07,390 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-14 20:42:07,390 [INFO] sending cmd: su -g
+2024-04-14 20:42:07,390 [INFO] sending cmd: status stop
+2024-04-14 20:42:07,611 [INFO] GoogleHandler initiated
+2024-04-14 20:42:08,150 [INFO] google drive ping is working
+2024-04-14 20:42:08,451 [INFO] Connected to the internet!
+2024-04-14 20:42:13,734 [INFO] Initiate data logging: %s
+2024-04-14 20:42:13,735 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-14 20:42:13,735 [INFO] sending cmd: get
+2024-04-14 20:42:13,736 [INFO] sending cmd: status json
+2024-04-14 20:42:24,673 [INFO] sending cmd: status stop
+2024-04-14 20:42:24,673 [INFO] Finished logging
+2024-04-14 20:42:24,676 [INFO] No plot saved
+2024-04-14 20:42:29,934 [INFO] Initiate data logging: %s
+2024-04-14 20:42:29,934 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-14 20:42:29,935 [INFO] sending cmd: get
+2024-04-14 20:42:29,935 [INFO] sending cmd: status json
+2024-04-14 20:43:01,068 [INFO] sending cmd: status stop
+2024-04-14 20:43:01,069 [INFO] Finished logging
+2024-04-14 20:43:01,074 [INFO] No plot saved
+2024-04-14 20:43:20,980 [INFO] Initiate data logging: %s
+2024-04-14 20:43:20,981 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-14 20:43:20,982 [INFO] sending cmd: get
+2024-04-14 20:43:20,982 [INFO] sending cmd: status json
+2024-04-14 20:43:22,808 [INFO] sending cmd: status stop
+2024-04-14 20:43:22,809 [INFO] Finished logging
+2024-04-14 20:43:22,810 [INFO] No plot saved
+2024-04-14 20:45:33,515 [INFO] macOS detected
+2024-04-14 20:45:33,519 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-14 20:45:33,519 [INFO] sending cmd: su -g
+2024-04-14 20:45:33,520 [INFO] sending cmd: status stop
+2024-04-14 20:45:33,977 [INFO] GoogleHandler initiated
+2024-04-14 20:45:34,461 [INFO] google drive ping is working
+2024-04-14 20:45:34,651 [INFO] Connected to the internet!
+2024-04-14 20:45:38,316 [INFO] Initiate data logging: %s
+2024-04-14 20:45:38,316 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-14 20:45:38,317 [INFO] sending cmd: get
+2024-04-14 20:45:43,546 [INFO] sending cmd: status stop
+2024-04-14 20:45:43,546 [INFO] Finished logging
+2024-04-14 20:45:43,546 [INFO] No plot saved
+2024-04-14 20:46:21,654 [INFO] macOS detected
+2024-04-14 20:46:21,658 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-14 20:46:21,658 [INFO] sending cmd: su -g
+2024-04-14 20:46:21,658 [INFO] sending cmd: status stop
+2024-04-14 20:46:21,864 [INFO] GoogleHandler initiated
+2024-04-14 20:46:22,360 [INFO] google drive ping is working
+2024-04-14 20:46:22,791 [INFO] Connected to the internet!
+2024-04-14 20:46:28,322 [INFO] Initiate data logging: %s
+2024-04-14 20:46:28,323 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-14 20:46:28,323 [INFO] sending cmd: get
+2024-04-16 17:43:13,725 [INFO] macOS detected
+2024-04-16 17:45:27,004 [INFO] macOS detected
+2024-04-16 17:45:27,006 [INFO] Log Handler port:  not open
+2024-04-16 17:45:27,209 [INFO] GoogleHandler initiated
+2024-04-16 17:45:27,740 [INFO] google drive ping is working
+2024-04-16 17:45:28,488 [INFO] Connected to the internet!
+2024-04-16 17:49:30,721 [INFO] macOS detected
+2024-04-16 17:49:30,726 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 17:49:30,726 [INFO] sending cmd: su -g
+2024-04-16 17:49:30,726 [INFO] sending cmd: status stop
+2024-04-16 17:49:30,962 [INFO] GoogleHandler initiated
+2024-04-16 17:49:31,467 [INFO] google drive ping is working
+2024-04-16 17:49:31,887 [INFO] Connected to the internet!
+2024-04-16 17:50:36,100 [INFO] macOS detected
+2024-04-16 17:50:36,104 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 17:50:36,104 [INFO] sending cmd: su -g
+2024-04-16 17:50:36,104 [INFO] sending cmd: status stop
+2024-04-16 17:50:36,304 [INFO] GoogleHandler initiated
+2024-04-16 17:50:36,766 [INFO] google drive ping is working
+2024-04-16 17:50:37,614 [INFO] Connected to the internet!
+2024-04-16 17:50:43,783 [INFO] Initiate data logging: %s
+2024-04-16 17:50:43,784 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 17:50:43,784 [INFO] sending cmd: get
+2024-04-16 17:51:37,406 [INFO] macOS detected
+2024-04-16 17:51:37,411 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 17:51:37,411 [INFO] sending cmd: su -g
+2024-04-16 17:51:37,411 [INFO] sending cmd: status stop
+2024-04-16 17:51:37,588 [INFO] GoogleHandler initiated
+2024-04-16 17:51:38,125 [INFO] google drive ping is working
+2024-04-16 17:51:38,628 [INFO] Connected to the internet!
+2024-04-16 17:51:46,074 [INFO] sending cmd: status stop
+2024-04-16 17:51:53,515 [INFO] Initiate data logging: %s
+2024-04-16 17:51:53,515 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 17:51:53,516 [INFO] sending cmd: get
+2024-04-16 17:52:48,446 [INFO] macOS detected
+2024-04-16 17:52:48,450 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 17:52:48,450 [INFO] sending cmd: su -g
+2024-04-16 17:52:48,450 [INFO] sending cmd: status stop
+2024-04-16 17:52:48,646 [INFO] GoogleHandler initiated
+2024-04-16 17:52:49,190 [INFO] google drive ping is working
+2024-04-16 17:52:49,864 [INFO] Connected to the internet!
+2024-04-16 17:52:55,556 [INFO] Initiate data logging: %s
+2024-04-16 17:52:55,557 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 17:52:55,557 [INFO] sending cmd: get
+2024-04-16 17:53:28,847 [INFO] macOS detected
+2024-04-16 17:53:28,851 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 17:53:28,851 [INFO] sending cmd: su -g
+2024-04-16 17:53:28,851 [INFO] sending cmd: status stop
+2024-04-16 17:53:29,072 [INFO] GoogleHandler initiated
+2024-04-16 17:53:29,597 [INFO] google drive ping is working
+2024-04-16 17:53:30,082 [INFO] Connected to the internet!
+2024-04-16 17:53:31,591 [INFO] Initiate data logging: %s
+2024-04-16 17:53:31,591 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 17:53:31,592 [INFO] sending cmd: get
+2024-04-16 17:54:11,249 [INFO] macOS detected
+2024-04-16 17:54:11,253 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 17:54:11,253 [INFO] sending cmd: su -g
+2024-04-16 17:54:11,253 [INFO] sending cmd: status stop
+2024-04-16 17:54:11,430 [INFO] GoogleHandler initiated
+2024-04-16 17:54:11,927 [INFO] google drive ping is working
+2024-04-16 17:54:12,385 [INFO] Connected to the internet!
+2024-04-16 17:54:14,863 [INFO] Initiate data logging: %s
+2024-04-16 17:54:14,864 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 17:54:14,864 [INFO] sending cmd: get
+2024-04-16 17:54:55,423 [INFO] macOS detected
+2024-04-16 17:54:55,427 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 17:54:55,427 [INFO] sending cmd: su -g
+2024-04-16 17:54:55,427 [INFO] sending cmd: status stop
+2024-04-16 17:54:55,615 [INFO] GoogleHandler initiated
+2024-04-16 17:54:56,054 [INFO] google drive ping is working
+2024-04-16 17:54:56,649 [INFO] Connected to the internet!
+2024-04-16 17:54:58,288 [INFO] Initiate data logging: %s
+2024-04-16 17:54:58,289 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 17:54:58,289 [INFO] sending cmd: get
+2024-04-16 18:02:14,309 [INFO] macOS detected
+2024-04-16 18:02:14,313 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 18:02:14,313 [INFO] sending cmd: su -g
+2024-04-16 18:02:14,313 [INFO] sending cmd: status stop
+2024-04-16 18:02:14,540 [INFO] GoogleHandler initiated
+2024-04-16 18:02:15,125 [INFO] google drive ping is working
+2024-04-16 18:02:15,448 [INFO] Connected to the internet!
+2024-04-16 18:02:17,680 [INFO] Initiate data logging: %s
+2024-04-16 18:02:17,680 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:02:17,681 [INFO] sending cmd: get
+2024-04-16 18:03:06,485 [INFO] macOS detected
+2024-04-16 18:03:06,490 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 18:03:06,490 [INFO] sending cmd: su -g
+2024-04-16 18:03:06,490 [INFO] sending cmd: status stop
+2024-04-16 18:03:06,672 [INFO] GoogleHandler initiated
+2024-04-16 18:03:07,143 [INFO] google drive ping is working
+2024-04-16 18:03:07,753 [INFO] Connected to the internet!
+2024-04-16 18:03:09,763 [INFO] Initiate data logging: %s
+2024-04-16 18:03:09,764 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:03:09,764 [INFO] sending cmd: get
+2024-04-16 18:07:23,769 [INFO] macOS detected
+2024-04-16 18:07:23,772 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 18:07:23,773 [INFO] sending cmd: su -g
+2024-04-16 18:07:23,773 [INFO] sending cmd: status stop
+2024-04-16 18:07:23,954 [INFO] GoogleHandler initiated
+2024-04-16 18:07:24,442 [INFO] google drive ping is working
+2024-04-16 18:07:24,941 [INFO] Connected to the internet!
+2024-04-16 18:07:27,002 [INFO] Initiate data logging: %s
+2024-04-16 18:07:27,002 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:07:27,002 [INFO] sending cmd: get
+2024-04-16 18:09:48,924 [INFO] macOS detected
+2024-04-16 18:09:48,928 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 18:09:48,928 [INFO] sending cmd: su -g
+2024-04-16 18:09:48,928 [INFO] sending cmd: status stop
+2024-04-16 18:09:49,135 [INFO] GoogleHandler initiated
+2024-04-16 18:09:49,647 [INFO] google drive ping is working
+2024-04-16 18:09:50,149 [INFO] Connected to the internet!
+2024-04-16 18:09:53,621 [INFO] Initiate data logging: %s
+2024-04-16 18:09:53,622 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:09:53,622 [INFO] sending cmd: get
+2024-04-16 18:13:33,816 [INFO] macOS detected
+2024-04-16 18:13:33,821 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 18:13:33,821 [INFO] sending cmd: su -g
+2024-04-16 18:13:33,821 [INFO] sending cmd: status stop
+2024-04-16 18:13:34,042 [INFO] GoogleHandler initiated
+2024-04-16 18:13:34,543 [INFO] google drive ping is working
+2024-04-16 18:13:34,978 [INFO] Connected to the internet!
+2024-04-16 18:13:38,463 [INFO] Initiate data logging: %s
+2024-04-16 18:13:38,463 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:13:38,463 [INFO] sending cmd: get
+2024-04-16 18:14:32,134 [INFO] macOS detected
+2024-04-16 18:14:32,137 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 18:14:32,138 [INFO] sending cmd: su -g
+2024-04-16 18:14:32,138 [INFO] sending cmd: status stop
+2024-04-16 18:14:32,340 [INFO] GoogleHandler initiated
+2024-04-16 18:14:32,908 [INFO] google drive ping is working
+2024-04-16 18:14:33,356 [INFO] Connected to the internet!
+2024-04-16 18:14:35,566 [INFO] Initiate data logging: %s
+2024-04-16 18:14:35,567 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:14:35,567 [INFO] sending cmd: get
+2024-04-16 18:15:07,854 [INFO] sending cmd: status stop
+2024-04-16 18:15:07,855 [INFO] Finished logging
+2024-04-16 18:15:07,855 [INFO] No plot saved
+2024-04-16 18:23:37,095 [INFO] macOS detected
+2024-04-16 18:23:37,099 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 18:23:37,099 [INFO] sending cmd: su -g
+2024-04-16 18:23:37,099 [INFO] sending cmd: status stop
+2024-04-16 18:23:37,323 [INFO] GoogleHandler initiated
+2024-04-16 18:23:37,854 [INFO] google drive ping is working
+2024-04-16 18:23:38,332 [INFO] Connected to the internet!
+2024-04-16 18:23:56,742 [INFO] Initiate data logging: %s
+2024-04-16 18:23:56,742 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:23:56,743 [INFO] sending cmd: get
+2024-04-16 18:24:00,555 [INFO] sending cmd: status stop
+2024-04-16 18:24:00,555 [INFO] Finished logging
+2024-04-16 18:24:00,556 [INFO] No plot saved
+2024-04-16 18:24:22,535 [INFO] Initiate data logging: %s
+2024-04-16 18:24:22,536 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:24:22,536 [INFO] sending cmd: get
+2024-04-16 18:24:23,789 [INFO] sending cmd: status stop
+2024-04-16 18:24:23,789 [INFO] Finished logging
+2024-04-16 18:24:23,790 [INFO] No plot saved
+2024-04-16 18:26:54,071 [INFO] macOS detected
+2024-04-16 18:26:54,075 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 18:26:54,075 [INFO] sending cmd: su -g
+2024-04-16 18:26:54,075 [INFO] sending cmd: status stop
+2024-04-16 18:26:54,294 [INFO] GoogleHandler initiated
+2024-04-16 18:26:54,755 [INFO] google drive ping is working
+2024-04-16 18:26:55,302 [INFO] Connected to the internet!
+2024-04-16 18:26:57,370 [INFO] Initiate data logging: %s
+2024-04-16 18:26:57,371 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:26:57,371 [INFO] sending cmd: get
+2024-04-16 18:27:01,155 [INFO] sending cmd: status stop
+2024-04-16 18:27:01,155 [INFO] Finished logging
+2024-04-16 18:27:01,156 [INFO] No plot saved
+2024-04-16 18:29:07,950 [INFO] macOS detected
+2024-04-16 18:29:07,955 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 18:29:07,955 [INFO] sending cmd: su -g
+2024-04-16 18:29:07,955 [INFO] sending cmd: status stop
+2024-04-16 18:29:08,161 [INFO] GoogleHandler initiated
+2024-04-16 18:29:08,627 [INFO] google drive ping is working
+2024-04-16 18:29:09,181 [INFO] Connected to the internet!
+2024-04-16 18:29:11,285 [INFO] Initiate data logging: %s
+2024-04-16 18:29:11,286 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:29:11,286 [INFO] sending cmd: get
+2024-04-16 18:29:14,897 [INFO] sending cmd: status stop
+2024-04-16 18:29:14,897 [INFO] Finished logging
+2024-04-16 18:29:14,898 [INFO] No plot saved
+2024-04-16 18:31:44,093 [INFO] macOS detected
+2024-04-16 18:31:44,097 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 18:31:44,098 [INFO] sending cmd: su -g
+2024-04-16 18:31:44,098 [INFO] sending cmd: status stop
+2024-04-16 18:31:44,322 [INFO] GoogleHandler initiated
+2024-04-16 18:31:44,800 [INFO] google drive ping is working
+2024-04-16 18:32:33,620 [INFO] macOS detected
+2024-04-16 18:32:33,626 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 18:32:33,626 [INFO] sending cmd: su -g
+2024-04-16 18:32:33,626 [INFO] sending cmd: status stop
+2024-04-16 18:32:33,836 [INFO] GoogleHandler initiated
+2024-04-16 18:32:34,405 [INFO] google drive ping is working
+2024-04-16 18:32:34,894 [INFO] Connected to the internet!
+2024-04-16 18:32:37,007 [INFO] Initiate data logging: %s
+2024-04-16 18:32:37,008 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:32:37,008 [INFO] sending cmd: get
+2024-04-16 18:32:40,856 [INFO] sending cmd: status stop
+2024-04-16 18:32:40,857 [INFO] Finished logging
+2024-04-16 18:32:40,857 [INFO] No plot saved
+2024-04-16 18:41:14,073 [INFO] macOS detected
+2024-04-16 18:41:14,078 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 18:41:14,078 [INFO] sending cmd: su -g
+2024-04-16 18:41:14,078 [INFO] sending cmd: status stop
+2024-04-16 18:41:14,317 [INFO] GoogleHandler initiated
+2024-04-16 18:41:14,880 [INFO] google drive ping is working
+2024-04-16 18:41:15,300 [INFO] Connected to the internet!
+2024-04-16 18:41:18,364 [INFO] Initiate data logging: %s
+2024-04-16 18:41:18,365 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:41:18,365 [INFO] sending cmd: get
+2024-04-16 18:41:21,707 [INFO] sending cmd: status stop
+2024-04-16 18:41:21,707 [INFO] Finished logging
+2024-04-16 18:41:21,708 [INFO] No plot saved
+2024-04-16 18:43:16,844 [INFO] macOS detected
+2024-04-16 18:43:16,848 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 18:43:16,848 [INFO] sending cmd: su -g
+2024-04-16 18:43:16,848 [INFO] sending cmd: status stop
+2024-04-16 18:43:17,048 [INFO] GoogleHandler initiated
+2024-04-16 18:43:17,524 [INFO] google drive ping is working
+2024-04-16 18:43:17,960 [INFO] Connected to the internet!
+2024-04-16 18:43:24,728 [INFO] Initiate data logging: %s
+2024-04-16 18:43:24,728 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:43:24,729 [INFO] sending cmd: get
+2024-04-16 18:43:26,939 [INFO] sending cmd: status stop
+2024-04-16 18:43:26,939 [INFO] Finished logging
+2024-04-16 18:43:26,940 [INFO] No plot saved
+2024-04-16 18:47:50,757 [INFO] macOS detected
+2024-04-16 18:47:50,761 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 18:47:50,761 [INFO] sending cmd: su -g
+2024-04-16 18:47:50,761 [INFO] sending cmd: status stop
+2024-04-16 18:47:50,967 [INFO] GoogleHandler initiated
+2024-04-16 18:47:51,418 [INFO] google drive ping is working
+2024-04-16 18:47:51,895 [INFO] Connected to the internet!
+2024-04-16 18:48:02,973 [INFO] Initiate data logging: %s
+2024-04-16 18:48:02,974 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:48:02,974 [INFO] sending cmd: get
+2024-04-16 18:48:04,249 [INFO] sending cmd: status stop
+2024-04-16 18:48:04,249 [INFO] Finished logging
+2024-04-16 18:48:04,250 [INFO] No plot saved
+2024-04-16 18:48:11,179 [INFO] Initiate data logging: %s
+2024-04-16 18:48:11,180 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:48:11,180 [INFO] sending cmd: get
+2024-04-16 18:48:12,923 [INFO] sending cmd: status stop
+2024-04-16 18:48:12,924 [INFO] Finished logging
+2024-04-16 18:48:12,924 [INFO] No plot saved
+2024-04-16 18:49:25,858 [INFO] macOS detected
+2024-04-16 18:49:25,863 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 18:49:25,863 [INFO] sending cmd: su -g
+2024-04-16 18:49:25,863 [INFO] sending cmd: status stop
+2024-04-16 18:49:26,102 [INFO] GoogleHandler initiated
+2024-04-16 18:49:27,684 [INFO] google drive ping is working
+2024-04-16 18:49:27,959 [INFO] Connected to the internet!
+2024-04-16 18:49:35,917 [INFO] Initiate data logging: %s
+2024-04-16 18:49:35,917 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:49:35,918 [INFO] sending cmd: get
+2024-04-16 18:49:37,497 [INFO] sending cmd: status stop
+2024-04-16 18:49:37,498 [INFO] Finished logging
+2024-04-16 18:49:37,498 [INFO] No plot saved
+2024-04-16 18:50:52,943 [INFO] macOS detected
+2024-04-16 18:50:52,947 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 18:50:52,947 [INFO] sending cmd: su -g
+2024-04-16 18:50:52,948 [INFO] sending cmd: status stop
+2024-04-16 18:50:53,135 [INFO] GoogleHandler initiated
+2024-04-16 18:50:53,709 [INFO] google drive ping is working
+2024-04-16 18:50:54,125 [INFO] Connected to the internet!
+2024-04-16 18:50:57,603 [INFO] Initiate data logging: %s
+2024-04-16 18:50:57,604 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:50:57,604 [INFO] sending cmd: get
+2024-04-16 18:51:04,034 [INFO] sending cmd: status stop
+2024-04-16 18:51:04,035 [INFO] Finished logging
+2024-04-16 18:51:04,035 [INFO] No plot saved
+2024-04-16 18:51:56,173 [INFO] macOS detected
+2024-04-16 18:51:56,179 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 18:51:56,179 [INFO] sending cmd: su -g
+2024-04-16 18:51:56,179 [INFO] sending cmd: status stop
+2024-04-16 18:51:56,386 [INFO] GoogleHandler initiated
+2024-04-16 18:51:56,866 [INFO] google drive ping is working
+2024-04-16 18:51:57,413 [INFO] Connected to the internet!
+2024-04-16 18:51:58,427 [INFO] Initiate data logging: %s
+2024-04-16 18:51:58,428 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:51:58,428 [INFO] sending cmd: get
+2024-04-16 18:52:06,405 [INFO] sending cmd: status stop
+2024-04-16 18:52:06,406 [INFO] Finished logging
+2024-04-16 18:52:06,406 [INFO] No plot saved
+2024-04-16 18:53:48,040 [INFO] macOS detected
+2024-04-16 18:53:48,044 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 18:53:48,045 [INFO] sending cmd: su -g
+2024-04-16 18:53:48,045 [INFO] sending cmd: status stop
+2024-04-16 18:53:48,220 [INFO] GoogleHandler initiated
+2024-04-16 18:53:48,805 [INFO] google drive ping is working
+2024-04-16 18:53:49,274 [INFO] Connected to the internet!
+2024-04-16 18:53:51,192 [INFO] Initiate data logging: %s
+2024-04-16 18:53:51,193 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:53:51,193 [INFO] sending cmd: get
+2024-04-16 18:53:52,909 [INFO] sending cmd: status stop
+2024-04-16 18:53:52,910 [INFO] Finished logging
+2024-04-16 18:53:52,910 [INFO] No plot saved
+2024-04-16 18:57:26,891 [INFO] Initiate data logging: %s
+2024-04-16 18:57:26,892 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:57:26,892 [INFO] sending cmd: get
+2024-04-16 18:57:45,288 [INFO] sending cmd: status stop
+2024-04-16 18:57:45,288 [INFO] Finished logging
+2024-04-16 18:57:45,289 [INFO] No plot saved
+2024-04-16 18:59:08,186 [INFO] macOS detected
+2024-04-16 18:59:08,190 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 18:59:08,190 [INFO] sending cmd: su -g
+2024-04-16 18:59:08,190 [INFO] sending cmd: status stop
+2024-04-16 18:59:08,427 [INFO] GoogleHandler initiated
+2024-04-16 18:59:09,111 [INFO] google drive ping is working
+2024-04-16 18:59:09,460 [INFO] Connected to the internet!
+2024-04-16 18:59:11,402 [INFO] Initiate data logging: %s
+2024-04-16 18:59:11,403 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:59:11,403 [INFO] sending cmd: get
+2024-04-16 18:59:14,143 [INFO] sending cmd: status stop
+2024-04-16 18:59:14,143 [INFO] Finished logging
+2024-04-16 19:00:23,890 [INFO] macOS detected
+2024-04-16 19:00:23,894 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:00:23,895 [INFO] sending cmd: su -g
+2024-04-16 19:00:23,895 [INFO] sending cmd: status stop
+2024-04-16 19:00:24,112 [INFO] GoogleHandler initiated
+2024-04-16 19:00:24,665 [INFO] google drive ping is working
+2024-04-16 19:00:25,011 [INFO] Connected to the internet!
+2024-04-16 19:00:26,001 [INFO] Initiate data logging: %s
+2024-04-16 19:00:26,002 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 19:00:26,002 [INFO] sending cmd: get
+2024-04-16 19:00:31,567 [INFO] sending cmd: status stop
+2024-04-16 19:00:31,568 [INFO] Finished logging
+2024-04-16 19:00:31,568 [INFO] No plot saved
+2024-04-16 19:00:55,832 [INFO] macOS detected
+2024-04-16 19:00:55,836 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:00:55,836 [INFO] sending cmd: su -g
+2024-04-16 19:00:55,836 [INFO] sending cmd: status stop
+2024-04-16 19:00:56,048 [INFO] GoogleHandler initiated
+2024-04-16 19:00:56,612 [INFO] google drive ping is working
+2024-04-16 19:00:56,976 [INFO] Connected to the internet!
+2024-04-16 19:00:59,951 [INFO] Initiate data logging: %s
+2024-04-16 19:00:59,951 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 19:00:59,951 [INFO] sending cmd: get
+2024-04-16 19:01:03,926 [INFO] sending cmd: status stop
+2024-04-16 19:01:03,926 [INFO] Finished logging
+2024-04-16 19:01:03,927 [INFO] No plot saved
+2024-04-16 19:02:45,740 [INFO] macOS detected
+2024-04-16 19:02:45,744 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:02:45,744 [INFO] sending cmd: su -g
+2024-04-16 19:02:45,744 [INFO] sending cmd: status stop
+2024-04-16 19:02:45,953 [INFO] GoogleHandler initiated
+2024-04-16 19:02:46,482 [INFO] google drive ping is working
+2024-04-16 19:02:46,886 [INFO] Connected to the internet!
+2024-04-16 19:02:49,904 [INFO] Initiate data logging: %s
+2024-04-16 19:02:49,904 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 19:02:49,904 [INFO] sending cmd: get
+2024-04-16 19:02:55,402 [INFO] sending cmd: status stop
+2024-04-16 19:02:55,403 [INFO] Finished logging
+2024-04-16 19:02:55,403 [INFO] No plot saved
+2024-04-16 19:04:23,332 [INFO] macOS detected
+2024-04-16 19:04:23,336 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:04:23,336 [INFO] sending cmd: su -g
+2024-04-16 19:04:23,336 [INFO] sending cmd: status stop
+2024-04-16 19:04:23,600 [INFO] GoogleHandler initiated
+2024-04-16 19:04:24,191 [INFO] google drive ping is working
+2024-04-16 19:04:24,471 [INFO] Connected to the internet!
+2024-04-16 19:04:36,678 [INFO] Initiate data logging: %s
+2024-04-16 19:04:36,678 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 19:04:36,679 [INFO] sending cmd: get
+2024-04-16 19:04:40,194 [INFO] sending cmd: status stop
+2024-04-16 19:04:40,195 [INFO] Finished logging
+2024-04-16 19:04:40,195 [INFO] No plot saved
+2024-04-16 19:06:40,103 [INFO] macOS detected
+2024-04-16 19:06:40,108 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:06:40,108 [INFO] sending cmd: su -g
+2024-04-16 19:06:40,108 [INFO] sending cmd: status stop
+2024-04-16 19:06:40,343 [INFO] GoogleHandler initiated
+2024-04-16 19:06:40,927 [INFO] google drive ping is working
+2024-04-16 19:06:41,568 [INFO] Connected to the internet!
+2024-04-16 19:06:46,828 [INFO] Initiate data logging: %s
+2024-04-16 19:06:46,850 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 19:06:46,850 [INFO] sending cmd: get
+2024-04-16 19:06:54,697 [INFO] sending cmd: status stop
+2024-04-16 19:06:54,697 [INFO] Finished logging
+2024-04-16 19:06:54,697 [INFO] No plot saved
+2024-04-16 19:08:01,020 [INFO] macOS detected
+2024-04-16 19:08:01,024 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:08:01,024 [INFO] sending cmd: su -g
+2024-04-16 19:08:01,024 [INFO] sending cmd: status stop
+2024-04-16 19:08:01,252 [INFO] GoogleHandler initiated
+2024-04-16 19:08:01,741 [INFO] google drive ping is working
+2024-04-16 19:08:02,255 [INFO] Connected to the internet!
+2024-04-16 19:08:04,918 [INFO] Initiate data logging: %s
+2024-04-16 19:08:04,919 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 19:08:04,919 [INFO] sending cmd: get
+2024-04-16 19:08:19,226 [INFO] macOS detected
+2024-04-16 19:08:19,230 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:08:19,230 [INFO] sending cmd: su -g
+2024-04-16 19:08:19,230 [INFO] sending cmd: status stop
+2024-04-16 19:08:19,428 [INFO] GoogleHandler initiated
+2024-04-16 19:08:19,910 [INFO] google drive ping is working
+2024-04-16 19:08:20,404 [INFO] Connected to the internet!
+2024-04-16 19:08:29,427 [INFO] sending cmd: status json
+2024-04-16 19:09:10,115 [INFO] macOS detected
+2024-04-16 19:09:10,119 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:09:10,119 [INFO] sending cmd: su -g
+2024-04-16 19:09:10,119 [INFO] sending cmd: status stop
+2024-04-16 19:09:10,306 [INFO] GoogleHandler initiated
+2024-04-16 19:09:10,768 [INFO] google drive ping is working
+2024-04-16 19:09:11,355 [INFO] Connected to the internet!
+2024-04-16 19:09:13,516 [INFO] Initiate data logging: %s
+2024-04-16 19:09:13,517 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 19:09:13,517 [INFO] sending cmd: get
+2024-04-16 19:09:13,517 [INFO] sending cmd: status json
+2024-04-16 19:09:17,941 [INFO] sending cmd: status stop
+2024-04-16 19:09:17,941 [INFO] Finished logging
+2024-04-16 19:09:17,945 [INFO] No plot saved
+2024-04-16 19:10:17,517 [INFO] macOS detected
+2024-04-16 19:10:17,521 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:10:17,521 [INFO] sending cmd: su -g
+2024-04-16 19:10:17,521 [INFO] sending cmd: status stop
+2024-04-16 19:10:17,718 [INFO] GoogleHandler initiated
+2024-04-16 19:10:18,248 [INFO] google drive ping is working
+2024-04-16 19:10:18,767 [INFO] Connected to the internet!
+2024-04-16 19:10:23,315 [INFO] Initiate data logging: %s
+2024-04-16 19:10:23,316 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 19:10:23,316 [INFO] sending cmd: get
+2024-04-16 19:10:23,316 [INFO] sending cmd: status json
+2024-04-16 19:10:31,556 [INFO] sending cmd: status stop
+2024-04-16 19:10:31,556 [INFO] Finished logging
+2024-04-16 19:10:31,558 [INFO] No plot saved
+2024-04-16 19:11:17,356 [INFO] macOS detected
+2024-04-16 19:11:17,361 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:11:17,361 [INFO] sending cmd: su -g
+2024-04-16 19:11:17,361 [INFO] sending cmd: status stop
+2024-04-16 19:11:17,542 [INFO] GoogleHandler initiated
+2024-04-16 19:11:18,019 [INFO] google drive ping is working
+2024-04-16 19:11:18,524 [INFO] Connected to the internet!
+2024-04-16 19:11:20,410 [INFO] Initiate data logging: %s
+2024-04-16 19:11:20,411 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 19:11:20,411 [INFO] sending cmd: get
+2024-04-16 19:11:20,411 [INFO] sending cmd: status json
+2024-04-16 19:11:27,900 [INFO] sending cmd: status stop
+2024-04-16 19:11:27,901 [INFO] Finished logging
+2024-04-16 19:11:27,902 [INFO] No plot saved
+2024-04-16 19:12:21,125 [INFO] macOS detected
+2024-04-16 19:12:21,128 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:12:21,128 [INFO] sending cmd: su -g
+2024-04-16 19:12:21,129 [INFO] sending cmd: status stop
+2024-04-16 19:12:21,319 [INFO] GoogleHandler initiated
+2024-04-16 19:12:21,782 [INFO] google drive ping is working
+2024-04-16 19:12:22,366 [INFO] Connected to the internet!
+2024-04-16 19:12:25,850 [INFO] Initiate data logging: %s
+2024-04-16 19:12:25,850 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 19:12:25,851 [INFO] sending cmd: get
+2024-04-16 19:12:25,851 [INFO] sending cmd: status json
+2024-04-16 19:12:30,404 [INFO] sending cmd: status stop
+2024-04-16 19:12:30,404 [INFO] Finished logging
+2024-04-16 19:19:32,171 [INFO] macOS detected
+2024-04-16 19:19:32,176 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:19:32,177 [INFO] sending cmd: su -g
+2024-04-16 19:19:32,177 [INFO] sending cmd: status stop
+2024-04-16 19:19:32,411 [INFO] GoogleHandler initiated
+2024-04-16 19:19:32,988 [INFO] google drive ping is working
+2024-04-16 19:19:33,407 [INFO] Connected to the internet!
+2024-04-16 19:19:35,807 [INFO] Initiate data logging: %s
+2024-04-16 19:19:35,808 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 19:19:35,808 [INFO] sending cmd: get
+2024-04-16 19:19:35,809 [INFO] sending cmd: status json
+2024-04-16 19:19:40,147 [INFO] sending cmd: status stop
+2024-04-16 19:19:40,148 [INFO] Finished logging
+2024-04-16 19:19:40,148 [INFO] No plot saved
+2024-04-16 19:20:13,672 [INFO] macOS detected
+2024-04-16 19:20:13,677 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:20:13,677 [INFO] sending cmd: su -g
+2024-04-16 19:20:13,677 [INFO] sending cmd: status stop
+2024-04-16 19:20:13,904 [INFO] GoogleHandler initiated
+2024-04-16 19:20:14,377 [INFO] google drive ping is working
+2024-04-16 19:20:14,912 [INFO] Connected to the internet!
+2024-04-16 19:20:16,029 [INFO] Initiate data logging: %s
+2024-04-16 19:20:16,029 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 19:20:16,030 [INFO] sending cmd: get
+2024-04-16 19:20:16,030 [INFO] sending cmd: status json
+2024-04-16 19:20:19,708 [INFO] sending cmd: status stop
+2024-04-16 19:20:19,709 [INFO] Finished logging
+2024-04-16 19:20:19,709 [INFO] No plot saved
+2024-04-16 19:21:54,801 [INFO] macOS detected
+2024-04-16 19:21:54,805 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:21:54,805 [INFO] sending cmd: su -g
+2024-04-16 19:21:54,805 [INFO] sending cmd: status stop
+2024-04-16 19:21:55,162 [INFO] GoogleHandler initiated
+2024-04-16 19:21:55,740 [INFO] google drive ping is working
+2024-04-16 19:21:56,048 [INFO] Connected to the internet!
+2024-04-16 19:21:59,243 [INFO] Initiate data logging: %s
+2024-04-16 19:21:59,244 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 19:21:59,244 [INFO] sending cmd: get
+2024-04-16 19:21:59,245 [INFO] sending cmd: status json
+2024-04-16 19:22:07,010 [INFO] sending cmd: status stop
+2024-04-16 19:22:07,011 [INFO] Finished logging
+2024-04-16 19:22:07,011 [INFO] No plot saved
+2024-04-16 19:23:35,018 [INFO] macOS detected
+2024-04-16 19:23:35,022 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:23:35,022 [INFO] sending cmd: su -g
+2024-04-16 19:23:35,022 [INFO] sending cmd: status stop
+2024-04-16 19:23:35,223 [INFO] GoogleHandler initiated
+2024-04-16 19:23:35,837 [INFO] google drive ping is working
+2024-04-16 19:23:36,155 [INFO] Connected to the internet!
+2024-04-16 19:23:37,371 [INFO] Initiate data logging: %s
+2024-04-16 19:23:37,372 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 19:23:37,372 [INFO] sending cmd: get
+2024-04-16 19:23:37,372 [INFO] sending cmd: status json
+2024-04-16 19:26:53,145 [INFO] macOS detected
+2024-04-16 19:26:53,149 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:26:53,149 [INFO] sending cmd: su -g
+2024-04-16 19:26:53,150 [INFO] sending cmd: status stop
+2024-04-16 19:26:53,364 [INFO] GoogleHandler initiated
+2024-04-16 19:26:53,831 [INFO] google drive ping is working
+2024-04-16 19:26:54,396 [INFO] Connected to the internet!
+2024-04-16 19:26:55,792 [INFO] Initiate data logging: %s
+2024-04-16 19:26:55,792 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 19:26:55,792 [INFO] sending cmd: get
+2024-04-16 19:26:55,793 [INFO] sending cmd: status json
+2024-04-16 19:26:58,273 [INFO] sending cmd: status stop
+2024-04-16 19:26:58,274 [INFO] Finished logging
+2024-04-16 19:26:58,346 [INFO] Created plot: MESC_plt.png
+2024-04-16 19:27:29,490 [INFO] macOS detected
+2024-04-16 19:27:29,494 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:27:29,494 [INFO] sending cmd: su -g
+2024-04-16 19:27:29,494 [INFO] sending cmd: status stop
+2024-04-16 19:27:29,676 [INFO] GoogleHandler initiated
+2024-04-16 19:27:30,149 [INFO] google drive ping is working
+2024-04-16 19:27:30,657 [INFO] Connected to the internet!
+2024-04-16 19:28:10,413 [INFO] macOS detected
+2024-04-16 19:28:10,417 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:28:10,417 [INFO] sending cmd: su -g
+2024-04-16 19:28:10,418 [INFO] sending cmd: status stop
+2024-04-16 19:28:10,617 [INFO] GoogleHandler initiated
+2024-04-16 19:28:11,124 [INFO] google drive ping is working
+2024-04-16 19:28:11,616 [INFO] Connected to the internet!
+2024-04-16 19:28:13,198 [INFO] Initiate data logging: %s
+2024-04-16 19:28:13,199 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 19:28:13,199 [INFO] sending cmd: get
+2024-04-16 19:28:13,199 [INFO] sending cmd: status json
+2024-04-16 19:28:15,735 [INFO] sending cmd: status stop
+2024-04-16 19:28:15,735 [INFO] Finished logging
+2024-04-16 19:28:15,792 [INFO] Created plot: MESC_plt.png
+2024-04-16 19:32:44,546 [INFO] Initiate data logging: %s
+2024-04-16 19:32:44,548 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 19:32:44,548 [INFO] sending cmd: get
+2024-04-16 19:32:44,548 [INFO] sending cmd: status json
+2024-04-16 19:32:46,633 [INFO] sending cmd: status stop
+2024-04-16 19:32:46,634 [INFO] Finished logging
+2024-04-16 19:32:46,678 [INFO] Created plot: MESC_plt.png
+2024-04-16 19:36:27,888 [INFO] macOS detected
+2024-04-16 19:36:27,892 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:36:27,892 [INFO] sending cmd: su -g
+2024-04-16 19:36:27,892 [INFO] sending cmd: status stop
+2024-04-16 19:36:28,123 [INFO] GoogleHandler initiated
+2024-04-16 19:36:28,718 [INFO] google drive ping is working
+2024-04-16 19:36:29,084 [INFO] Connected to the internet!
+2024-04-16 19:36:32,489 [INFO] Initiate data logging: %s
+2024-04-16 19:36:32,489 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 19:36:32,489 [INFO] sending cmd: get
+2024-04-16 19:36:33,001 [INFO] sending cmd: status json
+2024-04-16 19:36:38,004 [INFO] sending cmd: status stop
+2024-04-16 19:36:38,005 [INFO] Finished logging
+2024-04-16 19:36:38,062 [INFO] Created plot: MESC_plt.png
+2024-04-16 19:40:54,007 [INFO] macOS detected
+2024-04-16 19:40:54,011 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:40:54,011 [INFO] sending cmd: su -g
+2024-04-16 19:40:54,011 [INFO] sending cmd: status stop
+2024-04-16 19:40:54,231 [INFO] GoogleHandler initiated
+2024-04-16 19:40:54,765 [INFO] google drive ping is working
+2024-04-16 19:40:55,136 [INFO] Connected to the internet!
+2024-04-16 19:40:59,538 [INFO] Initiate data logging: %s
+2024-04-16 19:40:59,538 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 19:40:59,539 [INFO] sending cmd: get
+2024-04-16 19:40:59,994 [INFO] sending cmd: status json
+2024-04-16 19:41:01,775 [INFO] sending cmd: status stop
+2024-04-16 19:41:01,776 [INFO] Finished logging
+2024-04-16 19:41:01,834 [INFO] Created plot: MESC_plt.png
+2024-04-16 19:41:15,085 [INFO] sending cmd: get
+2024-04-16 19:41:52,420 [INFO] macOS detected
+2024-04-16 19:41:52,425 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:41:52,425 [INFO] sending cmd: su -g
+2024-04-16 19:41:52,425 [INFO] sending cmd: status stop
+2024-04-16 19:41:52,629 [INFO] GoogleHandler initiated
+2024-04-16 19:41:53,113 [INFO] google drive ping is working
+2024-04-16 19:41:53,541 [INFO] Connected to the internet!
+2024-04-16 19:42:01,253 [INFO] sending cmd: get
+2024-04-16 19:42:09,065 [INFO] Initiate data logging: %s
+2024-04-16 19:42:09,066 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 19:42:09,066 [INFO] sending cmd: get
+2024-04-16 19:42:09,762 [INFO] sending cmd: status json
+2024-04-16 19:42:12,679 [INFO] sending cmd: status stop
+2024-04-16 19:42:12,679 [INFO] Finished logging
+2024-04-16 19:42:12,729 [INFO] Created plot: MESC_plt.png
+2024-04-16 19:48:20,395 [INFO] macOS detected
+2024-04-16 19:48:20,399 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 19:48:20,399 [INFO] sending cmd: su -g
+2024-04-16 19:48:20,399 [INFO] sending cmd: status stop
+2024-04-16 19:48:20,601 [INFO] GoogleHandler initiated
+2024-04-16 19:48:21,159 [INFO] google drive ping is working
+2024-04-16 19:48:21,573 [INFO] Connected to the internet!
+2024-04-16 21:19:33,738 [INFO] Initiate data logging: %s
+2024-04-16 21:19:33,744 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 21:19:33,745 [INFO] sending cmd: get
+2024-04-16 21:19:34,288 [INFO] sending cmd: status json
+2024-04-16 21:21:14,184 [INFO] macOS detected
+2024-04-16 21:21:14,188 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 21:21:14,188 [INFO] sending cmd: su -g
+2024-04-16 21:21:14,188 [INFO] sending cmd: status stop
+2024-04-16 21:21:14,491 [INFO] GoogleHandler initiated
+2024-04-16 21:21:15,164 [INFO] google drive ping is working
+2024-04-16 21:21:15,490 [INFO] Connected to the internet!
+2024-04-16 21:21:16,869 [INFO] Initiate data logging: %s
+2024-04-16 21:21:16,869 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 21:21:16,870 [INFO] sending cmd: get
+2024-04-16 21:21:17,314 [INFO] sending cmd: status json
+2024-04-16 21:21:18,754 [INFO] sending cmd: status stop
+2024-04-16 21:21:18,755 [INFO] Finished logging
+2024-04-16 21:21:38,212 [INFO] macOS detected
+2024-04-16 21:21:38,218 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 21:21:38,218 [INFO] sending cmd: su -g
+2024-04-16 21:21:38,218 [INFO] sending cmd: status stop
+2024-04-16 21:21:38,420 [INFO] GoogleHandler initiated
+2024-04-16 21:21:39,021 [INFO] google drive ping is working
+2024-04-16 21:21:39,414 [INFO] Connected to the internet!
+2024-04-16 21:21:40,425 [INFO] Initiate data logging: %s
+2024-04-16 21:21:40,426 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 21:21:40,426 [INFO] sending cmd: get
+2024-04-16 21:21:40,830 [INFO] sending cmd: status json
+2024-04-16 21:21:43,252 [INFO] sending cmd: status stop
+2024-04-16 21:21:43,253 [INFO] Finished logging
+2024-04-16 21:22:20,162 [INFO] macOS detected
+2024-04-16 21:22:20,168 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 21:22:20,168 [INFO] sending cmd: su -g
+2024-04-16 21:22:20,168 [INFO] sending cmd: status stop
+2024-04-16 21:22:20,390 [INFO] GoogleHandler initiated
+2024-04-16 21:22:20,865 [INFO] google drive ping is working
+2024-04-16 21:22:21,290 [INFO] Connected to the internet!
+2024-04-16 21:22:21,836 [INFO] Initiate data logging: %s
+2024-04-16 21:22:21,837 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 21:22:21,837 [INFO] sending cmd: get
+2024-04-16 21:22:22,348 [INFO] sending cmd: status json
+2024-04-16 21:22:24,572 [INFO] sending cmd: status stop
+2024-04-16 21:22:24,573 [INFO] Finished logging
+2024-04-16 21:22:24,574 [INFO] No plot saved
+2024-04-16 21:22:30,555 [INFO] Initiate data logging: %s
+2024-04-16 21:22:30,557 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 21:22:30,557 [INFO] sending cmd: get
+2024-04-16 21:22:31,177 [INFO] sending cmd: status json
+2024-04-16 21:22:48,931 [INFO] sending cmd: status stop
+2024-04-16 21:22:48,932 [INFO] Finished logging
+2024-04-16 21:22:48,936 [INFO] No plot saved
+2024-04-16 21:22:50,906 [INFO] Initiate data logging: %s
+2024-04-16 21:22:50,907 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 21:22:50,907 [INFO] sending cmd: get
+2024-04-16 21:22:51,378 [INFO] sending cmd: status json
+2024-04-16 21:22:55,515 [INFO] sending cmd: status stop
+2024-04-16 21:22:55,516 [INFO] Finished logging
+2024-04-16 21:22:55,517 [INFO] No plot saved
+2024-04-16 21:23:09,219 [INFO] sending cmd: status stop
+2024-04-16 21:23:13,174 [INFO] Initiate data logging: %s
+2024-04-16 21:23:13,176 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 21:23:13,176 [INFO] sending cmd: get
+2024-04-16 21:23:13,578 [INFO] sending cmd: status json
+2024-04-16 21:23:15,915 [INFO] sending cmd: status stop
+2024-04-16 21:23:15,917 [INFO] Finished logging
+2024-04-16 21:23:15,918 [INFO] No plot saved
+2024-04-16 21:24:01,347 [INFO] macOS detected
+2024-04-16 21:24:01,352 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 21:24:01,352 [INFO] sending cmd: su -g
+2024-04-16 21:24:01,352 [INFO] sending cmd: status stop
+2024-04-16 21:24:01,540 [INFO] GoogleHandler initiated
+2024-04-16 21:24:02,019 [INFO] google drive ping is working
+2024-04-16 21:24:02,582 [INFO] Connected to the internet!
+2024-04-16 21:24:03,366 [INFO] Initiate data logging: %s
+2024-04-16 21:24:03,369 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 21:24:03,369 [INFO] sending cmd: get
+2024-04-16 21:24:03,848 [INFO] sending cmd: status json
+2024-04-16 21:24:07,851 [INFO] sending cmd: status stop
+2024-04-16 21:24:07,851 [INFO] Finished logging
+2024-04-16 21:24:08,142 [INFO] Created plot: MESC_plt.png
+2024-04-16 21:30:15,983 [INFO] Initiate data logging: %s
+2024-04-16 21:30:15,985 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 21:30:15,985 [INFO] sending cmd: get
+2024-04-16 21:30:16,374 [INFO] sending cmd: status json
+2024-04-16 21:30:21,592 [INFO] sending cmd: status stop
+2024-04-16 21:30:21,592 [INFO] Finished logging
+2024-04-16 21:30:21,640 [INFO] Created plot: MESC_plt.png
+2024-04-16 21:30:28,894 [INFO] Uploading initiated
+2024-04-16 21:30:30,235 [INFO] file url https://drive.google.com/file/d/1V7nxPRreEPxcFHooFDEISaclwHIRSmWD/view?usp=sharing
+2024-04-16 21:30:30,235 [INFO] Setting permissions on 1V7nxPRreEPxcFHooFDEISaclwHIRSmWD
+2024-04-16 21:30:30,782 [INFO] Uploading initiated
+2024-04-16 21:30:32,095 [INFO] file url https://drive.google.com/file/d/1Mt2thHtYK6WsurUBW6SvT6YrEeT9rfnH/view?usp=sharing
+2024-04-16 21:30:32,095 [INFO] Setting permissions on 1Mt2thHtYK6WsurUBW6SvT6YrEeT9rfnH
+2024-04-16 21:30:33,770 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
+2024-04-16 21:30:33,772 [INFO] File 'MESC_logdata.txt' deleted successfully.
+2024-04-16 21:30:33,773 [INFO] File 'MESC_plt.png' deleted successfully.
+2024-04-16 21:32:04,163 [INFO] macOS detected
+2024-04-16 21:32:04,166 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 21:32:04,167 [INFO] sending cmd: su -g
+2024-04-16 21:32:04,167 [INFO] sending cmd: status stop
+2024-04-16 21:32:04,395 [INFO] GoogleHandler initiated
+2024-04-16 21:32:04,892 [INFO] google drive ping is working
+2024-04-16 21:32:05,309 [INFO] Connected to the internet!
+2024-04-16 21:32:16,950 [INFO] Initiate data logging: %s
+2024-04-16 21:32:16,950 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 21:32:16,951 [INFO] sending cmd: get
+2024-04-16 21:32:17,375 [INFO] sending cmd: status json
+2024-04-16 21:32:21,447 [INFO] sending cmd: status stop
+2024-04-16 21:32:21,448 [INFO] Finished logging
+2024-04-16 21:32:21,516 [INFO] Created plot: MESC_plt.png
+2024-04-16 21:32:23,784 [INFO] Uploading initiated
+2024-04-16 21:32:24,796 [INFO] file url https://drive.google.com/file/d/1chnrwyoHHOoHXGDbleYHakkS6TdaTGAU/view?usp=sharing
+2024-04-16 21:32:24,797 [INFO] Setting permissions on 1chnrwyoHHOoHXGDbleYHakkS6TdaTGAU
+2024-04-16 21:32:25,336 [INFO] Uploading initiated
+2024-04-16 21:32:26,980 [INFO] file url https://drive.google.com/file/d/1jLILAT4bnqU_GZVxOb9YfyTAgN2bSYDh/view?usp=sharing
+2024-04-16 21:32:26,981 [INFO] Setting permissions on 1jLILAT4bnqU_GZVxOb9YfyTAgN2bSYDh
+2024-04-16 21:32:28,203 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
+2024-04-16 21:32:28,205 [INFO] File 'MESC_logdata.txt' deleted successfully.
+2024-04-16 21:32:28,205 [INFO] File 'MESC_plt.png' deleted successfully.
+2024-04-16 21:34:12,050 [INFO] macOS detected
+2024-04-16 21:34:12,054 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 21:34:12,054 [INFO] sending cmd: su -g
+2024-04-16 21:34:12,054 [INFO] sending cmd: status stop
+2024-04-16 21:34:12,257 [INFO] GoogleHandler initiated
+2024-04-16 21:34:12,763 [INFO] google drive ping is working
+2024-04-16 21:34:13,183 [INFO] Connected to the internet!
+2024-04-16 21:34:14,419 [INFO] Initiate data logging: %s
+2024-04-16 21:34:14,420 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 21:34:14,420 [INFO] sending cmd: get
+2024-04-16 21:34:14,873 [INFO] sending cmd: status json
+2024-04-16 21:34:18,407 [INFO] sending cmd: status stop
+2024-04-16 21:34:18,407 [INFO] Finished logging
+2024-04-16 21:34:18,471 [INFO] Created plot: MESC_plt.png
+2024-04-16 21:34:29,633 [INFO] Uploading initiated
+2024-04-16 21:34:30,641 [INFO] file url https://drive.google.com/file/d/1kYm5Yh9oFxjC3kbZLHKX5EppGZXIUMe8/view?usp=sharing
+2024-04-16 21:34:30,642 [INFO] Setting permissions on 1kYm5Yh9oFxjC3kbZLHKX5EppGZXIUMe8
+2024-04-16 21:34:31,231 [INFO] Uploading initiated
+2024-04-16 21:34:32,522 [INFO] file url https://drive.google.com/file/d/1paRrHf0NmXKBnBEkEOFrwSxPL1mPQKud/view?usp=sharing
+2024-04-16 21:34:32,522 [INFO] Setting permissions on 1paRrHf0NmXKBnBEkEOFrwSxPL1mPQKud
+2024-04-16 21:34:33,584 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
+2024-04-16 21:34:33,586 [INFO] File 'MESC_logdata.txt' deleted successfully.
+2024-04-16 21:34:33,587 [INFO] File 'MESC_plt.png' deleted successfully.
+2024-04-16 21:35:24,106 [INFO] macOS detected
+2024-04-16 21:35:24,110 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 21:35:24,110 [INFO] sending cmd: su -g
+2024-04-16 21:35:24,110 [INFO] sending cmd: status stop
+2024-04-16 21:35:24,291 [INFO] GoogleHandler initiated
+2024-04-16 21:35:24,824 [INFO] google drive ping is working
+2024-04-16 21:35:25,238 [INFO] Connected to the internet!
+2024-04-16 21:35:29,657 [INFO] Initiate data logging: %s
+2024-04-16 21:35:29,658 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 21:35:29,658 [INFO] sending cmd: get
+2024-04-16 21:35:30,172 [INFO] sending cmd: status json
+2024-04-16 21:35:33,144 [INFO] sending cmd: status stop
+2024-04-16 21:35:33,145 [INFO] Finished logging
+2024-04-16 21:35:33,210 [INFO] Created plot: MESC_plt.png
+2024-04-16 21:35:40,375 [INFO] Uploading initiated
+2024-04-16 21:35:41,470 [INFO] file url https://drive.google.com/file/d/1DXHB1U_G2swIceVsGdMP390nhNadpIkA/view?usp=sharing
+2024-04-16 21:35:41,471 [INFO] Setting permissions on 1DXHB1U_G2swIceVsGdMP390nhNadpIkA
+2024-04-16 21:35:42,028 [INFO] Uploading initiated
+2024-04-16 21:35:43,409 [INFO] file url https://drive.google.com/file/d/13FljrDgBD5EGcuYvUxjy3n68SQ6CYAzK/view?usp=sharing
+2024-04-16 21:35:43,410 [INFO] Setting permissions on 13FljrDgBD5EGcuYvUxjy3n68SQ6CYAzK
+2024-04-16 21:35:44,844 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
+2024-04-16 21:35:44,846 [INFO] File 'MESC_logdata.txt' deleted successfully.
+2024-04-16 21:35:44,847 [INFO] File 'MESC_plt.png' deleted successfully.
+2024-04-16 21:37:15,415 [INFO] macOS detected
+2024-04-16 21:37:15,419 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 21:37:15,419 [INFO] sending cmd: su -g
+2024-04-16 21:37:15,419 [INFO] sending cmd: status stop
+2024-04-16 21:37:15,685 [INFO] GoogleHandler initiated
+2024-04-16 21:37:16,163 [INFO] google drive ping is working
+2024-04-16 21:37:16,579 [INFO] Connected to the internet!
+2024-04-16 21:37:24,139 [INFO] Initiate data logging: %s
+2024-04-16 21:37:24,140 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 21:37:24,140 [INFO] sending cmd: get
+2024-04-16 21:37:24,594 [INFO] sending cmd: status json
+2024-04-16 21:37:27,308 [INFO] sending cmd: status stop
+2024-04-16 21:37:27,309 [INFO] Finished logging
+2024-04-16 21:37:27,374 [INFO] Created plot: MESC_plt.png
+2024-04-16 21:37:33,649 [INFO] Uploading initiated
+2024-04-16 21:37:34,601 [INFO] file url https://drive.google.com/file/d/1GHwpmtXUrHFpEB2apmexDyN01qz3GgoT/view?usp=sharing
+2024-04-16 21:37:34,601 [INFO] Setting permissions on 1GHwpmtXUrHFpEB2apmexDyN01qz3GgoT
+2024-04-16 21:37:35,195 [INFO] Uploading initiated
+2024-04-16 21:37:36,482 [INFO] file url https://drive.google.com/file/d/1SxkGoAllDQ1Q1RNmDvFN6rpTKU7LlgYR/view?usp=sharing
+2024-04-16 21:37:36,483 [INFO] Setting permissions on 1SxkGoAllDQ1Q1RNmDvFN6rpTKU7LlgYR
+2024-04-16 21:37:37,694 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
+2024-04-16 21:37:37,696 [INFO] File 'MESC_logdata.txt' deleted successfully.
+2024-04-16 21:37:37,696 [INFO] File 'MESC_plt.png' deleted successfully.
+2024-04-16 21:38:01,090 [INFO] macOS detected
+2024-04-16 21:38:01,094 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 21:38:01,094 [INFO] sending cmd: su -g
+2024-04-16 21:38:01,094 [INFO] sending cmd: status stop
+2024-04-16 21:38:01,283 [INFO] GoogleHandler initiated
+2024-04-16 21:38:01,717 [INFO] google drive ping is working
+2024-04-16 21:38:02,202 [INFO] Connected to the internet!
+2024-04-16 21:38:06,217 [INFO] MESC_logdata.txt missing
+2024-04-16 21:38:17,617 [INFO] macOS detected
+2024-04-16 21:38:17,622 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 21:38:17,622 [INFO] sending cmd: su -g
+2024-04-16 21:38:17,622 [INFO] sending cmd: status stop
+2024-04-16 21:38:17,816 [INFO] GoogleHandler initiated
+2024-04-16 21:38:18,430 [INFO] google drive ping is working
+2024-04-16 21:38:18,701 [INFO] Connected to the internet!
+2024-04-16 21:38:20,867 [INFO] Initiate data logging: %s
+2024-04-16 21:38:20,868 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 21:38:20,868 [INFO] sending cmd: get
+2024-04-16 21:38:21,291 [INFO] sending cmd: status json
+2024-04-16 21:38:24,713 [INFO] sending cmd: status stop
+2024-04-16 21:38:24,714 [INFO] Finished logging
+2024-04-16 21:38:24,780 [INFO] Created plot: MESC_plt.png
+2024-04-16 21:38:37,517 [INFO] Uploading initiated
+2024-04-16 21:38:38,546 [INFO] file url https://drive.google.com/file/d/128VUgwZptO43a8R9Qs3-hopucqnfSlGL/view?usp=sharing
+2024-04-16 21:38:38,547 [INFO] Setting permissions on 128VUgwZptO43a8R9Qs3-hopucqnfSlGL
+2024-04-16 21:38:39,113 [INFO] Uploading initiated
+2024-04-16 21:38:40,484 [INFO] file url https://drive.google.com/file/d/1hMB61W5spw__FFPEowH1prUeUaMvw1Ch/view?usp=sharing
+2024-04-16 21:38:40,484 [INFO] Setting permissions on 1hMB61W5spw__FFPEowH1prUeUaMvw1Ch
+2024-04-16 21:38:41,748 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
+2024-04-16 21:38:41,750 [INFO] File 'MESC_logdata.txt' deleted successfully.
+2024-04-16 21:38:41,751 [INFO] File 'MESC_plt.png' deleted successfully.
+2024-04-16 21:40:10,812 [INFO] MESC_logdata.txt missing
+2024-04-16 21:41:35,662 [INFO] macOS detected
+2024-04-16 21:41:35,666 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 21:41:35,666 [INFO] sending cmd: su -g
+2024-04-16 21:41:35,666 [INFO] sending cmd: status stop
+2024-04-16 21:41:35,863 [INFO] GoogleHandler initiated
+2024-04-16 21:41:36,382 [INFO] google drive ping is working
+2024-04-16 21:41:36,723 [INFO] Connected to the internet!
+2024-04-16 21:42:03,993 [INFO] macOS detected
+2024-04-16 21:42:03,997 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 21:42:03,997 [INFO] sending cmd: su -g
+2024-04-16 21:42:03,997 [INFO] sending cmd: status stop
+2024-04-16 21:42:04,193 [INFO] GoogleHandler initiated
+2024-04-16 21:42:04,723 [INFO] google drive ping is working
+2024-04-16 21:42:05,135 [INFO] Connected to the internet!
+2024-04-16 21:43:25,119 [INFO] macOS detected
+2024-04-16 21:43:25,125 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 21:43:25,125 [INFO] sending cmd: su -g
+2024-04-16 21:43:25,126 [INFO] sending cmd: status stop
+2024-04-16 21:43:25,339 [INFO] GoogleHandler initiated
+2024-04-16 21:43:25,820 [INFO] google drive ping is working
+2024-04-16 21:43:26,203 [INFO] Connected to the internet!
+2024-04-16 21:43:29,196 [INFO] Initiate data logging: %s
+2024-04-16 21:43:29,197 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 21:43:29,197 [INFO] sending cmd: get
+2024-04-16 21:43:29,588 [INFO] sending cmd: status json
+2024-04-16 21:43:32,299 [INFO] sending cmd: status stop
+2024-04-16 21:43:32,299 [INFO] Finished logging
+2024-04-16 21:43:32,379 [INFO] Created plot: MESC_plt.png
+2024-04-16 21:43:42,024 [INFO] Uploading initiated
+2024-04-16 21:43:43,104 [INFO] file url https://drive.google.com/file/d/19IzqgR8Oa8-4hY9PUwssR70c1ArbBdm7/view?usp=sharing
+2024-04-16 21:43:43,104 [INFO] Setting permissions on 19IzqgR8Oa8-4hY9PUwssR70c1ArbBdm7
+2024-04-16 21:43:43,843 [INFO] Uploading initiated
+2024-04-16 21:43:45,118 [INFO] file url https://drive.google.com/file/d/1YNO3sXXQHXpAf_YTDIHWPc3PykQWejez/view?usp=sharing
+2024-04-16 21:43:45,119 [INFO] Setting permissions on 1YNO3sXXQHXpAf_YTDIHWPc3PykQWejez
+2024-04-16 21:43:46,446 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
+2024-04-16 21:43:46,448 [INFO] File 'MESC_logdata.txt' deleted successfully.
+2024-04-16 21:43:46,449 [INFO] File 'MESC_plt.png' deleted successfully.
+2024-04-17 00:46:55,465 [INFO] No internet connection.
+2024-04-17 00:46:58,063 [INFO] Connected to the internet!
+2024-04-17 08:18:14,873 [INFO] No internet connection.
+2024-04-17 08:18:14,974 [INFO] Connected to the internet!
+2024-04-17 13:51:50,923 [INFO] macOS detected
+2024-04-17 13:51:50,927 [INFO] Log Handler port:  not open
+2024-04-17 13:51:51,148 [INFO] GoogleHandler initiated
+2024-04-17 13:51:51,773 [INFO] google drive ping is working
+2024-04-17 13:51:52,274 [INFO] Connected to the internet!
+2024-04-17 13:53:44,622 [INFO] macOS detected
+2024-04-17 13:53:44,624 [INFO] Log Handler port:  not open
+2024-04-17 13:53:44,801 [INFO] GoogleHandler initiated
+2024-04-17 13:53:45,432 [INFO] google drive ping is working
+2024-04-17 13:53:45,926 [INFO] Connected to the internet!
+2024-04-17 13:54:17,986 [INFO] macOS detected
+2024-04-17 13:54:17,987 [INFO] Log Handler port:  not open
+2024-04-17 13:54:18,190 [INFO] GoogleHandler initiated
+2024-04-17 13:54:18,685 [INFO] google drive ping is working
+2024-04-17 13:54:19,331 [INFO] Connected to the internet!
+2024-04-17 13:57:04,757 [INFO] macOS detected
+2024-04-17 13:57:04,759 [INFO] Log Handler port:  not open
+2024-04-17 13:57:04,953 [INFO] GoogleHandler initiated
+2024-04-17 13:57:05,447 [INFO] google drive ping is working
+2024-04-17 13:57:06,062 [INFO] Connected to the internet!
+2024-04-17 13:57:26,029 [INFO] macOS detected
+2024-04-17 13:57:26,030 [INFO] Log Handler port:  not open
+2024-04-17 13:57:26,234 [INFO] GoogleHandler initiated
+2024-04-17 13:57:26,798 [INFO] google drive ping is working
+2024-04-17 13:57:27,368 [INFO] Connected to the internet!
+2024-04-17 13:58:09,166 [INFO] macOS detected
+2024-04-17 13:58:09,167 [INFO] Log Handler port:  not open
+2024-04-17 13:58:09,350 [INFO] GoogleHandler initiated
+2024-04-17 13:58:09,920 [INFO] google drive ping is working
+2024-04-17 13:58:10,433 [INFO] Connected to the internet!
+2024-04-17 13:58:45,464 [INFO] macOS detected
+2024-04-17 13:58:45,466 [INFO] Log Handler port:  not open
+2024-04-17 13:58:45,656 [INFO] GoogleHandler initiated
+2024-04-17 13:58:46,090 [INFO] google drive ping is working
+2024-04-17 13:58:56,289 [INFO] macOS detected
+2024-04-17 13:58:56,290 [INFO] Log Handler port:  not open
+2024-04-17 13:58:56,463 [INFO] GoogleHandler initiated
+2024-04-17 13:58:56,887 [INFO] google drive ping is working
+2024-04-17 13:58:57,582 [INFO] Connected to the internet!
+2024-04-17 14:11:03,296 [INFO] macOS detected
+2024-04-17 14:11:03,297 [INFO] Log Handler port:  not open
+2024-04-17 14:11:03,514 [INFO] GoogleHandler initiated
+2024-04-17 14:11:04,034 [INFO] google drive ping is working
+2024-04-17 14:11:04,648 [INFO] Connected to the internet!
+2024-04-17 14:13:05,645 [INFO] macOS detected
+2024-04-17 14:13:05,655 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-17 14:13:05,656 [INFO] sending cmd: su -g
+2024-04-17 14:13:05,656 [INFO] sending cmd: status stop
+2024-04-17 14:13:05,842 [INFO] GoogleHandler initiated
+2024-04-17 14:13:06,393 [INFO] google drive ping is working
+2024-04-17 14:13:07,009 [INFO] Connected to the internet!
+2024-04-17 14:13:57,977 [INFO] Initiate data logging: %s
+2024-04-17 14:13:57,978 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-17 14:13:57,979 [INFO] sending cmd: get
+2024-04-17 14:13:58,338 [INFO] sending cmd: status json
+2024-04-17 14:14:00,472 [INFO] sending cmd: status stop
+2024-04-17 14:14:00,473 [INFO] Finished logging
+2024-04-17 14:14:00,584 [INFO] Created plot: MESC_plt.png

@@ -1,0 +1,172 @@
+usb@MESC>status stop
+
+
+usb@MESC>status stop
+
+usb@MESC>status stop
+
+
+usb@MESC>status stop
+
+
+
+
+usb@MESC>status stop
+
+2024-04-16 18:03:06,485 [INFO] macOS detected
+2024-04-16 18:03:06,490 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
+2024-04-16 18:03:06,490 [INFO] sending cmd: su -g
+2024-04-16 18:03:06,490 [INFO] sending cmd: status stop
+/Users/owhite/mesc-data-logging-ae144bcc6287.json
+2024-04-16 18:03:06,672 [INFO] GoogleHandler initiated
+2024-04-16 18:03:07,143 [INFO] google drive ping is working
+done
+1:  su -g
+ Godmode
+
+[34musb[0m@MESC>status stop
+
+[34musb[0m@MESC>
+2:  su -g
+ Godmode
+
+musbm@MESC>status stop
+
+musbm@MESC>
+2024-04-16 18:03:07,753 [INFO] Connected to the internet!
+2024-04-16 18:03:09,763 [INFO] Initiate data logging: %s
+2024-04-16 18:03:09,764 [INFO] Created new output file log: MESC_logdata.txt
+2024-04-16 18:03:09,764 [INFO] sending cmd: get
+1:  get
+[3`Parameter
+2:  get
+meter
+1:  [15`| Value[35`| Min[46`| Max[57`| Description
+[3`[36madc1[15`[37m| [32m3996[35`[37m| 0[46`[37m| 4096[57`[37m| Raw ADC throttle
+[3`[36madc1_max[15`[37m| [32m2700[35`[37m| 0[46`[37m| 4096[57`[37m| ADC1 max val
+[3`[36madc1_min[15`[37m| [32m1200[35`[37m| 0[46`[37m| 4096[57`[37m| ADC1 min val
+[3`[36madc1_pol[15`[37m| [32m1.000000[35`[37m| -1.00[46`[37m| 1.00[57`[37m| ADC1 polarity
+[3`[36madc2_max[15`[37m| [32m4095[35`[37m| 0[46`[37m| 4096[57`[37m| ADC2 max val
+[3`[36madc2_min[15`[37m| [32m1200[35`[37m| 0[46`[37m| 4096[57`[37m| ADC2 min val
+[3`[36madc2_pol[15`[37m| [32m1.000000[35`[37m| -1.00[46`[37m| 1.00[57`[37m| ADC2 polarity
+[3`[36mcan_adc[15`[37m| [32m0[35`[37m| 0[46`[37m| 254[57`[37m| CAN ADC ID  0=disabled
+[3`[36mcurr_max[15`[37m| [32m10.000000[35`[37m| 0.00[46`[37m| 300.00[57`[37m| Max motor current
+[3`[36mcurr_min[15`[37m| [32m-10.000000[35`[37m| -300.00[46`[37m| 0.00[57`[37m| Min motor current
+[3`[36mdirection[15`[37m| [32m0[35`[37m| 0[46`[37m| 1[57`[37m| Motor direction
+[3`[36mehz[15`[37m| [32m0.283824[35`[37m| -inf[46`[37m| inf[57`[37m| Motor electrical hz
+[3`[36menc_angle[15`[37m| [32m0[35`[37m| 0[46`[37m| 65535[57`[37m| Encoder angle now
+[3`[36menc_counts[15`[37m| [32m4096[35`[37m| 0[46`[37m| 65535[57`[37m| Encoder ABI PPR
+
+2:  madc1m| m3996m| 0m| 4096m| Raw ADC throttle
+madc1_maxm| m2700m| 0m| 4096m| ADC1 max val
+madc1_minm| m1200m| 0m| 4096m| ADC1 min val
+madc1_polm| m1.000000m| -1.00m| 1.00m| ADC1 polarity
+madc2_maxm| m4095m| 0m| 4096m| ADC2 max val
+madc2_minm| m1200m| 0m| 4096m| ADC2 min val
+madc2_polm| m1.000000m| -1.00m| 1.00m| ADC2 polarity
+mcan_adcm| m0m| 0m| 254m| CAN ADC ID  0=disabled
+mcurr_maxm| m10.000000m| 0.00m| 300.00m| Max motor current
+mcurr_minm| m-10.000000m| -300.00m| 0.00m| Min motor current
+mdirectionm| m0m| 0m| 1m| Motor direction
+mehzm| m0.283824m| -infm| infm| Motor electrical hz
+menc_anglem| m0m| 0m| 65535m| Encoder angle now
+menc_countsm| m4096m| 0m| 65535m| Encoder ABI PPR
+
+1:  [3`[36menc_offset[15`[37m| [32m25000[35`[37m| 0[46`[37m| 65535[57`[37m| Encoder alignment angle
+[3`[36menc_polarity[15`[37m| [32m0[35`[37m| 0[46`[37m| 1[57`[37m| Encoder polarity
+[3`[36merror[15`[37m| [32m0[35`[37m| 0[46`[37m| 4294967295[57`[37m| System errors now
+[3`[36merror_all[15`[37m| [32m0[35`[37m| 0[46`[37m| 4294967295[57`[37m| All errors encountered
+[3`[36mflux[15`[37m| [32m0.012800[35`[37m| 0.00[46`[37m| 100.00[57`[37m| Flux linkage
+[3`[36mflux_gain[15`[37m| [32m1.131371[35`[37m| 0.00[46`[37m| 100.00[57`[37m| Flux linkage gain
+[3`[36mflux_n_lin[15`[37m| [32m5000.000000[35`[37m| 0.00[46`[37m| 10000.00[57`[37m| Flux centering gain
+[3`[36mFOC_angle[15`[37m| [32m40958[35`[37m| 0[46`[37m| 65535[57`[37m| FOC angle now
+[3`[36mfw_curr[15`[37m| [32m0.000000[35`[37m| 0.00[46`[37m| 300.00[57`[37m| Max field weakenning current
+[3`[36mfw_ehz[15`[37m| [32m0.000000[35`[37m| 0.00[46`[37m| 6000.00[57`[37m| max eHz under field weakenning
+[3`[36mHall_flux[15`[37m| [32mArray[12][35`[37m| -10.00[46`[37m| 10.00[57`[37m| hall start table
+[3`[36mHall_initialised[15`[37m| [32m0[35`[37m| 0[46`[37m| 1[57`[37m| hall start flag
+[3`[36mhfi_gain[15`[37m| [32m0.000000[35`[37m| 0.00[46`[37m| 5000.00[57`[37m| HFI gain
+[3`[36mhfi_mod_didq[15`[37m| [32m0.000000[35`[37m| 0.00[46`[37m| 2.00[57`[37m| HFI mod didq
+[3`[36mhfi_type[15`[37m| [32m0[35`[37m| 0[46`[37m| 3[57`[37m| HFI type [0=None, 1=45deg, 2=d axis]
+[3`[36mhfi_volt[15`[37m| [32m4.000000[35`
+2:  menc_offsetm| m25000m| 0m| 65535m| Encoder alignment angle
+menc_polaritym| m0m| 0m| 1m| Encoder polarity
+merrorm| m0m| 0m| 4294967295m| System errors now
+merror_allm| m0m| 0m| 4294967295m| All errors encountered
+mfluxm| m0.012800m| 0.00m| 100.00m| Flux linkage
+mflux_gainm| m1.131371m| 0.00m| 100.00m| Flux linkage gain
+mflux_n_linm| m5000.000000m| 0.00m| 10000.00m| Flux centering gain
+mFOC_anglem| m40958m| 0m| 65535m| FOC angle now
+mfw_currm| m0.000000m| 0.00m| 300.00m| Max field weakenning current
+mfw_ehzm| m0.000000m| 0.00m| 6000.00m| max eHz under field weakenning
+mHall_fluxm| mArray[12]m| -10.00m| 10.00m| hall start table
+mHall_initialisedm| m0m| 0m| 1m| hall start flag
+mhfi_gainm| m0.000000m| 0.00m| 5000.00m| HFI gain
+mhfi_mod_didqm| m0.000000m| 0.00m| 2.00m| HFI mod didq
+mhfi_typem| m0m| 0m| 3m| HFI type [0=None, 1=45deg, 2=d axis]
+mhfi_voltm| m4.000000
+1:  [37m| 0.00[46`[37m| 50.00[57`[37m| HFI voltage
+[3`[36mi_max[15`[37m| [32m350.000000[35`[37m| 0.00[46`[37m| 500.00[57`[37m| Max current
+[3`[36mid[15`[37m| [32m0.431513[35`[37m| -inf[46`[37m| inf[57`[37m| Phase Idq_d smoothed
+[3`[36minput_opt[15`[37m| [32m1[35`[37m| 0[46`[37m| 128[57`[37m| Inputs [1=ADC1 2=ADC2 4=PPM 8=UART 16=CANADC1 32=CANADC2 64=ADC12DIFF]
+[3`[36miq[15`[37m| [32m-0.262720[35`[37m| -inf[46`[37m| inf[57`[37m| Phase Idq_q smoothed
+[3`[36miqreq[15`[37m| [32m0.000000[35`[37m| -4096.00[46`[37m| 4096.00[57`[37m| mtr[0].FOC.Idq_req.q
+[3`[36mld_phase[15`[37m| [32m0.000087[35`[37m| 0.00[46`[37m| 10.00[57`[37m| Phase inductance
+[3`[36mlq_phase[15`[37m| [32m0.000099[35`[37m| 0.00[46`[37m| 10.00[57`[37m| Phase inductance
+[3`[36mmotor_pp[15`[37m| [32m7[35`[37m| 0[46`[37m| 30[57`[37m| Number of motor pole PAIRS
+[3`[36mmotor_sensor[15`[37m| [32m0[35`[37m| 0[46`[37m| 30[57`[37m| 0=SL, 1=Hall, 2=OL, 3=ABSENC, 4=INC_ENC, 5=HFI
+[3`[36mnode_id[15`[37m| [32m0[35`[37m| 1[46`[37m| 254[57`[37m| Node ID
+[3`[36mol_step[15`[37m| [32m0[35`[37m| 0[46`[37m| 6000[57`[37m| Angle per PWM period openloop
+[3`[36mp_max[15`[37m| [32m5000.000000[35`[37m| 0.00[46`[37m| 50000.00[57`[37m| Max power
+[3`[36mpark_curr[15`[37m| [32m0.000000[35`[37m| 0.00[46`[37m| 300.00[57`[37m| max current for handbrake
+[3`[36mpassword[15`[37m| [32m[35`[46`[57`[37m| Password for SU
+[3`[36mpole_pairs[15`[37m| [32m7[35`[37m| 0[46`[37m| 255[57`[37m| Motor pole pairs
+[3`[36mpwm_freq[15`[37m| [32m20000.000000[35`[37m| 0.00[46`[37m| 100000.00[57`[37m| PWM frequency
+[3`[36mr_phase[15`[37m| [32m0.008000[35`[37m| 0.00[46`[37m| 10.00[57`[37m| Phase resistance
+[3`[36mrpm_max[15`[37m| [32m0[35`[37m| 0[46`[37m| 300000[57`[37m| Max RPM
+[3`[36msafe_count[15`[37m| [32m0[35`[37m| 0[46`[37m| 1000
+2:  m| 0.00m| 50.00m| HFI voltage
+mi_maxm| m350.000000m| 0.00m| 500.00m| Max current
+midm| m0.431513m| -infm| infm| Phase Idq_d smoothed
+minput_optm| m1m| 0m| 128m| Inputs [1=ADC1 2=ADC2 4=PPM 8=UART 16=CANADC1 32=CANADC2 64=ADC12DIFF]
+miqm| m-0.262720m| -infm| infm| Phase Idq_q smoothed
+miqreqm| m0.000000m| -4096.00m| 4096.00m| mtr[0].FOC.Idq_req.q
+mld_phasem| m0.000087m| 0.00m| 10.00m| Phase inductance
+mlq_phasem| m0.000099m| 0.00m| 10.00m| Phase inductance
+mmotor_ppm| m7m| 0m| 30m| Number of motor pole PAIRS
+mmotor_sensorm| m0m| 0m| 30m| 0=SL, 1=Hall, 2=OL, 3=ABSENC, 4=INC_ENC, 5=HFI
+mnode_idm| m0m| 1m| 254m| Node ID
+mol_stepm| m0m| 0m| 6000m| Angle per PWM period openloop
+mp_maxm| m5000.000000m| 0.00m| 50000.00m| Max power
+mpark_currm| m0.000000m| 0.00m| 300.00m| max current for handbrake
+mpasswordm| mm| Password for SU
+mpole_pairsm| m7m| 0m| 255m| Motor pole pairs
+mpwm_freqm| m20000.000000m| 0.00m| 100000.00m| PWM frequency
+mr_phasem| m0.008000m| 0.00m| 10.00m| Phase resistance
+mrpm_maxm| m0m| 0m| 300000m| Max RPM
+msafe_countm| m0m| 0m| 1000
+1:  [57`[37m| Live count before allowing throttle
+[3`[36msafe_start[15`[37m| [32m100[35`[37m| 0[46`[37m| 1000[57`[37m| Countdown before allowing throttle
+[3`[36mSL_sensor[15`[37m| [32m0[35`[37m| 0[46`[37m| 30[57`[37m| 0=OL, 1=Hall, 2=PWMENC, 3=HFI
+[3`[36mTMOS[15`[37m| [32m300.055603[35`[37m| 0.00[46`[37m| 4096.00[57`[37m| MOSFET temp, kelvin
+[3`[36mTMOT[15`[37m| [32m200.351425[35`[37m| 0.00[46`[37m| 4096.00[57`[37m| Motor temp, kelvin
+[3`[36muart_dreq[15`[37m| [32m0.000000[35`[37m| -1000.00[46`[37m| 1000.00[57`[37m| Uart input
+[3`[36muart_req[15`[37m| [32m0.000000[35`[37m| -1000.00[46`[37m| 1000.00[57`[37m| Uart input
+[3`[36mv_max[15`[37m| [32m0.000000[35`[37m| 0.00[46`[37m| 600.00[57`[37m| Max voltage
+[3`[36mvbus[15`[37m| [32m69.688622[35`[37m| 0.00[46`[37m| inf[57`[37m| Read input voltage
+[3`[36mVd[15`[37m| [32m3.024742[35`[37m| -4096.00[46`[37m| 4096.00[57`[37m| FOC_Vdq_d
+[3`[36mVq[15`[37m| [32m0.955337[35`[37m| -4096.00[46`[37m| 4096.00[57`[37m| FOC_Vdq_q
+
+[34musb[0m@MESC>
+2:  m| Live count before allowing throttle
+msafe_startm| m100m| 0m| 1000m| Countdown before allowing throttle
+mSL_sensorm| m0m| 0m| 30m| 0=OL, 1=Hall, 2=PWMENC, 3=HFI
+mTMOSm| m300.055603m| 0.00m| 4096.00m| MOSFET temp, kelvin
+mTMOTm| m200.351425m| 0.00m| 4096.00m| Motor temp, kelvin
+muart_dreqm| m0.000000m| -1000.00m| 1000.00m| Uart input
+muart_reqm| m0.000000m| -1000.00m| 1000.00m| Uart input
+mv_maxm| m0.000000m| 0.00m| 600.00m| Max voltage
+mvbusm| m69.688622m| 0.00m| infm| Read input voltage
+mVdm| m3.024742m| -4096.00m| 4096.00m| FOC_Vdq_d
+mVqm| m0.955337m| -4096.00m| 4096.00m| FOC_Vdq_q
+
+musbm@MESC>

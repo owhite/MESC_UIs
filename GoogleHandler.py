@@ -258,7 +258,7 @@ class uploadThread(threading.Thread):
         military_time = current_time.strftime("%H:%M")
         formatted_date = today.strftime("%m-%d-%y") + " " + military_time
         self.drive.add_row_to_spreadsheet(u1, u2, data_length, formatted_date, self.note)
-        self.status_label.setText(F"Done with upload")
+        self.status_label.setText(F"Done with upload: {note}")
         for file_path in self.files:
             try:
                 os.remove(file_path)

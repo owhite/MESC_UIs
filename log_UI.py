@@ -39,6 +39,7 @@ class TopApplication(QMainWindow):
         # system messages and serial messages
         self.msgs = HostMessages.LogHandler(self)
 
+        self.portName = ''
         # collect up some things
         if sys.platform.startswith('darwin'):
             self.msgs.logger.info("macOS detected")
@@ -97,6 +98,8 @@ class TopApplication(QMainWindow):
         handler2 = self.serialOutTab
         self.msgs.serial_msgs.addHandler(handler2)
 
+        # self.installEventFilter(self)
+
         self.mainTab.installEventFilter(self.mainTab)
         self.serialOutTab.installEventFilter(self.serialOutTab)
         self.systemsTab.installEventFilter(self.systemsTab)
@@ -120,6 +123,7 @@ class TopApplication(QMainWindow):
             key = event.key()
             print(f"KEY PRESS NOT CAPTURED: {key}")
             return True
+
         return False
 
 class mainTab(QMainWindow):
@@ -151,10 +155,12 @@ class mainTab(QMainWindow):
 
         self.output_data_file = 'MESC_logdata.txt'
         self.output_plot_file = 'MESC_plt.png'
+        self.output_note = ''
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.checkStatus)
         self.timer.start(50)
+        print("done")
         self.log_is_on = False
         self.upload_thread = None
 
@@ -164,21 +170,12 @@ class mainTab(QMainWindow):
         # Custom event handling for MainWindow
         if event.type() == QEvent.KeyPress:
             key = event.key()
-            event.accept()
-            # print(f"Key Pressed in Log Tab: {key} button: {self.current_index} row: {self.highlight_row}")
+            print(f"Key Pressed in Log Tab: {key} button: {self.current_index} row: {self.highlight_row}")
             if key == Qt.Key_Escape: # resets the settings of th tab
                 self.line_edit.hide()
                 self.current_index = 0
                 self.highlight_row = 1
                 self.highlight_widget()
-            elif key == Qt.Key_PageUp:
-                pass
-            elif key == Qt.Key_PageDown:
-                pass
-            elif key == Qt.Key_Home:
-                pass
-            elif key == Qt.Key_End:
-                pass
 
             if self.highlight_row == 0:
                 if key == Qt.Key_Left:
@@ -217,19 +214,21 @@ class mainTab(QMainWindow):
                 elif key == Qt.Key_Return:
                     if self.line_edit.hasFocus():
                         self.log_button.setFocus()
+                        self.output_note = self.line_edit.text()
                         self.line_edit.clear()
                         self.line_edit.clearFocus()
                         self.line_edit.hide()
                         QTimer.singleShot(0, self.set_button_focus)
                         self.current_index = -1
                         self.highlight_widget()
+
                     else:
                         self.trigger_button()
                         self.highlight_widget()
 
-
-            print(f"Key Pressed in main tab: {key}")
+            event.accept()
             return True
+
         return False
 
     def init_ui(self):
@@ -386,11 +385,11 @@ class mainTab(QMainWindow):
             self.status_label.setText("Logging initiated")
             self.msgs.initDataLogging(self.output_data_file)
 
-        self.log_button.setEnabled(False)
-        timer = QTimer(self)
-        timer.setSingleShot(True)  # Trigger only once
-        timer.timeout.connect(lambda: self.log_button.setEnabled(True))  # Directly connect to setEnabled
-        timer.start(200)  # Start the timer with
+        # self.log_button.setEnabled(False)
+        # timer = QTimer(self)
+        # timer.setSingleShot(True)  # Trigger only once
+        # timer.timeout.connect(lambda: self.log_button.setEnabled(True))  # Directly connect to setEnabled
+        # timer.start(200)  # Start the timer with
 
         self.log_is_on = not self.log_is_on
         self.highlight_widget()
@@ -412,8 +411,8 @@ class mainTab(QMainWindow):
         if not self.output_data_file or self.output_data_file == '':
             self.status_label.setText("No log file to upload")
         else:
-            self.status_label.setText(F"Making plot")
-            self.upload_thread = GoogleHandler.uploadThread(self, [self.output_data_file, self.output_plot_file], self.line_edit.text())
+            self.status_label.setText(F"Uploading plot")
+            self.upload_thread = GoogleHandler.uploadThread(self, [self.output_data_file, self.output_plot_file], self.output_note)
             self.upload_thread.start()
 
     def handle_plot_window_close(self):
@@ -487,7 +486,6 @@ class SerialOutTab(QMainWindow, logging.Handler):
             print(f"Key Pressed in serial out tab: {key}")
             event.accept()
             return True
-        event.accept()
         return False
 
     def on_line_edit_click(self, event):
@@ -571,6 +569,7 @@ class SystemsTab(QMainWindow, logging.Handler):
                 self.tabs.setCurrentIndex(next_tab_index)
 
             print(f"Key Pressed in systems tab: {key}")
+            event.accept()
             return True
         return False
 
@@ -641,6 +640,7 @@ class StatusTab(QMainWindow):
                 self.tabs.setCurrentIndex(next_tab_index)
 
             print(f"Key Pressed in status tab: {key}")
+            event.accept()
             return True
         return False
 

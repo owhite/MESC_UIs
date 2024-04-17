@@ -9,8 +9,10 @@ import re
 import sys
 from datetime import datetime
 
+from ansi2html import Ansi2HTMLConverter
+
 from PyQt5 import QtCore
-from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import QTimer, QMutex
 from PyQt5.QtSerialPort import QSerialPort, QSerialPortInfo
 from PyQt5.QtWidgets import QLabel
 
@@ -49,13 +51,15 @@ class LogHandler():
         self.logger.addHandler(serial_service_handler)
         self.logger.addHandler(stdout_handler)
 
-        self.term_collect_str = ''
-        self.term_collect_flag = False
-
+        self.mutex = QMutex()
+        self.dataBuffer = bytearray()
+        self.processTimer = QTimer()
+        self.processTimer.timeout.connect(self.processData)
+        self.processTimer.start(100)
+        
         self.json_collect_str = ''
         self.json_collect_flag = False
         self.hostStatusText = None
-
 
     def initHostStatusLabel(self, label):
         if isinstance(label, QLabel):
@@ -86,7 +90,7 @@ class LogHandler():
             else:
                 self.logger.info(F"Log Handler opened for port: {self.portName}")
                 self.setStatusText('Port opened')
-                self.port.readyRead.connect(self.parseStream)
+                self.port.readyRead.connect(self.getStream)
                 self.sendToPort('su -g') # totally safe
                 self.sendToPort('status stop')
 
@@ -135,21 +139,40 @@ class LogHandler():
 
         return flag, payload, remainder
 
-    # treat this function as a state machine
-    def parseStream(self):
-        data = self.port.readAll().data().decode()
+    # treat this function as a separate thread
+    #  mutex (short for mutual exclusion) helps in controlling access to self.dataBuffer 
+    def getStream(self):
+        self.mutex.lock()
+        try:
+            newData = self.port.readAll().data()
+            self.dataBuffer.extend(newData)
+        finally:
+            self.mutex.unlock()
+
+    # this function is called periodically and chows self.dataBuffer
+    def processData(self):
+        if len(self.dataBuffer) == 0:
+            return 
+
+        self.mutex.lock()
+        try:
+            data = self.dataBuffer.copy()
+            self.dataBuffer.clear()
+        finally:
+            self.mutex.unlock()
+
+        data = data.decode()
 
         # strip vt100 chars
-        ansi_escape = re.compile(r'\x1b[^m]*m|\x1b[^m]*$|^\x1b[^m]*')
+        ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
         data = ansi_escape.sub('', data)
         data = re.sub('\\| ', '\t', data)
 
         # get current buffer, add the data
         self.serialPayload.concatString(data)
-        
+
         remaining_text = ''
         s = self.serialPayload.reportString()
-
         json_text = ''
         if re.search("{.*}", s):
             s = s.replace('\r', '')
@@ -158,10 +181,10 @@ class LogHandler():
             pattern = r'(\{.*\})\n'
             matches = re.findall(pattern, s, re.DOTALL)
             remaining_text = re.sub(pattern, '', s)
-            self.serialPayload.setString(remaining_text)
             json_text = ''.join(matches)
             json_text = json_text.replace('\r', '').replace('\n', '')
             json_text = json_text.replace("}{", "}\n{") 
+            self.serialPayload.setString(remaining_text)
 
         if len(json_text) > 0:
             # split json to go to self.data_logger or self.serial_msgs
@@ -175,16 +198,38 @@ class LogHandler():
 
             self.serialPayload.resetTimer() 
 
-        s = self.serialPayload.reportString()
         token = "usb@MESC>"
+        s = self.serialPayload.reportString()
+        s = s.replace('\r', '')
 
+        # mulitple blocks may occur, so they get processed in the while loop, or
+        #   once it breaks out of loop. 
         result, first_block, second_block = self.chow_block(s, token)
         while(result):    
-            print("BLOCK 1: " + first_block)
+            self.serial_msgs.info(first_block)
+            # the only time you log this is if it is get command and it is long
+            if self.data_logger and token + 'get' in first_block and len(first_block) > 2000:
+                    self.data_logger.info("[GET]")
+                    self.data_logger.info(first_block)
+                    self.json_collect_flag = True
+                    self.sendToPort('status json')
+
+            else:
+                self.serial_msgs.info(first_block)
+
             result, first_block, second_block = self.chow_block(second_block, token)
 
         if len(first_block)!= 0:
-            print ("BLOCK 2: " + first_block)
+            # the only time you log this is if it is get command and it is long
+            if self.data_logger and token + 'get' in first_block and len(first_block) > 2000:
+                    self.data_logger.info("[GET]")
+                    self.data_logger.info(first_block)
+
+                    self.json_collect_flag = True
+                    self.sendToPort('status json')
+
+            else:
+                self.serial_msgs.info(first_block)
 
         self.serialPayload.setString(second_block)
 
@@ -210,21 +255,13 @@ class LogHandler():
         self.data_logger.addHandler(file_handler)
         self.logger.info(f"Created new output file log: {self.datafile_name}")
 
-        self.term_collect_str = ''
-
-        self.term_collect_flag = True
-        self.json_collect_flag = True
-
-        self.sendToPort('get')
         self.serialPayload.resetTimer() 
-        self.sendToPort('status json')
+        self.sendToPort('get')
 
 
     def endDataLogging(self, plot_file):
         self.sendToPort('status stop')
         self.plot_file = plot_file
-        self.term_collect_flag = False
-        self.json_collect_flag = False
 
         if self.data_logger:
             for handler in self.data_logger.handlers[:]:
@@ -237,6 +274,7 @@ class LogHandler():
             datatypes = ('ehz', 'phaseA', 'iqreq', 'vbus')
             p = plotMESC.PlotMESCOutput()
             (plt, fig) = p.generatePlot(self.datafile_name, datatypes)
+
             if plt is not None and fig is not None:
                 self.logger.info(F"Created plot: {self.plot_file}")
                 self.setStatusText("Created plot file")
