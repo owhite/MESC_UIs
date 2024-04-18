@@ -1,3 +1,25 @@
+        # Use a pre-existing spreadsheet, here
+        # https://docs.google.com/spreadsheets/d/1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c/
+        self.spreadsheet_id = '1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c'
+        self.worksheet_name = 'MESC_UPLOADS'  # Change to your worksheet name
+
+
+
+usb@MESC>status stop
+
+
+usb@MESC>status stop
+
+usb@MESC>status stop
+
+
+usb@MESC>status stop
+
+
+
+
+usb@MESC>status stop
+
 2024-04-16 18:03:06,485 [INFO] macOS detected
 2024-04-16 18:03:06,490 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
 2024-04-16 18:03:06,490 [INFO] sending cmd: su -g

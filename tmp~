@@ -1,18 +1,3 @@
-usb@MESC>status stop
-
-
-usb@MESC>status stop
-
-usb@MESC>status stop
-
-
-usb@MESC>status stop
-
-
-
-
-usb@MESC>status stop
-
 2024-04-16 18:03:06,485 [INFO] macOS detected
 2024-04-16 18:03:06,490 [INFO] Log Handler opened for port: /dev/tty.usbmodem3552356B32321
 2024-04-16 18:03:06,490 [INFO] sending cmd: su -g

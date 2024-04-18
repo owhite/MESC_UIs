@@ -27,19 +27,27 @@ from PyQt5.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLabel,
                              QLineEdit, QMainWindow, QPushButton, QSizePolicy,
                              QTabWidget, QTextEdit, QVBoxLayout, QWidget)
 
-# the goal of this code is to basically handle all the UI elements, while
+# a design goal of this code is to basically handle all the UI elements, while
 #   cutting over the other serial stuff and logging stuff to other
 #   python classes like LogHandler and GoogleHandler
-
+# probably failed with the goal.
+#
 class TopApplication(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        ##############################
+        # house keeping
+        self.working_directory = os.path.join(os.path.expanduser("~"), ".log_UI")
+        if not os.path.exists(self.working_directory):
+            os.makedirs(self.working_directory)
+        self.output_data_file = os.path.join(self.working_directory, 'MESC_logdata.txt')
+        self.output_plot_file = os.path.join(self.working_directory, 'MESC_plt.png')
+
         # system messages and serial messages
         self.msgs = HostMessages.LogHandler(self)
 
-        self.portName = ''
+        self.portName = None
+
         # collect up some things
         if sys.platform.startswith('darwin'):
             self.msgs.logger.info("macOS detected")
@@ -60,15 +68,21 @@ class TopApplication(QMainWindow):
 
         self.msgs.openPort(self.portName)
 
+        # Use a pre-existing spreadsheet, here
+        # https://docs.google.com/spreadsheets/d/1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c/
+        self.spreadsheet_id = '1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c'
+        self.worksheet_name = 'MESC_UPLOADS'
+
         # manage the uploader
-        self.drive = GoogleHandler.handler(self.msgs.logger, account_file)
+        self.drive = GoogleHandler.handler(self.msgs.logger,
+                                           account_file,
+                                           self.spreadsheet_id,
+                                           self.worksheet_name)
         self.msgs.logger.info("GoogleHandler initiated")
         if self.drive.test_connection(): 
             self.msgs.logger.info("google drive ping is working")
 
-        self.output_data_file = 'MESC_logdata.txt'
-        self.output_plot_file = 'MESC_plt.png'
-
+        # arbitray geometry things
         self.button_w = 600 - 20
         self.button_h = 80
 
@@ -98,8 +112,6 @@ class TopApplication(QMainWindow):
         handler2 = self.serialOutTab
         self.msgs.serial_msgs.addHandler(handler2)
 
-        # self.installEventFilter(self)
-
         self.mainTab.installEventFilter(self.mainTab)
         self.serialOutTab.installEventFilter(self.serialOutTab)
         self.systemsTab.installEventFilter(self.systemsTab)
@@ -112,6 +124,10 @@ class TopApplication(QMainWindow):
         self.tabs.addTab(self.statusTab, "STAT")
 
         self.setCentralWidget(self.tabs)
+
+    def close_app(self):
+        """Close the entire application."""
+        self.close()
 
     def tab_changed(self, index):
         if self.tabs.widget(index) == self.statusTab:
@@ -160,7 +176,6 @@ class mainTab(QMainWindow):
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.checkStatus)
         self.timer.start(50)
-        print("done")
         self.log_is_on = False
         self.upload_thread = None
 
@@ -170,12 +185,53 @@ class mainTab(QMainWindow):
         # Custom event handling for MainWindow
         if event.type() == QEvent.KeyPress:
             key = event.key()
-            print(f"Key Pressed in Log Tab: {key} button: {self.current_index} row: {self.highlight_row}")
-            if key == Qt.Key_Escape: # resets the settings of th tab
+            # print(f"Key Pressed in Log Tab: {key} button: {self.current_index} row: {self.highlight_row}")
+            if key == Qt.Key_Escape: # resets the settings of the tab
                 self.line_edit.hide()
                 self.current_index = 0
                 self.highlight_row = 1
                 self.highlight_widget()
+            elif key == Qt.Key_Q: 
+                self.msgs.logger.info("CLOSING")
+                try:
+                    self.parent.close_app()
+                except RuntimeError:
+                    pass
+            elif key == Qt.Key_F1: # go straight to the log button and trigger it
+                self.current_index = 0
+                self.highlight_row = 1
+                self.highlight_widget()
+                self.trigger_button()
+            elif key == Qt.Key_F2: # go straight to the show button and trigger it
+                self.current_index = 1
+                self.highlight_row = 1
+                self.highlight_widget()
+                self.trigger_button()
+            elif key == Qt.Key_F3: # go straight to the upload button and trigger it
+                self.current_index = 2
+                self.highlight_row = 1
+                self.highlight_widget()
+                self.trigger_button()
+            elif key == Qt.Key_F4: # highlight the bottom text edit
+                self.current_index = -1
+                self.line_edit.show()
+                self.line_edit.setFocus()
+                self.highlight_widget()
+            elif key == Qt.Key_Tab: # pressing tab key pops through each of the tabs in the UI
+                if self.current_index != -1:
+                    current_tab_index = self.tabs.currentIndex()
+                    next_tab_index = (current_tab_index + 1) % self.tabs.count()
+                    self.tabs.setCurrentIndex(next_tab_index)
+                else:
+                    self.highlight_row = 0
+                    self.line_edit.clearFocus()
+                    self.line_edit.hide()
+                    self.current_index = -1
+                    self.highlight_widget()
+                    event.accept()
+                    return True
+            else:
+                pass
 
             if self.highlight_row == 0:
                 if key == Qt.Key_Left:
@@ -253,7 +309,6 @@ class mainTab(QMainWindow):
         font.setPointSize(40)
         self.status_label.setFont(font)
 
-        # xxx
         self.msgs.initHostStatusLabel(self.status_label)
 
         # Create the four buttons with larger font size
@@ -368,6 +423,8 @@ class mainTab(QMainWindow):
         return html_color
 
     def trigger_button(self):
+        if self.current_index == -1:
+            return
         focused_button = self.index_to_widget[self.current_index]
         self.highlight_row = 1
         if focused_button == self.log_button:
@@ -476,10 +533,15 @@ class SerialOutTab(QMainWindow, logging.Handler):
 
             if key == Qt.Key_Escape:
                 self.line_edit.hide()
+            elif key == Qt.Key_Q: # close
+                try:
+                    app.quit()
+                except RuntimeError:
+                    pass  # Ignore the RuntimeError
             elif key == Qt.Key_Left:
                 next_tab_index = (current_tab_index - 1) % self.tabs.count()
                 self.tabs.setCurrentIndex(next_tab_index)
-            elif key == Qt.Key_Right:
+            elif key == Qt.Key_Right or key == Qt.Key_Tab:
                 next_tab_index = (current_tab_index + 1) % self.tabs.count()
                 self.tabs.setCurrentIndex(next_tab_index)
 
@@ -560,11 +622,16 @@ class SystemsTab(QMainWindow, logging.Handler):
             current_tab_index = self.tabs.currentIndex()
 
             if key == Qt.Key_Escape:
-                self.line_edit.hide()
+                pass
+            elif key == Qt.Key_Q: # close
+                try:
+                    app.quit()
+                except RuntimeError:
+                    pass  # Ignore the RuntimeError
             elif key == Qt.Key_Left:
                 next_tab_index = (current_tab_index - 1) % self.tabs.count()
                 self.tabs.setCurrentIndex(next_tab_index)
-            elif key == Qt.Key_Right:
+            elif key == Qt.Key_Right or key == Qt.Key_Tab:
                 next_tab_index = (current_tab_index + 1) % self.tabs.count()
                 self.tabs.setCurrentIndex(next_tab_index)
 
@@ -604,6 +671,8 @@ class StatusTab(QMainWindow):
         self.internet = self.parent.internet
         self.msgs = self.parent.msgs
         self.portName = self.parent.portName
+        self.spreadsheet_id = self.parent.spreadsheet_id
+        self.worksheet_name = self.parent.worksheet_name
 
         self.setWindowTitle("Log Viewer")
         self.setGeometry(100, 100, 800, 600)
@@ -631,11 +700,16 @@ class StatusTab(QMainWindow):
             event.accept()
             current_tab_index = self.tabs.currentIndex()
             if key == Qt.Key_Escape:
-                self.line_edit.hide()
+                pass
+            elif key == Qt.Key_Q: # close
+                try:
+                    app.quit()
+                except RuntimeError:
+                    pass  # Ignore the RuntimeError
             elif key == Qt.Key_Left:
                 next_tab_index = (current_tab_index - 1) % self.tabs.count()
                 self.tabs.setCurrentIndex(next_tab_index)
-            elif key == Qt.Key_Right:
+            elif key == Qt.Key_Right or key == Qt.Key_Tab:
                 next_tab_index = (current_tab_index + 1) % self.tabs.count()
                 self.tabs.setCurrentIndex(next_tab_index)
 
@@ -656,6 +730,13 @@ class StatusTab(QMainWindow):
         else:
             text += "google drive ping not working\n"
 
+        self.spreadsheet_id
+        self.worksheet_name
+
+        if self.spreadsheet_id and self.worksheet_name:
+            text += F"google spreadsheet {self.spreadsheet_id}\n"
+            text += F"worksheet {self.worksheet_name}\n"
+
         if self.internet and self.internet.check_internet_connection(): 
             text += "internet connected\n"
         else:
@@ -672,7 +753,7 @@ class StatusTab(QMainWindow):
 
     def get_wifi_name(self):
         if sys.platform.startswith('darwin'):
-
+            # the world's most 'unlikely to survive over time'-idea:
             process = subprocess.Popen(['/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport','-I'], stdout=subprocess.PIPE)
             out, err = process.communicate()
             process.wait()
@@ -691,6 +772,16 @@ class StatusTab(QMainWindow):
             if d.get('SSID'):
                 return d['SSID']
             else:
+                return None
+        elif sys.platform.startswith('linux'):
+            try:
+                result = subprocess.run(["iwgetid", "-r"], capture_output=True, text=True)
+                if result.returncode == 0:
+                    wifi_network_name = result.stdout.strip()
+                    return wifi_network_name
+                else:
+                    return None
+            except Exception as e:
                 return None
         else:
             return None
@@ -719,9 +810,7 @@ class PlotWindow(QWidget):
         self.setLayout(layout)
 
     def keyPressEvent(self, event):
-        if event.key() == Qt.Key_Escape:
-            self.close()
-        if event.key() == Qt.Key_Return:
+        if event.key() == Qt.Key_Escape or event.key() == Qt.Key_Return or event.key() == Qt.Key_Q:
             self.close()
 
     def closeEvent(self, event):

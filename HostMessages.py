@@ -6,10 +6,8 @@
 
 import logging
 import re
-import sys
+import sys, os
 from datetime import datetime
-
-from ansi2html import Ansi2HTMLConverter
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QTimer, QMutex
@@ -23,11 +21,11 @@ import plotMESC
 class LogHandler():
     def __init__(self, parent):
         self.parent = parent
+        self.working_directory = self.parent.working_directory
 
         self.port = QSerialPort()
         self.serialPayload = Payload.Payload()
         self.serialPayload.startTimer()
-
         self.serial = None
 
         # serial_msgs handles sending the serial data that is not sent to disk, but goes to the UI
@@ -39,14 +37,15 @@ class LogHandler():
         # dont confuse the service log, which just gets information from the program
         #  and sends it to serial_service.log, with the collection that is done by 
         #  initDataLogging() which actually collects data from the controller
-        self.service_log_file = 'serial_service.log'
+        self.service_log_file = os.path.join(self.working_directory, 'serial_service.log')
         self.logger = logging.getLogger('serial_service_log')
         self.logger.setLevel(logging.INFO)
-        serial_service_handler = logging.FileHandler(self.service_log_file)
+        serial_service_handler = logging.FileHandler(self.service_log_file, mode='w')
         stdout_handler = logging.StreamHandler(sys.stdout)
 
         formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
         serial_service_handler.setFormatter(formatter)
+        formatter = logging.Formatter('[%(levelname)s] %(message)s')
         stdout_handler.setFormatter(formatter)
         self.logger.addHandler(serial_service_handler)
         self.logger.addHandler(stdout_handler)

@@ -19,23 +19,19 @@ import plotMESC
 
 
 class handler:
-    def __init__(self, logger=None, account_file=None):
-
+    def __init__(self, logger=None, account_file=None, spreadsheet=None, worksheet=None):
+        self.spreadsheet_id = spreadsheet
+        self.worksheet_name = worksheet
         self.logger = logger
+
         # Define the Google Drive API scopes and service account file path
         SCOPES = ['https://www.googleapis.com/auth/drive']
 
-        print(account_file)
-        # Create credentials using the service account file
         self.credentials = service_account.Credentials.from_service_account_file(account_file, scopes=SCOPES)
-
-
-        # Build the Google Drive service
         self.drive_service = build('drive', 'v3', credentials=self.credentials)
 
-
+    # Create a folder in Google Drive and return its ID
     def create_folder(self, folder_name, parent_folder_id=None):
-        """Create a folder in Google Drive and return its ID."""
         folder_metadata = {
             'name': folder_name,
             "mimeType": "application/vnd.google-apps.folder",
@@ -56,14 +52,13 @@ class handler:
 
         if not items:
             if self.logger:
-                self.logger.info("No folders or files found in Google Drive.")
+                self.logger.info("No folders or files found in Google Drive")
         else:
             for item in items:
                 if item['name'] == name:
                     return(item['id'])
 
         return(None)
-
 
     def list_files(self, parent_folder_id=None, delete=False):
         """List folders and files in Google Drive."""
@@ -83,8 +78,8 @@ class handler:
                     l.append(item)
         return(l)
 
-    def delete_files(self, file_or_folder_id):
-        """Delete a file or folder in Google Drive by ID."""
+    # deletes google files
+    def delete_files(self, file_or_folder_id): 
         try:
             self.drive_service.files().delete(fileId=file_or_folder_id).execute()
             if self.logger:
@@ -94,8 +89,8 @@ class handler:
                 self.logger.info(f"Error deleting file/folder with ID: {file_or_folder_id}")
                 self.logger.info(f"Error details: {str(e)}")
 
+    # Download files from google
     def download_file(self, file_id, destination_path):
-        """Download a file from Google Drive by its ID."""
         request = self.drive_service.files().get_media(fileId=file_id)
         fh = io.FileIO(destination_path, mode='wb')
     
@@ -105,7 +100,7 @@ class handler:
         while not done:
             status, done = downloader.next_chunk()
             if self.logger:
-                self.logger.info(f"Download {int(status.progress() * 100)}%.")
+                self.logger.info(f"Download {int(status.progress() * 100)}%")
 
     def upload_file(self, file_path, file_name, mime_type='application/octet-stream', folder_id=None):
         if folder_id is not None:
@@ -118,20 +113,17 @@ class handler:
 
         media = MediaIoBaseUpload(io.FileIO(file_path, 'rb'), mimetype=mime_type)
 
-        # Create file on Google Drive
+        # creates file on Google Drive
         file = self.drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
-    
-        # Get URL for the file
         file_id = file.get('id')
         file_url = f'https://drive.google.com/file/d/{file_id}/view?usp=sharing'
 
         return file_id, file_url
     
     def set_permissions(self, file_id):
-        # set permission to wide open
         permission = {
             'role': 'reader',
-            'type': 'anyone',
+            'type': 'anyone', # wide open!
             'allowFileDiscovery': False,
         }
         if self.logger:
@@ -146,21 +138,20 @@ class handler:
 
         # Use a pre-existing spreadsheet, here
         # https://docs.google.com/spreadsheets/d/1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c/
-        spreadsheet_id = '1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c'
-        worksheet_name = 'MESC_UPLOADS'  # Change to your worksheet name
+        self.spreadsheet_id = '1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c'
+        self.worksheet_name = 'MESC_UPLOADS'  # Change to your worksheet name
 
         try:
-            spreadsheet = client.open_by_key(spreadsheet_id)
-            worksheet = client.open_by_key(spreadsheet_id).worksheet(worksheet_name)
-            # Add a new row of data to the end of the worksheet
-            new_data = [plot_url, data_url, size, timestamp, note]
+            spreadsheet = client.open_by_key(self.spreadsheet_id)
+            worksheet = client.open_by_key(self.spreadsheet_id).worksheet(self.worksheet_name)
+            new_data = [plot_url, data_url, size, timestamp, note] # adding a new row
             worksheet.append_row(new_data, value_input_option='USER_ENTERED')
 
             if self.logger:
-                self.logger.info(f"Added row to spreadsheet with id = {spreadsheet_id}")
+                self.logger.info(f"Added row to spreadsheet with id = {self.spreadsheet_id}")
 
         except Exception as e:
-            self.logger.info(f"Error attempting row addition to spreadsheet_id = {spreadsheet_id}")
+            self.logger.info(f"Error attempting row addition to self.spreadsheet_id = {self.spreadsheet_id}")
             return None
 
     def test_connection(self):
@@ -171,7 +162,7 @@ class handler:
             files = results.get('files', [])
 
             if not files:
-                self.logger.info('testing google drive, no files found.')
+                self.logger.info('testing google drive, no files found')
             else:
                 for file in files:
                     # self.logger.info(f"{file['name']} ({file['id']})")                    
@@ -201,17 +192,17 @@ class PingInternet(): # not really a google service but whatevs
             response = requests.get(url, timeout=timeout)
             response.raise_for_status()  # Raise an exception for HTTP errors
             if not self.internet_status:
-                self.logger.info("Connected to the internet!")
+                self.logger.info("Connected to the internet")
             self.internet_status = True
             return True
         except requests.ConnectionError:
             if self.internet_status:
-                self.logger.info("No internet connection.")
+                self.logger.info("No internet connection")
             self.internet_status = False
             return False
         except requests.Timeout:
             if self.internet_status:
-                self.logger.info("Timeout occurred.")
+                self.logger.info("Timeout occurred")
             self.internet_status = False
             return False
         except requests.HTTPError as e:
@@ -258,7 +249,7 @@ class uploadThread(threading.Thread):
         military_time = current_time.strftime("%H:%M")
         formatted_date = today.strftime("%m-%d-%y") + " " + military_time
         self.drive.add_row_to_spreadsheet(u1, u2, data_length, formatted_date, self.note)
-        self.status_label.setText(F"Done with upload: {note}")
+        self.status_label.setText(F"Done with upload: {self.note}")
         for file_path in self.files:
             try:
                 os.remove(file_path)
@@ -294,11 +285,10 @@ class uploadThread(threading.Thread):
         dict = self.openFile(data_file)
 
         if not dict.get("JSON BLOCK"):
-            print("something is wrong with json, returning")
+            self.logger.logger.info("something is wrong with json, returning")
             return(None)
         d = dict["JSON BLOCK"]
         if "}{" in d:
-            print("FIX THIS, SHOULD BE REMOVED NOW") 
             d = d.replace("}{", "}\n{") 
             
         json_lines = d.strip().split('\n')
