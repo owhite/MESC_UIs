@@ -1,114 +1,93 @@
 #!/usr/bin/env python3
+import sys
+import logging
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QTextEdit, QTabWidget, QPushButton, QHBoxLayout
 
-#!/usr/bin/env python3
+class SystemsWidget(QWidget, logging.Handler):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        logging.Handler.__init__(self)
 
-text1 = "usb@MESC>0000000000usb@MESC>111111111111usb@MESC>22222222222usb@MESC>33333333333" # remove token, get payload, remainder, continue
-text2 = "usb@MESC>33333333333"                                           # remove token,  no payload, return input, stop
-text3 = "usb@MESC>"                                                                    #  no payload, return input, stop
-text4 = "0000000000usb@MESC>111111111111usb@MESC>22222222222usb@MESC>33333333333"                  # get payload, remainder, continue
-text5 = "0000000000usb@MESC>"                                                          # get payload, remainder = token, stop
-text6 = "333333"                                                                 #  no payload, return input, stop
-text7 = ""                                                                       #  no payload, return input, stop
+        self.text_edit = QTextEdit()
+        self.text_edit.setReadOnly(True)
+        self.text_edit.setLineWrapMode(QTextEdit.NoWrap)
 
-text8 = """
-su -g
- Godmode
-usb@MESC>status stop
+        layout = QVBoxLayout()
+        layout.addWidget(self.text_edit)
 
-usb@MESC>get
-Parameter Value Min Max Description
-adc1 3996 0 4096 Raw ADC throttle
-adc1_max 2700 0 4096 ADC1 max val
-adc1_min 800 0 4096 ADC1 min val
-adc1_pol 1.000000 -1.00 1.00 ADC1 polarity
-adc2_max 4095 0 4096 ADC2 max val
+        self.setLayout(layout)
+        self.current_buffer_size = 0
+        self.max_buffer_size = 4000
 
-usb@MESC>status json
+    def emit(self, record):
+        msg = self.format(record)
+        self.append_text(msg)
 
-usb@MESC>
+    def append_text(self, text):
+        self.text_edit.append(text)
+        self.current_buffer_size += len(text)
+        if self.current_buffer_size > self.max_buffer_size:
+            current_text = self.text_edit.toPlainText()
+            excess_text = self.current_buffer_size - self.max_buffer_size
+            trim_index = 0
+            for i, c in enumerate(current_text):
+                excess_text -= sys.getsizeof(c.encode())
+                if excess_text <= 0:
+                    trim_index = i
+                    break
+            trimmed_text = current_text[trim_index:]
+            self.text_edit.setPlainText(trimmed_text)
+            self.current_buffer_size = len(trimmed_text)
+        
+        # Move cursor to the end of the document
+        cursor = self.text_edit.textCursor()
+        cursor.movePosition(QTextCursor.End)
+        self.text_edit.setTextCursor(cursor)
 
-"""
-text9 = """usb@MESC>get
-Parameter Value Min Max Description
-adc1 3996 0 4096 Raw ADC throttle
-adc1_max 2700 0 4096 ADC1 max val
-adc1_min 800 0 4096 ADC1 min val
-adc1_pol 1.000000 -1.00 1.00 ADC1 polarity
-adc2_max 4095 0 4096 ADC2 max val
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Main Window")
 
-usb@MESC>status json
+        # Set the width of the window
+        self.resize(800, self.height())
 
-usb@MESC>
+        self.central_widget = QWidget()
+        self.setCentralWidget(self.central_widget)
 
-"""
-l = [text1, text2, text3, text4, text5, text6, text7, text8, text9]
+        self.tab_widget = QTabWidget()
 
-# This funtion tests for MESC> prompt in a string.
-#   Payload chunks are found BEFORE the prompt, extracted. Material
-#   after the prompt is saved until another prompt appears
-# Try the MESC terminal and you'll see why.
-#
-# RETURNS:
-# 'flag' set to False to break out of while loop if its in one
-#  'payload' text from MESC stream appearing before prompt
-#  'remainder' either gets saved in a buffer for later
-#   or continues to get processed if this function
-#   is used in a while loop
+        self.tab1 = QWidget()
+        self.tab_widget.addTab(self.tab1, "Tab 1")
 
-def chow_block(text, token):
-    flag = False
+        self.systems_widget = SystemsWidget()
 
-    t = text
-    # not really intuitive but remove the token if at beginning of string
-    #  the idea is the remainder will get save for the next round of parsing
-    if text.startswith(token):
-        t = text.replace(token, '', 1)
+        self.button1 = QPushButton("Button 1")
+        self.button2 = QPushButton("Button 2")
 
-    if len(t) == 0: # you get this if string was empty or was just a prompt
-        return False, t, t
+        layout = QHBoxLayout()
+        layout.addWidget(self.button1)
+        layout.addWidget(self.button2)
 
-    l = t.split(token)
-    payload = ''
-    remainder = ''
-    if len(l) == 1: # no token, everything goes in remainder
-        remainder = l[0]
-    elif len(l) == 2:
-        payload = l[0]
-    elif len(l) > 2:
-        flag = True
-        payload = l[0]
-        remainder = token.join(l[1:])
-    else:
-        print("chow_block: unforseen parsing condition")
-        payload = "chow_block: unforseen parsing condition"
+        self.tab_layout = QVBoxLayout()
+        self.tab_layout.addLayout(layout)
+        self.tab_layout.addWidget(self.systems_widget)
 
-    # fakes the user out by showing the prompt at the beginning of the payload
-    if len(payload) > 0:
-        payload = token + payload
+        self.tab1.setLayout(self.tab_layout)
 
-    return flag, payload, remainder
+        self.central_layout = QVBoxLayout()
+        self.central_layout.addWidget(self.tab_widget)
 
-token = "usb@MESC>"
+        self.central_widget.setLayout(self.central_layout)
 
-count = 1
-for string in l:
-    print("="* 40)
-    print("TEST", count, string)
-    count += 1
-    result, first_block, second_block = chow_block(string, token)
-    print(result)
-    print("1: " + first_block)
-    print("2: " + second_block)
-    print("="* 40)
+        # Creating a logger and adding the SystemsWidget handler
+        self.logger = logging.getLogger('serial_service_log')
+        self.logger.setLevel(logging.INFO)
+        handler1 = self.systems_widget
+        self.logger.addHandler(handler1)
 
-print("="* 40)
-print("TEST", text1)
-
-result, first_block, second_block = chow_block(text8, token)
-while(result):    
-    print("1: " + first_block)
-    print("2: " + second_block)
-    result, first_block, second_block = chow_block(second_block, token)
-
-print("1: " + first_block)
-print("2: " + second_block)
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec_())
