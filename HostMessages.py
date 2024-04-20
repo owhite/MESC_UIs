@@ -99,7 +99,7 @@ class LogHandler():
 
     def sendToPort(self, text):
         if not self.port.isOpen():
-            self.logger.info("cant send cmd: {0} port not open".format(text))
+            self.logger.info("Cant send cmd: {0} port not open".format(text))
         else:
             self.logger.info("sending cmd: {0}".format(text))
             text = text + '\r\n'
