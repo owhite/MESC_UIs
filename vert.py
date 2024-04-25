@@ -261,8 +261,9 @@ class mainTab(QMainWindow):
         # Custom event handling for MainWindow
         if event.type() == QEvent.KeyPress:
             key = event.key()
-            # print(f"Key Pressed in Log Tab: {key} button: {self.button_index} row: {self.widget_row}")
-            if key == Qt.Key_Escape: # resets the settings of the tab
+            print(f"Key Pressed in Log Tab: {key} button: {self.button_index} row: {self.widget_row}")
+            print(Qt.Key_Home)
+            if key == Qt.Key_Escape or key == Qt.Key_Home: # resets the settings of the tab
                 self.line_edit.clear()
                 self.line_edit.clearFocus()
                 self.button_index = 0
@@ -337,7 +338,7 @@ class mainTab(QMainWindow):
                     else:
                         self.widget_row += 1
                         self.button_index = self.widget_row - 1
-                if key == Qt.Key_Return:
+                if key == Qt.Key_Return or key == Qt.Key_Enter:
                     self.trigger_button()
 
             elif self.widget_row == 4:
@@ -351,7 +352,7 @@ class mainTab(QMainWindow):
                     self.button_index = self.widget_row - 1
                     # self.line_edit.hide()
                     self.line_edit.clearFocus()
-                elif key == Qt.Key_Return:
+                elif key == Qt.Key_Return or Qt.Key_Enter:
                     self.button_index = -1
                     self.output_note = self.line_edit.text()
 
