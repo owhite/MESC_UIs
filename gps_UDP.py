@@ -31,6 +31,19 @@ class GNMEAReceiver:
         except Exception as e:
             print("An error occurred:", e)
 
+    def streetViewUrl(self, lat, lon):
+        url = f("http://maps.google.com/maps?q=&layer=c&cbll={lat},{lon}")
+        return url
+
+    def googleMapUrl(self, lat, lon):
+        url = f("http://maps.google.com/maps?q={lat},{lon}") # stack exchange
+        url = f("https://www.google.com/maps/search/?api=1&query={lat}%2C{lon}") # google
+        return url
+    
+    def urlToSpreadsheetFormat(, url, name):
+        entry = F'=hyperlink(\"{url}\",\"{name}\")'
+        return entry
+
 if __name__ == "__main__":
     ip_address = "192.16.54.210"
     ip_address = "" # actually just leave this empty
