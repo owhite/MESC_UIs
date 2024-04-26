@@ -22,7 +22,7 @@ from matplotlib.backends.backend_qt5agg import \
 from matplotlib.figure import Figure
 from PyQt5 import QtCore
 from PyQt5.QtCore import QEvent, QEventLoop, Qt, QTimer, QUrl, pyqtSignal
-from PyQt5.QtGui import QFont, QPixmap, QTextCursor
+from PyQt5.QtGui import QFont, QPixmap, QTextCursor, QImage, QColor
 from PyQt5.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLabel,
                              QLineEdit, QMainWindow, QPushButton, QSizePolicy,
                              QTabWidget, QTextEdit, QVBoxLayout, QWidget)
@@ -180,14 +180,18 @@ class mainTab(QMainWindow):
         central_widget = QWidget(self)
         self.setCentralWidget(central_widget)
 
-        # Label displays internet status
-        self.wifi_label = QLabel('wifi', self)
-        self.wifi_label.setAlignment(Qt.AlignCenter)
-        font = self.wifi_label.font()
-        font.setPointSize(30)
-        font.setBold(True)
-        self.wifi_label.setFont(font)
-        
+        # Internet status
+        filepath = "ICONS/wifi.png"
+        self.wifi_label = self.makePNGLabel(filepath)
+
+        # MQTT status
+        filepath = "ICONS/satellite.png"
+        self.mqtt_label = self.makePNGLabel(filepath)
+
+        # Serial status
+        filepath = "ICONS/usb_icon.png"
+        self.serial_label = self.makePNGLabel(filepath)
+
         # Label at top to display stuff
         self.status_label = QLabel('MESC Logger', self)
         self.status_label.setAlignment(Qt.AlignCenter)
@@ -238,13 +242,18 @@ class mainTab(QMainWindow):
         
         layout = QGridLayout()
         
-        layout.addWidget(self.status_label, 0, 0)
-        layout.addWidget(self.log_button, 1, 0)
-        layout.addWidget(self.show_button, 2, 0)
-        layout.addWidget(self.upload_button, 3, 0)
-        layout.addWidget(self.line_edit, 4, 0)
-        layout.addWidget(self.systems_widget, 5, 0)
-        layout.setRowStretch(5, 1)  # Ensure SystemsWidget expands to full height
+        layout.addWidget(self.wifi_label, 0, 0)
+        layout.addWidget(self.serial_label, 0, 1)
+        self.serial_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(self.mqtt_label, 0, 2)
+        self.mqtt_label.setAlignment(Qt.AlignRight)
+        layout.addWidget(self.status_label, 1, 0, 1, 3)
+        layout.addWidget(self.log_button, 2, 0, 1, 3)
+        layout.addWidget(self.show_button, 3, 0, 1, 3)
+        layout.addWidget(self.upload_button, 4, 0, 1, 3)
+        layout.addWidget(self.line_edit, 5, 0, 1, 3)
+        layout.addWidget(self.systems_widget, 6, 0, 1, 3)
+        layout.setRowStretch(6, 1)  # Ensure SystemsWidget expands to full height
         
         # Set size policy for buttons
         self.log_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -390,9 +399,9 @@ class mainTab(QMainWindow):
 
     def checkStatus(self):
         if self.internet.status():
-            self.wifi_label.setStyleSheet("color: blue;")
+            self.changePNGLabelColor(self.wifi_label, Qt.blue)
         else:
-            self.wifi_label.setStyleSheet("color: black;")
+            self.changePNGLabelColor(self.wifi_label, Qt.black)
 
         self.highlight_widget()
         if self.msgs and not self.msgs.port.isOpen():
@@ -493,6 +502,27 @@ class mainTab(QMainWindow):
             self.plot_window = PlotWindow(self.output_plot_file)
             self.plot_window.closing.connect(self.handle_plot_window_close)
             self.plot_window.show()
+
+    def makePNGLabel(self, filepath):
+        pngLabel = QLabel(self)
+        # pngLabel.setGeometry(0, 0, 12, 12)
+        pixmap = QPixmap(filepath)
+        pngLabel.setPixmap(pixmap)
+        return pngLabel
+
+
+    def changePNGLabelColor(self, label, color):
+        pixmap = label.pixmap()
+        
+        image = pixmap.toImage()
+        for y in range(image.height()):
+            for x in range(image.width()):
+                pixel_color = QColor(image.pixelColor(x, y))
+                if pixel_color != Qt.white and pixel_color != Qt.transparent:
+                    image.setPixelColor(x, y, color)
+
+        new_pixmap = QPixmap.fromImage(image)
+        label.setPixmap(new_pixmap)
 
 class SystemsWidget(QWidget, logging.Handler):
     def __init__(self, parent=None):
