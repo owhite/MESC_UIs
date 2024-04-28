@@ -6,6 +6,7 @@
 
 import logging
 import re
+import json
 import sys, os
 from datetime import datetime
 
@@ -50,6 +51,8 @@ class LogHandler():
         self.logger.addHandler(serial_service_handler)
         self.logger.addHandler(stdout_handler)
 
+        self.position = None
+
         self.mutex = QMutex()
         self.dataBuffer = bytearray()
         self.processTimer = QTimer()
@@ -72,6 +75,8 @@ class LogHandler():
         if self.serial:
             self.serial.close()
 
+    def setLocation(self, position):
+        self.position = position
         
     def openPort(self, name):
         self.portName = name
@@ -185,8 +190,22 @@ class LogHandler():
             json_text = json_text.replace("}{", "}\n{") 
             self.serialPayload.setString(remaining_text)
 
+        # json gets sent to self.data_logger or self.serial_msgs
         if len(json_text) > 0:
-            # split json to go to self.data_logger or self.serial_msgs
+            # need to fold in position if there is one
+            if self.position is not None:
+                new_str = ''
+                for l in json_text.split('\n'):
+                    try:
+                        data = json.loads(l)
+                        data["lat"] = self.position[0]
+                        data["lon"] = self.position[1]
+                        new_str = new_str + json.dumps(data)
+                    except json.JSONDecodeError as e:
+                        pass
+
+                json_text = new_str
+
             if self.data_logger:
                 if self.json_collect_flag:
                     self.data_logger.info("[JSON BLOCK]")

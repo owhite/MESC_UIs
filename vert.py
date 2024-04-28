@@ -5,9 +5,11 @@ import logging
 import math
 import os
 import glob
+import json
 import subprocess
 import sys
 import time
+import gps_MQTT
 
 import matplotlib
 
@@ -48,6 +50,8 @@ class TopApplication(QMainWindow):
 
         self.portName = None
 
+        broker_address = ''
+
         # collect up some things
         if sys.platform.startswith('darwin'):
             self.msgs.logger.info("macOS detected")
@@ -56,10 +60,14 @@ class TopApplication(QMainWindow):
                 self.portName = matches[0]
             # this is stupid AF, but...
             account_file = "/Users/owhite/mesc-data-logging-ae144bcc6287.json"
+            self.broker_address = "10.0.1.10"
+
         elif sys.platform.startswith('linux'):
             account_file = "/home/pi/mesc-data-logging-083b86e157cf.json"
             self.portName = '/dev/ttyACM0'
             self.msgs.logger.info("linux detected")
+            self.broker_address = "192.168.54.71"
+
         else:
             self.msgs.logger.info("Unknown operating system")
             sys.exit()
@@ -81,6 +89,21 @@ class TopApplication(QMainWindow):
         self.msgs.logger.info("GoogleHandler initiated")
         if self.drive.test_connection(): 
             self.msgs.logger.info("google drive ping is working")
+
+        # setting up the MQTT broker
+        broker_port = 1883
+        topic = "#"
+
+        self.mqttMsg = gps_MQTT.mqttHandler(self.broker_address, broker_port, topic, self.update_mqtt)
+        self.mqttMsg.startTimer()
+        self.reportLostMQTT = True
+
+        try:
+            self.mqttMsg.client.connect(self.broker_address, broker_port, 60)
+            self.mqttMsg.client.loop_start()
+            self.msgs.logger.info("MQTT broker found")
+        except ConnectionRefusedError:
+            self.msgs.logger.info("MQTT not broker found")
 
         # arbitray geometry things
         self.button_w = 500 - 20
@@ -118,6 +141,14 @@ class TopApplication(QMainWindow):
 
         self.setCentralWidget(self.tabs)
 
+    # xxx
+    def update_mqtt(self, message):
+        self.mqttMsg.message = message
+        if self.mqttMsg and self.mqttMsg.msg_dict is not None:
+            self.msgs.setLocation((self.mqttMsg.msg_dict['lat'], self.mqttMsg.msg_dict['lon']))
+
+        self.mqttMsg.resetTimer()
+
     def close_app(self):
         """Close the entire application."""
         self.close()
@@ -132,9 +163,7 @@ class TopApplication(QMainWindow):
             key = event.key()
             print(f"KEY PRESS NOT CAPTURED: {key}")
             return True
-
         return False
-
 
 class mainTab(QMainWindow):
     def __init__(self, parent=None):
@@ -150,6 +179,8 @@ class mainTab(QMainWindow):
         self.output_data_file = self.parent.output_data_file
         self.output_plot_file = self.parent.output_plot_file
         self.msgs = self.parent.msgs
+        self.mqttMsg = self.parent.mqttMsg
+        self.reportLostMQTT = self.parent.reportLostMQTT
         self.drive = self.parent.drive
 
         # Ensure this receives key events
@@ -255,11 +286,11 @@ class mainTab(QMainWindow):
         layout.addWidget(self.systems_widget, 6, 0, 1, 3)
         layout.setRowStretch(6, 1)  # Ensure SystemsWidget expands to full height
         
-        # Set size policy for buttons
+        # Set size policy for widgets
         self.log_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.show_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.upload_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        self.systems_widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)  # Set size policy for SystemsWidget
+        # self.systems_widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)  
         
         # Apply the main layout to the central widget
         central_widget.setLayout(layout)
@@ -387,7 +418,6 @@ class mainTab(QMainWindow):
         self.checkStatus()
         super().mousePressEvent(event)
 
-
     def set_button_focus(self):
         self.button_index = -1
         self.widget_row = 1
@@ -396,16 +426,6 @@ class mainTab(QMainWindow):
 
     def handle_second_window_close(self):
         self.activateWindow()
-
-    def checkStatus(self):
-        if self.internet.status():
-            self.changePNGLabelColor(self.wifi_label, Qt.blue)
-        else:
-            self.changePNGLabelColor(self.wifi_label, Qt.black)
-
-        self.highlight_widget()
-        if self.msgs and not self.msgs.port.isOpen():
-            self.status_label.setText('Port open: error')
 
     def highlight_widget(self):
         for n, b in enumerate(self.widgets):
@@ -457,6 +477,11 @@ class mainTab(QMainWindow):
             self.msgs.endDataLogging(self.output_plot_file)
         else:
             self.status_label.setText("Logging initiated")
+            self.start_position = (0.0, 0.0)
+            # xxx
+            if self.mqttMsg and self.mqttMsg.msg_dict is not None:
+                self.start_position = (self.mqttMsg.msg_dict['lat'], self.mqttMsg.msg_dict['lon'])
+
             self.msgs.initDataLogging(self.output_data_file)
 
         # self.log_button.setEnabled(False)
@@ -486,7 +511,11 @@ class mainTab(QMainWindow):
             self.status_label.setText("No log file to upload")
         else:
             self.status_label.setText(F"Uploading plot")
-            self.upload_thread = GoogleHandler.uploadThread(self, [self.output_data_file, self.output_plot_file], self.output_note)
+            self.upload_thread = GoogleHandler.uploadThread(self,
+                                                            [self.output_data_file,
+                                                             self.output_plot_file],
+                                                            self.start_position,
+                                                            self.output_note)
             self.upload_thread.start()
 
     def handle_plot_window_close(self):
@@ -510,19 +539,56 @@ class mainTab(QMainWindow):
         pngLabel.setPixmap(pixmap)
         return pngLabel
 
+    def checkStatus(self):
 
-    def changePNGLabelColor(self, label, color):
+        if self.internet and self.internet.status():
+            self.changePNGLabelColor(self.wifi_label, True)
+        else:
+            self.changePNGLabelColor(self.wifi_label, False)
+
+        if self.msgs and self.msgs.port.isOpen():
+            self.changePNGLabelColor(self.serial_label, True)
+        else:
+            self.changePNGLabelColor(self.serial_label, False)
+
+        if self.mqttMsg and self.mqttMsg.reportTimer() < 2:
+            self.changePNGLabelColor(self.mqtt_label, True)
+            if not self.reportLostMQTT:
+                self.msgs.logger.info("MQTT broker found")
+                self.reportLostMQTT = True
+        else:
+            self.changePNGLabelColor(self.mqtt_label, False)
+            if self.reportLostMQTT:
+                self.msgs.logger.info("MQTT broker lost")
+                self.reportLostMQTT = False
+
+        self.highlight_widget()
+        if self.msgs and not self.msgs.port.isOpen():
+            self.status_label.setText('Port open: error')
+
+    def changePNGLabelColor(self, label, to_blue=True):
         pixmap = label.pixmap()
-        
+    
         image = pixmap.toImage()
         for y in range(image.height()):
             for x in range(image.width()):
                 pixel_color = QColor(image.pixelColor(x, y))
-                if pixel_color != Qt.white and pixel_color != Qt.transparent:
-                    image.setPixelColor(x, y, color)
+                rgb = pixel_color.getRgb()
+                intensity = rgb[3]
+
+                if pixel_color == Qt.white or pixel_color == Qt.transparent:
+                    image.setPixelColor(x, y, Qt.transparent)
+                else:
+                    if to_blue:
+                        new_color = QColor(0, 0, intensity, intensity)
+                    else:
+                        new_color = QColor(0, 0, 0, intensity)
+                    
+                    image.setPixelColor(x, y, new_color)
 
         new_pixmap = QPixmap.fromImage(image)
         label.setPixmap(new_pixmap)
+
 
 class SystemsWidget(QWidget, logging.Handler):
     def __init__(self, parent=None):
@@ -531,8 +597,7 @@ class SystemsWidget(QWidget, logging.Handler):
         
         self.text_edit = QTextEdit()
         self.text_edit.setReadOnly(True)
-        self.text_edit.setLineWrapMode(QTextEdit.NoWrap)
-
+        self.text_edit.setWordWrapMode(True)
         self.setFixedHeight(200) 
 
         layout = QVBoxLayout()
@@ -674,6 +739,8 @@ class StatusTab(QMainWindow):
         self.drive = self.parent.drive
         self.internet = self.parent.internet
         self.msgs = self.parent.msgs
+        self.mqttMsg = self.parent.mqttMsg
+        self.broker_address = self.parent.broker_address
         self.portName = self.parent.portName
         self.spreadsheet_id = self.parent.spreadsheet_id
         self.worksheet_name = self.parent.worksheet_name
@@ -722,6 +789,7 @@ class StatusTab(QMainWindow):
             return True
         return False
 
+    # xxx
     def update_stats(self):
         text =  "UPDATE STATS\n"
         if self.msgs:
@@ -754,6 +822,17 @@ class StatusTab(QMainWindow):
             text += (F"no serial port name: {self.portName}\n")
 
         self.text_edit.setText(text)
+
+        if self.mqttMsg:
+            text += (F"appear to be connected to MQTT broker {self.broker_address}\n")
+        else:
+            text += (F"cant connect to MQTT broker {self.broker_address}\n")
+
+        if self.mqttMsg.reportTimer() < 2:
+            text += (F"recently received message from MQTT broker {self.broker_address}\n")
+        else: 
+            text += (F"have not recently received message from MQTT broker {self.broker_address}\n")
+
 
     def get_wifi_name(self):
         if sys.platform.startswith('darwin'):
