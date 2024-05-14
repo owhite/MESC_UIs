@@ -13,6 +13,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload
 from oauth2client.service_account import ServiceAccountCredentials
+from PyQt5.QtCore import QTimer
 
 import plotMESC
 
@@ -22,8 +23,6 @@ class handler:
         self.spreadsheet_id = spreadsheet
         self.worksheet_name = worksheet
         self.logger = logger
-
-        print(account_file)
 
         # Define the Google Drive API scopes and service account file path
         SCOPES = ['https://www.googleapis.com/auth/drive']
@@ -128,11 +127,11 @@ class handler:
             'allowFileDiscovery': False,
         }
         if self.logger:
-            self.logger.info(f"Setting permissions on {file_id}")
+            self.logger.info(f"Setting permissions on uploaded file")
 
         self.drive_service.permissions().create(fileId=file_id, body=permission).execute()
 
-    def add_row_to_spreadsheet(self, plot_url, data_url, size, timestamp, note):
+    def add_row_to_spreadsheet(self, row):
         # Define the scope and credentials
         scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
         client = gspread.authorize(self.credentials)
@@ -145,8 +144,7 @@ class handler:
         try:
             spreadsheet = client.open_by_key(self.spreadsheet_id)
             worksheet = client.open_by_key(self.spreadsheet_id).worksheet(self.worksheet_name)
-            new_data = [plot_url, data_url, size, timestamp, note] # adding a new row
-            worksheet.append_row(new_data, value_input_option='USER_ENTERED')
+            worksheet.append_row(row, value_input_option='USER_ENTERED')
 
             if self.logger:
                 self.logger.info(f"Added row to spreadsheet with id = {self.spreadsheet_id}")
@@ -179,9 +177,10 @@ class PingInternet(): # not really a google service but whatevs
     def __init__(self, logger = None):
         super().__init__()
         self.logger = logger
-
-        self.timer = threading.Timer(1, self.check_internet_connection)
-        self.timer.start()
+        # self.timer = QTimer(self)
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.check_internet_connection)
+        self.timer.start(1000)
         self.internet_status = False
 
     def check_internet_connection(self):
@@ -215,13 +214,14 @@ class PingInternet(): # not really a google service but whatevs
         return(self.internet_status)
 
 class uploadThread(threading.Thread):
-    def __init__(self, parent, files, note):
+    def __init__(self, parent, files, position, note):
         super().__init__()
         self.parent = parent
         self.status_label = self.parent.status_label
         self.logger = self.parent.msgs
         self.drive = self.parent.drive
         self.files = files
+        self.position = position
         self.note = note
         self.stopped = threading.Event()
         self.plot_file = files
@@ -242,28 +242,49 @@ class uploadThread(threading.Thread):
 
         data_length = self.dataLength(self.files[0])
 
-        u1 = (F"=hyperlink(\"{plot_url}\", \"PLOT\")")
-        u2 = (F"=hyperlink(\"{file_url}\", \"DATA\")")
+        u1 = self.urlToSpreadsheetFormat(plot_url, "PLOT")
+        u2 = self.urlToSpreadsheetFormat(file_url, "PLOT")
+
         today = datetime.today()
         current_time = datetime.now()
         military_time = current_time.strftime("%H:%M")
         formatted_date = today.strftime("%m-%d-%y") + " " + military_time
-        self.drive.add_row_to_spreadsheet(u1, u2, data_length, formatted_date, self.note)
+
+        item1 = self.googleMapUrl(self.position)
+        item2 = self.streetViewUrl(self.position)
+        item1 = self.urlToSpreadsheetFormat(item1, 'MAP')
+        item2 = self.urlToSpreadsheetFormat(item2, 'STREET')
+
+        l = (u1, u2, data_length, formatted_date, item1, item2, self.note)
+        self.drive.add_row_to_spreadsheet(l)
         self.status_label.setText(F"Done with upload: {self.note}")
         for file_path in self.files:
             try:
                 os.remove(file_path)
-                self.logger.logger.info(f"File '{file_path}' deleted successfully.")
+                self.logger.logger.info(f"Local file '{file_path}' deleted.")
             except OSError as e:
                 self.logger.logger.info(f"Error deleting the file '{file_path}': {e}")
                 self.delete(file_path)
         self.stop()
 
+    def streetViewUrl(self, pos):
+        url = f'http://maps.google.com/maps?q=&layer=c&cbll={pos[0]},{pos[1]}'
+        return url
+
+    def googleMapUrl(self, pos):
+        url = f'http://maps.google.com/maps?q={pos[0]},{pos[1]}' # stack exchange
+        url = f'https://www.google.com/maps/search/?api=1&query={pos[0]}%2C{pos[1]}' # google
+        return url
+    
+    def urlToSpreadsheetFormat(self, url, name):
+        entry = F'=hyperlink(\"{url}\",\"{name}\")'
+        return entry
+
     def stop(self):
         self.stopped.set()
 
     def uploadToDrive(self, output_file, dest_name):
-        self.logger.logger.info("Uploading initiated")
+        self.logger.logger.info("Upload initiated")
 
         # List folders and files
         l = self.drive.list_files()
@@ -275,9 +296,9 @@ class uploadThread(threading.Thread):
                 self.logger.logger.info(F"DELETING {item} {item['id']}")
 
         file_id, file_url =  self.drive.upload_file(output_file, dest_name)
-        self.logger.logger.info(F"file url {file_url}")
 
         self.drive.set_permissions(file_id)
+        self.logger.logger.info(F"Upload complete")
 
         return(file_url)
 

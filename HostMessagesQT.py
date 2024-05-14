@@ -6,21 +6,25 @@
 
 import logging
 import re
+import json
 import sys, os
-import threading
 from datetime import datetime
+
+from PyQt5 import QtCore
+from PyQt5.QtCore import QTimer, QMutex
+from PyQt5.QtSerialPort import QSerialPort, QSerialPortInfo
+from PyQt5.QtWidgets import QLabel
 
 import Payload
 import plotMESC
-import serial
+
 
 class LogHandler():
     def __init__(self, parent):
         self.parent = parent
         self.working_directory = self.parent.working_directory
 
-        self.port = serial.Serial()
-        # self.port = QSerialPort()
+        self.port = QSerialPort()
         self.serialPayload = Payload.Payload()
         self.serialPayload.startTimer()
         self.serial = None
@@ -47,12 +51,13 @@ class LogHandler():
         self.logger.addHandler(serial_service_handler)
         self.logger.addHandler(stdout_handler)
 
+        self.position = None
+
+        self.mutex = QMutex()
         self.dataBuffer = bytearray()
-        # alias this so it looks like QT version
-        Mutex = threading.Lock
-        self.mutex = Mutex()
-        self.processTimer = threading.Timer(0.1, self.processData)
-        self.processTimer.start()
+        self.processTimer = QTimer()
+        self.processTimer.timeout.connect(self.processData)
+        self.processTimer.start(100)
         
         self.json_collect_str = ''
         self.json_collect_flag = False
@@ -70,6 +75,8 @@ class LogHandler():
         if self.serial:
             self.serial.close()
 
+    def setLocation(self, position):
+        self.position = position
         
     def openPort(self, name):
         self.portName = name
@@ -80,7 +87,7 @@ class LogHandler():
             self.port.setParity( 0 ) 
             self.port.setStopBits( 0 ) 
             self.port.setFlowControl( 0 ) 
-            r = self.port.open()
+            r = self.port.open(QtCore.QIODevice.ReadWrite)
             if not r:
                 self.logger.info(F"Log Handler port: {self.portName} not open")
                 self.setStatusText('Port open: error')
@@ -94,7 +101,6 @@ class LogHandler():
         else:
             self.port.close()
             self.setStatusText('Port closed')
-
 
     def sendToPort(self, text):
         if not self.port.isOpen():
@@ -184,8 +190,22 @@ class LogHandler():
             json_text = json_text.replace("}{", "}\n{") 
             self.serialPayload.setString(remaining_text)
 
+        # json gets sent to self.data_logger or self.serial_msgs
         if len(json_text) > 0:
-            # split json to go to self.data_logger or self.serial_msgs
+            # need to fold in position if there is one
+            if self.position is not None:
+                new_str = ''
+                for l in json_text.split('\n'):
+                    try:
+                        data = json.loads(l)
+                        data["lat"] = self.position[0]
+                        data["lon"] = self.position[1]
+                        new_str = new_str + json.dumps(data)
+                    except json.JSONDecodeError as e:
+                        pass
+
+                json_text = new_str
+
             if self.data_logger:
                 if self.json_collect_flag:
                     self.data_logger.info("[JSON BLOCK]")
