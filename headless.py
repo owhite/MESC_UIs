@@ -75,7 +75,7 @@ class TopApplication():
 
         # manage the uploader
         google_config = config['GOOGLE']
-        self.account_file = google_config.get('account_file', '')
+        self.account_file = google_config.get('google_service_account', '')
 
         # Use a pre-existing spreadsheet, here
         # https://docs.google.com/spreadsheets/d/1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c/
@@ -92,8 +92,7 @@ class TopApplication():
         if self.drive.test_connection(): 
             self.msgs.logger.info("google drive ping is working")
 
-        self.msgs.initHostStatusLabel(self.status_label)
-
+        self.statusText = ''
         self.timer = threading.Timer(0.1, self.updateStats)
         self.timer.start()
 
@@ -139,7 +138,7 @@ class TopApplication():
         else:
             text += (F"no serial port name: {self.portName}\n")
 
-        self.text_edit.setText(text)
+        self.statusText = text
 
     def get_wifi_name(self):
         if sys.platform.startswith('darwin'):

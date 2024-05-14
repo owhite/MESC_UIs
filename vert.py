@@ -13,8 +13,8 @@ import gps_MQTT
 
 import matplotlib
 
-import GoogleHandler
-import HostMessages
+import GoogleHandlerQT
+import HostMessagesQT
 
 matplotlib.use('Qt5Agg')  # This chooses the appropriate backend for the RPI 
 
@@ -31,7 +31,7 @@ from PyQt5.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLabel,
 
 # a design goal of this code is to basically handle all the UI elements, while
 #   cutting over the other serial stuff and logging stuff to other
-#   python classes like LogHandler and GoogleHandler
+#   python classes like LogHandler and GoogleHandlerQT
 # probably failed with the goal.
 #
 class TopApplication(QMainWindow):
@@ -46,7 +46,7 @@ class TopApplication(QMainWindow):
         self.output_plot_file = os.path.join(self.working_directory, 'MESC_plt.png')
 
         # system messages and serial messages
-        self.msgs = HostMessages.LogHandler(self)
+        self.msgs = HostMessagesQT.LogHandler(self)
 
         self.portName = None
 
@@ -72,7 +72,7 @@ class TopApplication(QMainWindow):
             self.msgs.logger.info("Unknown operating system")
             sys.exit()
     
-        self.internet = GoogleHandler.PingInternet(self.msgs.logger)
+        self.internet = GoogleHandlerQT.PingInternet(self.msgs.logger)
 
         self.msgs.openPort(self.portName)
 
@@ -82,11 +82,11 @@ class TopApplication(QMainWindow):
         self.worksheet_name = 'MESC_UPLOADS'
 
         # manage the uploader
-        self.drive = GoogleHandler.handler(self.msgs.logger,
+        self.drive = GoogleHandlerQT.handler(self.msgs.logger,
                                            account_file,
                                            self.spreadsheet_id,
                                            self.worksheet_name)
-        self.msgs.logger.info("GoogleHandler initiated")
+        self.msgs.logger.info("GoogleHandlerQT initiated")
         if self.drive.test_connection(): 
             self.msgs.logger.info("google drive ping is working")
 
@@ -511,7 +511,7 @@ class mainTab(QMainWindow):
             self.status_label.setText("No log file to upload")
         else:
             self.status_label.setText(F"Uploading plot")
-            self.upload_thread = GoogleHandler.uploadThread(self,
+            self.upload_thread = GoogleHandlerQT.uploadThread(self,
                                                             [self.output_data_file,
                                                              self.output_plot_file],
                                                             self.start_position,
