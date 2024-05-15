@@ -4,6 +4,7 @@ import logging
 import configparser
 import math
 import os
+import random
 import glob
 import subprocess
 import sys
@@ -53,6 +54,8 @@ class TopApplication():
 
         # system messages and serial messages
         self.msgs = HostMessages.LogHandler(self)
+        self.msgs.setDataLogFile(self.output_data_file)
+        self.msgs.setDataLogFile(self.output_plot_file)
 
         self.portName = None
 
@@ -92,16 +95,19 @@ class TopApplication():
 
         self.msgs.logger.info("GoogleHandler initiated")
         if self.drive.test_connection(): 
-            self.msgs.logger.info("google drive ping is working")
+            self.msgs.logger.info("ping to google drive working")
 
         self.statusText = ''
         self.timer = threading.Timer(0.1, self.updateStats)
         self.timer.start()
 
-        self.log_is_on = False
-        self.upload_thread = None
-
         self.mqtt_config = config['MQTT']
+
+        #xxxx
+        self.incoming_functions = incomingFuncs(self.msgs)
+        self.initMQTT()
+
+    def initMQTT(self):
         client = mqtt.Client()
         client.on_connect = self.on_connect
         client.on_message = self.mqttEventHandler
@@ -115,27 +121,16 @@ class TopApplication():
         except Exception as e:
             self.msgs.logger.info(F"Error connecting to MQTT broker {e}")
 
+    def setStates(self):
+        self.upload_thread = None
+        self.log_is_on = False
+
     def on_connect(self, client, userdata, flags, rc):
         if rc == 0:
             print("Connected to MQTT broker")
             client.subscribe(self.mqtt_config.get('topic', ''))
         else:
             print("Failed to connect to MQTT broker with error code", rc)
-
-    def mqttEventHandler(self, client, userdata, message):
-        msg = message.payload.decode()
-        self.msgs.logger.info(f"MQTT message: {msg} topic {message.topic}")
-
-        if ' ' in msg:
-            func, args = msg.split(' ', 1)
-        else:
-            func = msg
-            args = None
-        try:
-            function_call = getattr(sys.modules[__name__], func)
-            function_call(args)
-        except AttributeError:
-            self.msgs.logger.info(F"requested function: {func} not found")
 
     def updateStats(self):
         text =  "UPDATE STATS\n"
@@ -204,6 +199,44 @@ class TopApplication():
                 return None
         else:
             return None
+
+    def mqttEventHandler(self, client, userdata, message):
+        msg = message.payload.decode()
+        self.msgs.logger.info(f"MQTT topic {message.topic} message: {msg}")
+
+        if ' ' in msg:
+            func, args = msg.split(' ', 1)
+        else:
+            func = msg 
+            args = None
+        try:
+            function_call = getattr(self.incoming_functions, func)
+            function_call(args)
+        except Exception as e:
+            self.msgs.logger.info(F"requested function {func} error: {e}")
+        except AttributeError:
+            self.msgs.logger.info(F"requested function: {func} not found")
+
+class incomingFuncs:
+    def __init__(self, msgs):
+        self.msgs = msgs
+
+    def set(self, args):
+        self.msgs.logger.info(F"incoming set: {args}")
+        if args is None:
+            return
+        
+        if args == 'log':
+            if self.msgs.logIsOn():
+                self.msgs.endDataLogging()
+            else:
+                # self.start_position = (0.0, 0.0)
+                # if self.mqttMsg and self.mqttMsg.msg_dict is not None:
+                    # self.start_position = (self.mqttMsg.msg_dict['lat'], self.mqttMsg.msg_dict['lon'])
+
+                self.msgs.initDataLogging()
+
+
 
 if __name__ == '__main__':
     TopApplication(config_file = "config.ini")

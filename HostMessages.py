@@ -58,6 +58,8 @@ class LogHandler():
         self.json_collect_flag = False
         self.hostStatusText = None
 
+        self.log_is_on = False
+
     def initHostStatusLabel(self, label):
         if isinstance(label, QLabel):
             self.hostStatusText = label
@@ -231,10 +233,15 @@ class LogHandler():
 
         self.serialPayload.setString(second_block)
 
-    def initDataLogging(self, file_name):
-        self.logger.info("Initiate data logging: %s")
+    def logIsOn(self):
+        return self.log_is_on
 
+    def setDataLogFile(self, file_name):
         self.datafile_name = file_name
+
+    def initDataLogging(self):
+        self.logger.info(F"Initiate data logging: {self.datafile_name}")
+
         if self.data_logger:
             for handler in self.data_logger.handlers[:]:
                 self.data_logger.removeHandler(handler)
@@ -257,9 +264,11 @@ class LogHandler():
         self.sendToPort('get')
 
 
-    def endDataLogging(self, plot_file):
+    def setPlotFile(self, file_name):
+        self.plot_file = file_name
+
+    def endDataLogging(self):
         self.sendToPort('status stop')
-        self.plot_file = plot_file
 
         if self.data_logger:
             for handler in self.data_logger.handlers[:]:

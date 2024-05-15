@@ -1,8 +1,17 @@
 #!/usr/bin/env python3
 
 import paho.mqtt.client as mqtt
+import random
 
 # Define callback functions for MQTT events
+def on_connect2(client, userdata, flags, reason_code, properties):
+    if flags.session_present:
+        pass
+    if reason_code == 0:
+        pass
+    if reason_code > 0:
+        pass
+
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
         print("Connected to MQTT broker")
@@ -19,6 +28,9 @@ def on_disconnect(client, userdata, rc):
         print("Unexpected disconnection from MQTT broker")
 
 # Create an MQTT client instance
+client_id = f'python-mqtt-{random.randint(0, 1000)}'
+CLIENT_ID = f'python-mqtt-{random.randint(0, 1000)}'
+
 client = mqtt.Client()
 
 # Set callback functions for MQTT events
@@ -33,7 +45,7 @@ client.username_pw_set(username, password)
 
 # Connect to the MQTT broker
 try:
-    client.connect("10.0.1.10", 1883, 60)
+    client.connect('localhost', 1883, 60)
     client.loop_forever()
 except ConnectionRefusedError:
     print("Connection to MQTT broker refused")
