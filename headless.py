@@ -49,6 +49,8 @@ class TopApplication():
         self.output_data_file = os.path.join(self.working_directory, file_config.get('logdata_file', 'MESC_logdata.txt'))
         self.output_plot_file = os.path.join(self.working_directory, file_config.get('plotdata_file', 'MESC_plt.png'))
 
+        print(self.output_data_file)
+
         # system messages and serial messages
         self.msgs = HostMessages.LogHandler(self)
 
@@ -100,12 +102,46 @@ class TopApplication():
         self.upload_thread = None
 
         mqtt_config = config['MQTT']
-        broker = mqtt_config.get('broker', 'localhost')
-        port = mqtt_config.getint('port', 1883)
-        topic = mqtt_config.get('topic', 'test/topic')
 
-        subscriber = MQTTSubscriber(broker="localhost", port=1883, topic="test/topic")
-        subscriber.start()
+        client = mqtt.Client()
+        client.on_connect = self.on_connect
+        client.on_message = self.mqttEventHandler
+
+        # Set username and password (if required by the MQTT broker)
+        client.username_pw_set(mqtt_config.get('username', ''), mqtt_config.get('password', ''))
+
+        # Connect to the MQTT broker
+        try:
+            client.connect(mqtt_config.get('broker', ''), mqtt_config.getint('port', ''), 60)
+            client.loop_forever()
+        except ConnectionRefusedError:
+            self.msgs.logger.info("MQTT connection refused")
+        except Exception as e:
+            self.msgs.logger.info(F"Error connecting to MQTT broker {e}")
+
+    # Define callback functions for MQTT events
+    def on_connect(self, client, userdata, flags, rc):
+        if rc == 0:
+            print("Connected to MQTT broker")
+            # Subscribe to the topic of interest
+            client.subscribe("ab")
+        else:
+            print("Failed to connect to MQTT broker with error code", rc)
+
+    def mqttEventHandler(self, client, userdata, message):
+        msg = message.payload.decode()
+        self.msgs.logger.info(f"MQTT message: {msg} topic {message.topic}")
+
+        if ' ' in msg:
+            func, args = msg.split(' ', 1)
+        else:
+            func = msg
+            args = None
+        try:
+            function_call = getattr(sys.modules[__name__], func)
+            function_call(args)
+        except AttributeError:
+            self.msgs.logger.info(F"requested function: {func} not found")
 
     def updateStats(self):
         text =  "UPDATE STATS\n"
@@ -174,34 +210,6 @@ class TopApplication():
                 return None
         else:
             return None
-
-
-class MQTTSubscriber:
-    def __init__(self, broker="localhost", port=1883, topic="test/topic"):
-        self.broker = broker
-        self.port = port
-        self.topic = topic
-        self.client = mqtt.Client()
-        self.client.on_message = self.messageEventHandler
-        self.thread = None
-
-    def messageEventHandler(self, client, userdata, message):
-        print(f"Received message: {message.payload.decode()} on topic {message.topic}")
-
-    def start(self):
-        self.client.connect(self.broker, self.port, 60)
-        self.client.subscribe(self.topic)
-        self.thread = threading.Thread(target=self.run)
-        self.thread.start()
-
-    def run(self):
-        self.client.loop_forever()
-
-    def stop(self):
-        self.client.disconnect()
-        if self.thread is not None:
-            self.thread.join()
-
 
 if __name__ == '__main__':
     TopApplication(config_file = "config.ini")

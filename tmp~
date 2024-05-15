@@ -1,0 +1,13 @@
+        client = mqtt.Client()
+        client.username_pw_set(mqtt_config.get('username', ''), mqtt_config.get('password', ''))
+        client.on_connect = self.mqttEventHandler
+
+        try:
+            client.connect(mqtt_config.get('broker', ''), mqtt_config.getint('port', ''), 60)
+            self.msgs.logger.info(F"MQTT server connect {mqtt_config.get('broker', '')} :: {mqtt_config.getint('port', '')}")
+            print(mqtt_config.get('topic', ''))
+            client.loop_forever()
+        except ConnectionRefusedError:
+            self.msgs.logger.info("MQTT connection refused")
+        except Exception as e:
+            self.msgs.logger.info(F"Error connecting to MQTT broker {e}")
