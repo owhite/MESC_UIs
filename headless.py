@@ -101,30 +101,24 @@ class TopApplication():
         self.log_is_on = False
         self.upload_thread = None
 
-        mqtt_config = config['MQTT']
-
+        self.mqtt_config = config['MQTT']
         client = mqtt.Client()
         client.on_connect = self.on_connect
         client.on_message = self.mqttEventHandler
+        client.username_pw_set(self.mqtt_config.get('username', ''), self.mqtt_config.get('password', ''))
 
-        # Set username and password (if required by the MQTT broker)
-        client.username_pw_set(mqtt_config.get('username', ''), mqtt_config.get('password', ''))
-
-        # Connect to the MQTT broker
         try:
-            client.connect(mqtt_config.get('broker', ''), mqtt_config.getint('port', ''), 60)
+            client.connect(self.mqtt_config.get('broker', ''), self.mqtt_config.getint('port', ''), 60)
             client.loop_forever()
         except ConnectionRefusedError:
             self.msgs.logger.info("MQTT connection refused")
         except Exception as e:
             self.msgs.logger.info(F"Error connecting to MQTT broker {e}")
 
-    # Define callback functions for MQTT events
     def on_connect(self, client, userdata, flags, rc):
         if rc == 0:
             print("Connected to MQTT broker")
-            # Subscribe to the topic of interest
-            client.subscribe("ab")
+            client.subscribe(self.mqtt_config.get('topic', ''))
         else:
             print("Failed to connect to MQTT broker with error code", rc)
 
