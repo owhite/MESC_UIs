@@ -29,11 +29,13 @@ import HostMessages
 #  Uploading
 
 # COMMANDS
-#  get [wifi | mesc | gps | log | upload | all]
-#  set [note | wifi | mesc | gps | log | upload]
+#  set [note]
+#  start [log | upload]
+#  stop  [log]
+#  restart -- stuff like MQTT? 
 #  cmd -- pass a command through to mesc
+#  get [wifi | mesc | gps | log | upload | all]
 #  report - send a bundle of info on status
-#  restart
 #  quit
 
 class TopApplication():
@@ -97,6 +99,10 @@ class TopApplication():
         if self.drive.test_connection(): 
             self.msgs.logger.info("ping to google drive working")
 
+        self.upload_thread = GoogleHandler.ThreadOperation(self.drive, self.msgs.logger)
+        self.upload_thread.setDataLogFile(self.output_data_file)
+        self.upload_thread.setPlotFile(self.output_plot_file)
+
         self.statusText = ''
         self.timer = threading.Timer(0.1, self.updateStats)
         self.timer.start()
@@ -104,7 +110,7 @@ class TopApplication():
         self.mqtt_config = config['MQTT']
 
         #xxxx
-        self.incoming_functions = incomingFuncs(self.msgs)
+        self.incoming_functions = incomingFuncs(self.msgs, self.upload_thread)
         self.initMQTT()
 
     def initMQTT(self):
@@ -218,24 +224,41 @@ class TopApplication():
             self.msgs.logger.info(F"requested function: {func} not found")
 
 class incomingFuncs:
-    def __init__(self, msgs):
+    def __init__(self, msgs, upload_thread):
         self.msgs = msgs
+        self.upload_thread = upload_thread
 
-    def set(self, args):
-        self.msgs.logger.info(F"incoming set: {args}")
+    def start(self, args):
+        self.msgs.logger.info(F"incoming start: {args}")
         if args is None:
             return
-        
         if args == 'log':
             if self.msgs.logIsOn():
                 self.msgs.endDataLogging()
-            else:
-                # self.start_position = (0.0, 0.0)
-                # if self.mqttMsg and self.mqttMsg.msg_dict is not None:
-                    # self.start_position = (self.mqttMsg.msg_dict['lat'], self.mqttMsg.msg_dict['lon'])
+            self.msgs.initDataLogging()
 
-                self.msgs.initDataLogging()
+        if args == 'upload':
+            self.upload_thread.start()
 
+    def stop(self, args):
+        self.msgs.logger.info(F"incoming stop: {args}")
+        if args is None:
+            return
+        if args == 'log':
+            if self.msgs.logIsOn():
+                self.msgs.endDataLogging()
+            self.msgs.initDataLogging()
+
+        if args == 'upload':
+            self.upload_thread.stop()
+
+    def check(self, args):
+        self.msgs.logger.info(F"incoming stop: {args}")
+        if self.upload_thread.threadIsRunning():
+            print ("running")
+        else:
+            print ("not running")
+            
 
 
 if __name__ == '__main__':

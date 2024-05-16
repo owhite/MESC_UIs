@@ -1,53 +1,40 @@
 #!/usr/bin/env python3
 
-import paho.mqtt.client as mqtt
-import random
+import threading
+import time
 
-# Define callback functions for MQTT events
-def on_connect2(client, userdata, flags, reason_code, properties):
-    if flags.session_present:
-        pass
-    if reason_code == 0:
-        pass
-    if reason_code > 0:
-        pass
+class ThreadOperation:
+    def __init__(self):
+        self._running = threading.Event()
+        self._thread = None
 
-def on_connect(client, userdata, flags, rc):
-    if rc == 0:
-        print("Connected to MQTT broker")
-        # Subscribe to the topic of interest
-        client.subscribe("ab")
-    else:
-        print("Failed to connect to MQTT broker with error code", rc)
+    def _operation(self):
+        while self._running.is_set():
+            print("Working...")
+            time.sleep(1)  # Simulate some work being done
 
-def on_message(client, userdata, msg):
-    print("Received message:", msg.payload.decode())
+    def start(self):
+        if self._thread is None or not self._thread.is_alive():
+            self._running.set()
+            self._thread = threading.Thread(target=self._operation)
+            self._thread.start()  # Start the thread in a non-blocking way
+            print("Thread started")
 
-def on_disconnect(client, userdata, rc):
-    if rc != 0:
-        print("Unexpected disconnection from MQTT broker")
+    def stop(self):
+        self._running.clear()
+        if self._thread is not None:
+            self._thread.join()  # Wait for the thread to finish
+        print("Thread stopped")
 
-# Create an MQTT client instance
-client_id = f'python-mqtt-{random.randint(0, 1000)}'
-CLIENT_ID = f'python-mqtt-{random.randint(0, 1000)}'
+    def threadIsRunning(self):
+        return self._running.is_set() and self._thread is not None and self._thread.is_alive()
 
-client = mqtt.Client()
-
-# Set callback functions for MQTT events
-client.on_connect = on_connect
-client.on_message = on_message
-client.on_disconnect = on_disconnect
-
-# Set username and password (if required by the MQTT broker)
-username = "owhite"
-password = "thing12"
-client.username_pw_set(username, password)
-
-# Connect to the MQTT broker
-try:
-    client.connect('localhost', 1883, 60)
-    client.loop_forever()
-except ConnectionRefusedError:
-    print("Connection to MQTT broker refused")
-except Exception as e:
-    print("Error connecting to MQTT broker:", str(e))
+# Example usage
+if __name__ == "__main__":
+    ThreadInstance = ThreadOperation()
+    
+    ThreadInstance.start()
+    print("1: Is thread running?", ThreadInstance.threadIsRunning())
+    time.sleep(20)  # Let the thread run for 2 seconds
+    ThreadInstance.stop()
+    print("2: Is thread running?", ThreadInstance.threadIsRunning())

@@ -1,3 +1,9 @@
+        while self._running.is_set():
+            # Perform the operation
+            print("Thread is running")
+            time.sleep(1)  # Simulate some work being done
+
+
         client = mqtt.Client()
         client.username_pw_set(mqtt_config.get('username', ''), mqtt_config.get('password', ''))
         client.on_connect = self.mqttEventHandler

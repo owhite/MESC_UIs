@@ -511,7 +511,7 @@ class mainTab(QMainWindow):
             self.status_label.setText("No log file to upload")
         else:
             self.status_label.setText(F"Uploading plot")
-            self.upload_thread = GoogleHandlerQT.uploadThread(self,
+            self.upload_thread = GoogleHandler.uploadThread(self,
                                                             [self.output_data_file,
                                                              self.output_plot_file],
                                                             self.start_position,

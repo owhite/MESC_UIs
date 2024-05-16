@@ -3,6 +3,7 @@
 import io
 import os
 import threading
+import time
 from datetime import datetime
 
 import gspread
@@ -213,6 +214,48 @@ class PingInternet(): # not really a google service but whatevs
 
     def status(self):
         return(self.internet_status)
+
+# Starts a non-blocking thread
+class ThreadOperation:
+    def __init__(self, drive, logger):
+        self._running = threading.Event()
+        self._thread = None
+        self.logger = logger
+        self.drive = drive
+        self.data_file = None
+        self.plot_file = None
+        self.note = None
+
+    def _operation(self):
+        print("Working...")
+        # Simulate some work being done
+        time.sleep(5)  
+        print("...done")
+
+    def start(self):
+        if self._thread is None or not self._thread.is_alive():
+            self._running.set()
+            self._thread = threading.Thread(target=self._operation)
+            self._thread.start()
+            print("Thread started")
+
+    def stop(self):
+        self._running.clear()
+        if self._thread is not None:
+            self._thread.join()  # Wait for the thread to finish
+        print("Thread stopped")
+
+    def threadIsRunning(self):
+        return self._running.is_set() and self._thread is not None and self._thread.is_alive()
+
+    def setDataLogFile(self, file_name):
+        self.datafile_name = file_name
+
+    def setPlotFile(self, file_name):
+        self.plot_file = file_name
+
+    def setUploadNote(self, note):
+        self.note = note
 
 class uploadThread(threading.Thread):
     def __init__(self, parent, files, note):
