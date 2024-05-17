@@ -10,6 +10,7 @@ import subprocess
 import sys
 import time
 import threading
+import signal
 
 import matplotlib
 
@@ -28,16 +29,6 @@ import HostMessages
 #  Logging [on/off]
 #  Uploading
 
-# COMMANDS
-#  set [note]
-#  start [log | upload]
-#  stop  [log]
-#  restart -- stuff like MQTT? 
-#  cmd -- pass a command through to mesc
-#  get [wifi | mesc | gps | log | upload | all]
-#  report - send a bundle of info on status
-#  quit
-
 class TopApplication():
     def __init__(self, config_file="config.ino"):
 
@@ -51,8 +42,6 @@ class TopApplication():
             os.makedirs(self.working_directory)
         self.output_data_file = os.path.join(self.working_directory, file_config.get('logdata_file', 'MESC_logdata.txt'))
         self.output_plot_file = os.path.join(self.working_directory, file_config.get('plotdata_file', 'MESC_plt.png'))
-
-        print(self.output_data_file)
 
         # system messages and serial messages
         self.msgs = HostMessages.LogHandler(self)
@@ -76,7 +65,7 @@ class TopApplication():
             self.msgs.logger.info("Unknown operating system")
             sys.exit()
     
-        self.internet = GoogleHandler.PingInternet(self.msgs.logger)
+        self.internet = GoogleHandler.Ping(self.msgs.logger)
 
         # self.msgs.openPort(self.portName)
 
@@ -88,7 +77,10 @@ class TopApplication():
         # https://docs.google.com/spreadsheets/d/1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c/
         self.spreadsheet_id = google_config.get('spreadsheet_id', '1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c')
         self.worksheet_name = google_config.get('worksheeet_name', 'MESC_UPLOADS')
-        print(self.msgs.logger, self.account_file, self.spreadsheet_id, self.worksheet_name)
+
+        self.msgs.logger.info(F"Google account {self.account_file}" )
+        self.msgs.logger.info(F"Google spreadsheet {self.spreadsheet_id}" )
+        self.msgs.logger.info(F"Google worksheet {self.worksheet_name}" )
 
         self.drive = GoogleHandler.handler(self.msgs.logger,
                                            self.account_file,
@@ -97,7 +89,8 @@ class TopApplication():
 
         self.msgs.logger.info("GoogleHandler initiated")
         if self.drive.test_connection(): 
-            self.msgs.logger.info("ping to google drive working")
+            self.msgs.logger.info("Ping to google drive working")
+
 
         self.upload_thread = GoogleHandler.ThreadOperation(self.drive, self.msgs.logger)
         self.upload_thread.setDataLogFile(self.output_data_file)
@@ -108,70 +101,52 @@ class TopApplication():
         self.timer.start()
 
         self.mqtt_config = config['MQTT']
-
-        #xxxx
-        self.incoming_functions = incomingFuncs(self.msgs, self.upload_thread)
         self.initMQTT()
 
+    def updateStats(self):
+        pass
+
     def initMQTT(self):
-        client = mqtt.Client()
-        client.on_connect = self.on_connect
-        client.on_message = self.mqttEventHandler
-        client.username_pw_set(self.mqtt_config.get('username', ''), self.mqtt_config.get('password', ''))
+        self.client = mqtt.Client()
+        self.client.on_connect = self.mqttConnect
+        self.client.on_message = self.mqttEventHandler
+        self.client.username_pw_set(self.mqtt_config.get('username', ''), self.mqtt_config.get('password', ''))
+        self.connected = False
+        self.subscribed = False
+        self.broker_address = self.mqtt_config.get('broker', '')
+
+        def signal_handler(sig, frame):
+            self.msgs.logger.info("MQTT disconnecting")
+            self.client.disconnect()
+            sys.exit(0)
+
+        signal.signal(signal.SIGINT, signal_handler)
 
         try:
-            client.connect(self.mqtt_config.get('broker', ''), self.mqtt_config.getint('port', ''), 60)
-            client.loop_forever()
+            self.client.connect(self.broker_address, self.mqtt_config.getint('port', ''), 60)
+            self.client.loop_forever()
         except ConnectionRefusedError:
             self.msgs.logger.info("MQTT connection refused")
         except Exception as e:
             self.msgs.logger.info(F"Error connecting to MQTT broker {e}")
 
-    def setStates(self):
-        self.upload_thread = None
-        self.log_is_on = False
+    def mqttDisconnect(self):
+        if self.client is not None:
+            self.connected = False
+            print('Disconnecting from MQTT broker...')
+            self.client.disconnect()
+            print('Disconnected.')
 
-    def on_connect(self, client, userdata, flags, rc):
+    def mqttConnect(self, client, userdata, flags, rc):
         if rc == 0:
-            print("Connected to MQTT broker")
+            self.msgs.logger.info("Connected to MQTT broker")
             client.subscribe(self.mqtt_config.get('topic', ''))
+            self.connected = True
+            self.subscribed = True
         else:
-            print("Failed to connect to MQTT broker with error code", rc)
+            self.msgs.logger.info(F"Failed to connect to MQTT broker {rc}")
 
-    def updateStats(self):
-        text =  "UPDATE STATS\n"
-        if self.msgs:
-            text += "message handler is not none\n"
-        else:
-            text += "message handler is none (that's bad)\n"
-            
-        if self.drive and self.drive.test_connection(): 
-            text += "google drive connected\n"
-        else:
-            text += "google drive ping not working\n"
-
-        self.spreadsheet_id
-        self.worksheet_name
-
-        if self.spreadsheet_id and self.worksheet_name:
-            text += F"google spreadsheet {self.spreadsheet_id}\n"
-            text += F"worksheet {self.worksheet_name}\n"
-
-        if self.internet and self.internet.check_internet_connection(): 
-            text += "internet connected\n"
-        else:
-            text += "internet not working\n"
-            
-        text += (F"internet name: {self.get_wifi_name()}\n")
-
-        if self.portName:
-            text += (F"serial port name: {self.portName}\n")
-        else:
-            text += (F"no serial port name: {self.portName}\n")
-
-        self.statusText = text
-
-    def get_wifi_name(self):
+    def getWifiName(self):
         if sys.platform.startswith('darwin'):
             # the world's most 'unlikely to survive over time'-idea:
             process = subprocess.Popen(['/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport','-I'], stdout=subprocess.PIPE)
@@ -190,6 +165,8 @@ class TopApplication():
                     d[l[0].lstrip()] = l[1].lstrip()
 
             if d.get('SSID'):
+                if d['SSID'] == 'Off':
+                    return None
                 return d['SSID']
             else:
                 return None
@@ -208,28 +185,41 @@ class TopApplication():
 
     def mqttEventHandler(self, client, userdata, message):
         msg = message.payload.decode()
-        self.msgs.logger.info(f"MQTT topic {message.topic} message: {msg}")
+        msg = msg.rstrip()
 
         if ' ' in msg:
             func, args = msg.split(' ', 1)
         else:
             func = msg 
             args = None
-        try:
-            function_call = getattr(self.incoming_functions, func)
-            function_call(args)
-        except Exception as e:
-            self.msgs.logger.info(F"requested function {func} error: {e}")
-        except AttributeError:
-            self.msgs.logger.info(F"requested function: {func} not found")
 
-class incomingFuncs:
-    def __init__(self, msgs, upload_thread):
-        self.msgs = msgs
-        self.upload_thread = upload_thread
+        # IMO a really fun technique. Test to see if a function exists,
+        #   if it does, then call it. errors are handled rather nicely
+        if hasattr(self, func) and callable(getattr(self, func)):
+            try:
+                self.msgs.logger.info(F"Incoming cmd: {{{func} {args}}}")
+                if args is None:
+                    getattr(self, func)()
+                else:
+                    getattr(self, func)(args)
+
+            except Exception as e:
+                self.msgs.logger.info(F"requested function {{{func}}} error: {{{e}}}")
+
+    ###############################
+    # These functions called by mqttEventHandler()
+    #  set [note]
+    #  start [log | upload]
+    #  stop  [log]
+    #  check [log | status ] status, creates a text bundle of info
+    #  quit
+    # 
+    # TO DO:
+    #  cmd -- pass a command through to mesc
+    #  get [wifi | port | files | things]
+    #  restart [wifi | port | mqtt | things]
 
     def start(self, args):
-        self.msgs.logger.info(F"incoming start: {args}")
         if args is None:
             return
         if args == 'log':
@@ -241,24 +231,64 @@ class incomingFuncs:
             self.upload_thread.start()
 
     def stop(self, args):
-        self.msgs.logger.info(F"incoming stop: {args}")
         if args is None:
             return
         if args == 'log':
             if self.msgs.logIsOn():
                 self.msgs.endDataLogging()
             self.msgs.initDataLogging()
-
         if args == 'upload':
             self.upload_thread.stop()
 
     def check(self, args):
-        self.msgs.logger.info(F"incoming stop: {args}")
-        if self.upload_thread.threadIsRunning():
-            print ("running")
+        if args is None:
+            return
+        if args == 'log':
+            if self.upload_thread.threadIsRunning():
+                self.msgs.logger.info(F"log upload running")
+            else:
+                self.msgs.logger.info(F"log upload not running")
+        if args == 'status':
+            self.checkStatus()
+
+    def checkStatus(self):
+        text =  "UPDATE STATS\n"
+        if self.msgs:
+            text += "Message handler is not none\n"
         else:
-            print ("not running")
+            text += "Message handler is none (that's bad)\n"
             
+        if self.drive and self.drive.test_connection(): 
+            text += "Google drive connected\n"
+        else:
+            text += "Google drive ping not working\n"
+
+        if self.spreadsheet_id and self.worksheet_name:
+            text += F"Google spreadsheet {self.spreadsheet_id}\n"
+            text += F"Worksheet {self.worksheet_name}\n"
+
+        if self.internet and self.internet.check_internet_connection(): 
+            text += (F"Internet connected, wifi name: {self.getWifiName()}\n")
+        else:
+            text += "Internet not working\n"
+            
+        if self.portName:
+            text += (F"Serial port name: {self.portName}\n")
+        else:
+            text += (F"No serial port name: {self.portName}\n")
+
+        if self.subscribed:
+            text += (F"Connected to MQTT broker {self.broker_address}")
+        else:
+            text += (F"Cant connect to MQTT broker {self.broker_address}")
+
+        print(text)
+
+
+    def quit(self):
+        self.msgs.logger.info(F"User quitting")
+        self.client.disconnect()
+        sys.exit(0)
 
 
 if __name__ == '__main__':
@@ -266,10 +296,6 @@ if __name__ == '__main__':
 
     try:
         while True:
-            # perform other operations here
             pass
     except KeyboardInterrupt:
-        print("Exiting...")
-        subscriber.stop()
-        print(f"Collected messages: {subscriber.myMessages}")
-
+        TopApplication.quit()

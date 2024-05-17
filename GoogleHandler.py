@@ -24,8 +24,6 @@ class handler:
         self.worksheet_name = worksheet
         self.logger = logger
 
-        print(account_file)
-
         # Define the Google Drive API scopes and service account file path
         SCOPES = ['https://www.googleapis.com/auth/drive']
 
@@ -176,7 +174,7 @@ class handler:
             self.logger.error(f"Error testing connection: {e}")
             return False  # Connection is closed or invalid
 
-class PingInternet(): # not really a google service but whatevs
+class Ping(): # not really a google service but whatevs
     def __init__(self, logger = None):
         super().__init__()
         self.logger = logger
