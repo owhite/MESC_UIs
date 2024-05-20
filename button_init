@@ -1,3 +1,4 @@
+[
 {
 "_type": "button_init",
 "number": 1,
@@ -12,10 +13,4 @@
 "emit_off": "command2",
 "state": true
 }
-
-
-{{{\"_type\":\"banner_set\", \"visible\": true, \"size\":32, \"background\":\"1E5334\", \"color\":\"ffffff\" ,\"text\":\"Hello\"}}}
-
-{{{\"_type\": \"LED_set\", \"number\": {num}, \"state\": {state}}}}
-
-{"_type": "LED_set", "number": 1, "state": true}
+]

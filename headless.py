@@ -5,6 +5,7 @@ import configparser
 import math
 import os
 import random
+import json
 import glob
 import subprocess
 import sys
@@ -96,15 +97,24 @@ class TopApplication():
         self.upload_thread.setDataLogFile(self.output_data_file)
         self.upload_thread.setPlotFile(self.output_plot_file)
 
-        self.statusText = ''
-        self.timer = threading.Timer(0.1, self.updateStats)
-        self.timer.start()
-
         self.mqtt_config = config['MQTT']
         self.initMQTT()
+        time.sleep(1)
 
-    def updateStats(self):
-        pass
+        # initialize LEDs
+        self.mqttMessage(self.topic, self.mqtt_config.get('led_init', ''))
+        # initialize buttons
+        self.mqttMessage(self.topic, self.mqtt_config.get('button_init', ''))
+        # set banner
+        self.setMQTTBanner("MESC Logger", "FFFFFF", "8E44AD")
+
+        self.statusText = ''
+        self.blink = True
+        self.thread = threading.Thread(target=self.updateStats)
+        self.updateStatsRunning = True
+        self.thread.start()
+
+
 
     def initMQTT(self):
         self.client = mqtt.Client()
@@ -114,6 +124,7 @@ class TopApplication():
         self.connected = False
         self.subscribed = False
         self.broker_address = self.mqtt_config.get('broker', '')
+        self.topic = self.mqtt_config.get('topic', '')
 
         def signal_handler(sig, frame):
             self.msgs.logger.info("MQTT disconnecting")
@@ -124,7 +135,7 @@ class TopApplication():
 
         try:
             self.client.connect(self.broker_address, self.mqtt_config.getint('port', ''), 60)
-            self.client.loop_forever()
+            self.client.loop_start()
         except ConnectionRefusedError:
             self.msgs.logger.info("MQTT connection refused")
         except Exception as e:
@@ -145,6 +156,37 @@ class TopApplication():
             self.subscribed = True
         else:
             self.msgs.logger.info(F"Failed to connect to MQTT broker {rc}")
+
+    def mqttMessage(self, topic, message):
+        m_trunc = message.replace('\n', '')
+        if len(m_trunc) > 50:
+            m_trunc = m_trunc[:50] + "...."
+        if self.connected:
+            self.client.publish(topic, message)
+            self.msgs.logger.info(f"Published message to {topic}: {m_trunc}")
+        else:
+            self.msgs.logger.info("Cannot publish message. Not connected to MQTT broker.")
+
+    # DESIGN NOTE:
+    # if these were external calls then this program would be completely
+    #  separate from the UI
+
+    # sets the banner of the mqtt app
+    def setMQTTBanner(self, text, color, background_color):
+        s = F"{{\"_type\":\"banner_set\", \"visible\": true, \"size\":40, \"background\":\"{background_color}\", \"color\":\"{color}\" ,\"text\":\"{text}\"}}"
+        self.mqttMessage(self.topic, s)
+
+    def setMQTT_LED(self, num, state):
+        s = F"{{\"_type\": \"LED_set\", \"number\": {num}, \"state\": false}}"
+        if state:
+            s = F"{{\"_type\": \"LED_set\", \"number\": {num}, \"state\": true}}"
+        self.mqttMessage(self.topic, s)
+
+    def updateStats(self):
+        while self.updateStatsRunning:
+            self.setMQTT_LED(3, self.blink)
+            self.blink = not self.blink
+            time.sleep(1)  
 
     def getWifiName(self):
         if sys.platform.startswith('darwin'):
@@ -187,11 +229,15 @@ class TopApplication():
         msg = message.payload.decode()
         msg = msg.rstrip()
 
-        if ' ' in msg:
-            func, args = msg.split(' ', 1)
+        if msg.startswith('{'):
+            self.parseJSON(msg)
+            return
         else:
-            func = msg 
-            args = None
+            if ' ' in msg:
+                func, args = msg.split(' ', 1)
+            else:
+                func = msg 
+                args = None
 
         # IMO a really fun technique. Test to see if a function exists,
         #   if it does, then call it. errors are handled rather nicely
@@ -208,6 +254,7 @@ class TopApplication():
 
     ###############################
     # These functions called by mqttEventHandler()
+    #  parseJSON
     #  set [note]
     #  start [log | upload]
     #  stop  [log]
@@ -218,6 +265,21 @@ class TopApplication():
     #  cmd -- pass a command through to mesc
     #  get [wifi | port | files | things]
     #  restart [wifi | port | mqtt | things]
+
+    def parseJSON(self, json_string):
+        # right now this just parses things of the form:
+        #   {"data":{"bearing":0.0,"deviceId":"c16","latitude":39.30,"longitude":-76.61,"speed":0.0,"timeStamp":"2024-05-19 13:14:45"},"type":"location"}
+        try:
+            dict = json.loads(json_string)
+            if dict.get('type') and dict['type'] == 'location':
+                if dict.get('data'):
+                    print (F"JSON: {dict['data']}")
+            
+        except json.JSONDecodeError as e:
+            self.msgs.logger.info(F"Tried json parse, failed: {{{json_string}}} {e}")
+            return False
+        return True
+
 
     def start(self, args):
         if args is None:

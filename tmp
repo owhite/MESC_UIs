@@ -1,40 +1,19 @@
-        while self._running.is_set():
-            # Perform the operation
-            print("Thread is running")
-            time.sleep(1)  # Simulate some work being done
+{
+"_type": "button_init",
+"number": 1,
+"visible": true,
+"text_color_on": "#FFFFFF",
+"color_on": "#1E5334",
+"text_on": " On",
+"emit_on": "return command",
+"text_color_off": "#000000",
+"color_off": "#F01140",
+"text_off": " Off",
+"emit_off": "command2",
+"state": true
+}
 
 
-        client = mqtt.Client()
-        client.username_pw_set(mqtt_config.get('username', ''), mqtt_config.get('password', ''))
-        client.on_connect = self.mqttEventHandler
+{{{\"_type\":\"banner_set\", \"visible\": true, \"size\":32, \"background\":\"1E5334\", \"color\":\"ffffff\" ,\"text\":\"Hello\"}}}
 
-        try:
-            client.connect(mqtt_config.get('broker', ''), mqtt_config.getint('port', ''), 60)
-            self.msgs.logger.info(F"MQTT server connect {mqtt_config.get('broker', '')} :: {mqtt_config.getint('port', '')}")
-            print(mqtt_config.get('topic', ''))
-            client.loop_forever()
-        except ConnectionRefusedError:
-            self.msgs.logger.info("MQTT connection refused")
-        except Exception as e:
-            self.msgs.logger.info(F"Error connecting to MQTT broker {e}")
-
-
-
-        client = mqtt.Client()
-        client.on_connect = self.on_connect
-        client.on_message = self.mqttEventHandler
-        # client.on_disconnect = on_disconnect
-
-        # Set username and password (if required by the MQTT broker)
-        username = "owhite"
-        password = "thing12"
-        client.username_pw_set(username, password)
-
-        # Connect to the MQTT broker
-        try:
-            client.connect("10.0.1.10", 1883, 60)
-            client.loop_forever()
-        except ConnectionRefusedError:
-            print("Connection to MQTT broker refused")
-        except Exception as e:
-            print("Error connecting to MQTT broker:", str(e))
+{{{\"_type\": \"LED_set\", \"number\": {num}, \"state\": {state}}}}
