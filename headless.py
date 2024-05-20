@@ -1,22 +1,14 @@
 #!/usr/bin/env python3
 
-import logging
 import configparser
-import math
-import os
-import random
-import json
 import glob
+import json
+import os
+import signal
 import subprocess
 import sys
-import time
 import threading
-import signal
-
-import matplotlib
-
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.figure import Figure
+import time
 
 import paho.mqtt.client as mqtt
 
@@ -168,14 +160,15 @@ class TopApplication():
             self.msgs.logger.info("Cannot publish message. Not connected to MQTT broker.")
 
     # DESIGN NOTE:
-    # if these were external calls then this program would be completely
-    #  separate from the UI
-
+    # these calls are the only place where the program has UI-specific function calls
+    # there are also commands that are sent from config.ini
+    # 
     # sets the banner of the mqtt app
     def setMQTTBanner(self, text, color, background_color):
         s = F"{{\"_type\":\"banner_set\", \"visible\": true, \"size\":40, \"background\":\"{background_color}\", \"color\":\"{color}\" ,\"text\":\"{text}\"}}"
         self.mqttMessage(self.topic, s)
 
+    # change state of an LED
     def setMQTT_LED(self, num, state):
         s = F"{{\"_type\": \"LED_set\", \"number\": {num}, \"state\": false}}"
         if state:

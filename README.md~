@@ -1,0 +1,6 @@
+Use:
+```
+% autoflake --remove-all-unused-imports --in-place vert.py
+```
+
+to remove unneeded imports

@@ -5,7 +5,6 @@ import logging
 import math
 import os
 import glob
-import json
 import subprocess
 import sys
 import time
@@ -18,16 +17,11 @@ import HostMessagesQT
 
 matplotlib.use('Qt5Agg')  # This chooses the appropriate backend for the RPI 
 
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_qt5agg import \
-    FigureCanvasQTAgg as FigureCanvas
-from matplotlib.figure import Figure
-from PyQt5 import QtCore
-from PyQt5.QtCore import QEvent, QEventLoop, Qt, QTimer, QUrl, pyqtSignal
-from PyQt5.QtGui import QFont, QPixmap, QTextCursor, QImage, QColor
-from PyQt5.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLabel,
-                             QLineEdit, QMainWindow, QPushButton, QSizePolicy,
-                             QTabWidget, QTextEdit, QVBoxLayout, QWidget)
+from PyQt5.QtCore import QEvent, Qt, QTimer, pyqtSignal
+from PyQt5.QtGui import QFont, QPixmap, QTextCursor, QColor
+from PyQt5.QtWidgets import (QApplication, QGridLayout, QLabel, QLineEdit,
+                             QMainWindow, QPushButton, QSizePolicy, QTabWidget,
+                             QTextEdit, QVBoxLayout, QWidget)
 
 # a design goal of this code is to basically handle all the UI elements, while
 #   cutting over the other serial stuff and logging stuff to other
