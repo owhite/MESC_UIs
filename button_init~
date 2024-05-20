@@ -1,1 +1,0 @@
-{"_type": "button_init", "number": 1, "visible": true, "text_color_on": "#FFFFFF", "color_on": "#1E5334", "text_on": " On","emit_on": "return command", "text_color_off": "#000000", "color_off": "#F01140", "text_off": " Off", "emit_off": "command2", "state": true}

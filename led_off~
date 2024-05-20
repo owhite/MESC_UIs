@@ -1,1 +1,0 @@
-led_off = {"_type": "LED_set", "number": 1, "state": true}
