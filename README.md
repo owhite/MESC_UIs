@@ -55,6 +55,32 @@ Now open up your android and set it up as a hotspot and connect the RPI to your 
 $ mosquitto_pub -h localhost -p 1883 -t "ab" -u owhite -P passwd12 -f mqtt_commands/button_init
 ```
 
+We are going to set up a password file for mosquitto according to:
+[this guide](http://www.steves-internet-guide.com/mqtt-username-password-example/) 
+
+Add this line to the top of the mosquitto.conf file:
+
+```
+per_listener_settings true
+```
+
+and these can go at the end
+```
+allow_anonymous false
+listener 1883 0.0.0.0
+password_file /usr/local/etc/mosquitto/pwfile
+```
+
+Run:
+```
+$ mosquitto_passwd -U pwfile
+```
+
+and then restart the broker. On my machine that's handled by:
+```
+$ brew services restart mosquitto
+
+
 ## Imports
 
 Note that GoogleHandlerQT.py and GoogleHandler.py are basically the same except for removal of QT imports for headless.

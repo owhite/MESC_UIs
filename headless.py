@@ -22,6 +22,9 @@ import HostMessages
 #  Logging [on/off]
 #  Uploading
 
+# ?? 
+# phone client: paho328137719229106
+
 class TopApplication():
     def __init__(self, config_file="config.ino"):
 
@@ -89,16 +92,11 @@ class TopApplication():
         self.upload_thread.setDataLogFile(self.output_data_file)
         self.upload_thread.setPlotFile(self.output_plot_file)
 
+        self.mqtt_heartbeat = time.time() - 20
+        self.mqtt_stopped = True
         self.mqtt_config = config['MQTT']
         self.initMQTT()
         time.sleep(1)
-
-        # initialize LEDs
-        self.mqttMessage(self.topic, self.mqtt_config.get('led_init', ''))
-        # initialize buttons
-        self.mqttMessage(self.topic, self.mqtt_config.get('button_init', ''))
-        # set banner
-        self.setMQTTBanner("MESC Logger", "FFFFFF", "8E44AD")
 
         self.statusText = ''
         self.blink = True
@@ -149,15 +147,17 @@ class TopApplication():
         else:
             self.msgs.logger.info(F"Failed to connect to MQTT broker {rc}")
 
-    def mqttMessage(self, topic, message):
+    def mqttMessage(self, topic, message, silent = False):
         m_trunc = message.replace('\n', '')
         if len(m_trunc) > 50:
             m_trunc = m_trunc[:50] + "...."
         if self.connected:
             self.client.publish(topic, message)
-            self.msgs.logger.info(f"Published message to {topic}: {m_trunc}")
+            if not silent:
+                self.msgs.logger.info(f"Published message to {topic}: {m_trunc}")
         else:
-            self.msgs.logger.info("Cannot publish message. Not connected to MQTT broker.")
+            if not silent:
+                self.msgs.logger.info("Cannot publish message. Not connected to MQTT broker.")
 
     # DESIGN NOTE:
     # these calls are the only place where the program has UI-specific function calls
@@ -168,18 +168,53 @@ class TopApplication():
         s = F"{{\"_type\":\"banner_set\", \"visible\": true, \"size\":40, \"background\":\"{background_color}\", \"color\":\"{color}\" ,\"text\":\"{text}\"}}"
         self.mqttMessage(self.topic, s)
 
-    # change state of an LED
-    def setMQTT_LED(self, num, state):
+    # change state of button
+    def setMQTT_Button(self, num, state, silent = False):
+        s = F"{{\"_type\": \"button_set\", \"number\": {num}, \"state\": false}}"
+        if state:
+            s = F"{{\"_type\": \"button_set\", \"number\": {num}, \"state\": true}}"
+        self.mqttMessage(self.topic, s, silent)
+
+    # change state of LED
+    def setMQTT_LED(self, num, state, silent = False):
         s = F"{{\"_type\": \"LED_set\", \"number\": {num}, \"state\": false}}"
         if state:
             s = F"{{\"_type\": \"LED_set\", \"number\": {num}, \"state\": true}}"
-        self.mqttMessage(self.topic, s)
+        self.mqttMessage(self.topic, s, silent)
 
     def updateStats(self):
         while self.updateStatsRunning:
-            self.setMQTT_LED(3, self.blink)
-            self.blink = not self.blink
+            if time.time() - self.mqtt_heartbeat < 20: # arbitrary time testing if we havent heard from app
+                if self.mqtt_stopped:
+                    self.initMQTTAppUI()
+                    self.mqtt_stopped = False
+                else:
+                    if self.internet and self.internet.check_internet_connection(): 
+                        # tell this to be quiet about it with True parameter
+                        self.setMQTT_Button(4, True, True)
+                    else:
+                        self.setMQTT_Button(4, False, True)
+                    self.setMQTT_Button(5, True, True)
+                    self.setMQTT_LED(3, self.blink, True)
+                    self.blink = not self.blink
+            else:
+                # if we're here, it is okay to send initializing commands, but commands involving "set" break the app
+                self.mqtt_stopped = True
+                self.initMQTTAppUI()
             time.sleep(1)  
+
+    def initMQTTAppUI(self):
+        # initialize LEDs
+        self.mqttMessage(self.topic, self.mqtt_config.get('led_init', ''))
+        # initialize buttons
+        self.mqttMessage(self.topic, self.mqtt_config.get('button_init', ''))
+        # set banner
+        self.setMQTTBanner("MESC Logger", "FFFFFF", "8E44AD")
+        if self.internet and self.internet.check_internet_connection(): 
+            # tell this to be quiet about it with True parameter
+            self.setMQTT_Button(4, True, True)
+        else:
+            self.setMQTT_Button(4, False, True)
 
     def getWifiName(self):
         if sys.platform.startswith('darwin'):
@@ -238,7 +273,7 @@ class TopApplication():
             try:
                 self.msgs.logger.info(F"Incoming cmd: {{{func} {args}}}")
                 if args is None:
-                    getattr(self, func)()
+                    getattr(self, func)(None)
                 else:
                     getattr(self, func)(args)
 
@@ -266,6 +301,7 @@ class TopApplication():
             dict = json.loads(json_string)
             if dict.get('type') and dict['type'] == 'location':
                 if dict.get('data'):
+                    self.mqtt_heartbeat = time.time() # needed to know the android app is connected
                     print (F"JSON: {dict['data']}")
             
         except json.JSONDecodeError as e:
@@ -276,6 +312,7 @@ class TopApplication():
 
     def start(self, args):
         if args is None:
+            # restart the server? the ui? 
             return
         if args == 'log':
             if self.msgs.logIsOn():
