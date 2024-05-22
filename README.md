@@ -1,9 +1,16 @@
 ## Introductionx
 
-The purpose of this repo is to demonstrate data logging connected to the [MESC](https://github.com/davidmolony/MESC_Firmware) motor controller
-The MESC firmware was developed by David Molony, and the terminal and CAN bus communications of MESC was created by [Jens Kerrinnes](https://github.com/Netzpfuscher) Special thanks to both David and Jens. 
+The purpose of this repo is to demonstrate connections between python programs with the [MESC](https://github.com/davidmolony/MESC_Firmware) motor controller. One of the programs can be run as a headless server on an raspberry PI, and facilitate interactions between the MESC controller and an android app. For the most part, you would probably want to use these to log data coming from the MESC, but there might be other applications for these programs as well. 
 
-If you're a fan of the VESC motor controller project, it is conceivable that these could be adapted to work with that system as well. 
+Note: MESC firmware was developed by David Molony, and the terminal and CAN bus communications of MESC was created by [Jens Kerrinnes](https://github.com/Netzpfuscher) Special thanks to both David and Jens. 
+
+The programs in this repo are just toys and unlikely to work straight out of the box. You will need working knowledge of:
+ * python and installing python modules
+ * [MESC](https://github.com/davidmolony/MESC_Firmware)
+ * Message Queuing Telemetry Transport (MQTT) and mosquitto
+ * ...and probably android app installation
+
+If you're a fan of the VESC motor controller project, it is conceivable that these could be adapted to work with that system as well but that is untested at this point. 
 
 At present the two functional programs in this repo are vert.py and headless.py
   * headless.py responds to the MQTT android app ([MQTT APP](https://github.com/owhite/MqttApp))
@@ -18,11 +25,9 @@ These python programs
  * create matplotlib plots of the data streams
  * handle uploads of both the data and plots to google drive
  
-In general implementation of the code would occur on a raspberry PI (RPI) that is connected to the MESC controller over USB serial and physically traveling with the controller during logging. Instead of using the android as an interface it's conceivable to put a touch screen on the RPI -- I tried that and hated it. 
+In general implementation of the code would occur on a raspberry PI (RPI) that is connected to the MESC controller over USB serial and physically traveling with the controller during logging. Instead of using the android as an interface it's conceivable to put a touch screen on the RPI -- I tried using an inexpensive touchscreen on the RPI and hated it. 
 
 headless.py has undergone much more testing than vert.py
-
-These programs are just toys and unlikely to work straight out of the box. 
 
 ## Running mosquitto
 
@@ -35,7 +40,6 @@ This code [https://github.com/owhite/MqttApp](https://github.com/owhite/MqttApp)
 To create the app, install android studio which has a very nice import function from github. Import the [MqttApp](https://github.com/owhite/MqttApp), and run compile just to see if the thing will cooperate. If it does, for [this video](https://www.youtube.com/watch?v=3FujlwQoKuk) to create the apk. Then search youtube for "install apk adb" to find a tutorial for installation. 
 
 ### Testing the MQTT service
-
 Suppose you have an RPI running, it is running a mosquitto broker. You dont need to run headless to test if the android is working. To do this, first open a terminal screen on the RPI and subscribe to MQTT messages:
 ```
 $ mosquitto_sub -u localhost -p 1883 -t "#" -u owhite -P passwd12
@@ -49,7 +53,6 @@ $ mosquitto_pub -h localhost -p 1883 -t "ab" -u owhite -P passwd12 -m "hello wor
 and the message should get published to the broker, and appear in the other terminal that is running mosquitto_sub. 
 
 ### Testing the app
-
 Now open up your android and set it up as a hotspot and connect the RPI to your android. The idea is the RPI has to be on the same network as the android. You'll need to dig up the IP address of the RPI once it's connected. Suppose the IP address of the RPI is *10.0.1.10*. Open the android app and go to the log screen. Youre now going to send a message to the broker, which hopefully will be received by the MqttApp. To do this, try publishing a command that creates a button on the app:
 ```
 $ mosquitto_pub -h localhost -p 1883 -t "ab" -u owhite -P passwd12 -f mqtt_commands/button_init

@@ -104,8 +104,6 @@ class TopApplication():
         self.updateStatsRunning = True
         self.thread.start()
 
-
-
     def initMQTT(self):
         self.client = mqtt.Client()
         self.client.on_connect = self.mqttConnect
@@ -344,16 +342,16 @@ class TopApplication():
             self.checkStatus()
 
     def checkStatus(self):
-        text =  "UPDATE STATS\n"
+        text =  "----UPDATE STATS----\n"
         if self.msgs:
-            text += "Message handler is not none\n"
+            text += "Message handler appears to be up\n"
         else:
-            text += "Message handler is none (that's bad)\n"
+            text += "Message handler appears to be down\n"
             
         if self.drive and self.drive.test_connection(): 
-            text += "Google drive connected\n"
+            text += "Ping to google working\n"
         else:
-            text += "Google drive ping not working\n"
+            text += "Ping to google not working\n"
 
         if self.spreadsheet_id and self.worksheet_name:
             text += F"Google spreadsheet {self.spreadsheet_id}\n"
@@ -370,11 +368,15 @@ class TopApplication():
             text += (F"No serial port name: {self.portName}\n")
 
         if self.subscribed:
-            text += (F"Connected to MQTT broker {self.broker_address}")
+            text += (F"Connected to MQTT broker: {self.broker_address}\n")
         else:
-            text += (F"Cant connect to MQTT broker {self.broker_address}")
+            text += (F"Cant connect to MQTT broker: {self.broker_address}\n")
 
-        print(text)
+        text += (F"The state of mqtt_stopped is: {self.mqtt_stopped}\n")
+        text += (F"The state of connected is is: {self.connected}\n")
+        text +=  "-UPDATE STATS-"
+
+        self.msgs.logger.info(text)
 
 
     def quit(self):
