@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Vertical Buttons</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .button {
+            padding: 14px 20px;
+            margin: 10px 0;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .clicked {
+            background-color: green;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Vertical Buttons Example</h2>
+<p>Click the buttons to change their color and issue a Python command.</p>
+
+<div class="button-container">
+    <button class="button" id="button1" onclick="handleButtonClick(this.id)">Button 1</button>
+    <button class="button" id="button2" onclick="handleButtonClick(this.id)">Button 2</button>
+    <button class="button" id="button3" onclick="handleButtonClick(this.id)">Button 3</button>
+</div>
+
+<script>
+    function handleButtonClick(buttonId) {
+        var button = document.getElementById(buttonId);
+        button.classList.toggle('clicked');
+
+        let url = '';
+        if (buttonId === 'button1') {
+            url = '/button1_click';
+        } else if (buttonId === 'button2') {
+            url = '/button2_click';
+        } else if (buttonId === 'button3') {
+            url = '/button3_click';
+        }
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ button_id: buttonId }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
+</body>
+</html>

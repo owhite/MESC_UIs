@@ -15,15 +15,11 @@ import paho.mqtt.client as mqtt
 import GoogleHandler
 import HostMessages
 
-# STATES:
-#  wifi connected
-#  MESC connected (usb/can)
-#  GPS connected (phone)
-#  Logging [on/off]
-#  Uploading
-
-# ?? 
-# phone client: paho328137719229106
+# INTRO
+#  This was going in an interesting direction.
+#  It was intended to simply run in the background and respond to
+#  MQTT commands. It works pretty well but my android app
+#  that ran MQTT decided to die, so that sucked. 
 
 class TopApplication():
     def __init__(self, config_file="config.ino"):
