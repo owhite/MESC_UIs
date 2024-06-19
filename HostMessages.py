@@ -10,6 +10,7 @@ import sys, os
 import threading
 from datetime import datetime
 
+import time
 import Payload
 import plotMESC
 import serial
@@ -19,11 +20,9 @@ class LogHandler():
         self.parent = parent
         self.working_directory = self.parent.working_directory
 
-        self.port = serial.Serial()
-        # self.port = QSerialPort()
         self.serialPayload = Payload.Payload()
         self.serialPayload.startTimer()
-        self.serial = None
+        self.port = None
 
         # serial_msgs handles sending the serial data that is not sent to disk, but goes to the UI
         self.serial_msgs = logging.getLogger('serial_msgs')
@@ -50,9 +49,10 @@ class LogHandler():
         self.dataBuffer = bytearray()
         # alias this so it looks like QT version
         Mutex = threading.Lock
+        self.is_running = True
         self.mutex = Mutex()
-        self.processTimer = threading.Timer(0.1, self.processData)
-        self.processTimer.start()
+        self.process_thread = threading.Thread(target=self.process_loop)
+        self.process_thread.start()
         
         self.json_collect_str = ''
         self.json_collect_flag = False
@@ -60,113 +60,35 @@ class LogHandler():
 
         self.log_is_on = False
 
-    def initHostStatusLabel(self, label):
-        if isinstance(label, QLabel):
-            self.hostStatusText = label
-
-    def setStatusText(self, text):
-        if self.hostStatusText and isinstance(self.hostStatusText, QLabel):
-            self.hostStatusText.setText(text)
-
-    def closePort(self):
-        if self.serial:
-            self.serial.close()
-
-        
-    def openPort(self, name):
-        self.portName = name
-        if not self.port.isOpen():
-            self.port.setBaudRate( 115200 ) 
-            self.port.setPortName( self.portName )
-            self.port.setDataBits( 8 )
-            self.port.setParity( 0 ) 
-            self.port.setStopBits( 0 ) 
-            self.port.setFlowControl( 0 ) 
-            r = self.port.open()
-            if not r:
-                self.logger.info(F"Log Handler port: {self.portName} not open")
-                self.setStatusText('Port open: error')
-            else:
-                self.logger.info(F"Log Handler opened for port: {self.portName}")
-                self.setStatusText('Port opened')
-                self.port.readyRead.connect(self.getStream)
-                self.sendToPort('su -g') # totally safe
-                self.sendToPort('status stop')
-
-        else:
-            self.port.close()
-            self.setStatusText('Port closed')
-
-
-    def sendToPort(self, text):
-        if not self.port.isOpen():
-            self.logger.info("Cant send cmd: {0} port not open".format(text))
-        else:
-            self.logger.info("sending cmd: {0}".format(text))
-            text = text + '\r\n'
-            self.port.write( text.encode() )
-
-    def chow_block(self, text, token):
-        flag = False
-
-        t = text
-        # not really intuitive but remove the token if at beginning of string
-        #  the idea is the remainder will get save for the next round of parsing
-        if text.startswith(token):
-            t = text.replace(token, '', 1)
-
-        if len(t) == 0: # you get this if string was empty or was just a prompt
-            return False, t, t
-
-        l = t.split(token)
-        payload = ''
-        remainder = ''
-        if len(l) == 1: # no token, everything goes in remainder
-            remainder = l[0]
-        elif len(l) == 2:
-            payload = l[0]
-        elif len(l) > 2:
-            flag = True
-            payload = l[0]
-            remainder = token.join(l[1:])
-        else:
-            print("chow_block: unforseen parsing condition")
-            payload = "chow_block: unforseen parsing condition"
-
-        # fakes the user out by showing the prompt at the beginning of the payload
-        if len(payload) > 0:
-            payload = token + payload
-
-        return flag, payload, remainder
-
-    # treat this function as a separate thread
-    #  mutex (short for mutual exclusion) helps in controlling access to self.dataBuffer 
-    def getStream(self):
-        self.mutex.lock()
-        try:
-            newData = self.port.readAll().data()
-            self.dataBuffer.extend(newData)
-        finally:
-            self.mutex.unlock()
+    def process_loop(self):
+        while self.is_running:
+            if self.port and self.port.is_open:
+                if self.port.in_waiting > 0:
+                    self.processData()
+            time.sleep(0.01)
 
     # this function is called periodically and chows self.dataBuffer
     def processData(self):
-        if len(self.dataBuffer) == 0:
-            return 
+        if not self.port or not self.port.is_open:
+            return
 
-        self.mutex.lock()
-        try:
-            data = self.dataBuffer.copy()
-            self.dataBuffer.clear()
-        finally:
-            self.mutex.unlock()
-
-        data = data.decode()
+        with self.mutex:
+            try:
+                data = self.port.readline()
+                if data:
+                    self.dataBuffer.extend(data)
+                    data = self.dataBuffer.copy()
+                    self.dataBuffer.clear()
+                    data = data.decode()
+            except serial.SerialException as e:
+                self.logger.error(f"Error reading from serial port: {e}")
 
         # strip vt100 chars
         ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
         data = ansi_escape.sub('', data)
         data = re.sub('\\| ', '\t', data)
+
+        print(F"{self.data_logger} :: {data}")
 
         # get current buffer, add the data
         self.serialPayload.concatString(data)
@@ -233,6 +155,74 @@ class LogHandler():
 
         self.serialPayload.setString(second_block)
 
+
+    def initHostStatusLabel(self, label):
+        if isinstance(label, QLabel):
+            self.hostStatusText = label
+
+    def openPort(self, name):
+        self.portName = name
+        try:
+            self.port = serial.Serial(port=self.portName, baudrate=115200, timeout=1)
+            self.logger.info(f"Log Handler opened for port: {self.portName}")
+            self.setStatusText('Port opened')
+            self.sendToPort('su -g')  # Example: sending commands to port
+            self.sendToPort('status stop')
+
+        except serial.SerialException as e:
+            self.logger.info(f"Error opening or using serial port: {e}")
+            self.setStatusText(f'Port open error: {e}')
+
+    def setStatusText(self, text):
+        if self.hostStatusText and isinstance(self.hostStatusText, QLabel):
+            self.hostStatusText.setText(text)
+
+    def closePort(self):
+        if self.serial:
+            self.serial.close()
+
+        
+    def sendToPort(self, text):
+        if not self.port.isOpen():
+            self.logger.info("Cant send cmd: {0} port not open".format(text))
+        else:
+            self.logger.info("sending cmd: {0}".format(text))
+            text = text + '\r\n'
+            self.port.write( text.encode() )
+
+    def chow_block(self, text, token):
+        flag = False
+
+        t = text
+        # not really intuitive but remove the token if at beginning of string
+        #  the idea is the remainder will get save for the next round of parsing
+        if text.startswith(token):
+            t = text.replace(token, '', 1)
+
+        if len(t) == 0: # you get this if string was empty or was just a prompt
+            return False, t, t
+
+        l = t.split(token)
+        payload = ''
+        remainder = ''
+        if len(l) == 1: # no token, everything goes in remainder
+            remainder = l[0]
+        elif len(l) == 2:
+            payload = l[0]
+        elif len(l) > 2:
+            flag = True
+            payload = l[0]
+            remainder = token.join(l[1:])
+        else:
+            print("chow_block: unforseen parsing condition")
+            payload = "chow_block: unforseen parsing condition"
+
+        # fakes the user out by showing the prompt at the beginning of the payload
+        if len(payload) > 0:
+            payload = token + payload
+
+        return flag, payload, remainder
+
     def logIsOn(self):
         return self.log_is_on
 
@@ -252,6 +242,8 @@ class LogHandler():
         # Create a new logger for output.log (overwriting the file each time)
         self.data_logger = logging.getLogger('output_log')
         self.data_logger.setLevel(logging.INFO)
+
+        print(F"LOGGER: {self.data_logger}")
 
         formatter = logging.Formatter('%(message)s')
         file_handler = logging.FileHandler(self.datafile_name, mode="w") 
