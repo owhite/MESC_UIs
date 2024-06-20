@@ -243,9 +243,6 @@ class MyFlaskApp:
             print(f'Button 3 clicked! Button ID: {button_id}, state: {self.button_states['b3']}')
             return jsonify({'status': 'success', 'button_id': button_id, 'b3': self.button_states['b3']})
 
-        @self.app.route('/check_button_status', methods=['GET'])
-        def check_button_status():
-            return jsonify(self.button_states)
 
         @self.app.route('/tab3_selected', methods=['POST'])
         def tab3_selected():
