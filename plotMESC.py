@@ -5,7 +5,10 @@ import json
 import os
 import sys
 
+import matplotlib
+matplotlib.use('agg')  # Set the backend to 'agg'
 import matplotlib.pyplot as plt
+
 import numpy as np
 import pandas as pd
 from matplotlib.patches import Rectangle

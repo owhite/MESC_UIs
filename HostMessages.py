@@ -11,9 +11,10 @@ import threading
 from datetime import datetime
 
 import time
-import Payload
-import plotMESC
 import serial
+import plotMESC
+import Payload
+
 
 class LogHandler():
     def __init__(self, parent):
@@ -88,13 +89,13 @@ class LogHandler():
         data = ansi_escape.sub('', data)
         data = re.sub('\\| ', '\t', data)
 
-        print(F"{self.data_logger} :: {data}")
-
+        
         # get current buffer, add the data
         self.serialPayload.concatString(data)
 
         remaining_text = ''
         s = self.serialPayload.reportString()
+
         json_text = ''
         if re.search("{.*}", s):
             s = s.replace('\r', '')
