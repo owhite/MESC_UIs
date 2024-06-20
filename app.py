@@ -44,6 +44,10 @@ class MyFlaskApp:
         self.output_data_file = os.path.join(self.working_directory, file_config.get('logdata_file', 'MESC_logdata.txt'))
         self.output_plot_file = os.path.join(self.working_directory, file_config.get('plotdata_file', 'MESC_plt.png'))
 
+        self.update_stats_running = True
+        self.update_stats_thread = threading.Thread(target=self.updateStats)
+        self.update_stats_thread.start()
+
         if os.environ.get('WERKZEUG_RUN_MAIN') == 'true':
             # system messages and serial messages
             self.msgs = HostMessages.LogHandler(self)
@@ -90,9 +94,6 @@ class MyFlaskApp:
             if self.drive.test_connection(): 
                 self.msgs.logger.info("Ping to google drive working")
 
-            # self.upload_thread = GoogleHandler.ThreadOperation(self.drive, self.msgs.logger)
-            # self.upload_thread.setDataLogFile(self.output_data_file)
-            # self.upload_thread.setPlotFile(self.output_plot_file)
             self.statusText = ''
             self.blink = True
 
@@ -102,15 +103,17 @@ class MyFlaskApp:
             if task is None:
                 break
             func, args = task
-            func(*args)
+            try:
+                func(*args)
+            except Exception as e:
+                self.msgs.logger.error(f"Error processing task: {e}")
 
     def addTaskToQueue(self, func, *args):
         self.task_queue.put((func, args))
 
     def updateStats(self):
-        while self.updateStatsRunning:
-            # do things to check on status
-            time.sleep(.1)  
+        while self.update_stats_running:
+            time.sleep(.1)
 
     def getWifiName(self):
         if sys.platform.startswith('darwin'):
@@ -255,8 +258,11 @@ class MyFlaskApp:
         self.app.run(debug=True)
 
     def stop(self):
+        self.update_stats_running = False
         self.task_queue.put(None)  # Stop the worker thread
         self.worker_thread.join()
+        self.update_stats_thread.join()
+
 
 if __name__ == '__main__':
     app = MyFlaskApp(config_file="config.ini")
@@ -264,3 +270,4 @@ if __name__ == '__main__':
         app.run()
     finally:
         app.stop()
+        
