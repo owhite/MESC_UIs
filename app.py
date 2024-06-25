@@ -184,6 +184,17 @@ class MyFlaskApp:
     def set_banner_text(self, new_text):
         self.banner_text = new_text
 
+    def button3_logic(self):
+        button_id = 'your_button_id'  # Replace with appropriate button ID logic
+        if self.button_states['b3']:
+            self.button_states['b3'] = False
+            # Perform actions when button3 is false
+            print(f'Button 3 clicked! Button ID: {button_id}, state: False')
+        else:
+            self.button_states['b3'] = True
+            # Perform actions when button3 is true
+            print(f'Button 3 clicked! Button ID: {button_id}, state: True')
+
     def setup_routes(self):
         @self.app.route('/')
         def index():
@@ -221,28 +232,8 @@ class MyFlaskApp:
 
         @self.app.route('/button3_click', methods=['POST'])
         def button3_click():
-            button_id = request.json['button_id']
-            if self.button_states['b3']:
-                self.button_states['b3'] = False
-                self.upload_thread.stop()
-            else:
-                self.button_states['b1'] = True
-                if not self.output_data_file or self.output_data_file == '':
-                    self.status_label.setText("No log file to upload")
-                else:
-                    self.start_position = (0.0, 0.0)
-                    self.output_note = ''
-                    self.upload_thread = GoogleHandler.uploadThread(self,
-                                                                    [self.output_data_file,
-                                                                     self.output_plot_file],
-                                                                    self.start_position,
-                                                                    self.output_note)
-                    self.upload_thread.start()
-
-            self.button_states['b3'] = not self.button_states['b3']  # Toggle state
-            print(f'Button 3 clicked! Button ID: {button_id}, state: {self.button_states['b3']}')
-            return jsonify({'status': 'success', 'button_id': button_id, 'b3': self.button_states['b3']})
-
+            response_data = self.button3_logic()
+            return jsonify(response_data)
 
         @self.app.route('/tab3_selected', methods=['POST'])
         def tab3_selected():
