@@ -1,11 +1,10 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MESC LOGGER</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -42,16 +41,31 @@
             align-items: flex-start;
         }
         .button {
-            padding: 14px 20px;
-            margin: 10px 0;
-            font-size: 16px;
+            background-color: white;
+            color: black;
+            border: 1px solid black;
+            padding: 10px 20px;
             cursor: pointer;
+	    margin: 10px; 
         }
         .clicked {
             background-color: green;
             color: white;
         }
+        #upload-button {
+            background-color: white;
+            color: black;
+            border: 1px solid black;
+            padding: 10px 20px;
+            cursor: pointer;
+	    margin: 10px; 
+        }
+        #upload-button.active {
+            background-color: green;
+            color: white;
+        }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <h2>MESC LOGGER</h2>
@@ -63,10 +77,12 @@
 </div>
 <div id="Tab1" class="tabcontent">
     <h3>Logging</h3>
+    <h1 id="status">Thread not started</h1>
+
     <div class="button-container">
         <button class="button" id="button1" onclick="handleButtonClick(this.id)">LOG</button>
         <button class="button" id="button2" onclick="handleButtonClick(this.id)">PLOT</button>
-        <button class="button" id="button3" onclick="handleButtonClick(this.id)">UPLOAD</button>
+	<button id="upload-button">Start Upload</button>
     </div>
 </div>
 <div id="Tab2" class="tabcontent">
@@ -77,7 +93,8 @@
     <h3>Update Stats</h3>
     <p id="tab3Content">Content for Tab 3.</p>
 </div>
-<script>
+
+<script type="text/javascript">
     function openTab(evt, tabName) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
@@ -121,8 +138,6 @@
             url = '/button1_click';
         } else if (buttonId === 'button2') {
             url = '/button2_click';
-        } else if (buttonId === 'button3') {
-            url = '/button3_click';
         }
 
         fetch(url, {
@@ -167,17 +182,38 @@
                 document.getElementById('button2').classList.remove('clicked');
             }
 
-            // Update Button 3 state
-            if (data.button3_clicked) {
-                document.getElementById('button3').classList.add('clicked');
-            } else {
-                document.getElementById('button3').classList.remove('clicked');
-            }
         })
         .catch((error) => {
             console.error('Error:', error);
         });
     }
+
+    $(document).ready(function() {
+        $('#upload-button').click(function() {
+            $.post('/upload_thread', function(data) {
+                updateStatus(data.status);
+                $('#upload-button').addClass('active');
+            });
+
+            uploadStatus();
+        });
+
+        function uploadStatus() {
+            var intervalId = setInterval(function() {
+                $.get('/upload_status', function(data) {
+                    updateStatus(data.status);
+                    if (data.status === 'Upload finished') {
+                        $('#upload-button').removeClass('active');
+                        clearInterval(intervalId);
+                    }
+                });
+            }, 300);
+        }
+
+        function updateStatus(status) {
+            $('#status').text(status);
+        }
+    });
 </script>
 </body>
 </html>

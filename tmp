@@ -1,4 +1,0 @@
-This was going in an interesting direction.
-It was intended to simply run in the background and respond to
-MQTT commands. It works pretty well but my android app
-that ran MQTT decided to die, so that sucked. 

@@ -8,6 +8,11 @@ import sys
 import threading
 import time
 import queue
+import logging
+import matplotlib
+matplotlib.use('agg')  # Set the backend to 'agg'
+
+import matplotlib.pyplot as plt
 
 import GoogleHandler
 import HostMessages
@@ -17,17 +22,16 @@ from flask import Flask, render_template, request, jsonify
 class MyFlaskApp:
     def __init__(self, config_file="config.ini"):
         self.app = Flask(__name__)
-
-        self.button_states = {
-            'b1': False,
-            'b2': False,
-            'b3': False
-        }
-
-        self.setup_routes()
+        self.upload_status_str = "Thread not started"
+        self._setup_routes()
+        self._setup_logging()
         self.task_queue = queue.Queue()
 
         self.banner_text = "Banner text"
+
+        # Start the worker thread that handles non-GUI tasks
+        self.worker_thread = threading.Thread(target=self.worker)
+        self.worker_thread.start()
 
         # Start the worker thread that handles non-GUI tasks
         self.worker_thread = threading.Thread(target=self.worker)
@@ -47,6 +51,14 @@ class MyFlaskApp:
         self.update_stats_running = True
         self.update_stats_thread = threading.Thread(target=self.updateStats)
         self.update_stats_thread.start()
+
+        self.button_states = {
+            'b1': False,
+            'b2': False
+        }
+
+        self.fig = None
+        self.host = None
 
         if os.environ.get('WERKZEUG_RUN_MAIN') == 'true':
             # system messages and serial messages
@@ -106,10 +118,7 @@ class MyFlaskApp:
             try:
                 func(*args)
             except Exception as e:
-                self.msgs.logger.error(f"Error processing task: {e}")
-
-    def addTaskToQueue(self, func, *args):
-        self.task_queue.put((func, args))
+                print(f"Error processing task: {e}")
 
     def updateStats(self):
         while self.update_stats_running:
@@ -181,31 +190,15 @@ class MyFlaskApp:
         self.msgs.logger.info(text)
         return text
 
-    def set_banner_text(self, new_text):
-        self.banner_text = new_text
+    def upload_task(self):
+        self.upload_status_str = "Upload started"
+        time.sleep(2)
+        self.upload_status_str = "Upload finished"
 
-    def button3_logic(self):
-        button_id = 'your_button_id'  # Replace with appropriate button ID logic
-        if self.button_states['b3']:
-            self.button_states['b3'] = False
-            # Perform actions when button3 is false
-            print(f'Button 3 clicked! Button ID: {button_id}, state: False')
-        else:
-            self.button_states['b3'] = True
-            # Perform actions when button3 is true
-            print(f'Button 3 clicked! Button ID: {button_id}, state: True')
-
-    def setup_routes(self):
+    def _setup_routes(self):
         @self.app.route('/')
         def index():
             return render_template('index.html')
-
-        @self.app.route('/update_banner', methods=['POST'])
-        def update_banner():
-            data = request.json
-            new_text = data.get('new_text', '')
-            self.banner_text = new_text
-            return jsonify({'status': 'success'})
 
         @self.app.route('/button1_click', methods=['POST'])
         def button1_click():
@@ -230,10 +223,22 @@ class MyFlaskApp:
             print(f'Button 2 clicked! Button ID: {button_id}, state: {self.button_states["b2"]}')
             return jsonify({'status': 'success', 'button_id': button_id, 'b2': self.button_states['b2']})
 
-        @self.app.route('/button3_click', methods=['POST'])
-        def button3_click():
-            response_data = self.button3_logic()
-            return jsonify(response_data)
+        @self.app.route('/update_banner', methods=['POST'])
+        def update_banner():
+            data = request.json
+            new_text = data.get('new_text', '')
+            self.banner_text = new_text
+            return jsonify({'status': 'success'})
+
+        @self.app.route('/upload_thread', methods=['POST'])
+        def start_upload_thread():
+            # Add the upload task to the worker thread's task queue
+            self.addTaskToQueue(self.upload_task)
+            return jsonify(status=self.upload_status_str)
+
+        @self.app.route('/upload_status', methods=['GET'])
+        def upload_status_route():
+            return jsonify(status=self.upload_status_str)
 
         @self.app.route('/tab3_selected', methods=['POST'])
         def tab3_selected():
@@ -242,20 +247,28 @@ class MyFlaskApp:
             new_content = new_content.replace('\n', '<br>')
             return jsonify({'status': 'success', 'content': new_content})
 
+    def addTaskToQueue(self, func, *args):
+        self.task_queue.put((func, args))
+
     def run(self):
         self.app.run(debug=True)
 
     def stop(self):
-        self.update_stats_running = False
         self.task_queue.put(None)  # Stop the worker thread
         self.worker_thread.join()
-        self.update_stats_thread.join()
+
+    def _setup_logging(self):
+        class NoStatusFilter(logging.Filter):
+            def filter(self, record):
+                return not record.getMessage().startswith('127.0.0.1 - - [') or 'GET /upload_status' not in record.getMessage()
+
+        log = logging.getLogger('werkzeug')
+        log.addFilter(NoStatusFilter())
 
 
 if __name__ == '__main__':
-    app = MyFlaskApp(config_file="config.ini")
+    app = MyFlaskApp()
     try:
         app.run()
     finally:
         app.stop()
-        
