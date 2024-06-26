@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle Image App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function checkImageStatus() {
+                $.get("/image_status", function (data) {
+                    if (data.image_visible) {
+                        $("#imageContainer").show();
+                    } else {
+                        $("#imageContainer").hide();
+                    }
+                });
+            }
+
+            $("#createBtn").click(function () {
+                $.post("/create_image", function () {
+                    // Image created, check the status
+                    checkImageStatus();
+                });
+            });
+
+            $("#toggleBtn").click(function () {
+                $.post("/toggle_image", function () {
+                    // Toggle image visibility
+                    checkImageStatus();
+                });
+            });
+
+            // Check image visibility on page load
+            checkImageStatus();
+        });
+    </script>
+</head>
+<body>
+    <button id="createBtn">Create Image</button>
+    <button id="toggleBtn">Toggle Image</button>
+
+    <div id="imageContainer" style="display:none;">
+        <img src="/get_image" id="displayImage">
+    </div>
+</body>
+</html>

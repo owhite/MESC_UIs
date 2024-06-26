@@ -9,9 +9,6 @@ import threading
 import time
 import queue
 
-import GoogleHandler
-import HostMessages
-
 from flask import Flask, render_template, request, jsonify
 
 class MyFlaskApp:
