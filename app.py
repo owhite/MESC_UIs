@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 import GoogleHandler
 import HostMessages
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_file
 
 class MyFlaskApp:
     def __init__(self, config_file="config.ini"):
@@ -26,6 +26,8 @@ class MyFlaskApp:
         self._setup_routes()
         self._setup_logging()
         self.task_queue = queue.Queue()
+
+        self.image_visible = False
 
         self.banner_text = "Banner text"
 
@@ -52,10 +54,7 @@ class MyFlaskApp:
         self.update_stats_thread = threading.Thread(target=self.updateStats)
         self.update_stats_thread.start()
 
-        self.button_states = {
-            'b1': False,
-            'b2': False
-        }
+        self.button_states = { 'b1': False }
 
         self.fig = None
         self.host = None
@@ -215,13 +214,25 @@ class MyFlaskApp:
             print(f'Button 1 clicked! Button ID: {button_id}, state: {self.button_states["b1"]}')
             return jsonify({'status': 'success', 'button_id': button_id, 'b1': self.button_states['b1']})
 
-        @self.app.route('/button2_click', methods=['POST'])
-        def button2_click():
-            button_id = request.json['button_id']
-            self.button_states['b2'] = not self.button_states['b2']  # Toggle state
-            self.addTaskToQueue(self.some_other_task, "Button 2 Task", 5)
-            print(f'Button 2 clicked! Button ID: {button_id}, state: {self.button_states["b2"]}')
-            return jsonify({'status': 'success', 'button_id': button_id, 'b2': self.button_states['b2']})
+        @self.app.route('/toggle_image', methods=['POST'])
+        def toggle_image():
+            self.image_visible = not self.image_visible
+            print("TOGGLE", self.image_visible)
+            return jsonify(image_visible=self.image_visible)
+
+        @self.app.route('/get_image', methods=['GET'])
+        def get_image():
+            print("GET", self.image_visible)
+
+            f = self.msgs.getPlotFile()
+            if self.image_visible and f:
+                return send_file(f, mimetype='image/jpg')
+            else:
+                return '', 204
+
+        @self.app.route('/image_status', methods=['GET'])
+        def image_status():
+            return jsonify(image_visible=self.image_visible)
 
         @self.app.route('/update_banner', methods=['POST'])
         def update_banner():

@@ -260,6 +260,9 @@ class LogHandler():
     def setPlotFile(self, file_name):
         self.plot_file = file_name
 
+    def getPlotFile(self):
+        return self.plot_file
+
     def endDataLogging(self):
         self.sendToPort('status stop')
 

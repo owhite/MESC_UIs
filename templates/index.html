@@ -46,9 +46,9 @@
             border: 1px solid black;
             padding: 10px 20px;
             cursor: pointer;
-	    margin: 10px; 
+	        margin: 10px; 
         }
-        .clicked {
+        .button.clicked {
             background-color: green;
             color: white;
         }
@@ -58,14 +58,13 @@
             border: 1px solid black;
             padding: 10px 20px;
             cursor: pointer;
-	    margin: 10px; 
+	        margin: 10px; 
         }
         #upload-button.active {
             background-color: green;
             color: white;
         }
     </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <h2>MESC LOGGER</h2>
@@ -80,9 +79,13 @@
     <h1 id="status">Thread not started</h1>
 
     <div class="button-container">
-        <button class="button" id="button1" onclick="handleButtonClick(this.id)">LOG</button>
-        <button class="button" id="button2" onclick="handleButtonClick(this.id)">PLOT</button>
-	<button id="upload-button">Start Upload</button>
+        <button class="button" id="button1" onclick="logButtonClick(this.id)">LOG</button>
+        <button class="button" id="toggleBtn">PLOT</button>
+        <button class="button" id="upload-button">Start Upload</button>
+
+        <div id="imageContainer" style="display:none;">
+            <img src="" id="displayImage">
+        </div>
     </div>
 </div>
 <div id="Tab2" class="tabcontent">
@@ -129,15 +132,13 @@
 
     document.getElementById("defaultOpen").click();
 
-    function handleButtonClick(buttonId) {
+    function logButtonClick(buttonId) {
         var button = document.getElementById(buttonId);
         button.classList.toggle('clicked');
 
         let url = '';
         if (buttonId === 'button1') {
             url = '/button1_click';
-        } else if (buttonId === 'button2') {
-            url = '/button2_click';
         }
 
         fetch(url, {
@@ -175,13 +176,6 @@
                 document.getElementById('button1').classList.remove('clicked');
             }
 
-            // Update Button 2 state
-            if (data.button2_clicked) {
-                document.getElementById('button2').classList.add('clicked');
-            } else {
-                document.getElementById('button2').classList.remove('clicked');
-            }
-
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -189,21 +183,47 @@
     }
 
     $(document).ready(function() {
-        $('#upload-button').click(function() {
-            $.post('/upload_thread', function(data) {
+        // Function to handle click on PLOT button
+        $("#toggleBtn").click(function() {
+            // Toggle 'clicked' class for styling
+            $(this).toggleClass("clicked");
+
+            // Perform your other actions here
+            $.post("/toggle_image", function() {
+                // Toggle image visibility
+                checkImageStatus();
+            });
+        });
+
+        // Function to periodically check image status and update UI
+        function checkImageStatus() {
+            $.get("/image_status", function(data) {
+                if (data.image_visible) {
+                    $("#imageContainer").show();
+                    $("#displayImage").attr("src", "/get_image");
+                } else {
+                    $("#imageContainer").hide();
+                    $("#displayImage").attr("src", "");
+                }
+            });
+        }
+
+        $("#upload-button").click(function() {
+            $.post("/upload_thread", function(data) {
                 updateStatus(data.status);
-                $('#upload-button').addClass('active');
+                $("#upload-button").addClass("active");
             });
 
             uploadStatus();
         });
 
+        // Function to periodically check upload status and update UI
         function uploadStatus() {
             var intervalId = setInterval(function() {
-                $.get('/upload_status', function(data) {
+                $.get("/upload_status", function(data) {
                     updateStatus(data.status);
-                    if (data.status === 'Upload finished') {
-                        $('#upload-button').removeClass('active');
+                    if (data.status === "Upload finished") {
+                        $("#upload-button").removeClass("active");
                         clearInterval(intervalId);
                     }
                 });
@@ -211,8 +231,11 @@
         }
 
         function updateStatus(status) {
-            $('#status').text(status);
+            $("#status").text(status);
         }
+
+        // Check initial image visibility on page load
+        checkImageStatus();
     });
 </script>
 </body>
