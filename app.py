@@ -8,8 +8,10 @@ import sys
 import threading
 import time
 import queue
+import io
 import logging
 import matplotlib
+
 matplotlib.use('agg')  # Set the backend to 'agg'
 
 import matplotlib.pyplot as plt
@@ -67,6 +69,9 @@ class MyFlaskApp:
 
             self.portName = None
 
+            self.statusText = ''
+            self.blink = True
+
             # collect up some things
             if sys.platform.startswith('darwin'):
                 self.msgs.logger.info("macOS detected")
@@ -92,6 +97,7 @@ class MyFlaskApp:
             self.spreadsheet_id = google_config.get('spreadsheet_id', '1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c')
             self.worksheet_name = google_config.get('worksheeet_name', 'MESC_UPLOADS')
 
+
             self.msgs.logger.info(f"Google account {self.account_file}")
             self.msgs.logger.info(f"Google spreadsheet {self.spreadsheet_id}")
             self.msgs.logger.info(f"Google worksheet {self.worksheet_name}")
@@ -101,12 +107,21 @@ class MyFlaskApp:
                                                self.spreadsheet_id,
                                                self.worksheet_name)
 
+            # connect to the host's stream
+            self.first_host_check = True
+            self.host_log_stream = io.StringIO()
+            stream_handler2 = logging.StreamHandler(self.host_log_stream)
+            self.msgs.logger.addHandler(stream_handler2)
+
+            # connect to the serial stream
+            self.serial_log_stream = io.StringIO()
+            stream_handler1 = logging.StreamHandler(self.serial_log_stream)
+            self.msgs.serial_msgs.addHandler(stream_handler1)
+
             self.msgs.logger.info("GoogleHandler initiated")
             if self.drive.test_connection(): 
                 self.msgs.logger.info("Ping to google drive working")
 
-            self.statusText = ''
-            self.blink = True
 
     def worker(self):
         while True:
@@ -186,7 +201,7 @@ class MyFlaskApp:
         else:
             text += (f"No serial port name: {self.portName}\n")
 
-        self.msgs.logger.info(text)
+        # self.msgs.logger.info(text)
         return text
 
     def upload_task(self):
@@ -258,6 +273,36 @@ class MyFlaskApp:
             new_content = new_content.replace('\n', '<br>')
             return jsonify({'status': 'success', 'content': new_content})
 
+        @self.app.route('/get_serial_msgs', methods=['GET'])
+        def get_serial_msgs():
+            log_content = self.serial_log_stream.getvalue()
+            if log_content:
+                print("Serial Messages Stream:", log_content)
+                
+            self.serial_log_stream.truncate(0)  # Clear the content
+            self.serial_log_stream.seek(0)  # Reset stream position
+            return jsonify({'logs': log_content})
+
+        @self.app.route('/get_host_msgs', methods=['GET'])
+        def get_host_msgs():
+            host_content = self.host_log_stream.getvalue()
+            if host_content:
+                print("HOST Messages Stream:", host_content)
+                
+            self.host_log_stream.truncate(0)  # Clear the content
+            self.host_log_stream.seek(0)  # Reset stream position
+            return jsonify({'logs': host_content})
+
+
+        @self.app.route('/send_command', methods=['PUT'])
+        def send_command():
+            command = request.data.decode('utf-8')  # Decode incoming text data
+            if command:
+                self.msgs.sendToPort(command)
+                return jsonify({'status': 'success', 'message': f"Command '{command}' received and processed."})
+            else:
+                return jsonify({'status': 'error', 'message': 'No command received.'})
+
     def addTaskToQueue(self, func, *args):
         self.task_queue.put((func, args))
 
@@ -271,7 +316,7 @@ class MyFlaskApp:
     def _setup_logging(self):
         class NoStatusFilter(logging.Filter):
             def filter(self, record):
-                return not record.getMessage().startswith('127.0.0.1 - - [') or 'GET /upload_status' not in record.getMessage()
+                return 'GET /get_serial_msgs' not in record.getMessage() and 'GET /get_host_msgs' not in record.getMessage() and 'GET /upload_status' not in record.getMessage()
 
         log = logging.getLogger('werkzeug')
         log.addFilter(NoStatusFilter())

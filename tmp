@@ -1,0 +1,6 @@
+        @self.app.route('/get_serial_msgs', methods=['GET'])
+        def get_serial_msgs():
+            log_content = self.log_stream.getvalue()
+            if log_content:
+                # print("Serial Messages Stream:", log_content)
+                return jsonify({'logs': log_content})

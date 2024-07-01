@@ -172,8 +172,6 @@ class LogHandler():
         data = ansi_escape.sub('', data)
         data = re.sub('\\| ', '\t', data)
 
-        print(F"{self.data_logger} :: {data}")
-
         # get current buffer, add the data
         self.serialPayload.concatString(data)
 

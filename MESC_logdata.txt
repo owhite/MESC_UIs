@@ -2,27 +2,27 @@
 usb@MESC>get
 Parameter	Value	Min	Max	Description
 adc1	0	0	4096	Raw ADC throttle
-adc1_max	4095	0	4096	ADC1 max val
-adc1_min	400	0	4096	ADC1 min val
+adc1_max	2700	0	4096	ADC1 max val
+adc1_min	1200	0	4096	ADC1 min val
 adc1_pol	1.000000	-1.00	1.00	ADC1 polarity
 adc2_max	4095	0	4096	ADC2 max val
 adc2_min	1200	0	4096	ADC2 min val
 adc2_pol	1.000000	-1.00	1.00	ADC2 polarity
-can_adc	10	0	254	CAN ADC ID  0=disabled
-curr_max	80.000000	0.00	300.00	Max motor current
+can_adc	11	0	254	CAN ADC ID  0=disabled
+curr_max	50.000000	0.00	300.00	Max motor current
 curr_min	-10.000000	-300.00	0.00	Min motor current
 direction	0	0	1	Motor direction
-ehz	-0.207540	-inf	inf	Motor electrical hz
-enc_angle	0	0	65535	Encoder angle now
+ehz	-0.106817	-inf	inf	Motor electrical hz
+enc_angle	25000	0	65535	Encoder angle now
 enc_counts	4096	0	65535	Encoder ABI PPR
 enc_offset	25000	0	65535	Encoder alignment angle
 enc_polarity	0	0	1	Encoder polarity
-error	0	0	4294967295	System errors now
-error_all	8	0	4294967295	All errors encountered
+error	16	0	4294967295	System errors now
+error_all	134217744	0	4294967295	All errors encountered
 flux	0.004500	0.00	100.00	Flux linkage
 flux_gain	0.670820	0.00	100.00	Flux linkage gain
 flux_n_lin	5000.000000	0.00	10000.00	Flux centering gain
-FOC_angle	40958	0	65535	FOC angle now
+FOC_angle	8196	0	65535	FOC angle now
 fw_curr	0.000000	0.00	300.00	Max field weakenning current
 fw_ehz	0.000000	0.00	6000.00	max eHz under field weakenning
 Hall_flux	Array[12]	-10.00	10.00	hall start table
@@ -31,18 +31,18 @@ hfi_gain	0.000000	0.00	5000.00	HFI gain
 hfi_mod_didq	0.000000	0.00	2.00	HFI mod didq
 hfi_type	0	0	3	HFI type [0=None, 1=45deg, 2=d axis]
 hfi_volt	4.000000	0.00	50.00	HFI voltage
-i_max	100.000000	0.00	500.00	Max current
-id	-0.590748	-inf	inf	Phase Idq_d smoothed
-input_opt	16	0	128	Inputs [1=ADC1 2=ADC2 4=PPM 8=UART 16=CANADC1 32=CANADC2 64=ADC12DIFF]
-iq	1.133418	-inf	inf	Phase Idq_q smoothed
+i_max	350.000000	0.00	500.00	Max current
+id	-9.214525	-inf	inf	Phase Idq_d smoothed
+input_opt	1	0	128	Inputs [1=ADC1 2=ADC2 4=PPM 8=UART 16=Killswitch 32=CANADC1 64=CANADC2 128=ADC12DIFF]
+iq	-7.121442	-inf	inf	Phase Idq_q smoothed
 iqreq	0.000000	-4096.00	4096.00	mtr[0].FOC.Idq_req.q
 ld_phase	0.000015	0.00	10.00	Phase inductance
 lq_phase	0.000022	0.00	10.00	Phase inductance
 motor_pp	14	0	30	Number of motor pole PAIRS
 motor_sensor	0	0	30	0=SL, 1=Hall, 2=OL, 3=ABSENC, 4=INC_ENC, 5=HFI
-node_id	0	1	256	Node ID
-ol_step	0	0	6000	Angle per PWM period openloop
-p_max	1000.000000	0.00	50000.00	Max power
+node_id	0	1	254	Node ID
+ol_step	20	0	6000	Angle per PWM period openloop
+p_max	5000.000000	0.00	50000.00	Max power
 park_curr	0.000000	0.00	300.00	max current for handbrake
 password		Password for SU
 pole_pairs	14	0	255	Motor pole pairs
@@ -52,41 +52,51 @@ rpm_max	0	0	300000	Max RPM
 safe_count	100	0	1000	Live count before allowing throttle
 safe_start	100	0	1000	Countdown before allowing throttle
 SL_sensor	0	0	30	0=OL, 1=Hall, 2=PWMENC, 3=HFI
-TMOS	301.813049	0.00	4096.00	MOSFET temp, kelvin
-TMOT	210.821808	0.00	4096.00	Motor temp, kelvin
+TMOS	0.000000	0.00	4096.00	MOSFET temp, kelvin
+TMOT	0.000000	0.00	4096.00	Motor temp, kelvin
 uart_dreq	0.000000	-1000.00	1000.00	Uart input
 uart_req	0.000000	-1000.00	1000.00	Uart input
 v_max	0.000000	0.00	600.00	Max voltage
-vbus	97.665855	0.00	inf	Read input voltage
-Vd	2.432183	-4096.00	4096.00	FOC_Vdq_d
-Vq	0.782231	-4096.00	4096.00	FOC_Vdq_q
+vbus	0.037427	0.00	inf	Read input voltage
+Vd	0.000000	-4096.00	4096.00	FOC_Vdq_d
+Vq	0.000000	-4096.00	4096.00	FOC_Vdq_q
 
 
 [JSON BLOCK]
-{"adc1":0,"ehz":-0.198,"error":0,"id":-0.642,"iq":1.142,"iqreq":0.000,"TMOS":301.813,"TMOT":210.739,"vbus":97.635,"Vd":2.418,"Vq":0.779}
-{"adc1":0,"ehz":-0.122,"error":0,"id":-0.662,"iq":1.040,"iqreq":0.000,"TMOS":301.813,"TMOT":210.665,"vbus":97.605,"Vd":2.393,"Vq":0.788}
-{"adc1":0,"ehz":-0.061,"error":0,"id":-0.691,"iq":1.064,"iqreq":0.000,"TMOS":301.813,"TMOT":210.702,"vbus":97.635,"Vd":2.393,"Vq":0.788}
-{"adc1":0,"ehz":-0.000,"error":0,"id":-0.649,"iq":1.044,"iqreq":0.000,"TMOS":301.813,"TMOT":210.724,"vbus":97.635,"Vd":2.427,"Vq":0.793}
-{"adc1":0,"ehz":0.061,"error":0,"id":-0.617,"iq":1.089,"iqreq":0.000,"TMOS":301.813,"TMOT":210.671,"vbus":97.635,"Vd":2.477,"Vq":0.768}
-{"adc1":0,"ehz":0.122,"error":0,"id":-0.666,"iq":1.025,"iqreq":0.000,"TMOS":301.813,"TMOT":210.723,"vbus":97.635,"Vd":2.432,"Vq":0.768}
-{"adc1":0,"ehz":0.183,"error":0,"id":-0.649,"iq":1.059,"iqreq":0.000,"TMOS":301.813,"TMOT":210.696,"vbus":97.635,"Vd":2.427,"Vq":0.797}
-{"adc1":0,"ehz":0.244,"error":0,"id":-0.581,"iq":0.977,"iqreq":0.000,"TMOS":301.813,"TMOT":210.713,"vbus":97.666,"Vd":2.452,"Vq":0.793}
-{"adc1":0,"ehz":0.305,"error":0,"id":-0.578,"iq":1.052,"iqreq":0.000,"TMOS":301.813,"TMOT":210.762,"vbus":97.574,"Vd":2.427,"Vq":0.782}
-{"adc1":0,"ehz":0.253,"error":0,"id":-0.611,"iq":1.011,"iqreq":0.000,"TMOS":301.813,"TMOT":210.717,"vbus":97.666,"Vd":2.418,"Vq":0.782}
-{"adc1":0,"ehz":0.192,"error":0,"id":-0.634,"iq":1.069,"iqreq":0.000,"TMOS":301.813,"TMOT":210.779,"vbus":97.635,"Vd":2.432,"Vq":0.798}
-{"adc1":0,"ehz":0.131,"error":0,"id":-0.652,"iq":0.987,"iqreq":0.000,"TMOS":301.813,"TMOT":210.722,"vbus":97.635,"Vd":2.452,"Vq":0.788}
-{"adc1":0,"ehz":0.070,"error":0,"id":-0.571,"iq":1.035,"iqreq":0.000,"TMOS":301.813,"TMOT":210.749,"vbus":97.635,"Vd":2.432,"Vq":0.777}
-{"adc1":0,"ehz":0.009,"error":0,"id":-0.667,"iq":1.031,"iqreq":0.000,"TMOS":301.813,"TMOT":210.803,"vbus":97.666,"Vd":2.452,"Vq":0.788}
-{"adc1":0,"ehz":-0.052,"error":0,"id":-0.707,"iq":0.968,"iqreq":0.000,"TMOS":301.813,"TMOT":210.750,"vbus":97.635,"Vd":2.413,"Vq":0.802}
-{"adc1":0,"ehz":-0.113,"error":0,"id":-0.581,"iq":1.005,"iqreq":0.000,"TMOS":301.813,"TMOT":210.777,"vbus":97.574,"Vd":2.427,"Vq":0.788}
-{"adc1":0,"ehz":-0.174,"error":0,"id":-0.585,"iq":1.044,"iqreq":0.000,"TMOS":301.813,"TMOT":210.723,"vbus":97.635,"Vd":2.471,"Vq":0.818}
-{"adc1":0,"ehz":-0.235,"error":0,"id":-0.595,"iq":1.017,"iqreq":0.000,"TMOS":301.813,"TMOT":210.758,"vbus":97.666,"Vd":2.432,"Vq":0.788}
-{"adc1":0,"ehz":-0.296,"error":0,"id":-0.660,"iq":1.054,"iqreq":0.000,"TMOS":301.813,"TMOT":210.811,"vbus":97.696,"Vd":2.432,"Vq":0.773}
-{"adc1":0,"ehz":-0.256,"error":0,"id":-0.608,"iq":1.076,"iqreq":0.000,"TMOS":301.813,"TMOT":210.741,"vbus":97.635,"Vd":2.432,"Vq":0.788}
-{"adc1":0,"ehz":-0.195,"error":0,"id":-0.571,"iq":1.023,"iqreq":0.000,"TMOS":301.813,"TMOT":210.808,"vbus":97.666,"Vd":2.452,"Vq":0.788}
-{"adc1":0,"ehz":-0.134,"error":0,"id":-0.651,"iq":1.007,"iqreq":0.000,"TMOS":301.813,"TMOT":210.750,"vbus":97.635,"Vd":2.393,"Vq":0.807}
-{"adc1":0,"ehz":-0.073,"error":0,"id":-0.633,"iq":1.045,"iqreq":0.000,"TMOS":301.813,"TMOT":210.768,"vbus":97.666,"Vd":2.452,"Vq":0.838}
-{"adc1":0,"ehz":-0.012,"error":0,"id":-0.666,"iq":1.010,"iqreq":0.000,"TMOS":301.813,"TMOT":210.812,"vbus":97.635,"Vd":2.427,"Vq":0.788}
-{"adc1":0,"ehz":0.049,"error":0,"id":-0.604,"iq":1.086,"iqreq":0.000,"TMOS":301.813,"TMOT":210.758,"vbus":97.635,"Vd":2.427,"Vq":0.788}
-{"adc1":0,"ehz":0.110,"error":0,"id":-0.652,"iq":1.105,"iqreq":0.000,"TMOS":301.813,"TMOT":210.798,"vbus":97.635,"Vd":2.447,"Vq":0.793}
-{"adc1":0,"ehz":0.171,"error":0,"id":-0.608,"iq":1.110,"iqreq":0.000,"TMOS":301.813,"TMOT":210.763,"vbus":97.605,"Vd":2.432,"Vq":0.773}
+{"adc1":0,"ehz":-0.046,"error":16,"id":-9.245,"iq":-7.109,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.075,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":-0.119,"error":16,"id":-9.361,"iq":-6.945,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.075,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":-0.180,"error":16,"id":-9.237,"iq":-7.101,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.037,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":-0.241,"error":16,"id":-9.219,"iq":-7.097,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.075,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":-0.302,"error":16,"id":-9.209,"iq":-7.099,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.000,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":-0.256,"error":16,"id":-39.442,"iq":23.459,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.037,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":-0.195,"error":16,"id":-15.502,"iq":-0.813,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.075,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":-0.134,"error":16,"id":-9.212,"iq":-7.138,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.000,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":-0.073,"error":16,"id":-10.060,"iq":-6.252,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.000,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":-0.012,"error":16,"id":-9.213,"iq":-7.117,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.037,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":0.049,"error":16,"id":-16.532,"iq":0.117,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.000,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":0.110,"error":16,"id":-9.193,"iq":-7.132,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.037,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":0.171,"error":16,"id":-46.506,"iq":30.312,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.037,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":0.232,"error":16,"id":-46.610,"iq":30.428,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.075,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":0.293,"error":16,"id":-46.605,"iq":30.476,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.000,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":0.259,"error":16,"id":-46.510,"iq":30.359,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.075,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":0.198,"error":16,"id":-39.059,"iq":22.983,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.075,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":0.137,"error":16,"id":-9.331,"iq":-6.967,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.000,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":0.076,"error":16,"id":-9.228,"iq":-7.110,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.075,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":0.015,"error":16,"id":-9.350,"iq":-6.993,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.037,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":-0.046,"error":16,"id":-39.821,"iq":23.766,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.000,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":-0.107,"error":16,"id":-15.944,"iq":-0.461,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.037,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":-0.168,"error":16,"id":-9.231,"iq":-7.092,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.075,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":-0.229,"error":16,"id":-38.897,"iq":22.750,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.037,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":-0.290,"error":16,"id":-16.108,"iq":-0.261,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.037,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":-0.269,"error":16,"id":-9.349,"iq":-6.942,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.037,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":-0.208,"error":16,"id":-16.057,"iq":-0.284,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.000,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":-0.146,"error":16,"id":-9.206,"iq":-7.062,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.037,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":-0.085,"error":16,"id":-9.225,"iq":-7.099,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.037,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":-0.024,"error":16,"id":-38.687,"iq":22.579,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.075,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":0.037,"error":16,"id":-10.170,"iq":-6.156,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.037,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":0.098,"error":16,"id":-16.313,"iq":-0.036,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.037,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":0.159,"error":16,"id":-16.195,"iq":-0.186,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.037,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":0.220,"error":16,"id":-16.293,"iq":-0.200,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.075,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":0.281,"error":16,"id":-16.220,"iq":-0.116,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.075,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":0.272,"error":16,"id":-39.383,"iq":23.274,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.075,"Vd":0.000,"Vq":0.000}
+{"adc1":0,"ehz":0.211,"error":16,"id":-10.172,"iq":-6.137,"iqreq":0.000,"TMOS":0.000,"TMOT":0.000,"vbus":0.037,"Vd":0.000,"Vq":0.000}

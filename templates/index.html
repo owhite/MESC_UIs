@@ -1,242 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MESC LOGGER</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .tab {
-            overflow: hidden;
-            border: 1px solid #ccc;
-            background-color: #f1f1f1;
-        }
-        .tab button {
-            background-color: inherit;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 14px 16px;
-            transition: 0.3s;
-            font-size: 17px;
-        }
-        .tab button:hover {
-            background-color: #ddd;
-        }
-        .tab button.active {
-            background-color: #ccc;
-        }
-        .tabcontent {
-            display: none;
-            padding: 6px 12px;
-            border: 1px solid #ccc;
-            border-top: none;
-        }
-        .button-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        .button {
-            background-color: white;
-            color: black;
-            border: 1px solid black;
-            padding: 10px 20px;
-            cursor: pointer;
-	        margin: 10px; 
-        }
-        .button.clicked {
-            background-color: green;
-            color: white;
-        }
-        #upload-button {
-            background-color: white;
-            color: black;
-            border: 1px solid black;
-            padding: 10px 20px;
-            cursor: pointer;
-	        margin: 10px; 
-        }
-        #upload-button.active {
-            background-color: green;
-            color: white;
-        }
+      body {
+          font-family: Arial, sans-serif;
+      }
+      .tab {
+          overflow: hidden;
+          border: 1px solid #ccc;
+          background-color: #f1f1f1;
+      }
+      .tab button {
+          background-color: inherit;
+          border: none;
+          outline: none;
+          cursor: pointer;
+          padding: 14px 16px;
+          transition: 0.3s;
+          font-size: 17px;
+      }
+      .tab button:hover {
+          background-color: #ddd;
+      }
+      .tab button.active {
+          background-color: #ccc;
+      }
+      .tabcontent {
+          display: none;
+          padding: 6px 12px;
+          border: 1px solid #ccc;
+          border-top: none;
+      }
+      .button-container {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+      }
+      .button {
+          background-color: white;
+          color: black;
+          border: 1px solid black;
+          padding: 10px 20px;
+          cursor: pointer;
+	  margin: 10px; 
+      }
+      .button.clicked {
+          background-color: green;
+          color: white;
+      }
+      #upload-button {
+          background-color: white;
+          color: black;
+          border: 1px solid black;
+          padding: 10px 20px;
+          cursor: pointer;
+	  margin: 10px; 
+      }
+      #upload-button.active {
+          background-color: green;
+          color: white;
+      }
     </style>
-</head>
-<body>
-<h2>MESC LOGGER</h2>
-<p id="bannerText">Update banner information</p>
-<div class="tab">
-    <button class="tablinks" onclick="openTab(event, 'Tab1')" id="defaultOpen">Log</button>
-    <button class="tablinks" onclick="openTab(event, 'Tab2')">Serial</button>
-    <button class="tablinks" onclick="openTab(event, 'Tab3')">Stats</button>
-</div>
-<div id="Tab1" class="tabcontent">
-    <h3>Logging</h3>
-    <h1 id="status">Thread not started</h1>
+  </head>
+  <body>
+    <h2>MESC LOGGER</h2>
+    <p id="bannerText">Update banner information</p>
+    <div class="tab">
+      <button class="tablinks" onclick="openTab(event, 'Tab1')" id="defaultOpen">Log</button>
+      <button class="tablinks" onclick="openTab(event, 'Tab2')">Serial</button>
+      <button class="tablinks" onclick="openTab(event, 'Tab3')">Stats</button>
+    </div>
+    <div id="Tab1" class="tabcontent">
+      <h3>Logging</h3>
+      <h1 id="status">Thread not started</h1>
 
-    <div class="button-container">
+      <div class="button-container">
         <button class="button" id="button1" onclick="logButtonClick(this.id)">LOG</button>
         <button class="button" id="toggleBtn">PLOT</button>
         <button class="button" id="upload-button">Start Upload</button>
-
         <div id="imageContainer" style="display:none;">
-            <img src="" id="displayImage">
+          <img src="" id="displayImage">
         </div>
+      </div>
     </div>
-</div>
-<div id="Tab2" class="tabcontent">
-    <h3>Serial connect</h3>
-    <p id="tab2Content">Content for Tab 2.</p>
-</div>
-<div id="Tab3" class="tabcontent">
-    <h3>Update Stats</h3>
-    <p id="tab3Content">Content for Tab 3.</p>
-</div>
+    <div id="Tab2" class="tabcontent">
+      <h3 id="tab2Headline">Serial connect</h3>
+      <textarea id="serialLogs" rows="20" cols="80" readonly></textarea>
+      <div>
+        <textarea id="commandInput" rows="2" cols="50"></textarea>
+        <button id="sendCommandBtn">Send Command</button>
+      </div>
+    </div>
+    <div id="Tab3" class="tabcontent">
+      <h3>Current Stats</h3>
+      <p id="tab3Content">Content for Tab 3.</p>
+      <h3 id="tab4Headline">Server Log</h3>
+      <textarea id="serverLogs" rows="30" cols="80" readonly></textarea>
+    </div>
 
-<script type="text/javascript">
-    function openTab(evt, tabName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.className += " active";
+    <script type="text/javascript">
+      function openTab(evt, tabName) {
+	  var i, tabcontent, tablinks;
+	  tabcontent = document.getElementsByClassName("tabcontent");
+	  for (i = 0; i < tabcontent.length; i++) {
+              tabcontent[i].style.display = "none";
+	  }
+	  tablinks = document.getElementsByClassName("tablinks");
+	  for (i = 0; i < tablinks.length; i++) {
+              tablinks[i].className = tablinks[i].className.replace(" active", "");
+	  }
+	  document.getElementById(tabName).style.display = "block";
+	  evt.currentTarget.className += " active";
 
-        // Make a Python function call when Tab 3 is selected and update content
-        if (tabName === 'Tab3') {
-            fetch('/tab3_selected', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Tab 3 selected:', data);
-                document.getElementById('tab3Content').innerHTML = data.content;  // Update content with HTML
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-        }
-    }
+	  // Make a Python function call when Tab 3 is selected and update content
+	  if (tabName === 'Tab3') {
+              fetch('/tab3_selected', {
+		  method: 'POST',
+		  headers: {
+                      'Content-Type': 'application/json',
+		  }
+              })
+		  .then(response => response.json())
+		  .then(data => {
+                      console.log('Tab 3 selected:', data);
+                      document.getElementById('tab3Content').innerHTML = data.content;  // Update content with HTML
+		  })
+		  .catch((error) => {
+                      console.error('Error:', error);
+		  });
+	  }
+      }
 
-    document.getElementById("defaultOpen").click();
+      document.getElementById("defaultOpen").click();
 
-    function logButtonClick(buttonId) {
-        var button = document.getElementById(buttonId);
-        button.classList.toggle('clicked');
+      function logButtonClick(buttonId) {
+	  var button = document.getElementById(buttonId);
+	  button.classList.toggle('clicked');
 
-        let url = '';
-        if (buttonId === 'button1') {
-            url = '/button1_click';
-        }
+	  let url = '';
+	  if (buttonId === 'button1') {
+              url = '/button1_click';
+	  }
 
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ button_id: buttonId }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-    }
+	  fetch(url, {
+              method: 'POST',
+              headers: {
+		  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ button_id: buttonId }),
+	  })
+              .then(response => response.json())
+              .then(data => {
+		  console.log('Success:', data);
+              })
+              .catch((error) => {
+		  console.error('Error:', error);
+              });
+      }
 
-    // Function to periodically check button status and update UI
-    function checkButtonStatus() {
-        fetch('/check_button_status', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Button states:', data);
+      // Function to periodically check button status and update UI
+      function checkButtonStatus() {
+	  fetch('/check_button_status', {
+              method: 'GET',
+              headers: {
+		  'Content-Type': 'application/json',
+              }
+	  })
+              .then(response => response.json())
+              .then(data => {
+		  console.log('Button states:', data);
 
-            // Update Button 1 state
-            if (data.button1_clicked) {
-                document.getElementById('button1').classList.add('clicked');
-            } else {
-                document.getElementById('button1').classList.remove('clicked');
-            }
+		  // Update Button 1 state
+		  if (data.button1_clicked) {
+                      document.getElementById('button1').classList.add('clicked');
+		  } else {
+                      document.getElementById('button1').classList.remove('clicked');
+		  }
 
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-    }
+              })
+              .catch((error) => {
+		  console.error('Error:', error);
+              });
+      }
 
-    $(document).ready(function() {
-        // Function to handle click on PLOT button
-        $("#toggleBtn").click(function() {
-            // Toggle 'clicked' class for styling
-            $(this).toggleClass("clicked");
+      $(document).ready(function() {
+	  // Function to handle click on PLOT button
+	  $("#toggleBtn").click(function() {
+              // Toggle 'clicked' class for styling
+              $(this).toggleClass("clicked");
 
-            // Perform your other actions here
-            $.post("/toggle_image", function() {
-                // Toggle image visibility
-                checkImageStatus();
-            });
-        });
+              // Perform your other actions here
+              $.post("/toggle_image", function() {
+		  // Toggle image visibility
+		  checkImageStatus();
+              });
+	  });
 
-        // Function to periodically check image status and update UI
-        function checkImageStatus() {
-            $.get("/image_status", function(data) {
-                if (data.image_visible) {
-                    $("#imageContainer").show();
-                    $("#displayImage").attr("src", "/get_image");
-                } else {
-                    $("#imageContainer").hide();
-                    $("#displayImage").attr("src", "");
-                }
-            });
-        }
+	  // Function to periodically check image status and update UI
+	  function checkImageStatus() {
+              $.get("/image_status", function(data) {
+		  if (data.image_visible) {
+                      $("#imageContainer").show();
+                      $("#displayImage").attr("src", "/get_image");
+		  } else {
+                      $("#imageContainer").hide();
+                      $("#displayImage").attr("src", "");
+		  }
+              });
+	  }
 
-        $("#upload-button").click(function() {
-            $.post("/upload_thread", function(data) {
-                updateStatus(data.status);
-                $("#upload-button").addClass("active");
-            });
+	  $("#upload-button").click(function() {
+              $.post("/upload_thread", function(data) {
+		  updateStatus(data.status);
+		  $("#upload-button").addClass("active");
+              });
 
-            uploadStatus();
-        });
+              uploadStatus();
+	  });
 
-        // Function to periodically check upload status and update UI
-        function uploadStatus() {
-            var intervalId = setInterval(function() {
-                $.get("/upload_status", function(data) {
-                    updateStatus(data.status);
-                    if (data.status === "Upload finished") {
-                        $("#upload-button").removeClass("active");
-                        clearInterval(intervalId);
-                    }
-                });
-            }, 300);
-        }
+	  // Function to periodically check upload status and update UI
+	  function uploadStatus() {
+              var intervalId = setInterval(function() {
+		  $.get("/upload_status", function(data) {
+                      updateStatus(data.status);
+                      if (data.status === "Upload finished") {
+			  $("#upload-button").removeClass("active");
+			  clearInterval(intervalId);
+                      }
+		  });
+              }, 100);
+	  }
 
-        function updateStatus(status) {
-            $("#status").text(status);
-        }
+	  function updateStatus(status) {
+              $("#status").text(status);
+	  }
 
-        // Check initial image visibility on page load
-        checkImageStatus();
-    });
-</script>
-</body>
+	  // Check initial image visibility on page load
+	  checkImageStatus();
+
+	  function fetchSerialLogs() {
+	      fetch('/get_serial_msgs')
+		  .then(response => response.json())
+		  .then(data => {
+		      const logs = data.logs;
+		      const textarea = document.getElementById('serialLogs');
+		      textarea.value += logs;
+		      if (textarea.value.length > 2000) {
+			  textarea.value = textarea.value.slice(-2000);
+		      }
+		  })
+		  .catch(error => console.error('Error fetching logs:', error));
+	  }
+
+	  setInterval(fetchSerialLogs, 300);
+
+	  function fetchServerLogs() {
+	      fetch('/get_host_msgs')
+		  .then(response => response.json())
+		  .then(data => {
+		      const logs = data.logs;
+		      const textarea = document.getElementById('serverLogs');
+		      textarea.value += logs;
+		      if (textarea.value.length > 2000) {
+			  textarea.value = textarea.value.slice(-2000);
+		      }
+		  })
+		  .catch(error => console.error('Error fetching logs:', error));
+	  }
+
+	  setInterval(fetchServerLogs, 300);
+
+
+	  $("#sendCommandBtn").click(function() {
+	      const command = $("#commandInput").val();
+	      if (command) {
+		  $.ajax({
+		      url: "/send_command",
+		      type: "PUT", // Use PUT method
+		      contentType: "text/plain", // Specify content type
+		      data: command, // Send the command directly as data
+		      success: function(response) {
+			  console.log("Command sent:", response);
+			  $("#commandInput").val(""); // Clear the input
+		      },
+		      error: function(xhr, status, error) {
+			  console.error("Error sending command:", error);
+		      }
+		  });
+	      }
+	  });
+      });
+
+    </script>
+  </body>
 </html>
