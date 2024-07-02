@@ -204,13 +204,12 @@ class MyFlaskApp:
         # self.msgs.logger.info(text)
         return text
 
-    def upload_task(self):
+    def upload_task(self, text):
         self.upload_status_str = "Upload started"
-        self.output_note = "thing"
         self.upload_thread = GoogleHandler.UploadManager(self,
                                                          [self.output_data_file, self.output_plot_file],
                                                          [0,0],
-                                                         self.output_note)
+                                                         text)
         self.upload_thread.upload()
         self.upload_status_str = "Upload finished"
 
@@ -264,7 +263,10 @@ class MyFlaskApp:
         @self.app.route('/upload_thread', methods=['POST'])
         def start_upload_thread():
             # Add the upload task to the worker thread's task queue
-            self.addTaskToQueue(self.upload_task)
+            global uploaded_text
+            data = request.get_json()
+            uploaded_text = data.get('text', '')  # Assign the text to the variable
+            self.addTaskToQueue(self.upload_task, uploaded_text)
             return jsonify(status=self.upload_status_str)
 
         @self.app.route('/upload_status', methods=['GET'])

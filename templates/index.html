@@ -79,6 +79,7 @@
         <button class="button" id="log_button" onclick="logButtonClick(this.id)">LOG</button>
         <button class="button" id="toggleBtn">PLOT</button>
         <button class="button" id="upload-button">Start Upload</button>
+	<textarea id="uploadTextarea" rows="2" cols="30" placeholder="Enter upload note"></textarea>
 	<p id="status">Upload not started</p>
         <div id="imageContainer" style="display:none;">
           <img src="" id="displayImage">
@@ -184,6 +185,46 @@
 		  console.error('Error:', error);
               });
       }
+
+$(document).ready(function() {
+    // Function to handle click on the Start Upload button
+    $("#upload-button").click(function() {
+        const text = $("#uploadTextarea").val(); // Get the text from the textarea
+        $.ajax({
+            url: "/upload_thread",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ text: text }),
+            success: function(data) {
+                updateStatus(data.status);
+                $("#upload-button").addClass("active");
+                $("#uploadTextarea").val(''); // Clear the textarea
+                uploadStatus();
+            },
+            error: function(xhr, status, error) {
+                console.error("Error sending text:", error);
+            }
+        });
+    });
+
+    // Function to periodically check upload status and update UI
+    function uploadStatus() {
+        var intervalId = setInterval(function() {
+            $.get("/upload_status", function(data) {
+                updateStatus(data.status);
+                if (data.status === "Upload finished") {
+                    $("#upload-button").removeClass("active");
+                    clearInterval(intervalId);
+                }
+            });
+        }, 100);
+    }
+
+    function updateStatus(status) {
+        $("#status").text(status);
+    }
+});
+
 
       $(document).ready(function() {
 	  // Function to handle click on PLOT button

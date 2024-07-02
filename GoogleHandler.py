@@ -222,8 +222,6 @@ class UploadManager:
         self.position = position
         self.note = note
         self.plot_file = files
-        print(files)
-        print(note)
         self.util = UploadUtilities(self.logger, self.drive)
 
     def upload(self):
@@ -249,6 +247,8 @@ class UploadManager:
         item2 = self.util.streetViewUrl(self.position)
         item1 = self.util.urlToSpreadsheetFormat(item1, 'MAP')
         item2 = self.util.urlToSpreadsheetFormat(item2, 'STREET')
+
+        print("NOTE", self.note)
 
         l = (u1, u2, data_length, formatted_date, item1, item2, self.note)
         self.util.drive.add_row_to_spreadsheet(l)
