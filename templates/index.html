@@ -186,46 +186,6 @@
               });
       }
 
-$(document).ready(function() {
-    // Function to handle click on the Start Upload button
-    $("#upload-button").click(function() {
-        const text = $("#uploadTextarea").val(); // Get the text from the textarea
-        $.ajax({
-            url: "/upload_thread",
-            type: "POST",
-            contentType: "application/json",
-            data: JSON.stringify({ text: text }),
-            success: function(data) {
-                updateStatus(data.status);
-                $("#upload-button").addClass("active");
-                $("#uploadTextarea").val(''); // Clear the textarea
-                uploadStatus();
-            },
-            error: function(xhr, status, error) {
-                console.error("Error sending text:", error);
-            }
-        });
-    });
-
-    // Function to periodically check upload status and update UI
-    function uploadStatus() {
-        var intervalId = setInterval(function() {
-            $.get("/upload_status", function(data) {
-                updateStatus(data.status);
-                if (data.status === "Upload finished") {
-                    $("#upload-button").removeClass("active");
-                    clearInterval(intervalId);
-                }
-            });
-        }, 100);
-    }
-
-    function updateStatus(status) {
-        $("#status").text(status);
-    }
-});
-
-
       $(document).ready(function() {
 	  // Function to handle click on PLOT button
 	  $("#toggleBtn").click(function() {
@@ -252,31 +212,44 @@ $(document).ready(function() {
               });
 	  }
 
-	  $("#upload-button").click(function() {
-              $.post("/upload_thread", function(data) {
-		  updateStatus(data.status);
-		  $("#upload-button").addClass("active");
-              });
+	  $(document).ready(function() {
+	      $("#upload-button").click(function() {
+		  const uploadText = $("#uploadTextarea").val();
 
-              uploadStatus();
-	  });
-
-	  // Function to periodically check upload status and update UI
-	  function uploadStatus() {
-              var intervalId = setInterval(function() {
-		  $.get("/upload_status", function(data) {
-                      updateStatus(data.status);
-                      if (data.status === "Upload finished") {
-			  $("#upload-button").removeClass("active");
-			  clearInterval(intervalId);
-                      }
+		  $.ajax({
+		      url: "/upload_thread",
+		      type: "POST",
+		      contentType: "application/json", // Specify content type
+		      data: JSON.stringify({ text: uploadText }), // Send the text as JSON
+		      success: function(data) {
+			  updateStatus(data.status);
+			  $("#upload-button").addClass("active");
+			  $("#upload-textarea").val(''); // Clear the textarea
+		      },
+		      error: function(xhr, status, error) {
+			  console.error("Error:", error);
+		      }
 		  });
-              }, 100);
-	  }
 
-	  function updateStatus(status) {
-              $("#status").text(status);
-	  }
+		  uploadStatus();
+	      });
+
+	      function uploadStatus() {
+		  var intervalId = setInterval(function() {
+		      $.get("/upload_status", function(data) {
+			  updateStatus(data.status);
+			  if (data.status === "Upload finished") {
+			      $("#upload-button").removeClass("active");
+			      clearInterval(intervalId);
+			  }
+		      });
+		  }, 100);
+	      }
+
+	      function updateStatus(status) {
+		  $("#status").text(status);
+	      }
+	  });
 
 	  // Check initial image visibility on page load
 	  checkImageStatus();
@@ -333,7 +306,6 @@ $(document).ready(function() {
 	      }
 	  });
       });
-
     </script>
   </body>
 </html>

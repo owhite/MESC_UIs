@@ -262,12 +262,14 @@ class MyFlaskApp:
 
         @self.app.route('/upload_thread', methods=['POST'])
         def start_upload_thread():
-            # Add the upload task to the worker thread's task queue
-            global uploaded_text
-            data = request.get_json()
-            uploaded_text = data.get('text', '')  # Assign the text to the variable
-            self.addTaskToQueue(self.upload_task, uploaded_text)
-            return jsonify(status=self.upload_status_str)
+            if request.is_json:
+                data = request.get_json()
+                uploaded_text = data.get('text', '')  # Assign the text to the variable
+                print("THING", data)
+                self.addTaskToQueue(self.upload_task, uploaded_text)
+                return jsonify(status=self.upload_status_str)
+            else:
+                return jsonify({"error": "Unsupported Media Type"}), 415
 
         @self.app.route('/upload_status', methods=['GET'])
         def upload_status_route():
