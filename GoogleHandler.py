@@ -213,50 +213,96 @@ class Ping(): # not really a google service but whatevs
     def status(self):
         return(self.internet_status)
 
-class uploadThread(threading.Thread):
+class UploadManager:
     def __init__(self, parent, files, position, note):
-        super().__init__()
         self.parent = parent
         self.logger = self.parent.msgs
         self.drive = self.parent.drive
         self.files = files
         self.position = position
         self.note = note
-        self.stopped = threading.Event()
-        self.upload_running = False
         self.plot_file = files
+        print(files)
+        print(note)
+        self.util = UploadUtilities(self.logger, self.drive)
 
-    def run(self):
+    def upload(self):
         for file_path in self.files:
             if not os.path.exists(file_path):
-                #self.status_label.setText(F"{file_path} missing")
                 self.logger.logger.info(f"{file_path} missing")
-                self.stop()
-                return()
+                return
 
-        # self.set_banner_text(F"Upload log file")
-        file_url = self.uploadToDrive(self.files[0], 'thing.txt')
-        # self.set_banner_text(F"Upload plot")
-        plot_url = self.uploadToDrive(self.files[1], 'thing.png')
-        # self.set_banner_text(F"Insert into spreadsheet")
+        file_url = self.util.uploadToDrive(self.files[0], 'thing.txt')
+        plot_url = self.util.uploadToDrive(self.files[1], 'thing.png')
 
-        data_length = self.dataLength(self.files[0])
+        data_length = self.util.dataLength(self.files[0])
 
-        u1 = self.urlToSpreadsheetFormat(plot_url, "PLOT")
-        u2 = self.urlToSpreadsheetFormat(file_url, "PLOT")
+        u1 = self.util.urlToSpreadsheetFormat(plot_url, "PLOT")
+        u2 = self.util.urlToSpreadsheetFormat(file_url, "PLOT")
 
         today = datetime.today()
         current_time = datetime.now()
         military_time = current_time.strftime("%H:%M")
         formatted_date = today.strftime("%m-%d-%y") + " " + military_time
 
-        item1 = self.googleMapUrl(self.position)
-        item2 = self.streetViewUrl(self.position)
-        item1 = self.urlToSpreadsheetFormat(item1, 'MAP')
-        item2 = self.urlToSpreadsheetFormat(item2, 'STREET')
+        item1 = self.util.googleMapUrl(self.position)
+        item2 = self.util.streetViewUrl(self.position)
+        item1 = self.util.urlToSpreadsheetFormat(item1, 'MAP')
+        item2 = self.util.urlToSpreadsheetFormat(item2, 'STREET')
 
         l = (u1, u2, data_length, formatted_date, item1, item2, self.note)
-        self.drive.add_row_to_spreadsheet(l)
+        self.util.drive.add_row_to_spreadsheet(l)
+        
+        for file_path in self.files:
+            try:
+                os.remove(file_path)
+                self.logger.logger.info(f"Local file '{file_path}' deleted.")
+            except OSError as e:
+                self.logger.logger.info(f"Error deleting the file '{file_path}': {e}")
+                self.delete(file_path)
+
+class uploadThread(threading.Thread):
+    def __init__(self, parent, string, files, position, note):
+        super().__init__()
+        self.parent = parent
+        self.logger = self.parent.msgs
+        self.drive = self.parent.drive
+        self.files = files
+        self.position = position
+        self.status_string = string
+        self.note = note
+        self.stopped = threading.Event()
+        self.upload_running = False
+        self.plot_file = files
+        self.util = UploadUtilities(self.logger, self.drive)
+
+    def run(self):
+        for file_path in self.files:
+            if not os.path.exists(file_path):
+                #self.status_label.setText(F"{file_path} missing")
+                self.logger.logger.info(f"{file_path} missing")
+                # self.stop()
+                return()
+
+        file_url = self.util.uploadToDrive(self.files[0], 'thing.txt')
+        plot_url = self.util.uploadToDrive(self.files[1], 'thing.png')
+        data_length = self.util.dataLength(self.files[0])
+
+        u1 = self.util.urlToSpreadsheetFormat(plot_url, "PLOT")
+        u2 = self.util.urlToSpreadsheetFormat(file_url, "PLOT")
+
+        today = datetime.today()
+        current_time = datetime.now()
+        military_time = current_time.strftime("%H:%M")
+        formatted_date = today.strftime("%m-%d-%y") + " " + military_time
+
+        item1 = self.util.googleMapUrl(self.position)
+        item2 = self.util.streetViewUrl(self.position)
+        item1 = self.util.urlToSpreadsheetFormat(item1, 'MAP')
+        item2 = self.util.urlToSpreadsheetFormat(item2, 'STREET')
+
+        l = (u1, u2, data_length, formatted_date, item1, item2, self.note)
+        self.util.drive.add_row_to_spreadsheet(l)
         #self.status_label.setText(F"Done with upload: {self.note}")
         for file_path in self.files:
             try:
@@ -267,6 +313,11 @@ class uploadThread(threading.Thread):
                 self.delete(file_path)
         self.stopped.set()
 
+class UploadUtilities:
+    def __init__(self, logger, drive):
+        self.logger = logger
+        self.drive = drive
+    
     def streetViewUrl(self, pos):
         url = f'http://maps.google.com/maps?q=&layer=c&cbll={pos[0]},{pos[1]}'
         return url
@@ -336,6 +387,7 @@ class uploadThread(threading.Thread):
                 data_dict[key] = "\n".join(value)
 
             return(data_dict)
+
 
 if __name__ == '__main__':
     # Example usage:

@@ -1,3 +1,8 @@
+            self.upload_thread = GoogleHandler.uploadThread(self, [self.output_data_file, self.output_plot_file], self.output_note)
+            self.upload_thread.start()
+
+
+
         @self.app.route('/get_serial_msgs', methods=['GET'])
         def get_serial_msgs():
             log_content = self.log_stream.getvalue()

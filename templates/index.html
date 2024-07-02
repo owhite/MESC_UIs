@@ -68,7 +68,6 @@
   </head>
   <body>
     <h2>MESC LOGGER</h2>
-    <p id="bannerText">Update banner information</p>
     <div class="tab">
       <button class="tablinks" onclick="openTab(event, 'Tab1')" id="defaultOpen">Log</button>
       <button class="tablinks" onclick="openTab(event, 'Tab2')">Serial</button>
@@ -76,12 +75,11 @@
     </div>
     <div id="Tab1" class="tabcontent">
       <h3>Logging</h3>
-      <h1 id="status">Thread not started</h1>
-
       <div class="button-container">
-        <button class="button" id="button1" onclick="logButtonClick(this.id)">LOG</button>
+        <button class="button" id="log_button" onclick="logButtonClick(this.id)">LOG</button>
         <button class="button" id="toggleBtn">PLOT</button>
         <button class="button" id="upload-button">Start Upload</button>
+	<p id="status">Upload not started</p>
         <div id="imageContainer" style="display:none;">
           <img src="" id="displayImage">
         </div>
@@ -142,8 +140,8 @@
 	  button.classList.toggle('clicked');
 
 	  let url = '';
-	  if (buttonId === 'button1') {
-              url = '/button1_click';
+	  if (buttonId === 'log_button') {
+              url = '/log_button_click';
 	  }
 
 	  fetch(url, {
@@ -175,10 +173,10 @@
 		  console.log('Button states:', data);
 
 		  // Update Button 1 state
-		  if (data.button1_clicked) {
-                      document.getElementById('button1').classList.add('clicked');
+		  if (data.log_button_clicked) {
+                      document.getElementById('log_button').classList.add('clicked');
 		  } else {
-                      document.getElementById('button1').classList.remove('clicked');
+                      document.getElementById('log_button').classList.remove('clicked');
 		  }
 
               })

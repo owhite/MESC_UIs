@@ -206,12 +206,7 @@ class MyFlaskApp:
 
     def upload_task(self):
         self.upload_status_str = "Upload started"
-        self.output_note = "thing"
-        self.upload_thread = GoogleHandler.UploadManager(self,
-                                                         [self.output_data_file, self.output_plot_file],
-                                                         [0,0],
-                                                         self.output_note)
-        self.upload_thread.upload()
+        time.sleep(5)
         self.upload_status_str = "Upload finished"
 
     def _setup_routes(self):
@@ -219,8 +214,8 @@ class MyFlaskApp:
         def index():
             return render_template('index.html')
 
-        @self.app.route('/log_button_click', methods=['POST'])
-        def log_button_click():
+        @self.app.route('/button1_click', methods=['POST'])
+        def button1_click():
             button_id = request.json['button_id']
 
             if self.button_states['b1']:
@@ -292,8 +287,7 @@ class MyFlaskApp:
         def get_host_msgs():
             host_content = self.host_log_stream.getvalue()
             if host_content:
-                pass
-                # print("HOST Messages Stream:", host_content)
+                print("HOST Messages Stream:", host_content)
                 
             self.host_log_stream.truncate(0)  # Clear the content
             self.host_log_stream.seek(0)  # Reset stream position
