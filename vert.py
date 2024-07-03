@@ -8,7 +8,6 @@ import glob
 import subprocess
 import sys
 import time
-import gps_MQTT
 
 import matplotlib
 

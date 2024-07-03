@@ -1,5 +1,4 @@
-from flask import Flask, send_file, render_template, request, jsonify
-import os
+from flask import Flask, send_file, render_template, jsonify
 
 class MyFlaskApp:
     def __init__(self, config_file="config.ini"):

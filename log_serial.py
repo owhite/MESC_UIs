@@ -12,9 +12,7 @@ import Payload
 import time
 import sys
 import re
-import plotMESC
 from datetime import datetime
-import GoogleHandler
 
 class SerialHandler:
     def __init__(self, port, name):

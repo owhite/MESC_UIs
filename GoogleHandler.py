@@ -3,20 +3,13 @@
 import io
 import os
 import threading
-import time
 from datetime import datetime
 
 import gspread
 import requests
-from google.auth.exceptions import GoogleAuthError
 from google.oauth2 import service_account
-from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload
-from oauth2client.service_account import ServiceAccountCredentials
-
-import plotMESC
-
 
 class handler:
     def __init__(self, logger=None, account_file=None, spreadsheet=None, worksheet=None):
@@ -140,8 +133,8 @@ class handler:
         # https://docs.google.com/spreadsheets/d/1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c/
         self.spreadsheet_id = '1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c'
         self.worksheet_name = 'MESC_UPLOADS'  # Change to your worksheet name
+        self.logger.info(f"ROW: {row}")
 
-        print("ROW", row)
         try:
             spreadsheet = client.open_by_key(self.spreadsheet_id)
             worksheet = client.open_by_key(self.spreadsheet_id).worksheet(self.worksheet_name)

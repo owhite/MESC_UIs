@@ -1,5 +1,3 @@
-import json
-import serial
 import configparser
 import glob
 import os

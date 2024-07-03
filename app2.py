@@ -1,5 +1,3 @@
-import json
-import serial
 import configparser
 import glob
 import os
@@ -14,7 +12,6 @@ import matplotlib
 
 matplotlib.use('agg')  # Set the backend to 'agg'
 
-import matplotlib.pyplot as plt
 
 import GoogleHandler
 import HostMessages

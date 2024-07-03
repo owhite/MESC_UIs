@@ -1,5 +1,3 @@
-import json
-import serial
 import configparser
 import glob
 import os
@@ -14,7 +12,6 @@ import matplotlib
 
 matplotlib.use('agg')  # Set the backend to 'agg'
 
-import matplotlib.pyplot as plt
 
 import GoogleHandler
 import HostMessages
@@ -316,8 +313,8 @@ class MyFlaskApp:
     def addTaskToQueue(self, func, *args):
         self.task_queue.put((func, args))
 
-    def run(self):
-        self.app.run(debug=True)
+    def run(self, host='0.0.0.0', port=5000):
+        self.app.run(host=host, port=port, debug=True)
 
     def stop(self):
         self.task_queue.put(None)  # Stop the worker thread
@@ -335,6 +332,6 @@ class MyFlaskApp:
 if __name__ == '__main__':
     app = MyFlaskApp()
     try:
-        app.run()
+        app.run(host='0.0.0.0', port = 5000)
     finally:
         app.stop()

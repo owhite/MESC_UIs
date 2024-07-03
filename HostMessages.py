@@ -1,6 +1,8 @@
 #! /usr/bin/env python3
 
-# this handles two forms of logging:
+# This is called HostMessages but in the context of it running
+#   with python-flask it is basically the server backend. 
+# note that it handles two forms of logging:
 #  1) it opens up system logs that sit on the host computer
 #  2) it also handles various serial operations like opening/closing the port
 
@@ -8,7 +10,6 @@ import logging
 import re
 import sys, os
 import threading
-from datetime import datetime
 
 import time
 import serial

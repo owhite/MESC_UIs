@@ -8,11 +8,10 @@ import logging
 import re
 import json
 import sys, os
-from datetime import datetime
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QTimer, QMutex
-from PyQt5.QtSerialPort import QSerialPort, QSerialPortInfo
+from PyQt5.QtSerialPort import QSerialPort
 from PyQt5.QtWidgets import QLabel
 
 import Payload

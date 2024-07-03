@@ -2,7 +2,6 @@
 
 import getopt
 import json
-import os
 import sys
 
 import matplotlib
@@ -11,7 +10,6 @@ import matplotlib.pyplot as plt
 
 import numpy as np
 import pandas as pd
-from matplotlib.patches import Rectangle
 
 
 class PlotMESCOutput:
@@ -120,7 +118,7 @@ class PlotMESCOutput:
         ax3.spines.right.set_position(("axes", 1.2))
     
         # xxx
-        title = ("{0}A, FW={1}".format(int(float(results['curr_max'][2])),
+        title = ("{0}A, FW={1}".format(int(float(results['curr_max'][0])),
                                             int(float(results['fw_curr'][0]))))
         plt.title(title)
         # plt.figtext(0.85, 0.01, text, fontsize=12, color='black', ha='right')

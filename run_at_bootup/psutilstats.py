@@ -7,7 +7,6 @@ import time
 import psutil as PS
 import socket
 import board
-import digitalio
 import adafruit_ssd1306
 #
 from PIL import Image, ImageDraw, ImageFont

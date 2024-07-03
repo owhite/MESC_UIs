@@ -7,15 +7,11 @@ from datetime import datetime
 
 import gspread
 import requests
-from google.auth.exceptions import GoogleAuthError
 from google.oauth2 import service_account
-from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload
-from oauth2client.service_account import ServiceAccountCredentials
 from PyQt5.QtCore import QTimer
 
-import plotMESC
 
 
 class handler:
