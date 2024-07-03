@@ -233,7 +233,7 @@
 		      success: function(data) {
 			  updateStatus(data.status);
 			  $("#upload-button").addClass("active");
-			  $("#uploadTextarea").val(''); // Clear the textarea
+1			  $("#uploadTextarea").val(''); // Clear the textarea
 		      },
 		      error: function(xhr, status, error) {
 			  console.error("Error:", error);
