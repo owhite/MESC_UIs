@@ -1,0 +1,27 @@
+2024-07-04 18:00:53,169 [INFO] macOS detected
+2024-07-04 18:00:53,271 [INFO] Log Handler opened for port: /dev/tty.usbmodem385D316830331
+2024-07-04 18:00:53,276 [INFO] sending cmd: su -g
+2024-07-04 18:00:53,276 [INFO] sending cmd: status stop
+2024-07-04 18:00:53,276 [INFO] Google account /Users/owhite/mesc-data-logging-ae144bcc6287.json
+2024-07-04 18:00:53,277 [INFO] Google spreadsheet 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
+2024-07-04 18:00:53,277 [INFO] Google worksheet MESC_UPLOADS
+2024-07-04 18:00:53,556 [INFO] GoogleHandler initiated
+2024-07-04 18:00:54,154 [INFO] Ping to google drive working
+2024-07-04 18:00:54,364 [INFO] Connected to the internet
+2024-07-04 18:01:01,552 [INFO] Initiate data logging: /Users/owhite/RPI_logger/static/images/MESC_logdata.txt
+2024-07-04 18:01:01,553 [INFO] Created new output file log: /Users/owhite/RPI_logger/static/images/MESC_logdata.txt
+2024-07-04 18:01:01,553 [INFO] sending cmd: get
+2024-07-04 18:01:02,914 [INFO] sending cmd: status json
+2024-07-04 18:01:05,822 [INFO] sending cmd: status stop
+2024-07-04 18:01:05,823 [INFO] Finished logging
+2024-07-04 18:01:05,881 [INFO] Created plot: /Users/owhite/RPI_logger/static/logs/MESC_plt.png
+2024-07-04 18:01:21,154 [INFO] Upload initiated
+2024-07-04 18:01:22,608 [INFO] Setting permissions on 1sdS2-MTfCWml3lsseRKjzf6q2oiccZFs
+2024-07-04 18:01:23,225 [INFO] Upload complete
+2024-07-04 18:01:23,225 [INFO] Upload initiated
+2024-07-04 18:01:26,753 [INFO] Setting permissions on 1YlUPj9Cy7ABYdBKJ5jwSJBs3cL79oU2x
+2024-07-04 18:01:27,320 [INFO] Upload complete
+2024-07-04 18:01:27,321 [INFO] ROW: ('=hyperlink("https://drive.google.com/file/d/1YlUPj9Cy7ABYdBKJ5jwSJBs3cL79oU2x/view?usp=sharing","PLOT")', '=hyperlink("https://drive.google.com/file/d/1sdS2-MTfCWml3lsseRKjzf6q2oiccZFs/view?usp=sharing","PLOT")', 30, '07-04-24 18:01', '=hyperlink("https://www.google.com/maps/search/?api=1&query=0%2C0","MAP")', '=hyperlink("http://maps.google.com/maps?q=&layer=c&cbll=0,0","STREET")', 'thing')
+2024-07-04 18:01:28,551 [INFO] Added row to spreadsheet with id = 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
+2024-07-04 18:01:28,553 [INFO] Local file '/Users/owhite/RPI_logger/static/images/MESC_logdata.txt' deleted.
+2024-07-04 18:01:28,553 [INFO] Local file '/Users/owhite/RPI_logger/static/logs/MESC_plt.png' deleted.

@@ -20,7 +20,8 @@ import Payload
 class LogHandler():
     def __init__(self, parent):
         self.parent = parent
-        self.working_directory = self.parent.working_directory
+        self.image_directory = self.parent.image_directory
+        self.log_directory = self.parent.log_directory
 
         self.serialPayload = Payload.Payload()
         self.serialPayload.startTimer()
@@ -35,7 +36,7 @@ class LogHandler():
         # dont confuse the service log, which just gets information from the program
         #  and sends it to serial_service.log, with the collection that is done by 
         #  initDataLogging() which actually collects data from the controller
-        self.service_log_file = os.path.join(self.working_directory, 'serial_service.log')
+        self.service_log_file = os.path.join(self.log_directory, 'serial_service.log')
         self.logger = logging.getLogger('serial_service_log')
         self.logger.setLevel(logging.INFO)
         serial_service_handler = logging.FileHandler(self.service_log_file, mode='w')

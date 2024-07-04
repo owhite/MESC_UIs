@@ -34,17 +34,25 @@ class MyFlaskApp:
         self.worker_thread = threading.Thread(target=self.worker)
         self.worker_thread.start()
 
-        # house keeping
+        # Determine the absolute path to the config file
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        config_path = os.path.join(script_dir, config_file)
+
+        # House keeping
         config = configparser.ConfigParser()
-        config.read(config_file)
+        config.read(config_path)
         file_config = config['FILES']
 
-        self.working_directory = os.path.join(os.path.expanduser("~"), ".log_UI")
-        if not os.path.exists(self.working_directory):
-            os.makedirs(self.working_directory)
-        self.output_data_file = os.path.join(self.working_directory, file_config.get('logdata_file', 'MESC_logdata.txt'))
-        self.output_plot_file = os.path.join(self.working_directory, file_config.get('plotdata_file', 'MESC_plt.png'))
+        self.image_directory = os.path.join(self.app.root_path, 'static', 'images')
+        if not os.path.exists(self.image_directory):
+            os.makedirs(self.image_directory)
 
+        self.log_directory = os.path.join(self.app.root_path, 'static', 'logs')
+        if not os.path.exists(self.log_directory):
+            os.makedirs(self.log_directory)
+
+        self.output_data_file = os.path.join(self.image_directory, file_config.get('logdata_file', 'MESC_logdata.txt'))
+        self.output_plot_file = os.path.join(self.log_directory, file_config.get('plotdata_file', 'MESC_plt.png'))
 
         self.button_states = { 'b1': False }
 
@@ -70,8 +78,9 @@ class MyFlaskApp:
                     self.portName = matches[0]
 
                 import oledDisplay_macos
-                self.oled_display = oledDisplay.OledDisplay()
-                self.addTaskToQueue(self.oled_display.display_ip)
+                self.oled_running = True
+                self.oled_display = oledDisplay_macos.OledDisplay()
+                self.oled_display.display_ip
 
             elif sys.platform.startswith('linux'):
                 self.portName = '/dev/ttyACM0'
@@ -79,10 +88,10 @@ class MyFlaskApp:
                 self.msgs.logger.info("RASPBERRY account file use: /home/pi/mesc-data-logging-083b86e157cf.json")
                 self.msgs.logger.info("starting OLED display")
 
-                oled_display = oledDisplay.OledDisplay()
+                import oledDisplay
                 self.oled_running = True
-                self.oled_thread = threading.Thread(target=oled_display.display_ip())
-                self.update_oled.start()
+                self.oled_display = oledDisplay.OledDisplay()
+                self.oled_display.display_ip
 
             else:
                 self.msgs.logger.info("Unknown operating system")
@@ -123,9 +132,6 @@ class MyFlaskApp:
             self.msgs.logger.info("GoogleHandler initiated")
             if self.drive.test_connection(): 
                 self.msgs.logger.info("Ping to google drive working")
-
-    def owenTest(self):
-        print ("here")
 
     def worker(self):
         while True:
@@ -228,10 +234,12 @@ class MyFlaskApp:
 
             if self.button_states['b1']:
                 self.button_states['b1'] = False
+                print("LOG STOP")
                 self.addTaskToQueue(self.msgs.endDataLogging)
                     
             else:
                 self.button_states['b1'] = True
+                print("LOG START")
                 self.addTaskToQueue(self.msgs.initDataLogging)
 
             print(f'Button 1 clicked! Button ID: {button_id}, state: {self.button_states["b1"]}')
@@ -240,7 +248,6 @@ class MyFlaskApp:
         @self.app.route('/toggle_image', methods=['POST'])
         def toggle_image():
             self.image_visible = not self.image_visible
-            print("TOGGLE", self.image_visible)
             return jsonify(image_visible=self.image_visible)
 
         @self.app.route('/get_image', methods=['GET'])
