@@ -65,9 +65,22 @@ class LogHandler():
     def process_loop(self):
         while self.is_running:
             if self.port and self.port.is_open:
-                if self.port.in_waiting > 0:
-                    self.processData()
-            time.sleep(0.01)
+                try:
+                    if self.port.in_waiting > 0:
+                        self.processData()
+                except OSError as e:
+                    if e.errno == 6:
+                        # Handle the specific error
+                        self.logger.info("Device not configured. Please check the connection.")
+                        self.is_running = False  # Optionally, stop the loop
+                    else:
+                        # Handle other potential OS errors
+                        self.logger.info(f"An unexpected OS error occurred: {e}")
+                except Exception as e:
+                    # Handle any other exceptions
+                    self.logger.info(f"An unexpected error occurred: {e}")
+        time.sleep(0.01)
+
 
     # this function is called periodically and chows self.dataBuffer
     def processData(self):
@@ -184,6 +197,27 @@ class LogHandler():
             self.serial.close()
 
         
+    def sendToPort_BROKEN(self, text):
+        if not self.port.isOpen():
+            self.logger.info("Port not open. Attempting to reopen.")
+            # self.port = serial.Serial(port=self.portName, baudrate=115200, timeout=1)
+            # self.logger.info(f"Log Handler opened for port: {self.portName}")
+            # self.setStatusText('Port opened')
+            try:
+                self.logger.info("Port reopened successfully.")
+            except serial.SerialException as e:
+                self.logger.error(f"Failed to reopen port: {e}")
+                self.logger.info(f"Cant send cmd: {text} port not open")
+
+                return
+
+        try:
+            self.logger.info(f"Sending cmd: {text}")
+            text = text + '\r\n'
+            self.port.write(text.encode())
+        except Exception as e:
+            self.logger.error(f"Failed to send cmd: {text} due to: {e}")
+
     def sendToPort(self, text):
         if not self.port.isOpen():
             self.logger.info("Cant send cmd: {0} port not open".format(text))

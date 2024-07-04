@@ -30,11 +30,7 @@ class MyFlaskApp:
 
         self.banner_text = "Banner text"
 
-        # Start the worker thread that handles non-GUI tasks
-        self.worker_thread = threading.Thread(target=self.worker)
-        self.worker_thread.start()
-
-        # Start the worker thread that handles non-GUI tasks
+        # Start the worker thread that handles anything called by self.addTaskToQueue
         self.worker_thread = threading.Thread(target=self.worker)
         self.worker_thread.start()
 
@@ -49,9 +45,6 @@ class MyFlaskApp:
         self.output_data_file = os.path.join(self.working_directory, file_config.get('logdata_file', 'MESC_logdata.txt'))
         self.output_plot_file = os.path.join(self.working_directory, file_config.get('plotdata_file', 'MESC_plt.png'))
 
-        self.update_stats_running = True
-        self.update_stats_thread = threading.Thread(target=self.updateStats)
-        self.update_stats_thread.start()
 
         self.button_states = { 'b1': False }
 
@@ -75,10 +68,22 @@ class MyFlaskApp:
                 matches = glob.glob('/dev/tty.usbmodem*')
                 if len(matches) == 1:
                     self.portName = matches[0]
+
+                import oledDisplay_macos
+                self.oled_display = oledDisplay.OledDisplay()
+                self.addTaskToQueue(self.oled_display.display_ip)
+
             elif sys.platform.startswith('linux'):
                 self.portName = '/dev/ttyACM0'
                 self.msgs.logger.info("linux detected")
-                print("RASPBERRY account file use: /home/pi/mesc-data-logging-083b86e157cf.json")
+                self.msgs.logger.info("RASPBERRY account file use: /home/pi/mesc-data-logging-083b86e157cf.json")
+                self.msgs.logger.info("starting OLED display")
+
+                oled_display = oledDisplay.OledDisplay()
+                self.oled_running = True
+                self.oled_thread = threading.Thread(target=oled_display.display_ip())
+                self.update_oled.start()
+
             else:
                 self.msgs.logger.info("Unknown operating system")
                 sys.exit()
@@ -119,6 +124,8 @@ class MyFlaskApp:
             if self.drive.test_connection(): 
                 self.msgs.logger.info("Ping to google drive working")
 
+    def owenTest(self):
+        print ("here")
 
     def worker(self):
         while True:
@@ -318,7 +325,7 @@ class MyFlaskApp:
 
     def stop(self):
         self.task_queue.put(None)  # Stop the worker thread
-        self.worker_thread.join()
+        # self.worker_thread.join()
 
     def _setup_logging(self):
         class NoStatusFilter(logging.Filter):
