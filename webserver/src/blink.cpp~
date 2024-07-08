@@ -1,0 +1,19 @@
+#include "blink.h"
+
+#define BLINK_GPIO 2
+
+void initBlinkTask() {
+    xTaskCreate(blinkTask, "Blink Task", 1024, NULL, 1, NULL);
+}
+
+void blinkTask(void *pvParameter) {
+    pinMode(BLINK_GPIO, OUTPUT);
+
+    while (1) {
+        Serial.println("blink");
+        digitalWrite(BLINK_GPIO, HIGH);
+        vTaskDelay(400 / portTICK_PERIOD_MS);
+        digitalWrite(BLINK_GPIO, LOW);
+        vTaskDelay(400 / portTICK_PERIOD_MS);
+    }
+}

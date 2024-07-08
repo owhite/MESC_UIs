@@ -1,0 +1,24 @@
+#include <Arduino.h>
+
+#define BLINK_GPIO LED_BUILTIN
+
+void blinkTask(void *pvParameter) {
+    pinMode(BLINK_GPIO, OUTPUT);
+    
+    while (1) {
+        digitalWrite(BLINK_GPIO, HIGH);
+        vTaskDelay(1000 / portTICK_PERIOD_MS); // Delay for 1 second
+        digitalWrite(BLINK_GPIO, LOW);
+        vTaskDelay(1000 / portTICK_PERIOD_MS); // Delay for 1 second
+    }
+}
+
+void setup() {
+    Serial.begin(115200);
+    Serial.println("Starting blinkTask...");
+    xTaskCreate(blinkTask, "blinkTask", 1024, NULL, 1, NULL);
+}
+
+void loop() {
+    // The loop function is empty because the tasks are running in parallel
+}

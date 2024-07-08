@@ -5,7 +5,7 @@ $ i2cdetect -y 1
 $ cat  /etc/supervisor/conf.d/IP_stats.conf
 [program:IP_stats]
 command=/usr/bin/python3 /home/pi/run_at_boot_up/stats.py
-autostart=true  
+; autostart=true  
 autorestart=true
 startsecs=5     
 stderr_logfile=/var/log/IP_stats.err.log

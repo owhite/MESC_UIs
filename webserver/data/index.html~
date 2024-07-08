@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ESP32 Web Server</title>
+</head>
+<body>
+    <h1>Hello, World!</h1>
+    <p>This is a web page served from ESP32 using LittleFS.</p>
+</body>
+</html>
