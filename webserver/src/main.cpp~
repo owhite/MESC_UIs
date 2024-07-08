@@ -1,24 +1,47 @@
 #include <Arduino.h>
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
+#include <freertos/semphr.h>
+#include "processData.h"
+#include "blink.h"  // Include your custom header file
 
-#define BLINK_GPIO LED_BUILTIN
+// Buffer to store incoming serial data
+#define BUFFER_SIZE 256
+char serialBuffer[BUFFER_SIZE];
+int bufferIndex = 0;
 
-void blinkTask(void *pvParameter) {
-    pinMode(BLINK_GPIO, OUTPUT);
-    
-    while (1) {
-        digitalWrite(BLINK_GPIO, HIGH);
-        vTaskDelay(1000 / portTICK_PERIOD_MS); // Delay for 1 second
-        digitalWrite(BLINK_GPIO, LOW);
-        vTaskDelay(1000 / portTICK_PERIOD_MS); // Delay for 1 second
-    }
-}
+// Mutex to protect access to the serialBuffer
+SemaphoreHandle_t mutex;
 
 void setup() {
-    Serial.begin(115200);
-    Serial.println("Starting blinkTask...");
-    xTaskCreate(blinkTask, "blinkTask", 1024, NULL, 1, NULL);
+  Serial.begin(115200);
+
+  // Create the mutex
+  mutex = xSemaphoreCreateMutex();
+  if (mutex == NULL) {
+    Serial.println("Mutex creation failed!");
+    while (true);
+  }
+
+  initProcessData();
+  initBlinkTask();
+
 }
 
 void loop() {
-    // The loop function is empty because the tasks are running in parallel
+  while (Serial.available()) {
+    char incomingByte = Serial.read();
+        
+    if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
+      if (bufferIndex < BUFFER_SIZE - 1) {
+	serialBuffer[bufferIndex++] = incomingByte;
+	if (incomingByte == '\n') {
+	  serialBuffer[bufferIndex] = '\0'; 
+	  bufferIndex = 0;
+	}
+      }
+      xSemaphoreGive(mutex);
+    }
+  }
 }
+
