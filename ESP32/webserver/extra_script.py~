@@ -1,0 +1,22 @@
+import os
+Import("env")
+
+def before_build(source, target, env):
+    # Copy data files to the filesystem
+    src_dir = os.path.join(env.subst("$PROJECT_DIR"), "data")
+    dst_dir = os.path.join(env.subst("$BUILD_DIR"), "littlefs", "data")
+    if not os.path.exists(dst_dir):
+        os.makedirs(dst_dir)
+    for file in os.listdir(src_dir):
+        full_file_name = os.path.join(src_dir, file)
+        if os.path.isfile(full_file_name):
+            env.Execute("copy %s %s" % (full_file_name, dst_dir))
+
+def before_upload(source, target, env):
+    # Build the LittleFS filesystem image
+    env.Execute("pio run --target buildfs")
+    # Upload the LittleFS filesystem image
+    env.Execute("pio run --target uploadfs")
+
+env.AddPreAction("buildfs", before_build)
+env.AddPreAction("upload", before_upload)
