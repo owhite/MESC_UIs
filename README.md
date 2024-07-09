@@ -39,18 +39,20 @@ $ i2cdetect -y 1
 
 ## Launch the progam using supervisor:
 $ cat > /etc/supervisor/conf.d/IP_stats.conf
-[program:IP_stats]
+```[program:IP_stats]
 command=/usr/bin/python3 /home/pi/RPI_logger/run_at_bootup/oled_stats.py
 autostart=true  
 autorestart=true
 startsecs=5     
 stderr_logfile=/var/log/IP_stats.err.log
 stdout_logfile=/var/log/IP_stats.out.log
-
+```
 Make this launches at boot:
+
 $ sudo systemctl enable supervisor
 
 If you need to restart:
+
 $ sudo supervisorctl restart IP_stats
 
 ## Code cleanup:
