@@ -1,4 +1,4 @@
-## Introductionx
+## Introduction
 
 The purpose of this repo is to demonstrate connections between python programs with the [MESC](https://github.com/davidmolony/MESC_Firmware) motor controller. One of the programs can be run as a headless server on an raspberry PI, and facilitate interactions between the MESC controller and an android app. For the most part, you would probably want to use these to log data coming from the MESC, but there might be other applications for these programs as well. 
 
@@ -40,7 +40,7 @@ $ i2cdetect -y 1
 ## Launch the progam using supervisor:
 $ cat > /etc/supervisor/conf.d/IP_stats.conf
 [program:IP_stats]
-command=/usr/bin/python3 /home/pi/RPI_logger/oled_stats.py
+command=/usr/bin/python3 /home/pi/RPI_logger/run_at_bootup/oled_stats.py
 autostart=true  
 autorestart=true
 startsecs=5     
