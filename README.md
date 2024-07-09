@@ -30,3 +30,25 @@ In any case, these python programs
  
 In general implementation of the code would occur on a raspberry PI (RPI) that is connected to the MESC controller over USB serial and physically traveling with the controller during logging. Instead of using the android as an interface it's conceivable to put a touch screen on the RPI -- I tried using an inexpensive touchscreen on the RPI and hated it. 
 
+# Raspberry PI support code
+
+So if you're running a PI and want to connect to it using your smartphone you'll have to get it connect as a hotspot, and if your phone is like mine it wont even tell you the IP address of the PI. That's where this little oled display program comes in. Connect it to the I2C pins of the PI then...
+
+## test the i2c connection:
+$ i2cdetect -y 1
+
+## Launch the progam using supervisor:
+$ cat > /etc/supervisor/conf.d/IP_stats.conf
+[program:IP_stats]
+command=/usr/bin/python3 /home/pi/RPI_logger/oled_stats.py
+autostart=true  
+autorestart=true
+startsecs=5     
+stderr_logfile=/var/log/IP_stats.err.log
+stdout_logfile=/var/log/IP_stats.out.log
+
+Make this launches at boot:
+$ sudo systemctl enable supervisor
+
+If you need to restart:
+$ sudo supervisorctl restart IP_stats
