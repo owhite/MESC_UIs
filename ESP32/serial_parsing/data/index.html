@@ -1,10 +1,71 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>ESP32 Web Server</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 Table Example</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        td:first-child {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello, World!</h1>
-    <p>A web page served from ESP32 using LittleFS.</p>
+    <h2>ESP32 Table Example</h2>
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Field 1</th>
+                <th>Field 2</th>
+                <th>Field 3</th>
+                <th>Field 4</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- Table rows will be dynamically inserted here -->
+            %TABLE_ROWS%
+        </tbody>
+    </table>
+    <br>
+    <button onclick="updateData()">Update</button>
+
+    <script>
+        function updateData() {
+            // Example of sending update request to ESP32
+            fetch('/update', {
+                method: 'POST',
+                body: JSON.stringify({ /* Include data to update */ }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Handle response data if needed
+                console.log('Update successful', data);
+            })
+            .catch(error => {
+                console.error('Error updating data:', error);
+            });
+        }
+    </script>
 </body>
 </html>
