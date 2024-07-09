@@ -77,21 +77,11 @@ class MyFlaskApp:
                 if len(matches) == 1:
                     self.portName = matches[0]
 
-                import oledDisplay_macos
-                self.oled_running = True
-                self.oled_display = oledDisplay_macos.OledDisplay()
-                self.oled_display.display_ip
-
             elif sys.platform.startswith('linux'):
                 self.portName = '/dev/ttyACM0'
                 self.msgs.logger.info("linux detected")
                 self.msgs.logger.info("RASPBERRY account file use: /home/pi/mesc-data-logging-083b86e157cf.json")
                 self.msgs.logger.info("starting OLED display")
-
-                import oledDisplay
-                self.oled_running = True
-                self.oled_display = oledDisplay.OledDisplay()
-                self.oled_display.display_ip
 
             else:
                 self.msgs.logger.info("Unknown operating system")

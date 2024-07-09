@@ -22,7 +22,7 @@ oled.show()
 image = Image.new("1", (oled.width, oled.height))
 draw = ImageDraw.Draw(image)
 draw.rectangle((0, 0, oled.width, oled.height), outline=255, fill=255)
-font = ImageFont.truetype('/home/pi/run_at_boot_up/PixelOperator.ttf', 32)
+font = ImageFont.truetype('/home/pi/RPI_logger/run_at_bootup/PixelOperator.ttf', 32)
 
 loop_duration = 1  # in seconds
 
@@ -30,7 +30,6 @@ def main():
 
     now = datetime.now()
     formatted_date = now.strftime("%Y-%m-%d %H:%M:%S")
-    print("Stats program that shows IP address to I2C is running", formatted_date)
     toggle = True
     loop_time = time.time() + loop_duration
     while True:
@@ -65,4 +64,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
+

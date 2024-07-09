@@ -1,10 +1,1 @@
-2024-07-08 19:52:51,468 [INFO] macOS detected
-2024-07-08 19:52:51,565 [INFO] Log Handler opened for port: /dev/tty.usbmodem14101
-2024-07-08 19:52:51,565 [INFO] sending cmd: su -g
-2024-07-08 19:52:51,565 [INFO] sending cmd: status stop
-2024-07-08 19:52:51,566 [INFO] Google account /Users/owhite/mesc-data-logging-ae144bcc6287.json
-2024-07-08 19:52:51,566 [INFO] Google spreadsheet 1iq2C9IOtOwm_KK67lcoUs2NjVRozEYd-shNs9lL559c
-2024-07-08 19:52:51,566 [INFO] Google worksheet MESC_UPLOADS
-2024-07-08 19:52:51,850 [INFO] GoogleHandler initiated
-2024-07-08 19:52:52,555 [INFO] Ping to google drive working
-2024-07-08 19:52:52,776 [INFO] Connected to the internet
+2024-07-08 20:05:25,099 [INFO] macOS detected
