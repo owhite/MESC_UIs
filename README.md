@@ -52,3 +52,14 @@ $ sudo systemctl enable supervisor
 
 If you need to restart:
 $ sudo supervisorctl restart IP_stats
+
+## Code cleanup:
+
+Run this to remove unneeded python imports:
+
+python3 /Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/autoflake.py  --remove-all-unused-imports --in-place --recursive
+
+## Using platformio
+Platformio now has a great serial monitor:
+
+# pio device monitor
