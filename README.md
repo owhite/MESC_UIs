@@ -47,7 +47,7 @@ startsecs=5
 stderr_logfile=/var/log/IP_stats.err.log
 stdout_logfile=/var/log/IP_stats.out.log
 ```
-Make this launches at boot:
+Make this launch at boot:
 
 $ sudo systemctl enable supervisor
 
@@ -59,7 +59,7 @@ $ sudo supervisorctl restart IP_stats
 
 Run this to remove unneeded python imports:
 
-python3 /Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/autoflake.py  --remove-all-unused-imports --in-place --recursive
+$ python3 /Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/autoflake.py  --remove-all-unused-imports --in-place --recursive
 
 ## Using platformio
 Platformio now has a great serial monitor:
