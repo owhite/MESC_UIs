@@ -15,6 +15,8 @@ void initProcessData();
 void processData(void *parameter);
 void *memcat(void *dest, size_t dest_len, const void *src, size_t src_len);
 void processLine(char *line);
+int countCharOccurrences(const char* str, char ch);
+void stringToTableRow(const char* data);
 
 // External declarations of global variables
 extern char serialBuffer[];

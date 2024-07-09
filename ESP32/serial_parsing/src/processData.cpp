@@ -1,3 +1,6 @@
+#include <cstring>
+#include <cstdio>
+#include <cstdlib>
 #include "processData.h"
 
 char serialBuffer[BUFFER_SIZE];
@@ -17,7 +20,7 @@ void initProcessData() {
   xTaskCreate(
 	      processData,     // Task function
 	      "Process Data",  // Name of the task
-	      2048,            // Stack size
+	      4048,            // Stack size
 	      NULL,            // Parameter
 	      1,               // Priority
 	      NULL             // Task handle
@@ -34,6 +37,24 @@ void *memcat(void *dest, size_t dest_len, const void *src, size_t src_len) {
 void processLine(char *line) {
   Serial.print("Processing data: ");
   Serial.println(line);
+  int count = countCharOccurrences(line, '\t');
+  Serial.print(" :: ");
+  Serial.println(count);
+  if (count == 4) {
+    Serial.println("making row");
+    stringToTableRow(line);
+  }
+}
+
+int countCharOccurrences(const char* str, char ch) {
+    int count = 0;
+    while (*str) {
+        if (*str == ch) {
+            count++;
+        }
+        str++;
+    }
+    return count;
 }
 
 void processData(void *parameter) {
@@ -75,4 +96,41 @@ void processData(void *parameter) {
 
     vTaskDelay(100 / portTICK_PERIOD_MS);
   }
+}
+
+void stringToTableRow(const char* data) {
+    char row[1024];
+    char tableRows[4096] = "";  // Adjust size as needed for your application
+    int fieldNum = 1;
+    char delimiter = '\t';
+
+    size_t dataLength = strlen(data);
+    size_t index = 0;
+    size_t rowIndex = 0;
+
+    while (index < dataLength) {
+        if (data[index] == delimiter || data[index] == '\n') {
+            strcat(row, "<td>");
+            if (fieldNum == 1) {
+                char field[128];
+                snprintf(field, sizeof(field), "<input type='text' name='field1' value='%.*s'>", (int)(index - rowIndex), data + rowIndex);
+                strcat(row, field);
+            } else {
+                strncat(row, data + rowIndex, index - rowIndex);
+            }
+            strcat(row, "</td>");
+            fieldNum++;
+            rowIndex = index + 1;  // Move past the delimiter
+        }
+
+        if (data[index] == '\n') {
+            strcat(row, "</tr>");
+            strcat(tableRows, row);
+            strcpy(row, "<tr>");
+            fieldNum = 1;
+            rowIndex = index + 1;  // Move past the newline
+        }
+
+        index++;
+    }
 }

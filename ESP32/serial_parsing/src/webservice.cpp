@@ -30,6 +30,7 @@ void initWebService() {
     host = WiFi.localIP().toString();
 
     server.on("/", handleRoot);
+    server.on("/update", handleUpdate);
     server.begin();
     Serial.println("HTTP server started");
     blinkSpeed = 80;
@@ -43,6 +44,10 @@ void webServerTask(void *pvParameter) {
         server.handleClient();
         vTaskDelay(10 / portTICK_PERIOD_MS);
     }
+}
+
+void handleUpdate() {
+  // Handle POST request to update data
 }
 
 void handleRoot() {
