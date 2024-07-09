@@ -62,4 +62,4 @@ python3 /Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-p
 ## Using platformio
 Platformio now has a great serial monitor:
 
-# pio device monitor
+$ pio device monitor
