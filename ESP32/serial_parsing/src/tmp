@@ -59,8 +59,32 @@ Vd	0.019072	-4096.00	4096.00	FOC_Vdq_d
 Vq	-0.078574	-4096.00	4096.00	FOC_Vdq_q
 
 
-uart_req	0.000000	
-v_max	0.000000	0.00	
-vbus	54.493359	0.00	
-Vd	0.019072	-4096.00	
-Vq	-0.078574	-4096.00	
+<tr>
+  <th>Variable</th>
+  <th>Value</th>
+  <th>min</th>
+  <th>max</th>
+  <th>note</th>
+</tr>
+<tr>
+  <td>adc1_max</td>
+  <td>string1</td>
+  <td>string2</td>
+  <td>string3</td>
+  <td>string4</td>
+</tr>
+<tr>
+  <td>curr_max</td>
+  <td>string1</td>
+  <td>string2</td>
+  <td>string3</td>
+  <td>string4</td>
+</tr>
+<tr>
+  <td>v_max</td>
+  <td>string1</td>
+  <td>string2</td>
+  <td>string3</td>
+  <td>string4</td>
+</tr>
+

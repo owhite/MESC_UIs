@@ -12,8 +12,8 @@ void initWebService() {
 
     Serial.println("LittleFS mounted successfully");
 
-    // WiFi.begin("Love Factory", "ILoveLyra");
-    WiFi.begin("WhiteVan-551E", "thing123");
+    WiFi.begin("Love Factory", "ILoveLyra");
+    // WiFi.begin("WhiteVan-551E", "thing123");
 
     Serial.print("Connecting to wifi");
 
@@ -61,7 +61,8 @@ void healthCheckTask(void *pvParameter) {
         if (WiFi.status() != WL_CONNECTED) {
             Serial.println("WiFi connection lost. Attempting to reconnect...");
 	    blinkSpeed = 1000;
-            WiFi.begin("WhiteVan-551E", "thing123");
+            // WiFi.begin("WhiteVan-551E", "thing123");
+	    WiFi.begin("Love Factory", "ILoveLyra");
             while (WiFi.status() != WL_CONNECTED) {
                 vTaskDelay(1000 / portTICK_PERIOD_MS);
                 Serial.print(".");

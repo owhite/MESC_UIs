@@ -11,26 +11,26 @@ void setup() {
 
   initProcessData();
   initBlinkTask();
-  // initWebService();
+  initWebService();
 
 }
 
 void loop() {
-    while (!Serial) {
-        delay(100);
-    }
+  while (!Serial) {
+    delay(100);  // Wait for serial port to connect
+  }
 
-    while (Serial.available()) {
-        char incomingByte = Serial.read();
+  while (Serial.available()) {
+    char incomingByte = Serial.read();
         
-        if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
-            if (bufferIndex < BUFFER_SIZE - 1) {
-                serialBuffer[bufferIndex++] = incomingByte;
-                serialBuffer[bufferIndex] = '\0'; 
-                lastReceiveTime = millis(); 
-            }
-            xSemaphoreGive(mutex);
-        }
+    if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
+      if (bufferIndex < BUFFER_SIZE - 1) {
+	serialBuffer[bufferIndex++] = incomingByte;
+	serialBuffer[bufferIndex] = '\0'; 
+	lastReceiveTime = millis(); 
+      }
+      xSemaphoreGive(mutex);
     }
+  }
 }
 

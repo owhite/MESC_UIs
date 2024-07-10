@@ -1,4 +1,5 @@
 #include "webservice.h"
+#include "processData.h"
 #include "blink.h"
 
 WebServer server(80);
@@ -12,8 +13,7 @@ void initWebService() {
 
     Serial.println("LittleFS mounted successfully");
 
-    // WiFi.begin("Love Factory", "ILoveLyra");
-    WiFi.begin("WhiteVan-551E", "thing123");
+    WiFi.begin("Love Factory", "ILoveLyra");
 
     Serial.print("Connecting to wifi");
 
@@ -35,13 +35,16 @@ void initWebService() {
     Serial.println("HTTP server started");
     blinkSpeed = 80;
 
+    webSocket.begin();
+    webSocket.onEvent(webSocketEvent);
+
     xTaskCreate(webServerTask, "Web Server Task", 8192, NULL, 1, NULL);
-    xTaskCreatePinnedToCore(healthCheckTask, "Health Check Task", 4096, NULL, 1, NULL, 1);
 }
 
 void webServerTask(void *pvParameter) {
     while (1) {
         server.handleClient();
+        webSocket.loop();
         vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }
@@ -65,13 +68,13 @@ void healthCheckTask(void *pvParameter) {
     while (1) {
         if (WiFi.status() != WL_CONNECTED) {
             Serial.println("WiFi connection lost. Attempting to reconnect...");
-	    blinkSpeed = 1000;
-            WiFi.begin("WhiteVan-551E", "thing123");
+            blinkSpeed = 1000;
+            WiFi.begin("Love Factory", "ILoveLyra");
             while (WiFi.status() != WL_CONNECTED) {
                 vTaskDelay(1000 / portTICK_PERIOD_MS);
                 Serial.print(".");
             }
-	    blinkSpeed = 80;
+            blinkSpeed = 80;
             Serial.println("");
             Serial.println("WiFi reconnected");
             Serial.print("IP address: ");
@@ -81,11 +84,11 @@ void healthCheckTask(void *pvParameter) {
         } else {
             WiFiClient client;
             if (!client.connect(host.c_str(), 80)) {
-	      Serial.print("Connection to host failed: ");
-	      Serial.print(host);
-	      Serial.println(" Trying again...");
+                Serial.print("Connection to host failed: ");
+                Serial.print(host);
+                Serial.println(" Trying again...");
             } else {
-		blinkSpeed = 80;
+                blinkSpeed = 80;
                 client.stop();
             }
         }
