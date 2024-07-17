@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>MESC Values</title>
+    <style>
+      body {
+          display: flex;
+      }
+      table table {
+          border: 2px solid #CCC;
+	  font-family: Tahoma, Geneva, sans-serif;
+      }
+      td {
+          padding: 2px;
+          text-align: left;
+	  font-size: 13px;
+      }
+      .hasTooltip span {
+	  display: none;
+	  color: #000;
+	  text-decoration: none;
+	  padding: 3px;
+      }
+
+      .hasTooltip:hover span {
+	  display: block;
+	  position: absolute;
+	  background-color: #FFF;
+	  border: 1px solid #CCC;
+	  margin: 2px 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <table border = "2">
+      <tr>
+	<td>
+	  <table border = "1" >
+	    <tr>
+	      <td class="hasTooltip" >error
+		<span>System errors now</span>
+	      </td>
+	      <td>0</td>
+	      <td>0</td>
+	      <td>4294967295</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">error_all
+		<span>All errors encountered</span>
+	      </td>
+	      <td>134217744</td>
+	      <td>0</td>
+	      <td>4294967295</td>
+	    </tr>
+	  </table>
+	</td>
+      </tr>
+      <tr>
+	<td>
+	  <table border = "1" >
+	    <tr>
+	      <td class="hasTooltip">flux
+		<span>Flux linkage</span>
+	      </td>
+	      <td>0.004500</td>
+	      <td>0.00</td>
+	      <td>100.00</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">r_phase
+		<span>resistance</span>
+	      </td>
+	      <td>0.070000</td>
+	      <td>0</td>
+	      <td>10.00</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">ld_phase
+		<span>Phase inductance</span>
+	      </td>
+	      <td>0.000043</td>
+	      <td>0.00</td>
+	      <td>10.0</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">lq_phase
+		<span>Phase inductance</span>
+	      </td>
+	      <td>0.000064</td>
+	      <td>0.00</td>
+	      <td>10.</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">motor_pp
+		<span>Number of motor pole PAIRS</span>
+	      </td>
+	      <td>28</td>
+	      <td>0</td>
+	      <td>30</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">pole_pairs
+		<span>Motor pole pairs</span>
+	      </td>
+	      <td>28</td>
+	      <td>0</td>
+	      <td>255</td>
+	    </tr>
+	</td>
+      </tr>
+      </table>
+      <tr>
+	<td>
+	  <table border = "1" >
+	    <tr>
+	      <td class="hasTooltip">curr_max
+		<span>Max motor current</span>
+	      </td>
+	      <td>40.0</td>
+	      <td>0.00</td>
+	      <td>300.00</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">curr_min
+		<span>Min motor current</span>
+	      </td>
+	      <td>-10.000000</td>
+	      <td>-300.00</td>
+	      <td>0.00</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">i_max
+		<span>Max current</span>
+	      </td>
+	      <td>500.</td>
+	      <td>0.00</td>
+	      <td>500.00</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">p_max
+		<span>Max power</span>
+	      </td>
+	      <td>12000</td>
+	      <td>0.00</td>
+	      <td>50000.00</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">v_max
+		<span>Max voltage</span>
+	      </td>
+	      <td>0.000000</td>
+	      <td>0.00</td>
+	      <td>600.00</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">fw_curr
+		<span>Max field weakenning current</span>
+	      </td>
+	      <td>36.000000</td>
+	      <td>0.00</td>
+	      <td>300.00</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">fw_ehz
+		<span>max eHz under field weakenning</span>
+	      </td>
+	      <td>0.000000</td>
+	      <td>0.00</td>
+	      <td>6000.00</td>
+	    </tr>
+	</td>
+      </tr>
+      </table>
+      <tr>
+	<td>
+	  <table border = "1" >
+	    <tr>
+	      <td class="hasTooltip">SL_sensor
+		<span>0=OL, 1=Hall, 2=PWMENC, 3=HFI</span>
+	      </td>
+	      <td>0</td>
+	      <td>0</td>
+	      <td>30</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">motor_sensor
+		<span>0=SL, 1=Hall, 2=OL, 3=ABSENC, 4=INC_ENC, 5=HFI</span>
+	      </td>
+	      <td>0</td>
+	      <td>0</td>
+	      <td>30</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">input_opt
+		<span>1=ADC1 2=ADC2 4=PPM 8=UART 16=Killswitch 32=CANADC1 64=CANADC2 128=ADC12DIFF</span>
+	      </td>
+	      <td>1</td>
+	      <td>0</td>
+	      <td>128</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">ol_step
+		<span>Angle per PWM period openloop</span>
+	      </td>
+	      <td>0</td>
+	      <td>0</td>
+	      <td>6000</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">uart_req
+		<span>Uart input</span>
+	      </td>
+	      <td>0.000000</td>
+	      <td>-1000.00</td>
+	      <td>1000.00</td>
+	    </tr>
+	</td>
+      </tr>
+      </table>
+      <tr>
+	<td>
+	  <table border = "1" >
+	    <tr>
+	      <td class="hasTooltip">vbus
+		<span>Read input voltage</span>
+	      </td>
+	      <td>54.530788</td>
+	      <td>0.00</td>
+	      <td>inf</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">adc1
+		<span>Raw ADC throttle</span>
+	      </td>
+	      <td>0</td>
+	      <td>0</td>
+	      <td>4096</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">Vd
+		<span>FOC_Vdq_d</span>
+	      </td>
+	      <td>0.017626</td>
+	      <td>-4096.00</td>
+	      <td>4096.00</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">Vq
+		<span>FOC_Vdq_q</span>
+	      </td>
+	      <td>0.024023</td>
+	      <td>-4096.00</td>
+	      <td>4096.00</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">TMOS
+		<span>MOSFET temp, kelvin</span>
+	      </td>
+	      <td>298.987518</td>
+	      <td>0.00</td>
+	      <td>4096.00</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">TMOT
+		<span>Motor temp, kelvin</span>
+	      </td>
+	      <td>210.618149</td>
+	      <td>0.00</td>
+	      <td>4096.00</td>
+	    </tr>
+	</td>
+      </tr>
+      </table>
+      <tr>
+	<td>
+	  <table border = "1" >
+	    <tr>
+	      <td class="hasTooltip">adc1_max
+		<span>ADC1 max val</span>
+	      </td>
+	      <td>2700</td>
+	      <td>0</td>
+	      <td>4096</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">adc1_min
+		<span>ADC1 min val</span>
+	      </td>
+	      <td>600</td>
+	      <td>0</td>
+	      <td>4096</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">adc2_max
+		<span>ADC2 max val</span>
+	      </td>
+	      <td>4095</td>
+	      <td>0</td>
+	      <td>4096</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">adc2_min
+		<span>ADC2 min val</span>
+	      </td>
+	      <td>1200</td>
+	      <td>0</td>
+	      <td>4096</td>
+	    </tr>
+	</td>
+      </tr>
+      </table>
+      <tr>
+	<td>
+	  <table border = "1" >
+	    <tr>
+	      <td class="hasTooltip">hall_flux
+		<span>hall start table</span>
+	      </td>
+	      <td>Array[12]</td>
+	      <td>-10.00</td>
+	      <td>10.00</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">hall_initialised
+		<span>hall start flag</span>
+	      </td>
+	      <td>1</td>
+	      <td>0</td>
+	      <td>1</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">safe_count
+		<span>Live count before allowing throttle</span>
+	      </td>
+	      <td>100</td>
+	      <td>0</td>
+	      <td>1000</td>
+	    </tr>
+	    <tr>
+	      <td class="hasTooltip">safe_start
+		<span>Countdown before allowing throttle</span>
+	      </td>
+	      <td>100</td>
+	      <td>0</td>
+	      <td>1000</td>
+	    </tr>
+	</td>
+      </tr>
+      </table>
+    </table>
+  </body>
+</html>
