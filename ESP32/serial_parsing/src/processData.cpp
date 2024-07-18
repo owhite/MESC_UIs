@@ -2,6 +2,8 @@
 #include <cstdio>
 #include <cstdlib>
 #include "processData.h"
+#include <ArduinoJson.h>
+#include "webservice.h"
 
 char serialBuffer[BUFFER_SIZE];
 char tableRows[4096];
@@ -12,132 +14,124 @@ unsigned long lastReceiveTime = 0;
 WebSocketsServer webSocket = WebSocketsServer(81);
 
 void initProcessData() {
-  mutex = xSemaphoreCreateMutex();
-  if (mutex == NULL) {
-    Serial.println("Mutex creation failed!");
-    while (true);
-  }
+    mutex = xSemaphoreCreateMutex();
+    if (mutex == NULL) {
+        Serial.println("Mutex creation failed!");
+        while (true);
+    }
 
-  xTaskCreate(
-    processData,     // Task function
-    "Process Data",  // Name of the task
-    4048,            // Stack size
-    NULL,            // Parameter
-    1,               // Priority
-    NULL             // Task handle
-  );
+    xTaskCreate(
+        processData,     // Task function
+        "Process Data",  // Name of the task
+        4048,            // Stack size
+        NULL,            // Parameter
+        1,               // Priority
+        NULL             // Task handle
+    );
 }
 
 void *memcat(void *dest, size_t dest_len, const void *src, size_t src_len) {
-  void *concat_position = (char *)dest + dest_len;
-  memcpy(concat_position, src, src_len);
-  return dest;
-}
-
-void processLine(char *line) {
-  int count = countCharOccurrences(line, '\t');
-  Serial.println(count);
-  if (count == 4) {
-    stringToTableRow(line);
-  }
-}
-
-void stringToTableRow(const char* data) {
-  char row[1024] = "<tr>"; 
-  int fieldNum = 1;
-  char delimiter = '\t';
-
-  size_t dataLength = strlen(data);
-  size_t index = 0;
-  size_t rowIndex = 0;
-
-  while (index <= dataLength) {
-    if (data[index] == delimiter || data[index] == '\n' || data[index] == '\0') {
-      strcat(row, "<td>");
-      if (fieldNum == 1) {
-        char field[256]; 
-        snprintf(field, sizeof(field), "<input type='text' name='field1' value='%.*s'>", (int)(index - rowIndex), data + rowIndex);
-        strcat(row, field);
-      } else {
-        strncat(row, data + rowIndex, index - rowIndex);
-      }
-      strcat(row, "</td>");
-      fieldNum++;
-      rowIndex = index + 1; 
-    }
-
-    if (data[index] == '\n' || data[index] == '\0') {
-      strcat(row, "</tr>");
-      break; 
-    }
-
-    index++;
-  }
-
-  // Append the new row to the global tableRows buffer
-  if (strlen(tableRows) + strlen(row) < sizeof(tableRows)) {
-    strcat(tableRows, row);
-    // Send the updated row to all connected clients
-    webSocket.broadcastTXT(row);
-  } else {
-    Serial.println("Error: tableRows buffer overflow.");
-  }
-  Serial.println(":::::");
-  Serial.println(tableRows);
-  Serial.println(":::::");
-}
-
-int countCharOccurrences(const char* str, char ch) {
-  int count = 0;
-  while (*str) {
-    if (*str == ch) {
-      count++;
-    }
-    str++;
-  }
-  return count;
+    void *concat_position = (char *)dest + dest_len;
+    memcpy(concat_position, src, src_len);
+    return dest;
 }
 
 void processData(void *parameter) {
-  char localBuffer[BUFFER_SIZE];
-  int localBufferIndex = 0;
+    char localBuffer[BUFFER_SIZE];
+    int localBufferIndex = 0;
 
-  while (true) {
-    if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
-      if (bufferIndex > 0) {
-        memcat(localBuffer, localBufferIndex, serialBuffer, bufferIndex);
-        localBufferIndex += bufferIndex;
-        bufferIndex = 0; // clear global buffer
-        serialBuffer[bufferIndex] = '\0';
-        lastReceiveTime = millis();
-      }
-      xSemaphoreGive(mutex);
+    while (true) {
+        if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
+            if (bufferIndex > 0) {
+                memcat(localBuffer, localBufferIndex, serialBuffer, bufferIndex);
+                localBufferIndex += bufferIndex;
+                bufferIndex = 0; // clear global buffer
+                serialBuffer[bufferIndex] = '\0';
+                lastReceiveTime = millis();
+            }
+            xSemaphoreGive(mutex);
 
-      for (int i = 0; i < localBufferIndex; i++) {
-        if (localBuffer[i] == '\n') {
-          localBuffer[i] = '\0';
-          processLine(localBuffer);
-          int remainingLength = localBufferIndex - (i + 1);
-          memmove(localBuffer, localBuffer + i + 1, remainingLength);
-          localBufferIndex = remainingLength;
-          i = -1; 
+            for (int i = 0; i < localBufferIndex; i++) {
+                if (localBuffer[i] == '\n') {
+                    localBuffer[i] = '\0';
+                    processLine(localBuffer);
+                    int remainingLength = localBufferIndex - (i + 1);
+                    memmove(localBuffer, localBuffer + i + 1, remainingLength);
+                    localBufferIndex = remainingLength;
+                    i = -1; 
+                }
+            }
+
+            if (localBufferIndex > 0 && (millis() - lastReceiveTime) >= SERIAL_TIMEOUT_MS) {
+                localBuffer[localBufferIndex] = '\0'; 
+                processLine(localBuffer); 
+                localBufferIndex = 0; 
+            }
         }
-      }
 
-      if (localBufferIndex > 0 && (millis() - lastReceiveTime) >= SERIAL_TIMEOUT_MS) {
-        localBuffer[localBufferIndex] = '\0'; 
-        processLine(localBuffer); 
-        localBufferIndex = 0; 
-      }
+        vTaskDelay(100 / portTICK_PERIOD_MS);
     }
-
-    vTaskDelay(100 / portTICK_PERIOD_MS);
-  }
 }
 
-void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length) {
-  if (type == WStype_TEXT) {
-    Serial.printf("[%u] get Text: %s\n", num, payload);
-    // Process incoming WebSocket data here
-  }
+void processLine(char *line) {
+    int count = countCharOccurrences(line, '\t');
+    if (count == 4) {
+        stringToJSON(line);
+    }
+}
+
+void stringToJSON(const char* data) {
+    // Create a JSON document
+    StaticJsonDocument<256> doc;
+
+    // Make a mutable copy of the input string
+    char inputCopy[256];
+    strncpy(inputCopy, data, sizeof(inputCopy));
+    inputCopy[sizeof(inputCopy) - 1] = '\0'; // Ensure null-termination
+    
+    // Parse the input string
+    char* token = strtok(inputCopy, "\t");
+    int index = 0;
+    const char* field1 = "";
+    const char* field2 = "";
+    const char* field3 = "";
+    const char* field4 = "";
+    const char* field5 = "";
+
+    while (token != NULL) {
+        if (index == 0) field1 = token;
+        else if (index == 1) field2 = token;
+        else if (index == 2) field3 = token;
+        else if (index == 3) field4 = token;
+        else if (index == 4) field5 = token;
+        
+        token = strtok(NULL, "\t");
+        index++;
+    }
+    
+    // Populate the JSON document
+    doc["parameter"] = field1;
+    doc["value"] = field2;
+    doc["min"] = field3;
+    doc["max"] = field4;
+    doc["description"] = field5;
+
+    // Serialize JSON to string
+    char output[256];
+    serializeJson(doc, output, sizeof(output));
+  
+    Serial.println(output);
+
+    webSocket.broadcastTXT(output);
+}
+
+int countCharOccurrences(const char* str, char ch) {
+    int count = 0;
+    while (*str) {
+        if (*str == ch) {
+            count++;
+        }
+        str++;
+    }
+    return count;
 }

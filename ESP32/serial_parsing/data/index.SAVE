@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Parameter Table</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Parameter Table</h1>
+    <table id="parameterTable">
+        <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+                <th>Min</th>
+                <th>Max</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="row_ehz">
+                <td>ehz</td>
+                <td id="value_ehz">0.084140</td>
+                <td id="min_ehz">-inf</td>
+                <td id="max_ehz">inf</td>
+                <td id="description_ehz">Motor electrical hz</td>
+            </tr>
+            <tr id="row_enc_angle">
+                <td>enc_angle</td>
+                <td id="value_enc_angle">0</td>
+                <td id="min_enc_angle">0</td>
+                <td id="max_enc_angle">65535</td>
+                <td id="description_enc_angle">Encoder angle now</td>
+            </tr>
+            <tr id="row_enc_counts">
+                <td>enc_counts</td>
+                <td id="value_enc_counts">4096</td>
+                <td id="min_enc_counts">0</td>
+                <td id="max_enc_counts">65535</td>
+                <td id="description_enc_counts">Encoder ABI PPR</td>
+            </tr>
+            <tr id="row_enc_offset">
+                <td>enc_offset</td>
+                <td id="value_enc_offset">25000</td>
+                <td id="min_enc_offset">0</td>
+                <td id="max_enc_offset">65535</td>
+                <td id="description_enc_offset">Encoder alignment angle</td>
+            </tr>
+            <tr id="row_enc_polarity">
+                <td>enc_polarity</td>
+                <td id="value_enc_polarity">0</td>
+                <td id="min_enc_polarity">0</td>
+                <td id="max_enc_polarity">1</td>
+                <td id="description_enc_polarity">Encoder polarity</td>
+            </tr>
+            <tr id="row_error">
+                <td>error</td>
+                <td id="value_error">0</td>
+                <td id="min_error">0</td>
+                <td id="max_error">4294967295</td>
+                <td id="description_error">System errors now</td>
+            </tr>
+            <tr id="row_error_all">
+                <td>error_all</td>
+                <td id="value_error_all">134217744</td>
+                <td id="min_error_all">0</td>
+                <td id="max_error_all">4294967295</td>
+                <td id="description_error_all">All errors encountered</td>
+            </tr>
+            <tr id="row_flux">
+                <td>flux</td>
+                <td id="value_flux">0.004500</td>
+                <td id="min_flux">0.00</td>
+                <td id="max_flux">100.00</td>
+                <td id="description_flux">Flux linkage</td>
+            </tr>
+            <tr id="row_flux_gain">
+                <td>flux_gain</td>
+                <td id="value_flux_gain">0.670820</td>
+                <td id="min_flux_gain">0.00</td>
+                <td id="max_flux_gain">100.00</td>
+                <td id="description_flux_gain">Flux linkage gain</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        var webSocket = new WebSocket('ws://' + window.location.hostname + ':81/');
+
+        webSocket.onmessage = function(event) {
+            var data = JSON.parse(event.data);
+            updateTable(data);
+        };
+
+        function updateTable(data) {
+            // Assuming data.parameter is used to identify the row
+            var rowId = 'row_' + data.parameter;
+            var row = document.getElementById(rowId);
+
+            if (row) {
+                document.getElementById('value_' + data.parameter).textContent = data.value;
+                document.getElementById('min_' + data.parameter).textContent = data.min;
+                document.getElementById('max_' + data.parameter).textContent = data.max;
+                document.getElementById('description_' + data.parameter).textContent = data.description;
+            }
+        }
+    </script>
+</body>
+</html>

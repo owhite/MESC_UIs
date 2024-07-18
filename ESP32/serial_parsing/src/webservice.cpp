@@ -64,34 +64,13 @@ void handleRoot() {
     file.close();
 }
 
-void healthCheckTask(void *pvParameter) {
-    while (1) {
-        if (WiFi.status() != WL_CONNECTED) {
-            Serial.println("WiFi connection lost. Attempting to reconnect...");
-            blinkSpeed = 1000;
-            WiFi.begin("Love Factory", "ILoveLyra");
-            while (WiFi.status() != WL_CONNECTED) {
-                vTaskDelay(1000 / portTICK_PERIOD_MS);
-                Serial.print(".");
-            }
-            blinkSpeed = 80;
-            Serial.println("");
-            Serial.println("WiFi reconnected");
-            Serial.print("IP address: ");
-            Serial.println(WiFi.localIP());
-
-            host = WiFi.localIP().toString().c_str();
-        } else {
-            WiFiClient client;
-            if (!client.connect(host.c_str(), 80)) {
-                Serial.print("Connection to host failed: ");
-                Serial.print(host);
-                Serial.println(" Trying again...");
-            } else {
-                blinkSpeed = 80;
-                client.stop();
-            }
-        }
-        vTaskDelay(10000 / portTICK_PERIOD_MS);
+void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length) {
+    if (type == WStype_TEXT) {
+        Serial.printf("[%u] get Text: %s\n", num, payload);
+        // Process incoming WebSocket data here
+    } else if (type == WStype_CONNECTED) {
+        Serial.printf("[%u] Connected!\n", num);
+    } else if (type == WStype_DISCONNECTED) {
+        Serial.printf("[%u] Disconnected!\n", num);
     }
 }

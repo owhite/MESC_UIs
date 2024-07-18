@@ -353,5 +353,27 @@
       </tr>
       </table>
     </table>
+    <script>
+        var ws = new WebSocket('ws://' + location.hostname + ':81/');
+
+        ws.onmessage = function(event) {
+            var data = JSON.parse(event.data);
+            var variable = data.variable;
+            var value = data.value;
+            var min = data.min;
+            var max = data.max;
+            var note = data.note;
+
+            if (document.getElementById(variable + '_val')) {
+                document.getElementById(variable + '_val').value = value;
+                document.getElementById(variable + '_min').innerText = min;
+                document.getElementById(variable + '_max').innerText = max;
+                document.getElementById(variable + '_note').innerText = note;
+            } else {
+                console.warn("Received invalid variable name: " + variable);
+            }
+        };
+    </script>
+
   </body>
 </html>

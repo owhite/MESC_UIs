@@ -1,3 +1,13 @@
+{"parameter":"ehz","value":"0.084140","min":"-inf","max":"inf","description":"Motor electrical hz"}
+{"parameter":"enc_angle","value":"0","min":"0","max":"65535","description":"Encoder angle now"}
+{"parameter":"enc_counts","value":"4096","min":"0","max":"65535","description":"Encoder ABI PPR"}
+{"parameter":"enc_offset","value":"25000","min":"0","max":"65535","description":"Encoder alignment angle"}
+{"parameter":"enc_polarity","value":"0","min":"0","max":"1","description":"Encoder polarity"}
+{"parameter":"error","value":"0","min":"0","max":"4294967295","description":"System errors now"}
+{"parameter":"error_all","value":"134217744","min":"0","max":"4294967295","description":"All errors encountered"}
+{"parameter":"flux","value":"0.004500","min":"0.00","max":"100.00","description":"Flux linkage"}
+{"parameter":"flux_gain","value":"0.670820","min":"0.00","max":"100.00","description":"Flux linkage gain"}
+
 adc1	0	0	4096	Raw ADC throttle
 adc1_max	2700	0	4096	ADC1 max val
 adc1_min	600	0	4096	ADC1 min val
@@ -88,3 +98,67 @@ Vq	-0.078574	-4096.00	4096.00	FOC_Vdq_q
   <td>string4</td>
 </tr>
 
+
+void stringToJSON(const char* data) {
+    // Create a JSON document
+    StaticJsonDocument<256> doc;
+
+    // Make a mutable copy of the input string
+    char inputCopy[256];
+    strncpy(inputCopy, data, sizeof(inputCopy));
+    inputCopy[sizeof(inputCopy) - 1] = '\0'; // Ensure null-termination
+    
+    // Parse the input string
+    char* token = strtok(inputCopy, "\t");
+    int index = 0;
+    const char* field1 = "";
+    const char* field2 = "";
+    const char* field3 = "";
+    const char* field4 = "";
+    const char* field5 = "";
+
+    while (token != NULL) {
+        if (index == 0) field1 = token;
+        else if (index == 1) field2 = token;
+        else if (index == 2) field3 = token;
+        else if (index == 3) field4 = token;
+        else if (index == 4) field5 = token;
+        
+        token = strtok(NULL, "\t");
+        index++;
+    }
+    
+    // Populate the JSON document
+    doc["parameter"] = field1;
+    doc["value"] = field2;
+    doc["min"] = field3;
+    doc["max"] = field4;
+    doc["description"] = field5;
+
+    // Serialize JSON to string
+    char output[256];
+    size_t bytesWritten = serializeJson(doc, output, sizeof(output));
+    
+    // Check if the serialization was successful
+    if (bytesWritten == 0) {
+        Serial.println("Serialization failed");
+    } else {
+        // Verify the content of the JSON string
+        StaticJsonDocument<256> verifyDoc;
+        DeserializationError error = deserializeJson(verifyDoc, output);
+
+        if (error) {
+            Serial.print("Deserialization failed: ");
+            Serial.println(error.c_str());
+	}
+	else {
+
+	  if (webSocket.connectedClients() > 0) {
+	    Serial.println(output);
+	    Serial.print("Serialized JSON length: ");
+	    Serial.println(bytesWritten);
+	    webSocket.broadcastTXT(output);
+	  }
+        }
+    }
+}
