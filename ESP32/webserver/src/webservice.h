@@ -2,15 +2,14 @@
 #define WEBSERVICE_H
 
 #include <Arduino.h>
-#include <WiFi.h>
-#include <WebServer.h>
-#include <LittleFS.h>
+#include <WebSocketsServer.h>  // Include WebSocketsServer library
 
-extern WebServer server;
+extern WebSocketsServer webSocket;
 
 void initWebService();
-void handleRoot();
 void webServerTask(void *pvParameter);
-void healthCheckTask(void *pvParameter);
+void handleRoot();
+void onWebSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length);
+void handleWebSocketMessage(void *arg, uint8_t *data, size_t len);
 
-#endif  // WEBSERVICE_H
+#endif // WEBSERVICE_H

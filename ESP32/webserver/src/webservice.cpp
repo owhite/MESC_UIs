@@ -1,8 +1,41 @@
 #include "webservice.h"
 #include "blink.h"
+#include <WiFi.h>
+#include <WebServer.h>
+#include <WebSocketsServer.h>
+#include <FS.h>
+#include <LittleFS.h>
 
 WebServer server(80);
+WebSocketsServer webSocket = WebSocketsServer(81);  // Define webSocket here
 String host;
+
+void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
+    data[len] = 0;  // Null-terminate the string
+    Serial.printf("WebSocket message: %s\n", (char *)data);
+    // Handle received WebSocket message here
+}
+
+void onWebSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length) {
+    switch (type) {
+        case WStype_DISCONNECTED:
+            Serial.printf("[%u] Disconnected!\n", num);
+            break;
+        case WStype_CONNECTED: {
+            IPAddress ip = webSocket.remoteIP(num);
+            Serial.printf("[%u] Connection from %s\n", num, ip.toString().c_str());
+            break;
+        }
+        case WStype_TEXT:
+            handleWebSocketMessage((void *)payload, payload, length);
+            break;
+        case WStype_BIN:
+            Serial.printf("[%u] Binary message received\n", num);
+            break;
+        default:
+            break;
+    }
+}
 
 void initWebService() {
     if (!LittleFS.begin()) {
@@ -34,13 +67,16 @@ void initWebService() {
     Serial.println("HTTP server started");
     blinkSpeed = 80;
 
+    webSocket.begin();
+    webSocket.onEvent(onWebSocketEvent);
+
     xTaskCreate(webServerTask, "Web Server Task", 8192, NULL, 1, NULL);
-    xTaskCreatePinnedToCore(healthCheckTask, "Health Check Task", 4096, NULL, 1, NULL, 1);
 }
 
 void webServerTask(void *pvParameter) {
     while (1) {
         server.handleClient();
+        webSocket.loop();
         vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }
@@ -54,37 +90,4 @@ void handleRoot() {
     File file = LittleFS.open("/index.html", "r");
     server.streamFile(file, "text/html");
     file.close();
-}
-
-void healthCheckTask(void *pvParameter) {
-    while (1) {
-        if (WiFi.status() != WL_CONNECTED) {
-            Serial.println("WiFi connection lost. Attempting to reconnect...");
-	    blinkSpeed = 1000;
-            // WiFi.begin("WhiteVan-551E", "thing123");
-	    WiFi.begin("Love Factory", "ILoveLyra");
-            while (WiFi.status() != WL_CONNECTED) {
-                vTaskDelay(1000 / portTICK_PERIOD_MS);
-                Serial.print(".");
-            }
-	    blinkSpeed = 80;
-            Serial.println("");
-            Serial.println("WiFi reconnected");
-            Serial.print("IP address: ");
-            Serial.println(WiFi.localIP());
-
-            host = WiFi.localIP().toString().c_str();
-        } else {
-            WiFiClient client;
-            if (!client.connect(host.c_str(), 80)) {
-	      Serial.print("Connection to host failed: ");
-	      Serial.print(host);
-	      Serial.println(" Trying again...");
-            } else {
-		blinkSpeed = 80;
-                client.stop();
-            }
-        }
-        vTaskDelay(10000 / portTICK_PERIOD_MS);
-    }
 }

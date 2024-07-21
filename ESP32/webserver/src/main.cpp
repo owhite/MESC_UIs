@@ -1,6 +1,10 @@
 #include <Arduino.h>
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
+#include <freertos/semphr.h>
 #include <WiFi.h>
 #include <LittleFS.h>
+#include "processData.h"
 #include "webservice.h"
 #include "blink.h"  // Include your custom header file
 
@@ -15,12 +19,11 @@ void setup() {
 
     Serial.println("Starting setup...");
 
-    // Initialize tasks
-    initBlinkTask();          // Initialize the blink task
-    initWebService();         // Initialize the web service (HTTP server)
-
+    initBlinkTask();
+    initProcessData();
+    initWebService();
 }
 
 void loop() {
-    // The loop function is empty because tasks are running in parallel
+
 }

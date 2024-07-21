@@ -4,8 +4,8 @@
 #include <Arduino.h>
 #include <WebSocketsServer.h>
 
-#define BUFFER_SIZE 1024
-#define SERIAL_TIMEOUT_MS 500
+#define BUFFER_SIZE 526
+#define SERIAL_TIMEOUT_MS 100
 
 extern char serialBuffer[BUFFER_SIZE];
 extern int bufferIndex;
@@ -18,8 +18,7 @@ extern WebSocketsServer webSocket;
 void initProcessData();
 void processData(void *parameter);
 void processLine(char *line);
-void stringToTableRow(const char* data);
+void stringToJSON(const char* data);
 int countCharOccurrences(const char* str, char ch);
-void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length);
 
 #endif // PROCESSDATA_H
