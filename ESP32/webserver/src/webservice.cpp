@@ -77,7 +77,7 @@ void webServerTask(void *pvParameter) {
     while (1) {
         server.handleClient();
         webSocket.loop();
-        vTaskDelay(10 / portTICK_PERIOD_MS);
+        vTaskDelay(100 / portTICK_PERIOD_MS);
     }
 }
 

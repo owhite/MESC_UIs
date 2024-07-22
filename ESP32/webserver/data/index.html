@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSocket Test</title>
+    <title>MESC WebSocket</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,11 +22,29 @@
             padding: 5px;
             border-bottom: 1px solid #ddd;
         }
+        .parameter {
+            margin-bottom: 10px;
+        }
+        .parameter textarea {
+            width: 100%;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
 
-<h1>WebSocket Test</h1>
+<h1>MESC WebSocket</h1>
+<table>
+    <tr><td>curr_max</td><td id="curr_max_value">0.0</td></tr>
+    <tr><td>curr_min</td><td id="curr_min_value">0.0</td></tr>
+    <tr><td>ehz</td><td id="ehz_value">0.0</td></tr>
+    <tr><td>i_max</td><td id="i_max_value">0.0</td></tr>
+    <tr><td>FOC_angle</td><td id="FOC_angle_value">0.0</td></tr>
+    <tr><td>motor_pp</td><td id="motor_pp_value">0.0</td></tr>
+    <tr><td>fw_ehz</td><td id="fw_ehz_value">0.0</td></tr>
+    <tr><td>enc_counts</td><td id="enc_counts_value">0.0</td></tr>
+</table>
+
 <div id="messages"></div>
 
 <script>
@@ -48,8 +66,10 @@
     }
 
     function onClose(event) {
-        console.log('Connection closed');
-        setTimeout(initWebSocket, 2000);
+	console.log('Connection closed');
+	setTimeout(function() {
+            location.reload();
+	}, 2000); // 2 seconds delay before reload
     }
 
     function onMessage(event) {
@@ -59,6 +79,39 @@
         message.textContent = event.data;
         messagesDiv.appendChild(message);
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+        try {
+            var json = JSON.parse(event.data);
+            updateParameter(json.parameter, json.value);
+        } catch (e) {
+            console.error('Error parsing JSON:', e);
+        }
+    }
+
+    function updateParameter(parameter, value) {
+        var textarea = document.getElementById(parameter);
+
+        var valueElement = document.getElementById(parameter + "_value");
+        if (valueElement) {
+            valueElement.textContent = value;
+        } else {
+            console.warn('No element found for parameter:', parameter);
+        }
+
+        if (!textarea) {
+            var container = document.createElement('div');
+            container.className = 'parameter';
+            
+            textarea = document.createElement('textarea');
+            textarea.id = parameter;
+            textarea.rows = 1;
+            textarea.cols = 50;
+            textarea.readOnly = true;
+            container.appendChild(textarea);
+            
+            parametersDiv.appendChild(container);
+        }
+        textarea.value = value;
     }
 
     function onLoad(event) {
