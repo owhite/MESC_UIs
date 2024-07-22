@@ -63,6 +63,7 @@ void initWebService() {
     host = WiFi.localIP().toString();
 
     server.on("/", handleRoot);
+    server.on("/button", handleButtonPress);  // Add button handler
     server.begin();
     Serial.println("HTTP server started");
     blinkSpeed = 80;
@@ -90,4 +91,16 @@ void handleRoot() {
     File file = LittleFS.open("/index.html", "r");
     server.streamFile(file, "text/html");
     file.close();
+}
+
+// talks to the server
+void handleButtonPress() {
+    Serial.println("Button pressed");
+    processButtonPress();
+    server.send(200, "text/plain", "Button Pressed");
+}
+
+// custom logic independent of the server
+void processButtonPress() {
+    Serial.println("Custom function logic executed.");
 }

@@ -45,6 +45,8 @@
     <tr><td>enc_counts</td><td id="enc_counts_value">0.0</td></tr>
 </table>
 
+<button onclick="sendButtonPress()">UPDATE</button> 
+
 <div id="messages"></div>
 
 <script>
@@ -66,10 +68,10 @@
     }
 
     function onClose(event) {
-	console.log('Connection closed');
-	setTimeout(function() {
+        console.log('Connection closed');
+        setTimeout(function() {
             location.reload();
-	}, 2000); // 2 seconds delay before reload
+        }, 2000); 
     }
 
     function onMessage(event) {
@@ -89,33 +91,22 @@
     }
 
     function updateParameter(parameter, value) {
-        var textarea = document.getElementById(parameter);
-
         var valueElement = document.getElementById(parameter + "_value");
         if (valueElement) {
             valueElement.textContent = value;
         } else {
             console.warn('No element found for parameter:', parameter);
         }
-
-        if (!textarea) {
-            var container = document.createElement('div');
-            container.className = 'parameter';
-            
-            textarea = document.createElement('textarea');
-            textarea.id = parameter;
-            textarea.rows = 1;
-            textarea.cols = 50;
-            textarea.readOnly = true;
-            container.appendChild(textarea);
-            
-            parametersDiv.appendChild(container);
-        }
-        textarea.value = value;
     }
 
     function onLoad(event) {
         initWebSocket();
+    }
+
+    function sendButtonPress() {
+        fetch('/button')
+            .then(response => response.text())
+            .then(data => console.log(data));
     }
 </script>
 
