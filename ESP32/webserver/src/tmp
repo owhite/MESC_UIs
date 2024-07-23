@@ -8,7 +8,7 @@
     <tr><td>enc_counts</td><td id="enc_counts_value">0.0</td></tr>
 <
 
-curr_max	40.000000	0.00	300.00	Max motor current
+curr_max	41.000000	0.00	300.00	Max motor current
 curr_min	-10.000000	-300.00	0.00	Min motor current
 i_max	500.000000	0.00	500.00	Max current
 FOC_angle	57347	0	65535	FOC angle now
