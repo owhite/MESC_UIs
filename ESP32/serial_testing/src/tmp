@@ -1,0 +1,96 @@
+    while (mescSerial.available()){
+      ch = mescSerial.read();
+      compSerial.write(ch);
+    }
+
+    while (compSerial.available()) {
+      ch = compSerial.read();
+      compSerial.write(ch);
+      if (ch == 'g') {
+	mescSerial.write("get vbus\r\n");
+      }
+    }
+
+    while (compSerial.available()) {
+      ch = compSerial.read();
+      compSerial.write(ch);
+      mescSerial.write(ch);
+    }
+
+    while (mescSerial.available()){
+      ch = mescSerial.read();
+      compSerial.write(ch);
+    }
+
+
+      while (compSerial.available()) {
+	ch = compSerial.read();
+
+	if (ch == 'g') {
+	  sendThing();
+	}
+
+      }
+
+      while (mescSerial.available()){
+	ch = mescSerial.read();
+	compSerial.println("RX");
+	compSerial.write(ch);
+      }
+
+
+
+   <tr><td>curr_max</td><td id="curr_max_value">0.0</td></tr>
+    <tr><td>curr_min</td><td id="curr_min_value">0.0</td></tr>
+    <tr><td>ehz</td><td id="ehz_value">0.0</td></tr>
+    <tr><td>i_max</td><td id="i_max_value">0.0</td></tr>
+    <tr><td>FOC_angle</td><td id="FOC_angle_value">0.0</td></tr>
+    <tr><td>motor_pp</td><td id="motor_pp_value">0.0</td></tr>
+    <tr><td>fw_ehz</td><td id="fw_ehz_value">0.0</td></tr>
+    <tr><td>enc_counts</td><td id="enc_counts_value">0.0</td></tr>
+<
+
+curr_max	41.000000	0.00	300.00	Max motor current
+curr_min	-10.000000	-300.00	0.00	Min motor current
+i_max	500.000000	0.00	500.00	Max current
+FOC_angle	57347	0	65535	FOC angle now
+motor_pp	28	0	30	Number of motor pole PAIRS
+fw_ehz	0.1345	0.00	6000.00	max eHz under field weakenning
+Hall_flux	Array[12]	-10.00	10.00	hall start table
+Hall_initialised	1	0	1	hall start flag
+enc_counts	400	0.00	5000.00	HFI gain
+hfi_gain	0.000000	0.00	5000.00	HFI gain
+hfi_mod_didq	0.000000	0.00	2.00	HFI mod didq
+hfi_type	0	0	3	HFI type [0=None, 1=45deg, 2=d axis]
+hfi_volt	4.000000	0.00	50.00	HFI voltage
+
+id	0.033391	-inf	inf	Phase Idq_d smoothed
+input_opt	1	0	128	Inputs [1=ADC1 2=ADC2 4=PPM 8=UART 16=Killswitch 32=CANADC1 64=CANADC2 128=ADC12DIFF]
+iq	-0.024569	-inf	inf	Phase Idq_q smoothed
+iqreq	0.000000	-4096.00	4096.00	mtr[0].FOC.Idq_req.q
+ld_phase	0.000043	0.00	10.00	Phase inductance
+lq_phase	0.000064	0.00	10.00	Phase inductance
+motor_sensor	0	0	30	0=SL, 1=Hall, 2=OL, 3=ABSENC, 4=INC_ENC, 5=HFI
+node_id	0	1	254	Node ID
+ol_step	0	0	6000	Angle per PWM period openloop
+p_max	12000.000000	0.00	50000.00	Max power
+park_curr	0.000000	0.00	300.00	max current for handbrake
+
+
+I would like to do something different than that approach. Keep the text area that shows the incomping json:
+
+In front of the text area, add a table, each row has only two cells. These are the rows:
+
+<tr><td>"curr_max"</td><td id = "curr_max_value">0.0</td></tr>
+<tr><td>"direction"</td><td id = "direction_value">0.0</td></tr>
+<tr><td>"ehz"</td><td id = "ehz_value">0.0</td></tr>
+<tr><td>"enc_angle"</td><td id = "enc_angle_value">0.0</td></tr>
+<tr><td>"FOC_angle"</td><td id = "FOC_angle_value">0.0</td></tr>
+<tr><td>"fw_curr"</td><td id = "fw_curr_value">0.0</td></tr>
+<tr><td>"fw_ehz"</td><td id = "fw_ehz_value">0.0</td></tr>
+<tr><td>"Hall_initialised"</td><td id = "Hall_initialised_value">0.0</td></tr>
+
+This is an example of json that can come in: {"parameter":"curr_max","value":"40.000000"}
+
+Use the variables in the first cell, use it change the corresponding value in the second cell. 
+

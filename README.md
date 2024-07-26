@@ -96,38 +96,8 @@ curr_min	-10.000000	-300.00	0.00	Min motor current
 direction	0	0	1	Motor direction
 ehz	0.172152	-inf	inf	Motor electrical hz
 enc_angle	0	0	65535	Encoder angle now
-enc_counts	4096	0	65535	Encoder ABI PPR
-enc_offset	25000	0	65535	Encoder alignment angle
-enc_polarity	0	0	1	Encoder polarity
-error	0	0	4294967295	System errors now
-error_all	134217744	0	4294967295	All errors encountered
-flux	0.004500	0.00	100.00	Flux linkage
-flux_gain	0.670820	0.00	100.00	Flux linkage gain
-flux_n_lin	5000.000000	0.00	10000.00	Flux centering gain
-FOC_angle	57347	0	65535	FOC angle now
-fw_curr	36.000000	0.00	300.00	Max field weakenning current
-fw_ehz	0.000000	0.00	6000.00	max eHz under field weakenning
-Hall_flux	Array[12]	-10.00	10.00	hall start table
-Hall_initialised	1	0	1	hall start flag
-hfi_gain	0.000000	0.00	5000.00	HFI gain
-hfi_mod_didq	0.000000	0.00	2.00	HFI mod didq
-hfi_type	0	0	3	HFI type [0=None, 1=45deg, 2=d axis]
-hfi_volt	4.000000	0.00	50.00	HFI voltage
-i_max	500.000000	0.00	500.00	Max current
-id	0.033391	-inf	inf	Phase Idq_d smoothed
-input_opt	1	0	128	Inputs [1=ADC1 2=ADC2 4=PPM 8=UART 16=Killswitch 32=CANADC1 64=CANADC2 128=ADC12DIFF]
-iq	-0.024569	-inf	inf	Phase Idq_q smoothed
-iqreq	0.000000	-4096.00	4096.00	mtr[0].FOC.Idq_req.q
-ld_phase	0.000043	0.00	10.00	Phase inductance
-lq_phase	0.000064	0.00	10.00	Phase inductance
-motor_pp	28	0	30	Number of motor pole PAIRS
-motor_sensor	0	0	30	0=SL, 1=Hall, 2=OL, 3=ABSENC, 4=INC_ENC, 5=HFI
-node_id	0	1	254	Node ID
-ol_step	0	0	6000	Angle per PWM period openloop
-p_max	12000.000000	0.00	50000.00	Max power
-park_curr	0.000000	0.00	300.00	max current for handbrake
 ```
 
-this gets parsed and loaded into the web page.
+if you cut and paste this into the terminal, it gets parsed and loaded into the web page.
 
 Definitely needs work. 
