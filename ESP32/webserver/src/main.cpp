@@ -10,17 +10,15 @@
 
 void setup() {
     Serial.begin(115200);
-    Serial.setTimeout(1000);
-    delay(3000);
 
     while (!Serial) {
-        delay(100);  // Wait for serial port to connect
+        delay(100);  
     }
 
     Serial.println("Starting setup...");
 
     initBlinkTask();
-    initProcessData();
+    // initProcessData();
     initWebService();
 }
 

@@ -5,19 +5,19 @@
 
 #define BUFFER_SIZE 526
 #define SERIAL_TIMEOUT_MS 100
-
-#define compSerial  Serial  // computer keyboard to ESP32 USB
-#define mescSerial  Serial2 // data from MP2 to ESP32
+#define compSerial Serial
+#define mescSerial Serial2
 
 extern char serialBuffer[BUFFER_SIZE];
 extern int bufferIndex;
 extern unsigned long lastReceiveTime;
 
-void initProcessData();
+void initProcessData(HardwareSerial& mescSerial, HardwareSerial& compSerial);
 void processData(void *parameter);
 void processLine(char *line);
-void sendThing();
 void stringToJSON(const char* data);
 int countCharOccurrences(const char* str, char ch);
+void remove_ansi_escape_sequences(char *data);
+void replace_pipe_with_tab(char *data);
 
 #endif // PROCESSDATA_H

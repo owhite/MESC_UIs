@@ -1,3 +1,45 @@
+    while (g_mescSerial->available()) {
+      char incomingByte = g_mescSerial->read();
+
+      if (bufferIndex < BUFFER_SIZE - 1) {
+        serialBuffer[bufferIndex++] = incomingByte;
+        serialBuffer[bufferIndex] = '\0';
+      }
+    }
+
+    if (bufferIndex > 0) {
+      memcat(localBuffer, localBufferIndex, serialBuffer, bufferIndex);
+      localBufferIndex += bufferIndex;
+      bufferIndex = 0;
+      serialBuffer[bufferIndex] = '\0';
+      lastReceiveTime = millis();
+    }
+
+    for (int i = 0; i < localBufferIndex; i++) {
+      if (localBuffer[i] == '\n') {
+        localBuffer[i] = '\0';
+
+        processLine(localBuffer);
+        int remainingLength = localBufferIndex - (i + 1);
+        memmove(localBuffer, localBuffer + i + 1, remainingLength);
+        localBufferIndex = remainingLength;
+        i = -1;
+      }
+    }
+
+    if (localBufferIndex > 0 && (millis() - lastReceiveTime) >= SERIAL_TIMEOUT_MS) {
+      localBuffer[localBufferIndex] = '\0';
+      processLine(localBuffer);
+      localBufferIndex = 0;
+    }
+
+    while (g_compSerial->available()) {
+      ch = g_compSerial->read();
+      g_mescSerial->write(ch);
+
+    }
+
+
     while (mescSerial.available()){
       ch = mescSerial.read();
       compSerial.write(ch);
