@@ -1,26 +1,28 @@
 #include <Arduino.h>
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <freertos/semphr.h>
 #include <WiFi.h>
 #include <LittleFS.h>
 #include "processData.h"
 #include "webservice.h"
-#include "blink.h"  // Include your custom header file
+#include "blink.h"
+
+#define compSerial Serial
+#define mescSerial Serial2
+
+WebSocketsServer webSocket(81);
 
 void setup() {
-    Serial.begin(115200);
+    compSerial.begin(115200);
+    mescSerial.begin(115200, SERIAL_8N1, 25, 27);
 
-    while (!Serial) {
-        delay(100);  
+    while (!compSerial) {
+        delay(100);  // Wait for serial port to connect
     }
 
-    Serial.println("Starting setup...");
+    compSerial.println("Starting setup...");
 
     initBlinkTask();
-    // initProcessData();
-    initWebService();
+    initProcessData(mescSerial, compSerial, webSocket);
+    initWebService(compSerial, mescSerial, webSocket);
 }
 
-void loop() {
-}
+void loop() {}

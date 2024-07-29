@@ -5,8 +5,6 @@
 
 #define BUFFER_SIZE 526
 #define SERIAL_TIMEOUT_MS 100
-#define compSerial Serial
-#define mescSerial Serial2
 
 extern char serialBuffer[BUFFER_SIZE];
 extern int bufferIndex;
