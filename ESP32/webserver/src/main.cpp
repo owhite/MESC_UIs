@@ -1,6 +1,8 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include <LittleFS.h>
+#include <ESPAsyncWebServer.h>
+#include <AsyncTCP.h>  // For ESP32
 #include "processData.h"
 #include "webservice.h"
 #include "blink.h"
@@ -8,7 +10,9 @@
 #define compSerial Serial
 #define mescSerial Serial2
 
-WebSocketsServer webSocket(81);
+AsyncWebServer server(80);
+AsyncWebSocket ws("/ws");
+
 
 void setup() {
     compSerial.begin(115200);
@@ -21,8 +25,8 @@ void setup() {
     compSerial.println("Starting setup...");
 
     initBlinkTask();
-    initProcessData(mescSerial, compSerial, webSocket);
-    initWebService(compSerial, mescSerial, webSocket);
+    initProcessData(mescSerial, compSerial, server, ws); 
+    initWebService(compSerial, mescSerial, server, ws);
 }
 
 void loop() {}

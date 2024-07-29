@@ -1,3 +1,26 @@
+void handleRoot(AsyncWebServerRequest *request) {
+  if (!LittleFS.exists("/index.html")) {
+    request->send(404, "text/plain", "File not found");
+    Serial.println("File not found: /index.html");
+    return;
+  }
+
+  File file = LittleFS.open("/index.html", "r");
+  if (!file) {
+    request->send(500, "text/plain", "Failed to open file");
+    Serial.println("Failed to open file: /index.html");
+    return;
+  }
+
+  // request->send(file, "text/html"); // Ensure the correct MIME type is set
+  request->send(200, "text/plain", html_page);
+
+  // request->send(200, "text/html", file); // Ensure the correct MIME type is set
+  file.close();
+  Serial.println("File served: /index.html");
+}
+
+
    <tr><td>curr_max</td><td id="curr_max_value">0.0</td></tr>
     <tr><td>curr_min</td><td id="curr_min_value">0.0</td></tr>
     <tr><td>ehz</td><td id="ehz_value">0.0</td></tr>

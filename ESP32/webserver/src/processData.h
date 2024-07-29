@@ -2,7 +2,8 @@
 #define PROCESSDATA_H
 
 #include <Arduino.h>
-#include <WebSocketsServer.h>
+#include <AsyncTCP.h>
+#include <ESPAsyncWebServer.h>
 
 #define BUFFER_SIZE 526
 #define SERIAL_TIMEOUT_MS 100
@@ -13,7 +14,7 @@ extern char serialBuffer[BUFFER_SIZE];
 extern int bufferIndex;
 extern unsigned long lastReceiveTime;
 
-void initProcessData(HardwareSerial& mescSerial, HardwareSerial& compSerial, WebSocketsServer& webSocket);
+void initProcessData(HardwareSerial& mescSerial, HardwareSerial& compSerial, AsyncWebServer& webServer, AsyncWebSocket& webSocket);
 void processData(void *parameter);
 void processLine(char *line);
 void stringToJSON(const char* data);

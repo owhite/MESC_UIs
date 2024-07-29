@@ -65,7 +65,7 @@
     }
 
     function onOpen(event) {
-        console.log('Log message: Connection opened');
+        console.log('Connection opened');
     }
 
     function onClose(event) {
@@ -73,7 +73,7 @@
         // Comment out the reload to diagnose the issue
         setTimeout(function() {
             location.reload();
-        }, 2000); 
+        }, 20000); 
     }
 
     function onError(event) {

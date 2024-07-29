@@ -1,19 +1,20 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <regex.h>
+#include <Arduino.h>
+#include <AsyncWebSocket.h> // Ensure this is included
 #include <ArduinoJson.h>
 #include "processData.h"
+
+#define BUFFER_SIZE 526
+#define SERIAL_TIMEOUT_MS 100
 
 char serialBuffer[BUFFER_SIZE];
 int bufferIndex = 0;
 unsigned long lastReceiveTime = 0;
 
-static WebSocketsServer* g_webSocket;
+static AsyncWebSocket* g_webSocket;
 static HardwareSerial* g_mescSerial; 
 static HardwareSerial* g_compSerial;
 
-void initProcessData(HardwareSerial& mescSerial, HardwareSerial& compSerial, WebSocketsServer& webSocket) {
+void initProcessData(HardwareSerial& mescSerial, HardwareSerial& compSerial, AsyncWebServer& server, AsyncWebSocket& webSocket) {
   g_mescSerial = &mescSerial;
   g_compSerial = &compSerial;
   g_webSocket = &webSocket;
@@ -79,7 +80,6 @@ void processData(void *parameter) {
     while (g_compSerial->available()) {
       ch = g_compSerial->read();
       g_mescSerial->write(ch);
-
     }
 
     vTaskDelay(1 / portTICK_PERIOD_MS);
@@ -89,7 +89,6 @@ void processData(void *parameter) {
 void processLine(char *line) {
   remove_ansi_escape_sequences(line);
   replace_pipe_with_tab(line);
-  g_compSerial->println(line);
 
   int count = countCharOccurrences(line, '\t');
 
@@ -174,9 +173,11 @@ void stringToJSON(const char* data) {
   char output[256];
   serializeJson(doc, output, sizeof(output));
 
-  // Note this does not actually send the JSON data in doc anywhere
-  // g_compSerial->println(output);
-  g_webSocket->broadcastTXT(output);
+  if (g_webSocket) {
+    g_webSocket->textAll(output); // Broadcast message to all connected clients
+  } else {
+    g_compSerial->println("WebSocket is not initialized.");
+  }
 }
 
 int countCharOccurrences(const char* str, char ch) {

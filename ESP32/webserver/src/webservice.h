@@ -3,18 +3,15 @@
 
 #include <Arduino.h>
 #include <WiFi.h>
-#include <WebServer.h>
-#include <WebSocketsServer.h>
-#include <FS.h>
 #include <LittleFS.h>
+#include <ESPAsyncWebServer.h>
+#include <AsyncTCP.h>  // For ESP32
 
-void initWebService(HardwareSerial& compSerial, HardwareSerial& mescSerial, WebSocketsServer& webSocket);
+void initWebService(HardwareSerial& compSerial, HardwareSerial& mescSerial, AsyncWebServer& server, AsyncWebSocket& webSocket);
 void webServerTask(void *pvParameter);
-void handleRoot();
-void onWebSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length);
-void handleWebSocketMessage(void *arg, uint8_t *data, size_t len);
-void handleButtonPress();
+void handleRoot(AsyncWebServerRequest *request);
+void handleButtonPress(AsyncWebServerRequest *request);
 void processButtonPress();
-
+void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t len);
 
 #endif // WEBSERVICE_H
