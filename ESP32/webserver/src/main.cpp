@@ -4,15 +4,18 @@
 #include <ESPAsyncWebServer.h>
 #include <AsyncTCP.h>  // For ESP32
 #include "processData.h"
+#include "global.h"
 #include "webservice.h"
 #include "blink.h"
 
-#define compSerial Serial
-#define mescSerial Serial2
+int commState = 0;
+DynamicJsonDocument jsonDoc(5024);
+
+float globalVar2 = 0.0f;
+char globalArray[100] = {0};
 
 AsyncWebServer server(80);
 AsyncWebSocket ws("/ws");
-
 
 void setup() {
     compSerial.begin(115200);

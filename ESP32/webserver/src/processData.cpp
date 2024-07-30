@@ -1,10 +1,9 @@
 #include <Arduino.h>
 #include <AsyncWebSocket.h> // Ensure this is included
-#include <ArduinoJson.h>
+#include "global.h"
 #include "processData.h"
 
 #define BUFFER_SIZE 526
-#define SERIAL_TIMEOUT_MS 100
 
 char serialBuffer[BUFFER_SIZE];
 int bufferIndex = 0;
@@ -71,18 +70,32 @@ void processData(void *parameter) {
       }
     }
 
+    // in general this means we have reached the command prompt
     if (localBufferIndex > 0 && (millis() - lastReceiveTime) >= SERIAL_TIMEOUT_MS) {
       localBuffer[localBufferIndex] = '\0';
       processLine(localBuffer);
       localBufferIndex = 0;
+
+      // server performed a get, and we have loaded up a bunch of values into
+      //  the json string, so send that by websocket
+      if (commState == COMM_GET) {
+	// I hate arduino strings, but...
+	String jsonString; 
+	serializeJson(jsonDoc, jsonString);
+	Serial.println(jsonString);
+	g_webSocket->textAll(jsonString);
+      }
+
+      commState = COMM_IDLE;
     }
 
     while (g_compSerial->available()) {
       ch = g_compSerial->read();
       g_mescSerial->write(ch);
+      g_compSerial->write(ch);
     }
 
-    vTaskDelay(1 / portTICK_PERIOD_MS);
+    // vTaskDelay(1 / portTICK_PERIOD_MS);
   }
 }
 
@@ -90,10 +103,37 @@ void processLine(char *line) {
   remove_ansi_escape_sequences(line);
   replace_pipe_with_tab(line);
 
-  int count = countCharOccurrences(line, '\t');
+  g_compSerial->println(line);
 
-  if (count == 4) {
-    stringToJSON(line);
+  if (commState == COMM_GET) {
+    int count = countCharOccurrences(line, '\t');
+
+    // if we're in the middle of a get it should always be count == 4
+    if (count == 4) {
+      char value1[20];
+      char value2[20];
+
+      const char* tab1 = strchr(line, '\t');
+      if (tab1 != NULL) {
+        size_t length1 = tab1 - line;
+        strncpy(value1, line, length1);
+        value1[length1] = '\0'; // Null-terminate the string
+
+        const char* tab2 = strchr(tab1 + 1, '\t');
+        if (tab2 != NULL) {
+            size_t length2 = tab2 - (tab1 + 1);
+            strncpy(value2, tab1 + 1, length2);
+            value2[length2] = '\0'; // Null-terminate the string
+        } else {
+            // If there's no second tab, take the remaining part of the string
+            strcpy(value2, tab1 + 1);
+        }
+      }
+
+      // dynamically update a json string
+      //  instead of performing a websocket->send on each line
+      jsonDoc[value1] = value2;
+    }
   }
 }
 
@@ -130,53 +170,6 @@ void replace_pipe_with_tab(char *data) {
   while ((pos = strstr(data, "| ")) != NULL) {
     *pos = '\t';
     memmove(pos + 1, pos + 2, strlen(pos + 2) + 1);
-  }
-}
-
-void stringToJSON(const char* data) {
-  // Create a JSON document
-  StaticJsonDocument<256> doc;
-
-  // Make a mutable copy of the input string
-  char inputCopy[256];
-  strncpy(inputCopy, data, sizeof(inputCopy));
-  inputCopy[sizeof(inputCopy) - 1] = '\0'; // Ensure null-termination
-    
-  // Parse the input string
-  char* token = strtok(inputCopy, "\t");
-  int index = 0;
-  const char* field1 = "";
-  const char* field2 = "";
-  const char* field3 = "";
-  const char* field4 = "";
-  const char* field5 = "";
-
-  while (token != NULL) {
-    if (index == 0) field1 = token;
-    else if (index == 1) field2 = token;
-    else if (index == 2) field3 = token;
-    else if (index == 3) field4 = token;
-    else if (index == 4) field5 = token;
-        
-    token = strtok(NULL, "\t");
-    index++;
-  }
-    
-  // Populate the JSON document
-  doc["parameter"] = field1;
-  doc["value"] = field2;
-  doc["min"] = field3;
-  doc["max"] = field4;
-  doc["description"] = field5;
-
-  // Serialize JSON to string
-  char output[256];
-  serializeJson(doc, output, sizeof(output));
-
-  if (g_webSocket) {
-    g_webSocket->textAll(output); // Broadcast message to all connected clients
-  } else {
-    g_compSerial->println("WebSocket is not initialized.");
   }
 }
 
