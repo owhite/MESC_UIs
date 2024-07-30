@@ -1,77 +1,141 @@
-void handleRoot(AsyncWebServerRequest *request) {
-  if (!LittleFS.exists("/index.html")) {
-    request->send(404, "text/plain", "File not found");
-    Serial.println("File not found: /index.html");
-    return;
-  }
-
-  File file = LittleFS.open("/index.html", "r");
-  if (!file) {
-    request->send(500, "text/plain", "Failed to open file");
-    Serial.println("Failed to open file: /index.html");
-    return;
-  }
-
-  // request->send(file, "text/html"); // Ensure the correct MIME type is set
-  request->send(200, "text/plain", html_page);
-
-  // request->send(200, "text/html", file); // Ensure the correct MIME type is set
-  file.close();
-  Serial.println("File served: /index.html");
-}
-
-
-   <tr><td>curr_max</td><td id="curr_max_value">0.0</td></tr>
-    <tr><td>curr_min</td><td id="curr_min_value">0.0</td></tr>
-    <tr><td>ehz</td><td id="ehz_value">0.0</td></tr>
-    <tr><td>i_max</td><td id="i_max_value">0.0</td></tr>
-    <tr><td>FOC_angle</td><td id="FOC_angle_value">0.0</td></tr>
-    <tr><td>motor_pp</td><td id="motor_pp_value">0.0</td></tr>
-    <tr><td>fw_ehz</td><td id="fw_ehz_value">0.0</td></tr>
-    <tr><td>enc_counts</td><td id="enc_counts_value">0.0</td></tr>
-<
-
-curr_max	41.000000	0.00	300.00	Max motor current
-curr_min	-10.000000	-300.00	0.00	Min motor current
-i_max	500.000000	0.00	500.00	Max current
-FOC_angle	57347	0	65535	FOC angle now
-motor_pp	28	0	30	Number of motor pole PAIRS
-fw_ehz	0.1345	0.00	6000.00	max eHz under field weakenning
-Hall_flux	Array[12]	-10.00	10.00	hall start table
-Hall_initialised	1	0	1	hall start flag
-enc_counts	400	0.00	5000.00	HFI gain
-hfi_gain	0.000000	0.00	5000.00	HFI gain
-hfi_mod_didq	0.000000	0.00	2.00	HFI mod didq
-hfi_type	0	0	3	HFI type [0=None, 1=45deg, 2=d axis]
-hfi_volt	4.000000	0.00	50.00	HFI voltage
-
-id	0.033391	-inf	inf	Phase Idq_d smoothed
-input_opt	1	0	128	Inputs [1=ADC1 2=ADC2 4=PPM 8=UART 16=Killswitch 32=CANADC1 64=CANADC2 128=ADC12DIFF]
-iq	-0.024569	-inf	inf	Phase Idq_q smoothed
-iqreq	0.000000	-4096.00	4096.00	mtr[0].FOC.Idq_req.q
-ld_phase	0.000043	0.00	10.00	Phase inductance
-lq_phase	0.000064	0.00	10.00	Phase inductance
-motor_sensor	0	0	30	0=SL, 1=Hall, 2=OL, 3=ABSENC, 4=INC_ENC, 5=HFI
-node_id	0	1	254	Node ID
-ol_step	0	0	6000	Angle per PWM period openloop
-p_max	12000.000000	0.00	50000.00	Max power
-park_curr	0.000000	0.00	300.00	max current for handbrake
-
-
-I would like to do something different than that approach. Keep the text area that shows the incomping json:
-
-In front of the text area, add a table, each row has only two cells. These are the rows:
-
-<tr><td>"curr_max"</td><td id = "curr_max_value">0.0</td></tr>
-<tr><td>"direction"</td><td id = "direction_value">0.0</td></tr>
-<tr><td>"ehz"</td><td id = "ehz_value">0.0</td></tr>
-<tr><td>"enc_angle"</td><td id = "enc_angle_value">0.0</td></tr>
-<tr><td>"FOC_angle"</td><td id = "FOC_angle_value">0.0</td></tr>
-<tr><td>"fw_curr"</td><td id = "fw_curr_value">0.0</td></tr>
-<tr><td>"fw_ehz"</td><td id = "fw_ehz_value">0.0</td></tr>
-<tr><td>"Hall_initialised"</td><td id = "Hall_initialised_value">0.0</td></tr>
-
-This is an example of json that can come in: {"parameter":"curr_max","value":"40.000000"}
-
-Use the variables in the first cell, use it change the corresponding value in the second cell. 
+      <table border = "1" >
+	<tr>
+	  <td>flux</td>
+	  <td id="flux_value">0.004500</td>
+	</tr>
+	<tr>
+	  <td>r_phase</td>
+	  <td id="r_phase_value">0.070000</td>
+	</tr>
+	<tr>
+	  <td>ld_phase</td>
+	  <td id="ld_phase_value">0.000043</td>
+	</tr>
+	<tr>
+	  <td>lq_phase</td>
+	  <td id="lq_phase_value">0.000064</td>
+	</tr>
+	<tr>
+	  <td>motor_pp</td>
+	  <td id="motor_pp_value">28</td>
+	</tr>
+	<tr>
+	  <td>pole_pairs</td>
+	  <td id="pole_pairs_value">28</td>
+	</tr>
+      </table>
+      <table border = "1" >
+	<tr>
+	  <td>curr_max</td>
+	  <td id="curr_max_value">40.0</td>
+	</tr>
+	<tr>
+	  <td>curr_min</td>
+	  <td id="curr_min_value">-10.000000</td>
+	</tr>
+	<tr>
+	  <td>i_max</td>
+	  <td id="i_max_value">500.</td>
+	</tr>
+	<tr>
+	  <td>p_max</td>
+	  <td id="p_max_value">12000</td>
+	</tr>
+	<tr>
+	  <td>v_max</td>
+	  <td id="v_max_value">0.000000</td>
+	</tr>
+	<tr>
+	  <td>fw_curr</td>
+	  <td id="fw_curr_value">36.000000</td>
+	</tr>
+	<tr>
+	  <td>fw_ehz</td>
+	  <td id="fw_ehz_value">0.000000</td>
+	</tr>
+      </table>
+      <table border = "1" >
+	<tr>
+	  <td>SL_sensor</td>
+	  <td id="SL_sensor_value">0</td>
+	</tr>
+	<tr>
+	  <td>motor_sensor</td>
+	  <td id="motor_sensor_value">0</td>
+	</tr>
+	<tr>
+	  <td>input_opt</td>
+	  <td id="input_opt_value">1</td>
+	</tr>
+	<tr>
+	  <td>ol_step</td>
+	  <td id="ol_step_value">0</td>
+	</tr>
+	<tr>
+	  <td>uart_req</td>
+	  <td id="uart_req_value">0.000000</td>
+	</tr>
+      </table>
+      <table border = "1" >
+	<tr>
+	  <td>vbus</td>
+	  <td id="vbus_value">54.530788</td>
+	</tr>
+	<tr>
+	  <td>adc1</td>
+	  <td id="adc1_value">0</td>
+	</tr>
+	<tr>
+	  <td>Vd</td>
+	  <td id="Vd_value">0.017626</td>
+	</tr>
+	<tr>
+	  <td>Vq</td>
+	  <td id="Vq_value">0.024023</td>
+	</tr>
+	<tr>
+	  <td>TMOS</td>
+	  <td id="TMOS_value">298.987518</td>
+	</tr>
+	<tr>
+	  <td>TMOT</td>
+	  <td id="TMOT_value">210.618149</td>
+	</tr>
+      </table>
+      <table border = "1" >
+	<tr>
+	  <td>adc1_max</td>
+	  <td id="adc1_max_value">2700</td>
+	</tr>
+	<tr>
+	  <td>adc1_min</td>
+	  <td id="adc1_min_value">600</td>
+	</tr>
+	<tr>
+	  <td>adc2_max</td>
+	  <td id="adc2_max_value">4095</td>
+	</tr>
+	<tr>
+	  <td>adc2_min</td>
+	  <td id="adc2_min_value">1200</td>
+	</tr>
+      </table>
+      <table border = "1" >
+	<tr>
+	  <td>hall_flux</td>
+	  <td id="hall_flux_value">Array[12]</td>
+	</tr>
+	<tr>
+	  <td>hall_initialised</td>
+	  <td id="hall_initialised_value">1</td>
+	</tr>
+	<tr>
+	  <td>safe_count</td>
+	  <td id="safe_count_value">100</td>
+	</tr>
+	<tr>
+	  <td>safe_start</td>
+	  <td id="safe_start_value">100</td>
+	</tr>
+      </table>
 

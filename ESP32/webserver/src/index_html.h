@@ -1,4 +1,11 @@
-<!DOCTYPE html>
+
+    #ifndef INDEX_HTML_H
+    #define INDEX_HTML_H
+
+    #include <pgmspace.h>
+
+    const char index_html[] PROGMEM = R"rawliteral(
+    <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -252,3 +259,8 @@
     </script>
   </body>
 </html>
+
+    )rawliteral";
+
+    #endif
+    
