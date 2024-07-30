@@ -73,24 +73,6 @@ void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t 
     g_compSerial->printf("WebSocket message: %s\n", message);
     g_mescSerial->write(message);
     g_mescSerial->write("\r\n");
-
-    // not needed so far...
-    if (strncmp(message, "COMMAND:", 8) == 0) {
-        const char* command = message + 8; 
-        processCommand(command);
-    } else {
-    }
-}
-
-void processCommand(const char* command) {
-    g_compSerial->printf("Processing command: %s\n", command);
-
-    // Process the command
-    if (strcmp(command, "get") == 0) {
-        g_mescSerial->write("get\r\n");
-    } else {
-        g_compSerial->printf("Unknown command: %s\n", command);
-    }
 }
 
 void webServerTask(void *pvParameter) {
@@ -114,6 +96,5 @@ void processButtonPress() {
   g_compSerial->println("Running get.");
   g_mescSerial->write("get\r\n");
 
-  jsonDoc.clear();
   commState = COMM_GET;
 }

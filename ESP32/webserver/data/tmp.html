@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editable Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        td.editing {
+            padding: 0;
+        }
+        td input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 8px;
+            border: none;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <table id="editableTable">
+        <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Parameter 1</td>
+                <td class="editable">Value 1</td>
+                <td>Description 1</td>
+            </tr>
+            <tr>
+                <td>Parameter 2</td>
+                <td class="editable">Value 2</td>
+                <td>Description 2</td>
+            </tr>
+            <!-- More rows as needed -->
+        </tbody>
+    </table>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const table = document.getElementById('editableTable');
+
+            table.addEventListener('click', function(event) {
+                const target = event.target;
+                if (target.classList.contains('editable')) {
+                    editCell(target);
+                }
+            });
+
+            function editCell(cell) {
+                const initialValue = cell.textContent;
+                cell.classList.add('editing');
+                cell.innerHTML = `<input type="text" value="${initialValue}">`;
+                const input = cell.querySelector('input');
+                input.focus();
+
+                input.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter') {
+                        saveCell(cell, input.value);
+                    } else if (event.key === 'Escape') {
+                        cell.innerHTML = initialValue;
+                        cell.classList.remove('editing');
+                    }
+                });
+
+                input.addEventListener('blur', function() {
+                    saveCell(cell, input.value);
+                });
+            }
+
+            function saveCell(cell, newValue) {
+                cell.textContent = newValue;
+                cell.classList.remove('editing');
+                onCellEdit(cell, newValue);
+            }
+
+            function onCellEdit(cell, newValue) {
+                console.log('Cell edited:', cell, 'New value:', newValue);
+                // Perform additional actions, e.g., sending data to the server
+            }
+        });
+    </script>
+</body>
+</html>

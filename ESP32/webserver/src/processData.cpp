@@ -39,7 +39,7 @@ void processData(void *parameter) {
   int localBufferIndex = 0;
   char ch;
 
-  while (true) { // equivalent of loop()
+  while (true) { // the equivalent of arduino loop()
 
     while (g_mescSerial->available()) {
       char incomingByte = g_mescSerial->read();
@@ -70,7 +70,7 @@ void processData(void *parameter) {
       }
     }
 
-    // in general this means we have reached the command prompt
+    // in general this means we have reached the prompt of Jens' term
     if (localBufferIndex > 0 && (millis() - lastReceiveTime) >= SERIAL_TIMEOUT_MS) {
       localBuffer[localBufferIndex] = '\0';
       processLine(localBuffer);
@@ -78,12 +78,13 @@ void processData(void *parameter) {
 
       // server performed a get, and we have loaded up a bunch of values into
       //  the json string, so send that by websocket
-      if (commState == COMM_GET) {
+      if (commState == COMM_GET || commState == COMM_IDLE) {
 	// I hate arduino strings, but...
 	String jsonString; 
 	serializeJson(jsonDoc, jsonString);
 	Serial.println(jsonString);
 	g_webSocket->textAll(jsonString);
+	jsonDoc.clear();
       }
 
       commState = COMM_IDLE;
@@ -103,9 +104,10 @@ void processLine(char *line) {
   remove_ansi_escape_sequences(line);
   replace_pipe_with_tab(line);
 
-  g_compSerial->println(line);
+  // use ful debugging
+  // g_compSerial->println(line);
 
-  if (commState == COMM_GET) {
+  if (commState == COMM_GET || commState == COMM_IDLE) {
     int count = countCharOccurrences(line, '\t');
 
     // if we're in the middle of a get it should always be count == 4
@@ -117,21 +119,24 @@ void processLine(char *line) {
       if (tab1 != NULL) {
         size_t length1 = tab1 - line;
         strncpy(value1, line, length1);
-        value1[length1] = '\0'; // Null-terminate the string
+        value1[length1] = '\0';
 
         const char* tab2 = strchr(tab1 + 1, '\t');
         if (tab2 != NULL) {
             size_t length2 = tab2 - (tab1 + 1);
             strncpy(value2, tab1 + 1, length2);
-            value2[length2] = '\0'; // Null-terminate the string
+            value2[length2] = '\0';
         } else {
-            // If there's no second tab, take the remaining part of the string
+            // should be a second tab,
+	    //  but if not take the remaining part of the string
             strcpy(value2, tab1 + 1);
         }
       }
 
-      // dynamically update a json string
-      //  instead of performing a websocket->send on each line
+      // avoid running websocket->send on each line
+      //   dynamically concatenate to json string
+      // Serial.println(value1);
+      // Serial.println(value2);
       jsonDoc[value1] = value2;
     }
   }
