@@ -6,188 +6,516 @@
     <title>MESC Web Cal</title>
     <style>
       /* Existing styles... */
-      #container {
-          width: 400px;
-          background-color: #fff;
-          padding: 20px;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      body {
+	  font-family: Arial, sans-serif;
+      }
+      .tab-container {
+	  width: 360px;
+	  align-items: center;
+	  width: 100%;
+      }
+      .tab-buttons {
+	  width: 360px;
+	  gap: 10px;
+	  margin-bottom: 10px;
+      }
+      .tab-content {
+	  display: none;
+	  width: 100%;
+      }
+      .tab-content.active {
+	  display: block;
+      }
+      #container1, #container2 {
+	  width: 360px;
+	  background-color: #fff;
+	  padding: 20px;
+	  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       }
       #messages {
-          background-color: #fff;
-          border: 1px solid #ccc;
-          padding: 10px;
-          height: 100px;
-          overflow-y: scroll;
-          word-wrap: break-word;
+	  background-color: #fff;
+	  border: 1px solid #ccc;
+	  padding: 10px;
+	  height: 100px;
+	  overflow-y: scroll;
+	  word-wrap: break-word;
       }
       .message {
-          padding: 5px;
-          border-bottom: 1px solid #ddd;
-          word-wrap: break-word;
-          white-space: pre-wrap;
+	  padding: 5px;
+	  border-bottom: 1px solid #ddd;
+	  word-wrap: break-word;
+	  white-space: pre-wrap;
       }
       .parameter {
-          margin-bottom: 10px;
+	  margin-bottom: 10px;
       }
       .parameter textarea {
-          width: 100%;
-          box-sizing: border-box;
+	  width: 100%;
+	  box-sizing: border-box;
+      }
+      .table-container {
+	  width: 100%;
+	  overflow-x: auto;
+	  white-space: nowrap;
+	  margin-bottom: 2px;
       }
       table {
-          border-collapse: collapse;
-          width: 100%;
-          margin-bottom: 2px;
-          border: 3px solid #000;
+	  border-collapse: collapse;
+	  width: 100%;
+	  margin-bottom: 2px;
+	  border: 3px solid #000;
+	  display: inline-block; /* Keeps tables in a single row */
       }
       th, td {
-          border: 1px solid #ddd;
-          text-align: left;
-          width: 8px;
+	  border: 1px solid #ddd;
+	  text-align: left;
+	  width: auto;
       }
-      th {
-          background-color: #f2f2f2;
+      #editableTable th:nth-child(1), #editableTable td:nth-child(1),
+      #additionalTable th:nth-child(1), #additionalTable td:nth-child(1) {
+	  width: 100px; /* adjust as needed */
+      }
+      #editableTable th:nth-child(2), #editableTable td:nth-child(2),
+      #additionalTable th:nth-child(2), #additionalTable td:nth-child(2) {
+	  width: 200px; /* adjust as needed */
+      }
+      td.editing {
+	  padding: 0;
+      }
+      td input {
+	  width: 100%;
+	  box-sizing: border-box;
+	  padding: 8px;
+	  border: none;
+	  background-color: #fff;
+      }
+      /* Styles specific to bannerTable */
+      .bannerTable {
+	  width: 100%;
+	  border-collapse: collapse;
+	  text-align: center;
+	  margin-bottom: 20px;
+      }
+      .bannerTable td {
+	  /* border: 1px solid #ddd; */ 
+	  padding: 16px;
+	  font-size: 24px;
+      }
+      .bannerTable .number {
+	  font-size: 20px;
+	  font-weight: bold;
+      }
+      .bannerTable .unit {
+	  font-size: 12px;
+	  color: #555;
+      }
+      #loadingSpinner {
+	  display: none;
+	  position: absolute;
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+      }
+      .spinner {
+	  border: 16px solid #f3f3f3; /* Light grey */
+	  border-top: 16px solid #3498db; /* Blue */
+	  border-radius: 50%;
+	  width: 120px;
+	  height: 120px;
+	  animation: spin 2s linear infinite;
+      }
+      @keyframes spin {
+	  0% { transform: rotate(0deg); }
+	  100% { transform: rotate(360deg); }
       }
     </style>
   </head>
   <body>
-    <div id="container">
-      <h1>MESC Web Cal</h1>
-      <button onclick="sendButtonPress()">UPDATE</button>
-      <br>
-      <br>
-      <table>
-        <tr>
-          <td>error</td>
-          <td id="error_value">NaN</td>
-        </tr>
-        <tr>
-          <td>pole_pairs</td>
-          <td id="pole_pairs_value">NaN</td>
-        </tr>
-        <tr>
-          <td>curr_max</td>
-          <td id="curr_max_value">NaN</td>
-        </tr>
-        <tr>
-          <td>p_max</td>
-          <td id="p_max_value">NaN</td>
-        </tr>
-        <tr>
-          <td>fw_curr</td>
-          <td id="fw_curr_value">NaN</td>
-        </tr>
-        <tr>
-          <td>SL_sensor</td>
-          <td id="SL_sensor_value">NaN</td>
-        </tr>
-        <tr>
-          <td>motor_sensor</td>
-          <td id="motor_sensor_value">NaN</td>
-        </tr>
-        <tr>
-          <td>input_opt</td>
-          <td id="input_opt_value">NaN</td>
-        </tr>
-        <tr>
-          <td>ol_step</td>
-          <td id="ol_step_value">NaN</td>
-        </tr>
-        <tr>
-          <td>uart_req</td>
-          <td id="uart_req_value">NaN</td>
-        </tr>
-        <tr>
-          <td>vbus</td>
-          <td id="vbus_value">NaN</td>
-        </tr>
-        <tr>
-          <td>adc1_max</td>
-          <td id="adc1_max_value">NaN</td>
-        </tr>
-        <tr>
-          <td>adc1_min</td>
-          <td id="adc1_min_value">NaN</td>
-        </tr>
-      </table>
-      <br>
-      <button onclick="sendCommand()">Send Command</button>
-      <input type="text" id="command_input" placeholder="MESC command">
-      <br>
-      <br>
-      <br>
-      <div id="messages"></div>
+    <h1>MESC Web Cal</h1>
+    <div class="tab-container">
+      <div class="tab-buttons">
+	<button onclick="openTab('tab1')">Tab 1</button>
+	<button onclick="openTab('tab2')">Tab 2</button>
+      </div>
+      <div id="tab1" class="tab-content">
+	<div id="container1">
+          <table class="bannerTable">
+            <tr>
+              <td>
+		<div class="number" id="error_value">-</div>
+		<div class="unit">Error</div>
+              </td>
+              <td>
+		<div class="number" id="vbus_value">-</div>
+		<div class="unit" id="vbus_value">vbus</div>
+              </td>
+              <td>
+		<div class="number" id="ehz_value">-</div>
+		<div class="unit">eHz</div>
+              </td>
+              <td>
+		<div class="number" id="TMOT_value">-</div>
+		<div class="unit">TMOT</div>
+              </td>
+              <td>
+		<div class="number" id="TMOS_value">-</div>
+		<div class="unit">TMOS</div>
+              </td>
+            </tr>
+          </table>
+          <button id="updateButton" onclick="sendButtonPress()">UPDATE</button>
+
+          <br>
+          <br>
+          <div class="table-container">
+            <!-- First table -->
+            <table id="editableTable">
+              <tr>
+		<td>pole_pairs</td>
+		<td id="pole_pairs_value" class="editable">NaN</td>
+              </tr>
+              <tr>
+		<td>curr_max</td>
+		<td id="curr_max_value" class="editable">NaN</td>
+              </tr>
+              <tr>
+		<td>p_max</td>
+		<td id="p_max_value" class="editable">NaN</td>
+              </tr>
+              <tr>
+		<td>fw_curr</td>
+		<td id="fw_curr_value" class="editable">NaN</td>
+              </tr>
+              <tr>
+		<td>SL_sensor</td>
+		<td id="SL_sensor_value" class="editable">NaN</td>
+              </tr>
+              <tr>
+		<td>motor_sensor</td>
+		<td id="motor_sensor_value" class="editable">NaN</td>
+              </tr>
+              <tr>
+		<td>input_opt</td>
+		<td id="input_opt_value" class="editable">NaN</td>
+              </tr>
+              <tr>
+		<td>ol_step</td>
+		<td id="ol_step_value" class="editable">NaN</td>
+              </tr>
+              <tr>
+		<td>uart_req</td>
+		<td id="uart_req_value" class="editable">NaN</td>
+              </tr>
+            </table>
+            <!-- Additional table -->
+            <table id="additionalTable">
+              <tr>
+		<td>adc1_max</td>
+		<td id="adc1_max_value" class="editable">NaN</td>
+              </tr>
+              <tr>
+		<td>adc1_min</td>
+		<td id="adc1_min_value" class="editable">NaN</td>
+              </tr>
+              <tr>
+		<td>adc2_max</td>
+		<td id="adc2_max_value" class="editable">NaN</td>
+              </tr>
+              <tr>
+		<td>adc2_min</td>
+		<td id="adc2_min_value" class="editable">NaN</td>
+              </tr>
+              <tr>
+		<td>flux</td>
+		<td id="flux_value" class="editable">NaN</td>
+              </tr>
+              <tr>
+		<td>r_phase</td>
+		<td id="r_phase_value" class="editable">NaN</td>
+              </tr>
+              <tr>
+		<td>ld_phase</td>
+		<td id="ld_phase_value" class="editable">NaN</td>
+              </tr>
+              <tr>
+		<td>lq_phase</td>
+		<td id="lq_phase_value" class="editable">NaN</td>
+              </tr>
+              <tr>
+		<td>motor_pp</td>
+		<td id="motor_pp_value" class="editable">NaN</td>
+              </tr>
+            </table>
+            <!-- Additional table -->
+            <table id="additionalTable">
+              <tr>
+		<td>error_all</td>
+		<td id="error_all_value" class="editable">NaN</td>
+              <tr>
+		<td>curr_min</td>
+		<td id="curr_min_value" class="editable">NaN</td>
+              </tr>
+              <tr>
+		<td>dq</td>
+		<td id="dq_value" class="editable">NaN</td>
+              </tr>
+              <tr>
+		<td>comp</td>
+		<td id="comp_value" class="editable">NaN</td>
+              </tr>
+              <tr>
+		<td>TA</td>
+		<td id="TA_value" class="editable">NaN</td>
+              </tr>
+              <tr>
+		<td>TB</td>
+		<td id="TB_value" class="editable">NaN</td>
+              </tr>
+            </table>
+          </div>
+          <br>
+          <button onclick="sendCommand()">Send</button>
+          <input type="text" id="command_input" placeholder="MESC command">
+	</div>
+      </div>
+      <div id="tab2" class="tab-content">
+	<div id="container2">
+          <!-- Content for container2 -->
+          <div id="messages"></div>
+	</div>
+      </div>
     </div>
     <script>
+
+      function openTab(tabId) {
+	  const tabs = document.querySelectorAll('.tab-content');
+	  tabs.forEach(tab => {
+              tab.classList.remove('active');
+	  });
+	  document.getElementById(tabId).classList.add('active');
+      }
+      document.addEventListener('DOMContentLoaded', () => {
+	  openTab('tab1'); // Open the first tab by default
+      });
       var gateway = `ws://${window.location.hostname}/ws`;
       var websocket;
       window.addEventListener('load', onLoad);
+      
       function initWebSocket() {
-          console.log('Trying to open a WebSocket connection...');
-          websocket = new WebSocket(gateway);
-          websocket.onopen = onOpen;
-          websocket.onclose = onClose;
-          websocket.onerror = onError;
-          websocket.onmessage = onMessage;
+	  console.log('Trying to open a WebSocket connection...');
+	  websocket = new WebSocket(gateway);
+	  websocket.onopen = onOpen;
+	  websocket.onclose = onClose;
+	  websocket.onerror = onError;
+	  websocket.onmessage = onMessage;
       }
+
       function onOpen(event) {
-          console.log('Log message: Connection opened');
+	  console.log('Log message: Connection opened');
       }
+
       function onClose(event) {
-          console.log('Connection closed', event);
-          setTimeout(function() {
+	  console.log('Connection closed', event);
+	  setTimeout(function() {
               location.reload();
-          }, 2000);
+	  }, 2000);
       }
+
       function onError(event) {
-          console.error('WebSocket error:', event);
+	  console.error('WebSocket error:', event);
       }
+
       function onMessage(event) {
-          console.log('Message received:', event.data);
-          var messagesDiv = document.getElementById('messages');
-          var message = document.createElement('div');
-          message.className = 'message';
-          message.textContent = event.data;
-          messagesDiv.appendChild(message);
-          messagesDiv.scrollTop = messagesDiv.scrollHeight;
-          try {
+	  console.log('Message received:', event.data);
+	  var messagesDiv = document.getElementById('messages');
+	  var message = document.createElement('div');
+	  message.className = 'message';
+	  message.textContent = event.data;
+	  messagesDiv.appendChild(message);
+	  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+	  try {
               var json = JSON.parse(event.data);
               updateTable(json);
-          } catch (e) {
+	  } catch (e) {
               console.error('Error parsing JSON:', e);
-          }
+	  }
+	  // Hide spinner after table update
+	  hideLoadingSpinner();  
       }
+
+      function truncateNumber(value, decimalPlaces) {
+	  if (isNaN(value)) return value; // Return as is if it's not a number
+	  return parseFloat(parseFloat(value).toFixed(decimalPlaces));
+      }
+
       function updateTable(data) {
-          for (const [key, value] of Object.entries(data)) {
+	  for (const [key, value] of Object.entries(data)) {
+              let truncatedValue = value;
+              switch (key) {
+              case "ld_phase":
+		  // truncatedValue = truncateNumber(value, 6);
+		  break;
+              case "lq_phase":
+		  // truncatedValue = truncateNumber(value, 6);
+		  break;
+              case "flux":
+		  // truncatedValue = truncateNumber(value, 6);
+		  break;
+              case "r_phase":
+		  // truncatedValue = truncateNumber(value, 6);
+		  break;
+              default:
+		  truncatedValue = truncateNumber(value, 1);
+		  break;
+              }
+
+              // Update editable table cells
               var valueElement = document.getElementById(key + "_value");
               if (valueElement) {
-                  valueElement.textContent = value;
-              } else {
-                  console.warn('No element found for key:', key);
+		  valueElement.textContent = truncatedValue;
               }
-          }
+
+              // Update non-editable elements
+              var nonEditableElement = document.getElementById(key);
+              if (nonEditableElement) {
+		  nonEditableElement.textContent = truncatedValue;
+              }
+	  }
       }
+
       function onLoad(event) {
-          initWebSocket();
-          document.getElementById('command_input').addEventListener('keydown', function(event) {
-              if (event.key === 'Enter') {
-                  sendCommand();
-              }
-          });
+	  initWebSocket();
+	  document.getElementById('command_input').addEventListener('keydown', function(event) {
+	      if (event.key === 'Enter') {
+		  sendCommand();
+	      }
+	  });
+	  const tables = document.querySelectorAll('table');
+	  tables.forEach(table => {
+	      table.addEventListener('click', function(event) {
+		  const target = event.target;
+		  if (target.classList.contains('editable')) {
+		      editCell(target);
+		  }
+	      });
+	  });
+
+	  // Ensure the button has the correct ID and event listener
+	  const updateButton = document.getElementById('updateButton');
+	  updateButton.addEventListener('click', sendButtonPress);
       }
-      function sendButtonPress() {
-          fetch('/button')
-              .then(response => response.text())
-              .then(data => console.log(data));
-      }
+
       function sendCommand() {
-          var command = document.getElementById('command_input').value;
-          if (command) {
+	  var command = document.getElementById('command_input').value;
+	  if (command) {
               websocket.send(command);
               console.log('Sent command:', command);
-          } else {
+	  } else {
               console.warn('No command entered');
-          }
+	  }
       }
-    </script>
+
+      function editCell(cell) {
+	  const currentValue = cell.textContent;
+	  cell.classList.add('editing');
+	  cell.innerHTML = `<input type="text" value="${currentValue}">`;
+	  const input = cell.querySelector('input');
+	  input.focus();
+	  input.addEventListener('blur', function() {
+              saveCell(cell, input.value);
+	  });
+	  input.addEventListener('keydown', function(event) {
+              if (event.key === 'Enter') {
+		  saveCell(cell, input.value);
+              }
+	  });
+      }
+
+      function saveCell(cell, newValue) {
+	  cell.classList.remove('editing');
+	  cell.textContent = newValue;
+	  const cellID = cell.id.slice(0, -6);
+	  const command = "set " + cellID + " " + newValue;
+	  websocket.send(command);
+	  onCellEdit(cell, newValue);
+      }
+
+      function onCellEdit(cell, newValue) {
+	  console.log('Cell edited:', cell, 'New value:', newValue);
+	  // Perform additional actions, e.g., sending data to the server
+      }
+
+      async function sendButtonPress() {
+	  console.log('Update button pressed');
+	  showLoadingSpinner(); // Show spinner when update button is pressed
+	  try {
+	      const response = await fetch('/button');
+	      const data = await response.text();
+	      console.log('Response from server:', data);
+	  } catch (error) {
+	      console.error('Error:', error);
+	  } finally {
+	      // hideLoadingSpinner(); // Hide spinner when the request is complete
+	  }
+      }
+
+      function showLoadingSpinner() {
+	  document.getElementById('loadingSpinner').style.display = 'block';
+      }
+
+      function hideLoadingSpinner() {
+	  document.getElementById('loadingSpinner').style.display = 'none';
+      }
+
+      async function updateTable(data) {
+	  const entries = Object.entries(data);
+	  const totalEntries = entries.length;
+	  let count = 0;
+
+	  for (const [key, value] of entries) {
+	      let truncatedValue = value;
+	      switch (key) {
+	      case "ld_phase":
+		  // truncatedValue = truncateNumber(value, 6);
+		  break;
+	      case "lq_phase":
+		  // truncatedValue = truncateNumber(value, 6);
+		  break;
+	      case "flux":
+		  // truncatedValue = truncateNumber(value, 6);
+		  break;
+	      case "r_phase":
+		  // truncatedValue = truncateNumber(value, 6);
+		  break;
+	      case "Vq":
+		  break;
+	      default:
+		  truncatedValue = truncateNumber(value, 1);
+		  break;
+	      }
+
+	      // Update editable table cells
+	      var valueElement = document.getElementById(key + "_value");
+	      if (valueElement) {
+		  valueElement.textContent = truncatedValue;
+	      }
+
+	      // Update non-editable elements
+	      var nonEditableElement = document.getElementById(key);
+	      if (nonEditableElement) {
+		  nonEditableElement.textContent = truncatedValue;
+	      }
+
+	      count++;
+	      // Test for last element and hide the spinner
+	      if (count === totalEntries) {
+		  hideLoadingSpinner();
+	      }
+	  }
+      }
+
+
+      window.addEventListener('load', onLoad);
+      </script>
   </body>
 </html>

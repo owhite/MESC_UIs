@@ -105,7 +105,7 @@ void processLine(char *line) {
   replace_pipe_with_tab(line);
 
   // use ful debugging
-  // g_compSerial->println(line);
+  g_compSerial->println(line);
 
   if (commState == COMM_GET || commState == COMM_IDLE) {
     int count = countCharOccurrences(line, '\t');
