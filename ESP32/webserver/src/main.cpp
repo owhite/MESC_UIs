@@ -1,35 +1,56 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include <LittleFS.h>
-#include <ESPAsyncWebServer.h>
-#include <AsyncTCP.h>  // For ESP32
+#include <AsyncTCP.h>
 #include "processData.h"
+#include "processConfig.h"
 #include "global.h"
 #include "webservice.h"
 #include "blink.h"
 
+// Global variable definitions
 int commState = 0;
 DynamicJsonDocument jsonDoc(5024);
 
 float globalVar2 = 0.0f;
 char globalArray[100] = {0};
 
+// Define global pointers
+HardwareSerial* g_compSerial = nullptr;
+HardwareSerial* g_mescSerial = nullptr;
+AsyncWebSocket* g_webSocket = nullptr;
+
 AsyncWebServer server(80);
 AsyncWebSocket ws("/ws");
 
+// Define the hardware serial object
+#define TX 0
+#define RX 1
+
+HardwareSerial mescSerial(1);
+#define compSerial Serial
+
+String getLocalIPAddress() {
+    return WiFi.localIP().toString();
+}
+
 void setup() {
-    compSerial.begin(115200);
-    mescSerial.begin(115200, SERIAL_8N1, 25, 27);
+  // Initialize the serial ports
+  compSerial.begin(115200);
+  mescSerial.begin(115200, SERIAL_8N1, RX, TX); 
 
-    while (!compSerial) {
-        delay(100);  // Wait for serial port to connect
-    }
+  compSerial.println("Starting setup...");
 
-    compSerial.println("Starting setup...");
+  // Set the global pointers to the correct objects
+  g_compSerial = &compSerial;
+  g_mescSerial = &mescSerial;
+  g_webSocket = &ws;
 
-    initBlinkTask();
-    initProcessData(mescSerial, compSerial, server, ws); 
-    initWebService(compSerial, mescSerial, server, ws);
+  readConfig();
+
+  initBlinkTask();
+  initProcessData(mescSerial, compSerial, server, ws); 
+  initWebService(compSerial, mescSerial, server, ws);
 }
 
 void loop() {}

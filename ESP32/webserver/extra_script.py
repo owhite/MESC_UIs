@@ -1,8 +1,15 @@
+import os
 Import("env")
 
-# Do not run a script when external applications, such as IDEs,
-# dump integration data. Otherwise, input() will block the process
-# waiting for the user input
+def before_build(source, target, env):
+    # Build the LittleFS filesystem image
+    env.Execute("pio run --target buildfs")
+
+def before_upload(source, target, env):
+    # Upload the LittleFS filesystem image
+    env.Execute("pio run --target uploadfs")
 
 env.Execute("python generate_header.py")
+env.AddPreAction("upload", before_build)
+env.AddPreAction("upload", before_upload)
 

@@ -38,7 +38,6 @@ void processData(void *parameter) {
   char ch;
 
   while (true) { // equivalent of loop()
-
     while (g_mescSerial->available()) {
       char incomingByte = g_mescSerial->read();
 
@@ -59,7 +58,6 @@ void processData(void *parameter) {
     for (int i = 0; i < localBufferIndex; i++) {
       if (localBuffer[i] == '\n') {
         localBuffer[i] = '\0';
-
         processLine(localBuffer);
         int remainingLength = localBufferIndex - (i + 1);
         memmove(localBuffer, localBuffer + i + 1, remainingLength);
@@ -70,14 +68,17 @@ void processData(void *parameter) {
 
     if (localBufferIndex > 0 && (millis() - lastReceiveTime) >= SERIAL_TIMEOUT_MS) {
       localBuffer[localBufferIndex] = '\0';
-      processLine(localBuffer);
+      // processLine(localBuffer);
       localBufferIndex = 0;
     }
 
     while (g_compSerial->available()) {
       ch = g_compSerial->read();
+      if (ch == 'g') {
+	// g_mescSerial->write("get\r\n");
+      }
       g_mescSerial->write(ch);
-
+      g_compSerial->write(ch);
     }
 
     vTaskDelay(1 / portTICK_PERIOD_MS);

@@ -1,22 +1,25 @@
+#include <WiFi.h>
 #include "index_html.h"
 #include "webservice.h"
 #include "global.h"
 #include "blink.h"
 
-static AsyncWebSocket* g_webSocket;
-static HardwareSerial* g_compSerial;
-static HardwareSerial* g_mescSerial;
-
 void initWebService(HardwareSerial& compSerial, HardwareSerial& mescSerial, AsyncWebServer& server, AsyncWebSocket& webSocket) {
+
   g_compSerial = &compSerial;
   g_mescSerial = &mescSerial;
   g_webSocket = &webSocket;
 
-  g_compSerial->println("SPIFFS mounted successfully");
+  // Ensure config object is initialized before using it
+  if (strlen(config.password) == 0) {
+    g_compSerial->println("WiFi password not set!");
+    return;
+  }
 
-  WiFi.begin("HouseNextDoor", "ILoveLyra");
+  // Use explicit casts to resolve ambiguity
+  WiFi.begin((const char*)config.ssid, (const char*)config.password);
 
-  g_compSerial->print("Connecting to wifi");
+  g_compSerial->print("Connecting to WiFi");
 
   while (WiFi.status() != WL_CONNECTED) {
     vTaskDelay(1000 / portTICK_PERIOD_MS);
@@ -70,9 +73,15 @@ void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t 
     data[len] = '\0'; // Null-terminate the string
     const char* message = (char*)data;
 
-    g_compSerial->printf("WebSocket message: %s\n", message);
-    g_mescSerial->write(message);
-    g_mescSerial->write("\r\n");
+    if (strcmp(message, "IP") == 0) {
+        g_compSerial->println("IP address: ");
+        g_compSerial->println(WiFi.localIP());
+    }
+    else {
+      g_compSerial->printf("WebSocket message: %s\n", message);
+      g_mescSerial->write(message);
+      g_mescSerial->write("\r\n");
+    }
 }
 
 void webServerTask(void *pvParameter) {

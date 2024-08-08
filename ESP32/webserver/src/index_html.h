@@ -140,8 +140,8 @@
     <h1>MESC Web Cal</h1>
     <div class="tab-container">
       <div class="tab-buttons">
-        <button onclick="openTab('tab1')">Tab 1</button>
-        <button onclick="openTab('tab2')">Tab 2</button>
+        <button onclick="openTab('tab1')">Settings</button>
+        <button onclick="openTab('tab2')">Messages</button>
       </div>
       <div id="tab1" class="tab-content">
         <div id="container1">
@@ -170,7 +170,7 @@
             </tr>
           </table>
           <div style="display: flex; align-items: center;">
-            <button id="updateButton" onclick="sendButtonPress()">UPDATE</button>
+            <button id="updateButton" onclick="updateButtonPress()">UPDATE</button>
           </div>
           <br>
           <br>
@@ -286,14 +286,6 @@
 	      <tr>
 		<td>Vq</td>
 		<td id="Vq_value" class="editable">NaN</td>
-	      </tr>
-	      <tr>
-		<td>TMOS</td>
-		<td id="TMOS_value" class="editable">NaN</td>
-	      </tr>
-	      <tr>
-		<td>TMOT</td>
-		<td id="TMOT_value" class="editable">NaN</td>
 	      </tr>
             </table>
           </div>
@@ -437,14 +429,18 @@
 
           // Ensure the button has the correct ID and event listener
           const updateButton = document.getElementById('updateButton');
-          updateButton.addEventListener('click', sendButtonPress);
+          updateButton.addEventListener('click', updateButtonPress);
       }
 
       function sendCommand() {
-          var command = document.getElementById('command_input').value;
+          var inputBox = document.getElementById('command_input');
+          var command = inputBox.value;
           if (command) {
               websocket.send(command);
               console.log('Sent command:', command);
+              // Clear the input box and reset the placeholder
+              inputBox.value = '';
+              inputBox.placeholder = 'MESC command';
           } else {
               console.warn('No command entered');
           }
@@ -480,7 +476,7 @@
           // Perform additional actions, e.g., sending data to the server
       }
 
-      async function sendButtonPress() {
+      async function updateButtonPress() {
           console.log('Update button pressed');
           showLoadingSpinner(); // Show loading state
           try {

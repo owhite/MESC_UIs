@@ -7,8 +7,11 @@
 #include "processData.h"
 #include "blink.h"  // Include your custom header file
 
+// Define the hardware serial object
 #define compSerial Serial
-#define mescSerial Serial2
+#define TX 0
+#define RX 1
+HardwareSerial mescSerial(1);
 
 // This runs on a ESP32 module, typically with Serial connected
 //   by USB to a computer, and another hardware serial is
@@ -21,8 +24,7 @@
 
 void setup() {
   compSerial.begin(115200);
-  // 25/27 are pins on the ESP32 connected to the F405 UART
-  mescSerial.begin(115200, SERIAL_8N1, 25, 27);
+  mescSerial.begin(115200, SERIAL_8N1, RX, TX); 
 
   initBlinkTask();
   initProcessData(mescSerial, compSerial);

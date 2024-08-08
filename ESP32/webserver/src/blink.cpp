@@ -1,7 +1,8 @@
 #include "blink.h"
 #include <Arduino.h>
 
-#define BLINK_GPIO LED_BUILTIN
+// #define BLINK_GPIO LED_BUILTIN
+#define BLINK_GPIO 3
 
 // Declare the blinkTask function prototype here
 void blinkTask(void *pvParameter);

@@ -1,1 +1,29 @@
-{"Parameter":"Value","adc1":"0","adc1_max":"2700","adc1_min":"600","adc1_pol":"1.000000","adc2_max":"4095","adc2_min":"1200","adc2_pol":"1.000000","can_adc":"11","curr_max":"40.000000","curr_min":"-10.000000","direction":"0","ehz":"-0.198380","enc_angle":"0","enc_counts":"4096","enc_offset":"25000","enc_polarity":"0","error":"16","error_all":"134217744","flux":"0.004500","flux_gain":"0.670820","flux_n_lin":"5000.000000","FOC_angle":"63857","fw_curr":"36.000000","fw_ehz":"0.000000","Hall_flux":"Array[12]","Hall_initialised":"1","hfi_gain":"0.000000","hfi_mod_didq":"0.000000","hfi_type":"0","hfi_volt":"4.000000","i_max":"500.000000","id":"-6.079540"}
+void handleESP32Config(char* localBuffer, int& localBufferIndex, char* serialBuffer, int& bufferIndex) {
+    while (g_compSerial->available()) {
+        char ch = g_compSerial->read();
+        g_compSerial->write(ch);
+
+        if (bufferIndex < BUFFER_SIZE - 1) {
+            serialBuffer[bufferIndex++] = ch;
+            serialBuffer[bufferIndex] = '\0';
+        }
+    }
+
+    if (bufferIndex > 0) {
+        memcat(localBuffer, localBufferIndex, serialBuffer, bufferIndex);
+        localBufferIndex += bufferIndex;
+        bufferIndex = 0;
+        serialBuffer[bufferIndex] = '\0';
+    }
+
+    for (int i = 0; i < localBufferIndex; i++) {
+        if (localBuffer[i] == '\n') {
+            localBuffer[i] = '\0';
+            processConfig(localBuffer);
+            int remainingLength = localBufferIndex - (i + 1);
+            memmove(localBuffer, localBuffer + i + 1, remainingLength);
+            localBufferIndex = remainingLength;
+            i = -1;
+        }
+    }
+}
