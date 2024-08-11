@@ -1,0 +1,18 @@
+let mydata_1 = [];
+let mydata_2 = [];
+let mydata_3 = [];
+
+// WebSocket to receive data
+const ws = new WebSocket('ws://yourserveraddress');
+
+// When data is received
+ws.onmessage = function(event) {
+  let jsonData = JSON.parse(event.data);
+
+  mydata_1 = jsonData['Vbus.V.y1'];
+  mydata_2 = jsonData['Iu.I_phase.y1'];
+  mydata_3 = jsonData['Iv.I_phase.y1'];
+
+  // Optionally log to check conversion
+  console.log(mydata_1, mydata_2, mydata_3);
+};

@@ -101,3 +101,6 @@ enc_angle	0	0	65535	Encoder angle now
 if you cut and paste this into the terminal, it gets parsed and loaded into the web page.
 
 Definitely needs work. 
+
+## Attribution to this charting code:
+https://github.com/SK-SpeedBit/js_chart/tree/master

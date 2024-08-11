@@ -1,0 +1,22 @@
+# Example configuration file
+
+# WiFi settings
+ssid=my_wifi_ssid
+password=my_wifi_password
+
+# Device settings
+device_name=ESP32_Device
+device_location=Living Room
+
+# Network settings
+ip_address=192.168.1.100
+subnet_mask=255.255.255.0
+gateway=192.168.1.1
+
+# Sensor settings
+sensor1_threshold=25.5
+sensor2_threshold=75.0
+
+# Miscellaneous settings
+debug_mode=1
+log_interval=300

@@ -15,16 +15,25 @@
       /* Existing styles... */
       body {
           font-family: Arial, sans-serif;
+	  Color: #000088;
       }
       .tab-container {
           width: 360px;
           align-items: center;
           width: 100%;
+
       }
       .tab-buttons {
-          width: 360px;
-          gap: 10px;
-          margin-bottom: 10px;
+          background-color: #fff;
+	  border: none;
+	  color: white;
+	  padding: 10px 20px;
+	  text-align: center;
+	  text-decoration: none;
+	  display: inline-block;
+	  font-size: 16px;
+	  margin: 4px 2px;
+	  border-radius: 4px;
       }
       .tab-content {
           display: none;
@@ -292,6 +301,8 @@
 	  <br>
 	  <button onclick="sendCommand()">Send</button>
 	  <input type="text" id="command_input" placeholder="MESC command">
+	  <br>
+	  <button onclick="logCommand()">Log</button>
 
         </div>
       </div>
@@ -301,6 +312,7 @@
         </div>
       </div>
     </div>
+    <script type="text/javascript" src="data/js_chart.js"></script>
     <script>
       function openTab(tabId) {
           const tabs = document.querySelectorAll('.tab-content');
@@ -340,22 +352,28 @@
           console.error('WebSocket error:', event);
       }
 
+      function createGraph(data) {
+	  mydata_1 = data['Vbus.V.y1'];
+
+          console.log('create graph', mydata_1);
+      }
+
       function onMessage(event) {
-          console.log('Message received:', event.data);
-          var messagesDiv = document.getElementById('messages');
-          var message = document.createElement('div');
-          message.className = 'message';
-          message.textContent = event.data;
-          messagesDiv.appendChild(message);
-          messagesDiv.scrollTop = messagesDiv.scrollHeight;
-          try {
-              var json = JSON.parse(event.data);
-              updateTable(json);
-          } catch (e) {
-              console.error('Error parsing JSON:', e);
-          }
-          // Hide spinner after table update
-          hideLoadingSpinner();  
+	  try {
+              // Parse the incoming JSON string
+              const data = JSON.parse(event.data);
+
+              // Check if the JSON object contains the "time" key
+              if ('time' in data) {
+		  // If "time" is present, call createGraph()
+		  createGraph(data);
+              } else {
+		  // If "time" is not present, call updateTable()
+		  updateTable(data);
+              }
+	  } catch (error) {
+              console.error("Error parsing JSON:", error);
+	  }
       }
 
       function truncateNumber(value, decimalPlaces) {
@@ -446,6 +464,10 @@
           }
       }
 
+      function logCommand() {
+          websocket.send("log_request");
+      }
+
       function editCell(cell) {
           const currentValue = cell.textContent;
           cell.classList.add('editing');
@@ -503,6 +525,7 @@
 
   </body>
 </html>
+ 
 
     )rawliteral";
 
