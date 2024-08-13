@@ -111,6 +111,18 @@ when you perform 'pio run' it handles some cool things:
 * extra_script.py uploads config.txt to the ESP32
 * generate_header.py converts index.html into a header for the web client. 
 
+## wifi connection
+config.txt contains details for the wifi:
+
+```
+# WiFi settings
+ssid=YOUR_SSID_HERE
+password=YOUR_PASSWORD_HERE
+
+```
+
+It is also possible to set the network and password using the command/serial connection, but that workflow is likely to change. 
+
 ## Special shout out to the javascript graph code
 The enjoyable thing about webservers is the client can do a lot of the work, such as graphing. I grabbed the code from this site to help with charting the results of 'log -fl' from [Jens term](https://github.com/Netzpfuscher). Anyway, this code seems to work with Chrome on my mac as well as android: 
 
