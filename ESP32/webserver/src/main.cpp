@@ -23,7 +23,7 @@ AsyncWebSocket* g_webSocket = nullptr;
 AsyncWebServer server(80);
 AsyncWebSocket ws("/ws");
 
-// Define the hardware serial object
+// Pins to define the hardware serial object
 #define TX 0
 #define RX 1
 
@@ -35,13 +35,11 @@ String getLocalIPAddress() {
 }
 
 void setup() {
-  // Initialize the serial ports
   compSerial.begin(115200);
   mescSerial.begin(115200, SERIAL_8N1, RX, TX); 
 
   compSerial.println("Starting setup...");
 
-  // Set the global pointers to the correct objects
   g_compSerial = &compSerial;
   g_mescSerial = &mescSerial;
   g_webSocket = &ws;

@@ -12,7 +12,7 @@ The programs in this repo are just toys and unlikely to work straight out of the
 
 If you're a fan of the VESC motor controller project, it is conceivable that these could be adapted to work with that system as well but that is untested at this point. 
 
-At present the three functional programs in this repo are app.py, vert.py and headless.py
+At present the functional programs in this repo are:
  * MESC Web Cal, the ESP32 Web Server 
  * app.py runs with 'python3 app.py' and makes a fairly functional web page
  * vert.py is PYQT5 app that can be run using VNC on your android
@@ -23,6 +23,18 @@ headless.py is probably broken at this point
 # MESC Web Cal, the ESP32 Web Server 
 
 Running a webserver on the ESP32. Results are preliminary. Install the ESP32/webserver code using platformio:
+
+The ESP32 pins that connect to the serial are defined into main.cpp:
+```
+#define TX 0
+#define RX 1
+
+HardwareSerial mescSerial(1);
+.
+.
+.
+mescSerial.begin(115200, SERIAL_8N1, RX, TX); 
+```
 
 ```
 $ cd ESP32/webserver/
