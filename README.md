@@ -25,10 +25,11 @@ headless.py is probably broken at this point
 Running a webserver on the ESP32. Results are preliminary. Install the ESP32/webserver code using platformio:
 
 ```
+$ cd ESP32/webserver/
 $ pio run 
 ```
 
-You may need to adjust the platformio.ini file:
+Well, that would be great if it works. You will  need to adjust the platformio.ini file:
 ```
 [env:esp32-c3-devkitm-1]
 platform = espressif32
