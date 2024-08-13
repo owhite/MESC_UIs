@@ -4,11 +4,10 @@
 #include <Arduino.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
+#include "global.h"
 
-#define BUFFER_SIZE 526
 #define SERIAL_TIMEOUT_MS 300
 
-extern char serialBuffer[BUFFER_SIZE];
 extern int bufferIndex;
 extern unsigned long lastReceiveTime;
 

@@ -81,8 +81,8 @@ void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t 
     }
     else if (strcmp(message, "log_request") == 0) {
         g_compSerial->println("log requested ");
-	g_webSocket->textAll(bigString);
-
+	g_mescSerial->write("log -fl\r\n");
+	// commState = COMM_LOG;
     }
     else {
       g_compSerial->printf("WebSocket message: %s\n", message);

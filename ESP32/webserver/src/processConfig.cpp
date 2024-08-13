@@ -5,8 +5,10 @@
 #include "global.h"
 
 Config config;
+char *serialInput = nullptr; 
 
 void initESP32Config() {
+  serialInput = (char *)malloc(BUFFER_SIZE * sizeof(char));
   g_compSerial->println("\nSwitching to ESP32 Configuration" );
   commState = COMM_ESP32;
 }
@@ -113,22 +115,22 @@ void getConfig() {
     g_compSerial->println(config.log_interval);
 }
 
-void handleESP32Config(char* localBuffer, int& localBufferIndex, char* serialBuffer, int& bufferIndex) {
+void handleESP32Config(char* localBuffer, int& localBufferIndex, char* serialInput, int& bufferIndex) {
     while (g_compSerial->available()) {
         char ch = g_compSerial->read();
         g_compSerial->write(ch);
 
         if (bufferIndex < BUFFER_SIZE - 1) {
-            serialBuffer[bufferIndex++] = ch;
-            serialBuffer[bufferIndex] = '\0';
+            serialInput[bufferIndex++] = ch;
+            serialInput[bufferIndex] = '\0';
         }
     }
 
     if (bufferIndex > 0) {
-        memcat(localBuffer, localBufferIndex, serialBuffer, bufferIndex);
+        memcat(localBuffer, localBufferIndex, serialInput, bufferIndex);
         localBufferIndex += bufferIndex;
         bufferIndex = 0;
-        serialBuffer[bufferIndex] = '\0';
+        serialInput[bufferIndex] = '\0';
     }
 
     for (int i = 0; i < localBufferIndex; i++) {

@@ -12,10 +12,15 @@ extern DynamicJsonDocument jsonDoc;
 
 extern int commState;
 
+#define BUFFER_SIZE 526
+#define BIG_BUFFER_SIZE 10000
+
+
 #define COMM_IDLE      0
 #define COMM_GET       1
 #define COMM_SEND      2
-#define COMM_ESP32     3
+#define COMM_LOG       3
+#define COMM_ESP32     4
 
 String getLocalIPAddress();
 

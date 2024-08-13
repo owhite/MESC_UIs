@@ -63,12 +63,32 @@ $ python3 /Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site
 
 ## ESP32
 
-At present I got a webserver running on an ESP32. The results are quite preliminary. Install the ESP32/webserver code using platformio:
+Running a webserver on the ESP32. Results are preliminary. Install the ESP32/webserver code using platformio:
 
 $ pio run 
 
-## Using platformio
-Platformio now has a great serial monitor:
+You may need to adjust the platformio.ini file:
+```
+[env:esp32-c3-devkitm-1]
+platform = espressif32
+board = esp32-c3-devkitm-1
+framework = arduino
+monitor_speed = 115200
+board_build.filesystem = littlefs
+targets = upload
+
+lib_deps =
+    ArduinoJson@6.18.0 ;
+    me-no-dev/AsyncTCP@^1.1.1 ; 
+    me-no-dev/ESP Async WebServer@^1.2.4 ; 
+
+extra_scripts = pre:extra_script.py
+
+```
+Notice the board configuration is set to work with an ESP32-C3. Other configs may be reqiured. 
+
+## Serial interactions
+The ESP32 chip is presumably connected to a USB, and the webserver will stream information to the serial. Connect it up, and platformio now has a great serial monitor:
 
 ```
 $ pio device monitor
@@ -80,27 +100,19 @@ HTTP server started
 
 Open your browswer, go to the IP address: 10.0.1.59, a page will load showing some mesc variables.
 
-Right now the only thing that happens is it parses data that sort of looks like lines from the jen's terminal, for example:
-
+THIS WILL NOT ALWAYS WORK. Sometimes the webserver continues running after reboot, so it does not always report it's IP address. The default is the ESP32 USB connection will report debugging information, but if you type:
 ```
-adc1	0	0	4096	Raw ADC throttle
-adc1_max	2700	0	4096	ADC1 max val
-adc1_min	600	0	4096	ADC1 min val
-adc1_pol	1.000000	-1.00	1.00	ADC1 polarity
-adc2_max	4095	0	4096	ADC2 max val
-adc2_min	1200	0	4096	ADC2 min val
-adc2_pol	1.000000	-1.00	1.00	ADC2 polarity
-can_adc	11	0	254	CAN ADC ID  0=disabled
-curr_max	40.000000	0.00	300.00	Max motor current
-curr_min	-10.000000	-300.00	0.00	Min motor current
-direction	0	0	1	Motor direction
-ehz	0.172152	-inf	inf	Motor electrical hz
-enc_angle	0	0	65535	Encoder angle now
+>
+```
+you can launch a help session. The ESP32-terminal is a WIP, but if you type:
+```
+>
+Switching to ESP32 Configuration
+IP
+IP address: 10.0.1.62
 ```
 
-if you cut and paste this into the terminal, it gets parsed and loaded into the web page.
-
-Definitely needs work. 
+the web server reports on it's IP
 
 ## Attribution to this charting code:
 https://github.com/SK-SpeedBit/js_chart/tree/master

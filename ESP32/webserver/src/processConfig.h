@@ -7,10 +7,8 @@
 #include "global.h"
 #include "processData.h"
 
-#define BUFFER_SIZE 526
-
 void initESP32Config();
-void handleESP32Config(char* localBuffer, int& localBufferIndex, char* serialBuffer, int& bufferIndex);
+void handleESP32Config(char* localBuffer, int& localBufferIndex, char* serialInput, int& bufferIndex);
 void processConfig(char* line);
 void consolidateSpaces(char* input);
 void getConfig();

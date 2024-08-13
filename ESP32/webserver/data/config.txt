@@ -1,5 +1,5 @@
 # WiFi settings
-ssid=HouseNextDoor
+ssid=Love Factory
 password=ILoveLyra
 
 # Device settings
