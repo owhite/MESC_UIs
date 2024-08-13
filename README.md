@@ -140,9 +140,9 @@ webserver/
 ```
 
 when you perform 'pio run' it handles some cool things:
-** it makes sure you have libraries needed, like ArduinoJson, AsyncTCP
-** extra_script.py uploads config.txt to the ESP32
-** generate_header.py converts index.html into a header for the web client. 
+* it makes sure you have libraries needed, like ArduinoJson, AsyncTCP
+* extra_script.py uploads config.txt to the ESP32
+* generate_header.py converts index.html into a header for the web client. 
 
 ## Special shout out to the javascript graph code
 https://github.com/SK-SpeedBit/js_chart/tree/master
