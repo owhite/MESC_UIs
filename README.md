@@ -4,12 +4,6 @@ The purpose of this repo is to demonstrate connections between python programs w
 
 Note: MESC firmware was developed by David Molony, and the terminal and CAN bus communications of MESC was created by [Jens Kerrinnes](https://github.com/Netzpfuscher) Special thanks to both David and Jens. 
 
-The programs in this repo are just toys and unlikely to work straight out of the box. You will need working knowledge of:
- * python and installing python modules
- * [MESC](https://github.com/davidmolony/MESC_Firmware)
- * Message Queuing Telemetry Transport (MQTT) and mosquitto
- * ...and probably android app installation
-
 If you're a fan of the VESC motor controller project, it is conceivable that these could be adapted to work with that system as well but that is untested at this point. 
 
 At present the functional programs in this repo are:
@@ -35,6 +29,7 @@ HardwareSerial mescSerial(1);
 .
 mescSerial.begin(115200, SERIAL_8N1, RX, TX); 
 ```
+My MESC code is set up to connect to UART3. 
 
 ```
 $ cd ESP32/webserver/
@@ -117,11 +112,18 @@ when you perform 'pio run' it handles some cool things:
 * generate_header.py converts index.html into a header for the web client. 
 
 ## Special shout out to the javascript graph code
+The enjoyable thing about webservers is the client can do a lot of the work, such as graphing. I grabbed the code from this site to help with charting the results of 'log -fl' from [Jens term](https://github.com/Netzpfuscher). Anyway, this code seems to work with Chrome on my mac as well as android: 
+
 https://github.com/SK-SpeedBit/js_chart/tree/master
 
 # Raspberry PI support code
 
-These python programs 
+The rest of the programs in this repo are just toys and unlikely to work straight out of the box. You will need working knowledge of:
+ * python and installing python modules
+ * Message Queuing Telemetry Transport (MQTT) and mosquitto
+ * ...and probably android app installation
+
+These programs 
  * send commands over the USB-serial to the MESC controller
  * send commands or grab user parameters embedded in the controller
  * initiate streams of json data containing real time controller information
