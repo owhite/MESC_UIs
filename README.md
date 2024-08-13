@@ -65,7 +65,9 @@ $ python3 /Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site
 
 Running a webserver on the ESP32. Results are preliminary. Install the ESP32/webserver code using platformio:
 
+```
 $ pio run 
+```
 
 You may need to adjust the platformio.ini file:
 ```
