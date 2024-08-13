@@ -116,5 +116,33 @@ IP address: 10.0.1.62
 
 the web server reports on it's IP
 
-## Attribution to this charting code:
+## A note about the files used by pio
+
+```
+webserver/
+├── .pio/                  # PlatformIO build and project files
+│   ├── .pioenvs/          # Environment-specific build folders
+│   └── libdeps/           # Library dependencies for the project
+├── src/                   # Source code files
+│   ├── main.cpp           # Main application file
+│   ├── other_files.cpp    # Other source files
+│   └── index_html.h       # Discussed below
+├── data/                  # Supports LittleFS
+│   ├── config.txt         # Contains password / wifi information
+│   └── index.html         # Converted to index_html.h
+├── include/               # Never used 
+├── lib/                   # Never used
+├── platformio.ini         # PlatformIO configuration file
+├── extra_script.py        # Helps with pre-preprocessing files
+├── generate_header.py     # Helps with pre-preprocessing files
+├── README.md              # Project documentation
+└── .gitignore             # Git ignore file
+```
+
+when you perform 'pio run' it handles some cool things:
+** it makes sure you have libraries needed, like ArduinoJson, AsyncTCP
+** extra_script.py uploads config.txt to the ESP32
+** generate_header.py converts index.html into a header for the web client. 
+
+## Special shout out to the javascript graph code
 https://github.com/SK-SpeedBit/js_chart/tree/master
