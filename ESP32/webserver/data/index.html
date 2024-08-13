@@ -11,7 +11,7 @@
 	  Color: #000088;
       }
       .tab-container {
-          width: 360px;
+          width: 240px;
           align-items: center;
           width: 100%;
 
@@ -36,7 +36,7 @@
           display: block;
       }
       #container1, #container2 {
-          width: 600px;
+          width: 360px;
           background-color: #fff;
           padding: 20px;
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -348,10 +348,26 @@
           console.error('WebSocket error:', event);
       }
 
+      // xxx
       function onMessage(event) {
 	  try {
               // Parse the incoming JSON string
               const data = JSON.parse(event.data);
+
+        // Create a new message element
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message');
+
+        // Format the message
+        messageDiv.textContent = JSON.stringify(data, null, 2); // Pretty-print JSON data
+
+        // Append the message to the #messages div
+        document.getElementById('messages').appendChild(messageDiv);
+
+        // Scroll to the bottom of the #messages div to show the latest message
+        const messagesDiv = document.getElementById('messages');
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
 
               // Check if the JSON object contains the "time" key
               if ('time' in data) {
