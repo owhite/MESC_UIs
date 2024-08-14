@@ -16,7 +16,9 @@ headless.py is probably broken at this point
 
 # MESC Web Cal, the ESP32 Web Server 
 
-Running a webserver on the ESP32. Results are preliminary. Install the ESP32/webserver code using platformio:
+Running a webserver on the ESP32. Results are preliminary. 
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/E1SCVV9bBj0/0.jpg)](https://www.youtube.com/watch?v=E1SCVV9bBj0)
 
 The ESP32 pins that connect to the serial are defined into main.cpp:
 ```
@@ -30,6 +32,8 @@ HardwareSerial mescSerial(1);
 mescSerial.begin(115200, SERIAL_8N1, RX, TX); 
 ```
 My MESC code is set up to connect to UART3. 
+
+Install the ESP32/webserver code using platformio:
 
 ```
 $ cd ESP32/webserver/
@@ -69,11 +73,7 @@ HTTP server started
 
 Open your browswer, go to the IP address: 10.0.1.59, a page will load showing some mesc variables.
 
-THIS WILL NOT ALWAYS WORK. Sometimes the webserver continues running after reboot, so it does not always report it's IP address. The default is the ESP32 USB connection will report debugging information, but if you type:
-```
->
-```
-you can launch a help session. The ESP32-terminal is a WIP, but if you type:
+Getting output from the serial on connection does not always work. Sometimes the webserver continues running after reboot, so it does not always report it's IP address. The default is the ESP32 USB connection will report debugging information, but if you type the '>' character you can launch a help session. The ESP32-terminal is a WIP, but if you type:
 ```
 >
 Switching to ESP32 Configuration
@@ -81,7 +81,19 @@ IP
 IP address: 10.0.1.62
 ```
 
-the web server reports on it's IP
+If you type 'IP' the web server reports it's address. 
+
+## wifi connection
+config.txt contains details for the wifi:
+
+```
+# WiFi settings
+ssid=YOUR_SSID_HERE
+password=YOUR_PASSWORD_HERE
+
+```
+
+It is also possible to set the network and password using the command/serial connection, but that workflow is likely to change. 
 
 ## A note about the files used by pio
 
@@ -110,18 +122,6 @@ when you perform 'pio run' it handles some cool things:
 * it makes sure you have libraries needed, like ArduinoJson, AsyncTCP
 * extra_script.py uploads config.txt to the ESP32
 * generate_header.py converts index.html into a header for the web client. 
-
-## wifi connection
-config.txt contains details for the wifi:
-
-```
-# WiFi settings
-ssid=YOUR_SSID_HERE
-password=YOUR_PASSWORD_HERE
-
-```
-
-It is also possible to set the network and password using the command/serial connection, but that workflow is likely to change. 
 
 ## Special shout out to the javascript graph code
 The enjoyable thing about webservers is the client can do a lot of the work, such as graphing. I grabbed the code from this site to help with charting the results of 'log -fl' from [Jens term](https://github.com/Netzpfuscher). Anyway, this code seems to work with Chrome on my mac as well as android: 

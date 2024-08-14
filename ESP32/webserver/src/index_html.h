@@ -179,7 +179,7 @@
             </tr>
           </table>
           <div style="display: flex; align-items: center;">
-            <button id="updateButton" onclick="updateButtonPress()">UPDATE</button>
+            <button id="updateButton">UPDATE</button>
           </div>
           <br>
           <br>
