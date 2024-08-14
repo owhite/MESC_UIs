@@ -16,7 +16,7 @@ headless.py is probably broken at this point
 
 # MESC Web Cal, the ESP32 Web Server 
 
-Running a webserver on the ESP32. Results are preliminary. 
+Running a webserver on the ESP32. Results are preliminary, have a look at short video:
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/E1SCVV9bBj0/0.jpg)](https://www.youtube.com/watch?v=E1SCVV9bBj0)
 
@@ -124,7 +124,7 @@ when you perform 'pio run' it handles some cool things:
 * generate_header.py converts index.html into a header for the web client. 
 
 ## Special shout out to the javascript graph code
-The enjoyable thing about webservers is the client can do a lot of the work, such as graphing. I grabbed the code from this site to help with charting the results of 'log -fl' from [Jens term](https://github.com/Netzpfuscher). Anyway, this code seems to work with Chrome on my mac as well as android: 
+The enjoyable thing about webservers is the client can do a lot of the work, such as graphing. I grabbed the code from this site to help with charting the results of 'log -fl' from [Jens term](https://github.com/Netzpfuscher). This code seems to work with Chrome on my mac as well as android: 
 
 https://github.com/SK-SpeedBit/js_chart/tree/master
 
