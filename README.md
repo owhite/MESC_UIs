@@ -60,7 +60,7 @@ extra_scripts = pre:extra_script.py
 ```
 Notice the board configuration is set to work with an ESP32-C3. Other configs may be reqiured. 
 
-## Serial interactions
+## ESP32 Serial interactions
 The ESP32 chip is presumably connected to a USB, and the webserver will stream information to the serial. Connect it up, and platformio now has a great serial monitor:
 
 ```
@@ -83,7 +83,7 @@ IP address: 10.0.1.62
 
 If you type 'IP' the web server reports it's address. 
 
-## wifi connection
+## ESP32 wifi connection
 config.txt contains details for the wifi:
 
 ```
@@ -95,7 +95,7 @@ password=YOUR_PASSWORD_HERE
 
 It is also possible to set the network and password using the command/serial connection, but that workflow is likely to change. 
 
-## A note about the files used by pio
+## ESP32 compilation - a note about the files used by pio
 
 ```
 webserver/
@@ -123,7 +123,7 @@ when you perform 'pio run' it handles some cool things:
 * extra_script.py uploads config.txt to the ESP32
 * generate_header.py converts index.html into a header for the web client. 
 
-## Javascript Graphing
+## ESP32 Javascript Graphing
 One enjoyable thing about webservers is the client can do a lot of the work for you -- such as graphing.
 
 There are two variants of the graphing methods that have been tested so far. 
@@ -132,17 +132,17 @@ There are two variants of the graphing methods that have been tested so far.
 
 The code from these sites help with charting the results of 'log -fl' from [Jens term](https://github.com/Netzpfuscher). This code seems to work with Chrome on my mac as well as android. 
 
-My favorite graphing library is plot.ly, and [this](https://owhite.github.io/) is an example of a toy-rendering of a MESC output using that library. The example shown there is static data embedded directly in the page. 
+My favorite graphing library is plot.ly, and [this](https://owhite.github.io/) is an example of a toy-rendering of a MESC output using that library. The example shown there is static data embedded directly in the page. Plotly does a nice job of handling zooming and mouseovers. 
 
 
-# Raspberry PI support code
+# Raspberry PI: MESC UIs
 
-The rest of the programs in this repo are just toys and unlikely to work straight out of the box. You will need working knowledge of:
+The other programs in this repo are just toys and unlikely to work straight out of the box. You will need working knowledge of:
  * python and installing python modules
  * Message Queuing Telemetry Transport (MQTT) and mosquitto
  * ...and probably android app installation
 
-These programs 
+These programs:
  * send commands over the USB-serial to the MESC controller
  * send commands or grab user parameters embedded in the controller
  * initiate streams of json data containing real time controller information
@@ -151,34 +151,6 @@ These programs
  * create matplotlib plots of the data streams
  * handle uploads of both the data and plots to google drive
  
-In general implementation of the code would occur on a raspberry PI (RPI) that is connected to the MESC controller over USB serial and physically traveling with the controller during logging. Instead of using the android as an interface it's conceivable to put a touch screen on the RPI -- I tried using an inexpensive touchscreen on the RPI and hated it. 
+In general implementation of the code would occur on a raspberry PI (RPI) that is connected to the MESC controller over USB serial and physically traveling with the controller during logging. Instead of using the android as an interface it's conceivable to put a touch screen on the RPI -- I tried using an inexpensive touchscreen on the RPI and hated it. Also, in comparison to the ESP32, RPI work is not very interesting. These programs do work nicely on a computer command line for a MESC-configuration system, but so does Jens' term. 
 
-So if you're running a PI and want to connect to it using your smartphone you'll have to get it connect as a hotspot, and if your phone is like mine it wont even tell you the IP address of the PI. That's where this little oled display program comes in. Connect it to the I2C pins of the PI then...
-
-## test the i2c connection:
-$ i2cdetect -y 1
-
-## Launch the progam using supervisor:
-$ cat > /etc/supervisor/conf.d/IP_stats.conf
-```[program:IP_stats]
-command=/usr/bin/python3 /home/pi/RPI_logger/run_at_bootup/oled_stats.py
-autostart=true  
-autorestart=true
-startsecs=5     
-stderr_logfile=/var/log/IP_stats.err.log
-stdout_logfile=/var/log/IP_stats.out.log
-```
-Make this launch at boot:
-
-$ sudo systemctl enable supervisor
-
-If you need to restart:
-
-$ sudo supervisorctl restart IP_stats
-
-## Code cleanup:
-
-Run this to remove unneeded python imports:
-
-$ python3 /Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/autoflake.py  --remove-all-unused-imports --in-place --recursive
 
