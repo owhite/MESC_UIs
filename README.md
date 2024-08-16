@@ -126,7 +126,7 @@ when you perform 'pio run' it handles some cool things:
 ## Javascript Graphing
 One enjoyable thing about webservers is the client can do a lot of the work for you -- such as graphing.
 
-There are two varients of the graphing methods that have been tested so far. 
+There are two variants of the graphing methods that have been tested so far. 
 * [webserver](ESP32/webserver/) is based on [https://github.com/SK-SpeedBit/js_chart](https://github.com/SK-SpeedBit/js_chart)
 * [chart_js](ESP32/chart_js/) is based on [https://www.chartjs.org](https://www.chartjs.org)
 
