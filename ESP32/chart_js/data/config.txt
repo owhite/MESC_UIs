@@ -1,0 +1,14 @@
+# WiFi settings
+ssid=Love Factory
+password=ILoveLyra
+
+# Device settings
+#  all these settings are unused...
+device_name=ESP32_Device
+
+# Sensor settings
+sensor1_threshold=25.5
+
+# Miscellaneous settings
+debug_mode=1
+log_interval=300

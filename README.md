@@ -123,10 +123,15 @@ when you perform 'pio run' it handles some cool things:
 * extra_script.py uploads config.txt to the ESP32
 * generate_header.py converts index.html into a header for the web client. 
 
-## Special shout out to the javascript graph code
-The enjoyable thing about webservers is the client can do a lot of the work, such as graphing. I grabbed the code from this site to help with charting the results of 'log -fl' from [Jens term](https://github.com/Netzpfuscher). This code seems to work with Chrome on my mac as well as android: 
+## Javascript Graphing
+One enjoyable thing about webservers is the client can do a lot of the work for you -- such as graphing.
 
-https://github.com/SK-SpeedBit/js_chart/tree/master
+There are two varients of the graphing methods that have been tested so far. 
+* [webserver](ESP32/webserver/) is based on [https://github.com/SK-SpeedBit/js_chart](https://github.com/SK-SpeedBit/js_chart)
+* [webserver](ESP32/chart_js/) is based on [https://www.chartjs.org](https://www.chartjs.org)
+
+The code from these sites help with charting the results of 'log -fl' from [Jens term](https://github.com/Netzpfuscher). This code seems to work with Chrome on my mac as well as android. 
+
 
 # Raspberry PI support code
 
