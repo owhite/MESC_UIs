@@ -128,7 +128,7 @@ One enjoyable thing about webservers is the client can do a lot of the work for 
 
 There are two varients of the graphing methods that have been tested so far. 
 * [webserver](ESP32/webserver/) is based on [https://github.com/SK-SpeedBit/js_chart](https://github.com/SK-SpeedBit/js_chart)
-* [webserver](ESP32/chart_js/) is based on [https://www.chartjs.org](https://www.chartjs.org)
+* [chart_js](ESP32/chart_js/) is based on [https://www.chartjs.org](https://www.chartjs.org)
 
 The code from these sites help with charting the results of 'log -fl' from [Jens term](https://github.com/Netzpfuscher). This code seems to work with Chrome on my mac as well as android. 
 
