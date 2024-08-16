@@ -132,6 +132,8 @@ There are two variants of the graphing methods that have been tested so far.
 
 The code from these sites help with charting the results of 'log -fl' from [Jens term](https://github.com/Netzpfuscher). This code seems to work with Chrome on my mac as well as android. 
 
+My favorite graphing library is plot.ly, and [this](https://owhite.github.io/) is an example of a toy-rendering of a MESC output using that library. The example shown there is static data embedded directly in the page. 
+
 
 # Raspberry PI support code
 
