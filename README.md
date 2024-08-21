@@ -134,6 +134,13 @@ The code from these sites help with charting the results of 'log -fl' from [Jens
 
 My favorite graphing library is plot.ly, and [this](https://owhite.github.io/) is an example of a toy-rendering of a MESC output using that library. The example shown there is static data embedded directly in the page. Plotly does a nice job of handling zooming and mouseovers. 
 
+## Code issues
+
+Items for improvement:
+* Very little debugging information
+* Serial command line codes are very limited
+* No CAN bus support
+* [ESP32/i2c_testing](ESP32/i2c_testing/) does very little
 
 # Raspberry PI: MESC UIs
 

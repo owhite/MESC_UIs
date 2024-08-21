@@ -12,7 +12,5 @@
 
 void oledTask(void *pvParameter);
 void initOLEDTask(void);
-void testdrawchar(void);
-void testdrawrect(void);
 
 #endif // OLED_HANDLER_H
