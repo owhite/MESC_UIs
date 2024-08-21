@@ -138,9 +138,10 @@ My favorite graphing library is plot.ly, and [this](https://owhite.github.io/) i
 
 Items for improvement:
 * Very little debugging information
-* Serial command line codes are very limited
-* No CAN bus support
-* [ESP32/i2c_testing](ESP32/i2c_testing/) does very little
+** Serial command line codes are very limited
+** Bluetooth communication would be helpful
+** [ESP32/i2c_testing](ESP32/i2c_testing/) is a boring oled display
+* CAN bus support would be cool
 
 # Raspberry PI: MESC UIs
 
