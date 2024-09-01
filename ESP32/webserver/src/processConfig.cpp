@@ -3,6 +3,7 @@
 #include "processData.h"
 #include <LittleFS.h>
 #include "global.h"
+#include "WiFi.h"
 
 Config config;
 char *serialInput = nullptr; 
@@ -62,7 +63,13 @@ void readConfig() {
             } else if (strcmp(key, "sensor1_threshold") == 0) {
                 config.sensor1_threshold = atof(value);
             } else if (strcmp(key, "debug_mode") == 0) {
-                config.debug_mode = atoi(value) != 0;
+	      config.debug_mode = atoi(value) != 0; // ??? 
+            } else if (strcmp(key, "access_point") == 0) {
+	      if (strcmp(value, "1") == 0) {
+		config.access_point = true;
+	      } else {
+		config.access_point = false;
+	      }
             } else if (strcmp(key, "log_interval") == 0) {
                 config.log_interval = atoi(value);
             }
@@ -167,8 +174,14 @@ void processConfig(char* line) {
 	  g_compSerial->println("get entered");
 	  getConfig();
         } else if (strncmp(line, "IP", 2) == 0) {
-	  g_compSerial->print("IP address: ");
-	  g_compSerial->println(getLocalIPAddress());
+	  if (config.access_point) {
+	    g_compSerial->println("Access point IP address: ");
+	    g_compSerial->println(WiFi.softAPIP());
+	  }
+	  else {
+	    g_compSerial->println("IP address: ");
+	    g_compSerial->println(WiFi.localIP());
+	  }
         } else {
             g_compSerial->println("level 0 -- confused");
             g_compSerial->println(line);

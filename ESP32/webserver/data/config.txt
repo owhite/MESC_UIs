@@ -2,6 +2,10 @@
 ssid=Love Factory
 password=ILoveLyra
 
+# ssid=OwenBike
+# password=thing123
+# access_point=1
+
 # Device settings
 #  all these settings are unused...
 device_name=ESP32_Device

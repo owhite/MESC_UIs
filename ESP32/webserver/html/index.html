@@ -36,7 +36,7 @@
           display: block;
       }
       #container1, #container2 {
-          width: 600px;
+          width: 360px;
           background-color: #fff;
           padding: 20px;
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -144,6 +144,7 @@
       <div class="tab-buttons">
         <button onclick="openTab('tab1')">Settings</button>
         <button onclick="openTab('tab2')">Messages</button>
+        <button onclick="openTab('tab3')">Graphing</button>
       </div>
       <div id="tab1" class="tab-content">
         <div id="container1">
@@ -296,13 +297,17 @@
 	  <input type="text" id="command_input" placeholder="MESC command">
 	  <br>
 	  <br>
-	  <button onclick="logCommand()">Log</button>
+	  <button onclick="graphCommand()">Graph</button>
 
         </div>
       </div>
       <div id="tab2" class="tab-content">
         <div id="container2">
           <div id="messages"></div>
+        </div>
+      </div>
+      <div id="tab3" class="tab-content">
+        <div id="container3">
         </div>
       </div>
     </div>
@@ -348,6 +353,10 @@
           console.error('WebSocket error:', event);
       }
 
+      // handles websocket messages coming from webserver
+      //  content is typically json. Look for calls like:
+      //   g_webSocket->textAll(line);
+      // that send content to this function
       function onMessage(event) {
 	  try {
               // Parse the incoming JSON string
@@ -361,6 +370,14 @@
 		  // If "time" is not present, call updateTable()
 		  updateTable(data);
               }
+
+	      // Optionally, append a message to the #messages div
+              const messagesDiv = document.getElementById('messages');
+              const messageElement = document.createElement('div');
+              messageElement.className = 'message';
+              messageElement.textContent = 'Received from MESC: ' + event.data;
+              messagesDiv.appendChild(messageElement);  
+
 	  } catch (error) {
               console.error("Error parsing JSON:", error);
 	  }
@@ -454,8 +471,8 @@
           }
       }
 
-      function logCommand() {
-          websocket.send("log_request");
+      function graphCommand() {
+          websocket.send("graph_request");
       }
 
       function editCell(cell) {

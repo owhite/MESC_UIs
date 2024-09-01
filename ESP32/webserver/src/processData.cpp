@@ -4,6 +4,8 @@
 #include "processData.h"
 #include "processConfig.h"
 
+// chows data from the mesc controller
+
 int bufferIndex = 0;
 unsigned long lastReceiveTime = 0;
 char *serialBuffer = nullptr; 
@@ -46,9 +48,13 @@ void processData(void *parameter) {
       while (g_mescSerial->available()) {
 	char incomingByte = g_mescSerial->read();
 	if (bufferIndex < BIG_BUFFER_SIZE - 1) {
-	  if (incomingByte == '\n') {
+	  if (incomingByte == '\r') {
 	    processLine(serialBuffer);
 	    bufferIndex = 0;
+	  }
+	  else if (incomingByte == 0) {
+	  }
+	  else if (incomingByte == '\n') {
 	  }
 	  else {
 	    serialBuffer[bufferIndex] = incomingByte;
@@ -57,6 +63,7 @@ void processData(void *parameter) {
 	  }
 	}
 	else {
+
 	  g_compSerial->println("broke string length");
 	  g_compSerial->println(bufferIndex);
 	}
@@ -64,11 +71,13 @@ void processData(void *parameter) {
       }
 
       // we're probably here because we're just sitting at the jens prompt
+      //   this section chucks back all the values caught by processLine()
+      //   that's been loaded into jsonDoc()
       if (bufferIndex > 0 && (millis() - lastReceiveTime) >= SERIAL_TIMEOUT_MS) {
 	if (commState == COMM_GET || commState == COMM_IDLE) {
 	  String jsonString; 
 	  serializeJson(jsonDoc, jsonString);
-	  g_webSocket->textAll(jsonString);
+	  g_webSocket->textAll(jsonString); 
 	  jsonDoc.clear();
 	  bufferIndex = 0;
 	}
@@ -78,7 +87,6 @@ void processData(void *parameter) {
       while (g_compSerial->available()) {
 	ch = g_compSerial->read();
 	g_mescSerial->write(ch);
-	g_compSerial->write(ch);
 	if (ch == '>') {
 	  bufferIndex = 0;
 	  localBufferIndex = 0;
@@ -92,21 +100,25 @@ void processData(void *parameter) {
 
 void processLine(char *line) {
 
-  // the user requested a 'log -fl':
   //  avoiding a test for: (commState == COMM_LOG)
-  if (strncmp(line, "{\"time\":", 8) == 0) {
+  if (strncmp(line, "{\"time\":", 8) == 0) { // recieving strings from 'log -fl'
     g_webSocket->textAll(line);
     // commState = COMM_IDLE;
+  }
+  else if (strncmp(line, "{\"adc1\":", 8) == 0) { // recieving strings from 'status json'
+    g_compSerial->printf("LOG: %s\n", line);
   }
   else {
     remove_ansi_escape_sequences(line);
     replace_pipe_with_tab(line);
+    // g_compSerial->println(line);
+
     // this is also avoid testing the communication state
     if (commState == COMM_GET || commState == COMM_IDLE) {
       int count = countCharOccurrences(line, '\t');
 
       if (count == 4) {
-	g_compSerial->println(line);
+	g_compSerial->printf("TERM: %s\n", line);
 
 	char value1[20];
 	char value2[20];
@@ -132,7 +144,6 @@ void processLine(char *line) {
     }
   }
 }
-
 void remove_ansi_escape_sequences(char *data) {
   char buffer[strlen(data) + 1];
   int bufferIndex = 0;

@@ -12,27 +12,41 @@ void initWebService(HardwareSerial& compSerial, HardwareSerial& mescSerial, Asyn
   g_mescSerial = &mescSerial;
   g_webSocket = &webSocket;
 
-  // Ensure config object is initialized before using it
   if (strlen(config.password) == 0) {
     g_compSerial->println("WiFi password not set!");
     return;
   }
 
-  // Use explicit casts to resolve ambiguity
-  WiFi.begin((const char*)config.ssid, (const char*)config.password);
+  if (config.access_point) {
+    // Configure the ESP32 as an Access Point
+    IPAddress local_IP(192,168,4,1);
+    IPAddress gateway(192,168,4,1);
+    IPAddress subnet(255,255,255,0);
 
-  g_compSerial->print("Connecting to WiFi");
+    WiFi.softAPConfig(local_IP, gateway, subnet);
+    WiFi.softAP((const char*)config.ssid, (const char*)config.password);
 
-  while (WiFi.status() != WL_CONNECTED) {
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
-    g_compSerial->print(".");
+    g_compSerial->println("Access Point started");
+    g_compSerial->print("AP IP address: ");
+    g_compSerial->println(WiFi.softAPIP());
+  } else {
+    // Connect to an existing WiFi network
+    WiFi.begin((const char*)config.ssid, (const char*)config.password);
+
+    g_compSerial->print("Connecting to WiFi");
+
+    while (WiFi.status() != WL_CONNECTED) {
+      vTaskDelay(1000 / portTICK_PERIOD_MS);
+      g_compSerial->print(".");
+    }
+
+    g_compSerial->println("");
+    g_compSerial->println("WiFi connected");
+    g_compSerial->print("IP address: ");
+    g_compSerial->println(WiFi.localIP());
   }
 
-  g_compSerial->println("");
-  g_compSerial->println("WiFi connected");
-  g_compSerial->print("IP address: ");
-  g_compSerial->println(WiFi.localIP());
-
+  // Web server setup remains unchanged
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
     handleRoot(request);
   });
@@ -76,11 +90,17 @@ void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t 
     const char* message = (char*)data;
 
     if (strcmp(message, "IP") == 0) {
-        g_compSerial->println("IP address: ");
-        g_compSerial->println(WiFi.localIP());
+	if (config.access_point) {
+	  g_compSerial->println("Access point IP address: ");
+	  g_compSerial->println(WiFi.softAPIP());
+	}
+	else {
+	  g_compSerial->println("IP address: ");
+	  g_compSerial->println(WiFi.localIP());
+	}
     }
-    else if (strcmp(message, "log_request") == 0) {
-        g_compSerial->println("log requested ");
+    else if (strcmp(message, "graph_request") == 0) {
+        g_compSerial->println("log -fl requested");
 	g_mescSerial->write("log -fl\r\n");
 	if (commState == COMM_LOG) {
 	  comm_counter = 0;

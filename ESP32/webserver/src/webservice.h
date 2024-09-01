@@ -11,6 +11,8 @@
 
 void initWebService(HardwareSerial& compSerial, HardwareSerial& mescSerial, AsyncWebServer& server, AsyncWebSocket& webSocket);
 
+void initWebService2(HardwareSerial& compSerial, HardwareSerial& mescSerial, AsyncWebServer& server, AsyncWebSocket& webSocket);
+
 void webServerTask(void *pvParameter);
 void handleRoot(AsyncWebServerRequest *request);
 void handleButtonPress(AsyncWebServerRequest *request);

@@ -25,12 +25,13 @@ extern int commState;
 String getLocalIPAddress();
 
 struct Config {
-    char ssid[32];
-    char password[32];
-    char device_name[32];
-    float sensor1_threshold;
-    bool debug_mode;
-    int log_interval;
+  char ssid[32];
+  char password[32];
+  char device_name[32];
+  float sensor1_threshold;
+  bool debug_mode;
+  bool access_point;
+  int log_interval;
 };
 
 extern Config config;
