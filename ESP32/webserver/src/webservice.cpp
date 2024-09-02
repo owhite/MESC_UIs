@@ -100,15 +100,20 @@ void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t 
 	}
     }
     else if (strcmp(message, "graph_request") == 0) {
-        g_compSerial->println("log -fl requested");
-	g_mescSerial->write("log -fl\r\n");
 	if (commState == COMM_LOG) {
 	  comm_counter = 0;
+	  g_compSerial->println("commState = COMM_IDLE");
 	  commState = COMM_IDLE;
 	}
 	else {
+	  g_compSerial->println("log -fl requested");
+	  g_compSerial->println("commState = COMM_LOG");
+	  g_mescSerial->write("log -fl\r\n"); // call is repeated in webServerTask()
 	  commState = COMM_LOG;
 	}
+    }
+    else if (strcmp(message, "log_request") == 0) {
+      g_compSerial->println("SD card logging requested");
     }
     else {
       g_compSerial->printf("WebSocket message: %s\n", message);
@@ -120,7 +125,8 @@ void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t 
 void webServerTask(void *pvParameter) {
   while (1) {
     if (commState == COMM_LOG) {
-      if (comm_counter > 5) {
+      // continuously update the graph -- should be optional. 
+      if (comm_counter > 5) { 
 	g_mescSerial->write("log -fl\r\n");
 	comm_counter = 0;
       }
