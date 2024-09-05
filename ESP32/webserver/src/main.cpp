@@ -7,6 +7,7 @@
 #include "global.h"
 #include "webservice.h"
 #include "blink.h"
+#include "sd_card.h" // Include the SD card header
 
 // Global variable definitions
 int commState = 0;
@@ -22,6 +23,8 @@ AsyncWebSocket* g_webSocket = nullptr;
 
 AsyncWebServer server(80);
 AsyncWebSocket ws("/ws");
+
+LoggingState sdLoggingState = {false, "", File(), NULL};
 
 // Pins to define the hardware serial object
 #define TX 0
@@ -44,8 +47,8 @@ void setup() {
   g_mescSerial = &mescSerial;
   g_webSocket = &ws;
 
+  initSDCard(compSerial, mescSerial);
   readConfig();
-
   initBlinkTask();
   initProcessData(mescSerial, compSerial, server, ws); 
   initWebService(compSerial, mescSerial, server, ws);
