@@ -47,7 +47,7 @@ void setup() {
   g_mescSerial = &mescSerial;
   g_webSocket = &ws;
 
-  initSDCard(compSerial, mescSerial);
+  // initSDCard(compSerial, mescSerial);
   readConfig();
   initBlinkTask();
   initProcessData(mescSerial, compSerial, server, ws); 

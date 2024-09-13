@@ -26,6 +26,7 @@ extern SemaphoreHandle_t sdLoggingStateMutex;
 
 // Function prototypes
 void initSDCard(HardwareSerial& compSerial, HardwareSerial& mescSerial);
+bool isSDCardStillMounted();
 void sdLoggingTask(void* pvParameters);
 void setLoggingState(bool logging);
 void setLogFileName(const char* name);

@@ -1,3 +1,5 @@
+
+
 // this code was hacked from
 //   https://github.com/thorsten-l/ESP32-TTGO-T4-T10-TestCode.git
 //   to work with my T4-lillygo V1.3 board
@@ -32,7 +34,9 @@ SPIClass sdSPI(VSPI);
 #define IP5306_ADDR 0X75
 #define IP5306_REG_SYS_CTL0 0x00
 
-uint8_t state = 0;
+#define ROW_HEIGHT 30
+
+uint8_t state = 1;
 Button2 *pBtns = nullptr;
 uint8_t g_btns[] = BUTTONS_MAP;
 char buff[512];
@@ -86,7 +90,7 @@ void button_handle(uint8_t gpio) {
 void button_callback(Button2 &b) {
   for (int i = 0; i < sizeof(g_btns) / sizeof(g_btns[0]); ++i) {
     if (pBtns[i] == b) {
-      Serial.printf("btn: %u press\n", pBtns[i].getAttachPin());
+      compSerial.printf("btn: %u press\n", pBtns[i].getAttachPin());
       button_handle(pBtns[i].getAttachPin());
     }
   }
@@ -102,20 +106,20 @@ void button_init() {
 
   pBtns[0].setLongClickHandler([](Button2 &b) {
     int x = tft.width() / 2;
-    int y = tft.height() / 2 - 30;
+    int y = tft.height() / 2 - ROW_HEIGHT;
     int r = digitalRead(TFT_BL);
 
     tft.setTextColor(TFT_GREEN, TFT_BLACK);
     tft.setTextDatum(MC_DATUM);
     tft.fillScreen(TFT_BLACK);
     tft.drawString(r ? "Backlight OFF" : "Backlight ON", x, y);
-    tft.drawString("IP5306 KeepOn ", x - 20, y + 30);
+    tft.drawString("IP5306 KeepOn ", x - 20, y + ROW_HEIGHT);
 
     bool isOk = setPowerBoostKeepOn(1);
     tft.setTextColor(isOk ? TFT_GREEN : TFT_RED, TFT_BLACK);
-    tft.drawString(isOk ? "PASS" : "FAIL", x + 50, y + 30);
+    tft.drawString(isOk ? "PASS" : "FAIL", x + 50, y + ROW_HEIGHT);
     tft.setTextColor(TFT_GREEN, TFT_BLACK);
-    tft.drawString("Press again to wake up", x - 20, y + 30);
+    tft.drawString("Press again to wake up", x - 20, y + ROW_HEIGHT);
 
     delay(6000);
     digitalWrite(TFT_BL, !r);
@@ -139,44 +143,13 @@ void spisd_test() {
     if (!SD.begin(SD_CS, sdSPI)) {
       tft.setTextFont(2);
       tft.setTextColor(TFT_RED, TFT_BLACK);
-      tft.drawString("SDCard MOUNT FAIL", tft.width() / 2,
-		     tft.height() / 2);
+      tft.drawString("SDCard MOUNT FAIL", tft.width() / 2, tft.height() / 2);
     } else {
       uint32_t cardSize = SD.cardSize() / (1024 * 1024);
       String str = "SDCard Size: " + String(cardSize) + "MB";
       tft.setTextFont(2);
       tft.setTextColor(TFT_GREEN, TFT_BLACK);
       tft.drawString(str, tft.width() / 2, tft.height() / 2);
-    }
-    delay(2000);
-  }
-}
-
-void wifi_scan() {
-  tft.setTextColor(TFT_GREEN, TFT_BLACK);
-  tft.fillScreen(TFT_BLACK);
-  tft.setTextDatum(MC_DATUM);
-  tft.setTextFont(2);
-  tft.setTextSize(1);
-
-  tft.drawString("Scan Network", tft.width() / 2, tft.height() / 2);
-
-  WiFi.mode(WIFI_STA);
-  WiFi.disconnect();
-  delay(100);
-
-  int16_t n = WiFi.scanNetworks();
-  tft.fillScreen(TFT_BLACK);
-  if (n == 0) {
-    tft.drawString("no networks found", tft.width() / 2, tft.height() / 2);
-  } else {
-    tft.setTextDatum(TL_DATUM);
-    tft.setCursor(0, 0);
-    Serial.printf("Fount %d net\n", n);
-    for (int i = 0; i < n; ++i) {
-      sprintf(buff, "%2d %s (%d)", i + 1, WiFi.SSID(i).c_str(),
-	      WiFi.RSSI(i));
-      tft.println(buff);
     }
   }
 }
@@ -200,9 +173,26 @@ void setup() {
   pinMode(TFT_BL, OUTPUT);
   digitalWrite(TFT_BL, HIGH);
 
-  spisd_test();
-  button_init();
+  tft.fillScreen(TFT_BLACK);
+  tft.setTextDatum(MC_DATUM);
+  tft.setTextFont(2);
+
+  sdSPI.begin(SD_SCLK, SD_MISO, SD_MOSI, SD_CS);
+
+  if (!SD.begin(SD_CS, sdSPI)) {
+    tft.setTextColor(TFT_GREEN, TFT_BLACK);
+    tft.drawString("SDCard MOUNT FAIL", tft.width() / 2,
+		   tft.height() / 2);
+  } else {
+    uint32_t cardSize = SD.cardSize() / (1024 * 1024);
+    String str = "SDCard Size: " + String(cardSize) + "MB";
+    tft.setTextColor(TFT_GREEN, TFT_BLACK);
+    tft.drawString(str, tft.width() / 2, tft.height() / 2);
+  }
+
   initSDCard(compSerial, mescSerial);
+
+  button_init();
   readConfig();
   initBlinkTask();
   initProcessData(mescSerial, compSerial, server, ws); 
@@ -216,17 +206,25 @@ void loop() {
   switch (state) {
   case 1:
     state = 0;
+    tft.setTextFont(2);
     tft.setTextColor(TFT_GREEN, TFT_BLACK);
     tft.fillScreen(TFT_BLACK);
     tft.setTextDatum(MC_DATUM);
-    tft.drawString("Button 1: wifi scan", tft.width() / 2, tft.height() / 2);
+    tft.drawString("Button 1: status", 0, tft.height() - (3 * ROW_HEIGHT));
+    tft.drawString("Button 2: log", 0, tft.height() - (2 * ROW_HEIGHT));
+    tft.drawString("Button 3: speedo", 0, tft.height() - (1 * ROW_HEIGHT));
+
     if (config.access_point) {
       tft.println(WiFi.softAPIP());
     }
     else {
+      tft.setCursor(0, 0);
+      tft.print("HOST:  ");
+      tft.println(WiFi.gatewayIP());
+      tft.print("CLIENT: ");
       tft.println(WiFi.localIP());
     }
-    // wifi_scan();
+
     break;
   case 2:
     state = 0;

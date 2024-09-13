@@ -50,6 +50,18 @@ void initSDCard(HardwareSerial& compSerial, HardwareSerial& mescSerial) {
   xTaskCreate(sdLoggingTask, "SD Logging Task", 4096, NULL, 1, NULL);  // Create SD logging task
 }
 
+bool isSDCardStillMounted() {
+  // Attempt to open the root directory to verify the SD card is still accessible
+  File testFile = SD.open("/");
+  if (!testFile) {
+    g_compSerial->println("SD card is no longer accessible.");
+    return false;
+  }
+
+  testFile.close();
+  return true;
+}
+
 void sdLoggingTask(void* pvParameters) {
   LoggingRequest request;
     

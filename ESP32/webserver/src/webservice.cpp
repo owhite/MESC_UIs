@@ -1,7 +1,7 @@
 #include <WiFi.h>
 #include "index_html.h"
 #include "webservice.h"
-#include "sd_card.h"
+// #include "sd_card.h"
 #include "global.h"
 #include "blink.h"
 
@@ -90,7 +90,7 @@ void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t 
     data[len] = '\0';  // Null-terminate the string
     const char* message = (char*)data;
 
-    LoggingRequest request;
+    // LoggingRequest request;
 
     if (strcmp(message, "IP") == 0) {
         // Handle IP request...
@@ -100,19 +100,19 @@ void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t 
     }
     else if (strcmp(message, "log_start") == 0) {
         g_compSerial->println("Starting logging...");
-        request.commandType = LOG_START;
-        xQueueSend(loggingQueue, &request, portMAX_DELAY);
+        // request.commandType = LOG_START;
+        // xQueueSend(loggingQueue, &request, portMAX_DELAY);
     }
     else if (strcmp(message, "log_stop") == 0) {
         g_compSerial->println("Stopping logging...");
-        request.commandType = LOG_STOP;
-        xQueueSend(loggingQueue, &request, portMAX_DELAY);
+        // request.commandType = LOG_STOP;
+        // xQueueSend(loggingQueue, &request, portMAX_DELAY);
     }
     else if (strcmp(message, "log_add_line") == 0) {
         g_compSerial->println("Adding line to log...");
-        request.commandType = LOG_ADD_LINE;
-        request.logLine = "Sample log line\n";  // Replace with dynamic content if needed
-        xQueueSend(loggingQueue, &request, portMAX_DELAY);
+        // request.commandType = LOG_ADD_LINE;
+        // request.logLine = "Sample log line\n";  // Replace with dynamic content if needed
+        // xQueueSend(loggingQueue, &request, portMAX_DELAY);
     }
     else {
         g_compSerial->printf("WebSocket message: %s\n", message);

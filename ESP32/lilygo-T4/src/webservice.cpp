@@ -18,34 +18,19 @@ void initWebService(HardwareSerial& compSerial, HardwareSerial& mescSerial, Asyn
     return;
   }
 
-  if (config.access_point) {
-    // Configure the ESP32 as an Access Point
-    IPAddress local_IP(192,168,4,1);
-    IPAddress gateway(192,168,4,1);
-    IPAddress subnet(255,255,255,0);
+  WiFi.begin((const char*)config.ssid, (const char*)config.password);
 
-    WiFi.softAPConfig(local_IP, gateway, subnet);
-    WiFi.softAP((const char*)config.ssid, (const char*)config.password);
+  g_compSerial->print("Connecting to WiFi");
 
-    g_compSerial->println("Access Point started");
-    g_compSerial->print("AP IP address: ");
-    g_compSerial->println(WiFi.softAPIP());
-  } else {
-    // Connect to an existing WiFi network
-    WiFi.begin((const char*)config.ssid, (const char*)config.password);
-
-    g_compSerial->print("Connecting to WiFi");
-
-    while (WiFi.status() != WL_CONNECTED) {
-      vTaskDelay(1000 / portTICK_PERIOD_MS);
-      g_compSerial->print(".");
-    }
-
-    g_compSerial->println("");
-    g_compSerial->println("WiFi connected");
-    g_compSerial->print("IP address: ");
-    g_compSerial->println(WiFi.localIP());
+  while (WiFi.status() != WL_CONNECTED) {
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
+    g_compSerial->print(".");
   }
+
+  g_compSerial->println("");
+  g_compSerial->println("WiFi connected");
+  g_compSerial->print("IP address: ");
+  g_compSerial->println(WiFi.localIP());
 
   // Web server setup remains unchanged
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -90,7 +75,7 @@ void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t 
     data[len] = '\0';  // Null-terminate the string
     const char* message = (char*)data;
 
-    LoggingRequest request;
+    // LoggingRequest request;
 
     if (strcmp(message, "IP") == 0) {
         // Handle IP request...
@@ -100,19 +85,19 @@ void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t 
     }
     else if (strcmp(message, "log_start") == 0) {
         g_compSerial->println("Starting logging...");
-        request.commandType = LOG_START;
-        xQueueSend(loggingQueue, &request, portMAX_DELAY);
+        // request.commandType = LOG_START;
+        // xQueueSend(loggingQueue, &request, portMAX_DELAY);
     }
     else if (strcmp(message, "log_stop") == 0) {
         g_compSerial->println("Stopping logging...");
-        request.commandType = LOG_STOP;
-        xQueueSend(loggingQueue, &request, portMAX_DELAY);
+        // request.commandType = LOG_STOP;
+        // xQueueSend(loggingQueue, &request, portMAX_DELAY);
     }
     else if (strcmp(message, "log_add_line") == 0) {
         g_compSerial->println("Adding line to log...");
-        request.commandType = LOG_ADD_LINE;
-        request.logLine = "Sample log line\n";  // Replace with dynamic content if needed
-        xQueueSend(loggingQueue, &request, portMAX_DELAY);
+        // request.commandType = LOG_ADD_LINE;
+        // request.logLine = "Sample log line\n";  // Replace with dynamic content if needed
+        // xQueueSend(loggingQueue, &request, portMAX_DELAY);
     }
     else {
         g_compSerial->printf("WebSocket message: %s\n", message);
