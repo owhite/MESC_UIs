@@ -4,6 +4,8 @@ ssid=OwenBike
 password=thing123
 
 # Device settings
+MAC=84:fc:e6:01:08:50
+
 #  all these settings are unused...
 device_name=ESP32_Device
 

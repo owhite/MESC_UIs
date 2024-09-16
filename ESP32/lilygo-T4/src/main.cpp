@@ -1,5 +1,3 @@
-
-
 // this code was hacked from
 //   https://github.com/thorsten-l/ESP32-TTGO-T4-T10-TestCode.git
 //   to work with my T4-lillygo V1.3 board
@@ -7,7 +5,6 @@
 //   held in /lib
 
 #include <Arduino.h>
-#include "T4_V13.h"
 #include <WiFi.h>
 #include <LittleFS.h>
 #include <AsyncTCP.h>
@@ -16,12 +13,12 @@
 #include <SPI.h>
 #include <TFT_eSPI.h>
 #include <Wire.h>
+#include <esp_wifi.h>
 
-#include "processData.h"
+#include "T4_V13.h"
+#include "espnowservice.h"
 #include "processConfig.h"
 #include "global.h"
-#include "webservice.h"
-#include "blink.h"
 #include "sd_card.h" // Include the SD card header
 
 // used by buttons -- wonder if it's in conflict with other threads
@@ -154,6 +151,19 @@ void spisd_test() {
   }
 }
 
+void readMacAddress(){
+  uint8_t baseMac[6];
+  esp_err_t ret = esp_wifi_get_mac(WIFI_IF_STA, baseMac);
+  if (ret == ESP_OK) {
+    Serial.println("my mac address");
+    Serial.printf("%02x:%02x:%02x:%02x:%02x:%02x\n",
+                  baseMac[0], baseMac[1], baseMac[2],
+                  baseMac[3], baseMac[4], baseMac[5]);
+  } else {
+    Serial.println("Failed to read MAC address");
+  }
+}
+
 void setup() {
   compSerial.begin(115200);
   mescSerial.begin(115200);
@@ -190,14 +200,14 @@ void setup() {
     tft.drawString(str, tft.width() / 2, tft.height() / 2);
   }
 
-  initSDCard(compSerial, mescSerial);
-
   button_init();
   readConfig();
-  initBlinkTask();
-  initProcessData(mescSerial, compSerial, server, ws); 
-  initWebService(compSerial, mescSerial, server, ws);
 
+  initSDCard(compSerial, mescSerial);
+  initESPNow();
+
+  readMacAddress();
+  
   Wire.begin(I2C_SDA, I2C_SCL);
   btnscanT.attach_ms(30, button_loop);
 }
@@ -219,10 +229,23 @@ void loop() {
     }
     else {
       tft.setCursor(0, 0);
-      tft.print("HOST:  ");
+      tft.print("REMOTE:  ");
       tft.println(WiFi.gatewayIP());
-      tft.print("CLIENT: ");
+      tft.print("LOCAL: ");
       tft.println(WiFi.localIP());
+
+      uint8_t primaryChan;
+      wifi_second_chan_t secondChan;
+
+      // Get the current WiFi channel
+      esp_wifi_get_channel(&primaryChan, &secondChan);
+
+      // Print the primary channel and secondary channel info
+      tft.print("Primary WiFi Channel: ");
+      tft.println(primaryChan);
+      tft.print("Secondary Channel: ");
+      tft.println(secondChan == WIFI_SECOND_CHAN_NONE ? "None" : (secondChan == WIFI_SECOND_CHAN_ABOVE ? "Above" : "Below"));
+
     }
 
     break;

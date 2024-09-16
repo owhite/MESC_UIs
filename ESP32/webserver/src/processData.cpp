@@ -1,5 +1,7 @@
 #include <Arduino.h>
 #include <AsyncWebSocket.h>
+#include <esp_now.h>
+#include <esp_wifi.h>
 #include "global.h"
 #include "processData.h"
 #include "processConfig.h"
@@ -28,14 +30,7 @@ void initProcessData(HardwareSerial& mescSerial, HardwareSerial& compSerial, Asy
 	      );
 }
 
-void *memcat(void *dest, size_t dest_len, const void *src, size_t src_len) {
-  void *concat_position = (char *)dest + dest_len;
-  memcpy(concat_position, src, src_len);
-  return dest;
-}
-
 void processData(void *parameter) {
-  // char localBuffer[BIG_BUFFER_SIZE];
   localBuffer = (char *)malloc(BIG_BUFFER_SIZE * sizeof(char));
 
   int localBufferIndex = 0;
@@ -98,6 +93,36 @@ void processData(void *parameter) {
   }
 }
 
+void sendESPNowString(const char* message) {
+  // size_t length = strlen(message); 
+  // esp_err_t result = esp_now_send(config.MAC, (uint8_t*)message, length);
+
+  if (esp_now_is_peer_exist(config.MAC)) {
+    g_compSerial->println("Peer exists, sending message...");
+  }
+
+  const char *thing = "Hello ESP-NOW";
+  esp_err_t result = esp_now_send(config.MAC, (uint8_t *)thing, strlen(thing));
+
+  uint8_t primaryChan;
+  wifi_second_chan_t secondChan;
+
+  // Get the current WiFi channel
+  esp_wifi_get_channel(&primaryChan, &secondChan);
+
+  // Print the primary channel and secondary channel info
+  g_compSerial->print("Primary WiFi Channel: ");
+  g_compSerial->println(primaryChan);
+  g_compSerial->print("Secondary Channel: ");
+  g_compSerial->println(secondChan == WIFI_SECOND_CHAN_NONE ? "None" : (secondChan == WIFI_SECOND_CHAN_ABOVE ? "Above" : "Below"));
+
+  if (result == ESP_OK) {
+    g_compSerial->println("ESP-now msg sent");
+  } else {
+    g_compSerial->println("ESP-now msg not sent");
+  }
+}
+
 void processLine(char *line) {
 
   //  avoiding a test for: (commState == COMM_LOG)
@@ -107,6 +132,7 @@ void processLine(char *line) {
   }
   else if (strncmp(line, "{\"adc1\":", 8) == 0) { // recieving strings from 'status json'
     g_compSerial->printf("LOG: %s\n", line);
+    sendESPNowString(line);
   }
   else {
     remove_ansi_escape_sequences(line);

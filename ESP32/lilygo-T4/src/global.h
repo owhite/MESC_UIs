@@ -28,6 +28,8 @@ struct Config {
   char ssid[32];
   char password[32];
   char device_name[32];
+  char MAC_str[32];
+  uint8_t MAC[6];
   float sensor1_threshold;
   bool debug_mode;
   bool access_point;
