@@ -4,6 +4,7 @@
 #include <ArduinoJson.h>
 #include <HardwareSerial.h>
 #include <ESPAsyncWebServer.h>
+#include <WiFiUdp.h>
 
 extern float globalVar2;
 extern char globalArray[100];
@@ -24,12 +25,16 @@ extern int commState;
 
 String getLocalIPAddress();
 
+extern WiFiUDP udp; 
+
 struct Config {
   char ssid[32];
   char password[32];
   char device_name[32];
-  char MAC_str[32];
-  uint8_t MAC[6];
+  char remote_IP[32];
+  uint8_t remote_IP_array[4];
+  char local_IP[32];
+  uint8_t local_IP_array[4];
   float sensor1_threshold;
   bool debug_mode;
   bool access_point;

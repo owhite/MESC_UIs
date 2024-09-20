@@ -56,10 +56,12 @@ void readConfig() {
 	strncpy(config.ssid, value, sizeof(config.ssid) - 1);
       } else if (strcmp(key, "password") == 0) {
 	strncpy(config.password, value, sizeof(config.password) - 1);
-      } else if (strcmp(key, "MAC") == 0) {
-	strncpy(config.MAC_str, value, sizeof(config.MAC_str) - 1);
-	// Convert config.MAC to byte array and add peer
-	parseMAC(config.MAC_str, config.MAC);
+      } else if (strcmp(key, "remote_IP") == 0) {
+	strncpy(config.remote_IP, value, sizeof(config.remote_IP) - 1);
+	parseIPAddress(config.remote_IP, config.remote_IP_array);
+      } else if (strcmp(key, "local_IP") == 0) {
+	strncpy(config.local_IP, value, sizeof(config.local_IP) - 1);
+	parseIPAddress(config.local_IP, config.local_IP_array);
       } else if (strcmp(key, "device_name") == 0) {
 	strncpy(config.device_name, value, sizeof(config.device_name) - 1);
       } else if (strcmp(key, "sensor1_threshold") == 0) {
@@ -82,6 +84,21 @@ void readConfig() {
   LittleFS.end();
 }
 
+void parseIPAddress(const char* ipStr, uint8_t* ipArray) {
+  char ipCopy[16];
+  strncpy(ipCopy, ipStr, sizeof(ipCopy) - 1);
+  ipCopy[sizeof(ipCopy) - 1] = '\0';
+
+  // Tokenize and convert each part of the IP address
+  char* token = strtok(ipCopy, ".");
+  int i = 0;
+  while (token != NULL && i < 4) {
+    ipArray[i] = atoi(token);  // Convert string to integer
+    token = strtok(NULL, ".");
+    i++;
+  }
+}
+
 int countCharOccurrences(const char* str, char ch) {
   int count = 0;
   while (*str) {
@@ -91,15 +108,6 @@ int countCharOccurrences(const char* str, char ch) {
     str++;
   }
   return count;
-}
-
-void parseMAC(const char* macStr, uint8_t* mac) {
-  int values[6];
-  if (sscanf(macStr, "%x:%x:%x:%x:%x:%x", &values[0], &values[1], &values[2], &values[3], &values[4], &values[5]) == 6) {
-    for (int i = 0; i < 6; ++i) {
-      mac[i] = (uint8_t)values[i];
-    }
-  }
 }
 
 void writeConfig() {

@@ -294,18 +294,15 @@
           </div>
 	  <br>
 	  <button onclick="sendCommand()">Send</button>
-	  <input type="text" id="command_input" placeholder="MESC command">
+	  <input type="text" id="send_command_input" placeholder="MESC command">
 	  <br>
 	  <br>
-	  <button onclick="logCommand()">CMD</button>
+	  <button onclick="logSetName()">Name</button>
+	  <input type="text" id="log_set_name" placeholder="log file name">
 	  <br>
-	  <button onclick="logStart()">SRT</button>
+	  <button onclick="logStart()">LOG_SRT</button>
 	  <br>
-	  <button onclick="logStop()">STP</button>
-	  <br>
-	  <button onclick="logAddLine()">ADD</button>
-
-
+	  <button onclick="logStop()">LOG_STP</button>
         </div>
       </div>
       <div id="tab2" class="tab-content">
@@ -367,6 +364,10 @@
       //   g_webSocket->textAll(line);
       // that send content to this function
       function onMessage(event) {
+	  const messagesDiv = document.getElementById('messages');
+	  const messageElement = document.createElement('div');
+	  messageElement.className = 'message';
+
 	  try {
               // Parse the incoming JSON string
               const data = JSON.parse(event.data);
@@ -380,16 +381,16 @@
 		  updateTable(data);
               }
 
-	      // Optionally, append a message to the #messages div
-              const messagesDiv = document.getElementById('messages');
-              const messageElement = document.createElement('div');
-              messageElement.className = 'message';
-              messageElement.textContent = 'Received from MESC: ' + event.data;
-              messagesDiv.appendChild(messageElement);  
-
+              // Append a message to the #messages div indicating JSON was received
+              messageElement.textContent = 'Received JSON: ' + event.data;
 	  } catch (error) {
-              console.error("Error parsing JSON:", error);
+              // Handle non-JSON strings
+	      //   it's not really an error
+              messageElement.textContent = 'Received from nonJSON ' + event.data;
 	  }
+
+	  // Append the message element to the #messages div in both cases
+	  messagesDiv.appendChild(messageElement);
       }
 
       function truncateNumber(value, decimalPlaces) {
@@ -446,9 +447,14 @@
 
       function onLoad(event) {
           initWebSocket();
-          document.getElementById('command_input').addEventListener('keydown', function(event) {
+          document.getElementById('send_command_input').addEventListener('keydown', function(event) {
               if (event.key === 'Enter') {
                   sendCommand();
+              }
+          });
+          document.getElementById('log_set_name').addEventListener('keydown', function(event) {
+              if (event.key === 'Enter') {
+                  logSetName();
               }
           });
           const tables = document.querySelectorAll('table');
@@ -467,11 +473,12 @@
       }
 
       function sendCommand() {
-          var inputBox = document.getElementById('command_input');
+          var inputBox = document.getElementById('send_command_input');
           var command = inputBox.value;
           if (command) {
-              websocket.send(command);
-              console.log('Sent command:', command);
+	      var cmd = "MESC: " + command;
+              websocket.send(cmd);
+              console.log('Sent command:', cmd);
               // Clear the input box and reset the placeholder
               inputBox.value = '';
               inputBox.placeholder = 'MESC command';
@@ -480,24 +487,33 @@
           }
       }
 
-      function graphCommand() {
-          console.log('Send graph_request:');
-          websocket.send("graph_request");
+      function logSetName() {
+          var inputBox = document.getElementById('log_set_name');
+          var command = inputBox.value;
+          if (command) {
+	      var cmd = "LOG_NAME: " + command;
+              websocket.send(cmd);
+              console.log('Set log name:', cmd);
+              inputBox.value = '';
+              inputBox.placeholder = 'log file name';
+          } else {
+              console.warn('No command entered');
+          }
       }
 
-      function logCommand() {
-          console.log('Send log_command:');
-          websocket.send("log_request");
+      function graphCommand() {
+          console.log('Send graph_request:');
+          websocket.send("GRAPH_REQUEST:");
       }
 
       function logStart() {
           console.log('Send log_start:');
-          websocket.send("log_start");
+          websocket.send("LOG_START:");
       }
 
       function logStop() {
           console.log('Send log_stop:');
-          websocket.send("log_stop");
+          websocket.send("LOG_STOP:");
       }
 
       function logAddLine() {

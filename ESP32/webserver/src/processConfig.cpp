@@ -1,5 +1,4 @@
 #include "processConfig.h"
-#include "processData.h"
 #include <LittleFS.h>
 #include "global.h"
 #include "WiFi.h"
@@ -53,14 +52,17 @@ void readConfig() {
       while (*value == ' ') value++;
 
       // Assign values to the corresponding fields
+      //  not very elaborate
       if (strcmp(key, "ssid") == 0) {
 	strncpy(config.ssid, value, sizeof(config.ssid) - 1);
       } else if (strcmp(key, "password") == 0) {
 	strncpy(config.password, value, sizeof(config.password) - 1);
-      } else if (strcmp(key, "MAC") == 0) {
-	strncpy(config.MAC_str, value, sizeof(config.MAC_str) - 1);
-	// Convert config.MAC to byte array and add peer
-	parseMAC(config.MAC_str, config.MAC);
+      } else if (strcmp(key, "remote_IP") == 0) {
+	strncpy(config.remote_IP, value, sizeof(config.remote_IP) - 1);
+	parseIPAddress(config.remote_IP, config.remote_IP_array);
+      } else if (strcmp(key, "local_IP") == 0) {
+	strncpy(config.local_IP, value, sizeof(config.local_IP) - 1);
+	parseIPAddress(config.local_IP, config.local_IP_array);
       } else if (strcmp(key, "device_name") == 0) {
 	strncpy(config.device_name, value, sizeof(config.device_name) - 1);
       } else if (strcmp(key, "sensor1_threshold") == 0) {
@@ -83,13 +85,30 @@ void readConfig() {
   LittleFS.end();
 }
 
-void parseMAC(const char* macStr, uint8_t* mac) {
-  int values[6];
-  if (sscanf(macStr, "%x:%x:%x:%x:%x:%x", &values[0], &values[1], &values[2], &values[3], &values[4], &values[5]) == 6) {
-    for (int i = 0; i < 6; ++i) {
-      mac[i] = (uint8_t)values[i];
-    }
+void parseIPAddress(const char* ipStr, uint8_t* ipArray) {
+  char ipCopy[16];
+  strncpy(ipCopy, ipStr, sizeof(ipCopy) - 1);
+  ipCopy[sizeof(ipCopy) - 1] = '\0';
+
+  // Tokenize and convert each part of the IP address
+  char* token = strtok(ipCopy, ".");
+  int i = 0;
+  while (token != NULL && i < 4) {
+    ipArray[i] = atoi(token);  // Convert string to integer
+    token = strtok(NULL, ".");
+    i++;
   }
+}
+
+int countCharOccurrences(const char* str, char ch) {
+  int count = 0;
+  while (*str) {
+    if (*str == ch) {
+      count++;
+    }
+    str++;
+  }
+  return count;
 }
 
 void writeConfig() {
@@ -181,18 +200,27 @@ void processConfig(char* line) {
 
   if (count > 3) {
     g_compSerial->print("too many variables");
-  } else if (count == 0) {
+  }
+  else if (count == 0) {
     if (strncmp(line, "save", 4) == 0) {
       g_compSerial->println("save entered");
-    } else if (strncmp(line, "help", 4) == 0) {
+    }
+    else if (strncmp(line, "help", 4) == 0) {
       g_compSerial->println("help entered");
-    } else if (strncmp(line, "exit", 4) == 0) {
+    }
+    else if (strncmp(line, "exit", 4) == 0) {
       g_compSerial->println("exit entered");
       commState = COMM_IDLE;
-    } else if (strncmp(line, "get", 3) == 0) {
-      g_compSerial->println("get entered");
+    }
+    else if (strncmp(line, "quit", 4) == 0) {
+      g_compSerial->println("quit entered");
+      commState = COMM_IDLE;
+    }
+    else if (strncmp(line, "get", 3) == 0) {
+      g_compSerial->println("get entered"); // should show all config variables
       getConfig();
-    } else if (strncmp(line, "IP", 2) == 0) {
+    }
+    else if (strncmp(line, "IP", 2) == 0) {
       if (config.access_point) {
 	g_compSerial->println("Access point IP address: ");
 	g_compSerial->println(WiFi.softAPIP());
@@ -205,7 +233,8 @@ void processConfig(char* line) {
       g_compSerial->println("level 0 -- confused");
       g_compSerial->println(line);
     }
-  } else if (count == 1) {
+  }
+  else if (count == 1) {
     g_compSerial->print("spaces: ");
     g_compSerial->println(count);
     g_compSerial->println(line);
@@ -221,15 +250,15 @@ void processConfig(char* line) {
 	value2[sizeof(value2) - 1] = '\0';
       }
     }
-    if (strncmp(value1, "get", 3) == 0) {
+    if (strncmp(value1, "get", 3) == 0) { // should make a call to mesc
       g_compSerial->print("cmd: get ");
-      g_compSerial->print(value2);
-      g_compSerial->println(" Doesn't work :)");
-    } else {
+    }
+    else {
       g_compSerial->print("command not recognized: ");
       g_compSerial->println(value1);
     }
-  } else if (count == 2) {
+  }
+  else if (count == 2) {
     char* token = strtok(line, " ");
     if (token != NULL) {
       strncpy(value1, token, sizeof(value1) - 1);
@@ -255,11 +284,13 @@ void processConfig(char* line) {
 	strcpy(config.password, value3);
       }
 	    
-    } else {
+    }
+    else {
       g_compSerial->print("command not recognized: ");
       g_compSerial->println(value1);
     }
-  } else {
+  }
+  else {
     g_compSerial->println("confusion about input");
     g_compSerial->println(line);
   }

@@ -4,7 +4,8 @@ ssid=OwenBike
 password=thing123
 
 # Device settings
-MAC=84:fc:e6:01:08:50
+remote_IP=100.168.4.1
+local_IP=100.168.4.11
 
 #  all these settings are unused...
 device_name=ESP32_Device

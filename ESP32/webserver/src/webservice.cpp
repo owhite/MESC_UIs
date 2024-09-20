@@ -5,6 +5,12 @@
 #include "global.h"
 
 int comm_counter = 0;
+const uint16_t localPort = 1234; 
+const uint16_t remote_Port = 1234;
+
+IPAddress remote_IP;
+WiFiUDP udpReceiver;
+WiFiUDP udpSender;
 
 void initWebService(HardwareSerial& compSerial, HardwareSerial& mescSerial, AsyncWebServer& server, AsyncWebSocket& webSocket) {
 
@@ -20,9 +26,11 @@ void initWebService(HardwareSerial& compSerial, HardwareSerial& mescSerial, Asyn
 
   if (config.access_point) {
     // Configure the ESP32 as an Access Point
-    IPAddress local_IP(192,168,4,1);
-    IPAddress gateway(192,168,4,1);
+    IPAddress local_IP(config.local_IP_array[0], config.local_IP_array[1], config.local_IP_array[2], config.local_IP_array[3]);
+    IPAddress gateway(192,168,1,1);
     IPAddress subnet(255,255,255,0);
+
+  remote_IP = IPAddress(config.remote_IP_array[0], config.remote_IP_array[1], config.remote_IP_array[2], config.remote_IP_array[3]);
 
     WiFi.softAPConfig(local_IP, gateway, subnet);
     WiFi.softAP((const char*)config.ssid, (const char*)config.password, 6);//
@@ -86,40 +94,94 @@ void initWebService(HardwareSerial& compSerial, HardwareSerial& mescSerial, Asyn
 
   // Start a FreeRTOS task to manage the web server
   xTaskCreate(webServerTask, "Web Server Task", 8192, NULL, 1, NULL);
+  xTaskCreate(udpReceiveTask, "UDP Send Task", 4096, NULL, 1, NULL);
+}
+
+void udpReceiveTask(void *pvParameter) {
+  udpReceiver.begin(localPort);
+  Serial.printf("UDP Receiver listening on port %d\n", localPort);
+
+  while (1) {
+    int packetSize = udpReceiver.parsePacket();
+    if (packetSize) {
+      char incomingPacket[255];
+      int len = udpReceiver.read(incomingPacket, 255);
+      if (len > 0) {
+        incomingPacket[len] = 0;  // Null-terminate packet
+        Serial.printf("Received UDP packet: %s\n", incomingPacket);
+      }
+    }
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+  }
+}
+
+void udpSend(char *message) {
+  // Serial.printf("Send UDP: %s to IP: %s, port: %d\n", message, remote_IP.toString().c_str(), remote_Port);
+
+  udpSender.beginPacket(remote_IP, remote_Port);
+  udpSender.printf("%s", message);
+  udpSender.endPacket();
 
 }
 
 // WebSocket message handler
 void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t len) {
-    data[len] = '\0';  // Null-terminate the string
-    const char* message = (char*)data;
+  data[len] = '\0';  // Null-terminate the string
+  char* message = (char*)data;
 
-    if (strcmp(message, "IP") == 0) {
-        // Handle IP request...
+  // Variables to handle the log name extraction
+  char my_str[100];  // Array to hold the extracted log name
+  char* spacePtr = NULL;
+  int spaceCount = 0;
+
+  // Count spaces and find the first space
+  for (char* p = (char*)message; *p != '\0'; p++) {
+    if (*p == ' ') {
+      spaceCount++;
+      if (spaceCount == 1) {
+        spacePtr = p;
+      }
     }
-    else if (strcmp(message, "graph_request") == 0) {
-        // Handle graph request...
-    }
-    else if (strcmp(message, "log_start") == 0) {
-        g_compSerial->println("Starting logging...");
-    }
-    else if (strcmp(message, "log_stop") == 0) {
-        g_compSerial->println("Stopping logging...");
-    }
-    else if (strcmp(message, "log_add_line") == 0) {
-        g_compSerial->println("Adding line to log...");
-    }
-    else {
-        g_compSerial->printf("WebSocket message: %s\n", message);
-        g_mescSerial->write(message);
-        g_mescSerial->write("\r\n");
-    }
+  }
+
+  if (strncmp(message, "MESC:", 5) == 0 && spacePtr) {
+    strcpy(my_str, spacePtr + 1); 
+    my_str[sizeof(my_str) - 1] = '\0'; 
+
+    g_compSerial->printf("WebSocket to MESC: %s\n", my_str);
+    g_mescSerial->write(my_str);
+    g_mescSerial->write("\r\n");
+  }
+  else if (strncmp(message, "LOG_NAME:", 9) == 0 && spacePtr) {
+    strcpy(my_str, spacePtr + 1); 
+    my_str[sizeof(my_str) - 1] = '\0'; 
+    g_compSerial->printf("Setting log name: %s\n", my_str);
+    udpSend(message);
+  }
+  else if (strncmp(message, "LOG_START:", 10) == 0) {
+    udpSend(message);
+    vTaskDelay(300 / portTICK_PERIOD_MS); // no idea if this is realistic
+    g_compSerial->println("Start logging...");
+    logState = LOG_REQUEST_GET;
+  }
+  else if (strncmp(message, "LOG_STOP:", 9) == 0) {
+    g_compSerial->println("...stop logging");
+    logState = LOG_REQUEST_IDLE;
+    udpSend(message);
+  }
+  else if (strncmp(message, "GRAPH_REQUEST:", 15) == 0) {
+    g_compSerial->println("graphing");
+    commState = COMM_GRAPH;
+  }
+  else {
+    g_compSerial->println("strange websocket message");
+  }
 }
 
 // Task to manage web server (runs in a FreeRTOS task)
 void webServerTask(void *pvParameter) {
   while (1) {
-    if (commState == COMM_LOG) {
+    if (commState == COMM_GRAPH) {
       // Continuously update the graph -- should be optional.
       if (comm_counter > 5) { 
         g_mescSerial->write("log -fl\r\n");
@@ -127,6 +189,25 @@ void webServerTask(void *pvParameter) {
       }
       comm_counter++;
     }
+    // this switch helps deal with multiple methods that can
+    //   request logging. 
+    switch(logState)
+      {
+      case LOG_REQUEST_GET:
+	g_mescSerial->write("get\r\n");
+	logState = LOG_GET;
+	break;
+      case LOG_REQUEST_JSON:
+	g_mescSerial->write("status json\r\n");
+	logState = LOG_JSON;
+	break;
+      case LOG_REQUEST_IDLE:
+	g_mescSerial->write("status stop\r\n");
+	logState = LOG_IDLE;
+	break;
+      default:
+	break;
+      }
     vTaskDelay(100 / portTICK_PERIOD_MS);
   }
 }

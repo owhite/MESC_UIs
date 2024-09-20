@@ -1,66 +1,60 @@
-  if (!SD.begin(SD_CS, sdSPI)) {
-    //  if (isSDCardStillMounted()) {
-    tft.setTextColor(TFT_GREEN, TFT_BLACK);
-    tft.drawString("SDCard MOUNT FAIL", tft.width() / 2,
-		   tft.height() / 2);
+#include <WiFi.h>
+#include <WiFiUdp.h>
+
+Create a function taht will be a separate ESP32 task called initUDPService(). The ssid is set with the variable config.ssid, the password is set with config.password. The IP address will be fixed, and set with config.local_IP. Besure to also create this as a task:
+
+void initUDPService() {
+  // start Wifi
+  // set IP address
+  // start a FreeRTOS task
+  xTaskCreate(udpTask, "ESP-NOW Task", 4096, NULL, 1, NULL);
+}
+
+void udpTask(void *pvParameter) {
+  while (1) {
+    vTaskDelay(100 / portTICK_PERIOD_MS);  // Delay to prevent blocking other tasks
+  }
+}
+
+
+  WiFi.begin((const char*)config.ssid, (const char*)config.password);
+
+  // Wait for the WiFi connection to be established
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(100);
+    Serial.print("Connecting to ");
+    Serial.println(config.ssid);
+  }
+  Serial.println("Connected to WiFi");
+
+  if (esp_now_add_peer(&peerInfo) != ESP_OK) {
+    Serial.println("Failed to add peer");
   } else {
-    uint32_t cardSize = SD.cardSize() / (1024 * 1024);
-    String str = "SDCard Size: " + String(cardSize) + "MB";
-    tft.setTextColor(TFT_GREEN, TFT_BLACK);
-    tft.drawString(str, tft.width() / 2, tft.height() / 2);
+    Serial.println("Peer added");
   }
 
+  // Optionally, start a FreeRTOS task for ESP-NOW communication
+  xTaskCreate(espNowTask, "ESP-NOW Task", 4096, NULL, 1, NULL);
+}
 
-  if (csState == LOW) {
-    uint32_t cardSize = SD.cardSize() / (1024 * 1024);
-    tft.setTextColor(TFT_GREEN, TFT_BLACK);
-    tft.drawString("CARD MOUNTED", tft.width() / 2, tft.height() / 2);
-  } else {
-    tft.setTextColor(TFT_GREEN, TFT_BLACK);
-    tft.drawString("SDCard MOUNT FAIL", tft.width() / 2,
-		   tft.height() / 2);
+// Task to manage ESP-NOW communication
+void espNowTask(void *pvParameter) {
+  while (1) {
+    // ESP-NOW communication can be processed here
+    // This loop will keep running for ESP-NOW-related tasks
+    vTaskDelay(100 / portTICK_PERIOD_MS);  // Delay to prevent blocking other tasks
   }
+}
 
-  // sdSPI.begin(SD_SCLK, SD_MISO, SD_MOSI, SD_CS);
+// ESP-NOW Send and Receive Callback functions
+void onDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
+  Serial.println(status == ESP_NOW_SEND_SUCCESS ? "ESP-NOW Send Success" : "ESP-NOW Send Fail");
+}
 
-
-  compSerial.begin(115200);
-  mescSerial.begin(115200, SERIAL_8N1, RX, TX); 
-  case 4:
-    state = 0;
-    tft.fillScreen(TFT_BLACK);
-    tft.setTextDatum(MC_DATUM);
-    tft.drawString("Undefined function", tft.width() / 2, tft.height() / 2);
-    break;
-
-
-
-
-120 _ 95 :: 120
-3:
-121 V 86 :: 121
-3:
-122 d 100 :: 122
-3:
-123 q 113 :: 123
-3:
-124 _ 95 :: 124
-3:
-125 q 113 :: 125
-1:
-␛[3`␛[36mflux_n_lin␛[15`␛[37m| ␛[32m5000.000000␛[35`␛[37m| 0.00␛[46`␛[37m| 10000.00␛[57`␛[37m| Fl4096.00␛[57`␛[37m| FOC_Vdq_q
- 13 :: 125
-2:
-0 
- 10 :: 125
-1:
-␛[3`␛[36mflux_n_lin␛[15`␛[37m| ␛[32m5000.000000␛[35`␛[37m| 0.00␛[46`␛[37m| 10000.00␛[57`␛[37m| Fl4096.00␛[57`␛[37m| FOC_Vdq_q
- 13 :: 125
-2:
-0 
- 10 :: 125
-3:
-1 ␛ 27 :: 1
-3:
-2 [ 91 :: 2
-3:
+void onDataRecv(const uint8_t *mac_addr, const uint8_t *data, int len) {
+  Serial.print("Received ESP-NOW data: ");
+  for (int i = 0; i < len; i++) {
+    Serial.write(data[i]);
+  }
+  Serial.println();
+}

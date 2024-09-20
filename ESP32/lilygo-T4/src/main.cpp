@@ -13,14 +13,11 @@
 #include <SPI.h>
 #include <TFT_eSPI.h>
 #include <Wire.h>
-#include <esp_wifi.h>
-
 #include "T4_V13.h"
-#include "espnowservice.h"
+#include "udpService.h"
 #include "processConfig.h"
 #include "global.h"
-#include "sd_card.h" // Include the SD card header
-
+#include "sd_card.h"
 // used by buttons -- wonder if it's in conflict with other threads
 #include <Ticker.h> 
 
@@ -151,19 +148,6 @@ void spisd_test() {
   }
 }
 
-void readMacAddress(){
-  uint8_t baseMac[6];
-  esp_err_t ret = esp_wifi_get_mac(WIFI_IF_STA, baseMac);
-  if (ret == ESP_OK) {
-    Serial.println("my mac address");
-    Serial.printf("%02x:%02x:%02x:%02x:%02x:%02x\n",
-                  baseMac[0], baseMac[1], baseMac[2],
-                  baseMac[3], baseMac[4], baseMac[5]);
-  } else {
-    Serial.println("Failed to read MAC address");
-  }
-}
-
 void setup() {
   compSerial.begin(115200);
   mescSerial.begin(115200);
@@ -204,10 +188,8 @@ void setup() {
   readConfig();
 
   initSDCard(compSerial, mescSerial);
-  initESPNow();
+  initUDPService();
 
-  readMacAddress();
-  
   Wire.begin(I2C_SDA, I2C_SCL);
   btnscanT.attach_ms(30, button_loop);
 }
@@ -229,23 +211,17 @@ void loop() {
     }
     else {
       tft.setCursor(0, 0);
-      tft.print("REMOTE:  ");
-      tft.println(WiFi.gatewayIP());
-      tft.print("LOCAL: ");
+      tft.print("REMOTE: ");
+      tft.print(config.remote_IP_array[0]);
+      tft.print(".");
+      tft.print(config.remote_IP_array[1]);
+      tft.print(".");
+      tft.print(config.remote_IP_array[2]);
+      tft.print(".");
+      tft.println(config.remote_IP_array[3]);
+
+      tft.print("LOCAL:  ");
       tft.println(WiFi.localIP());
-
-      uint8_t primaryChan;
-      wifi_second_chan_t secondChan;
-
-      // Get the current WiFi channel
-      esp_wifi_get_channel(&primaryChan, &secondChan);
-
-      // Print the primary channel and secondary channel info
-      tft.print("Primary WiFi Channel: ");
-      tft.println(primaryChan);
-      tft.print("Secondary Channel: ");
-      tft.println(secondChan == WIFI_SECOND_CHAN_NONE ? "None" : (secondChan == WIFI_SECOND_CHAN_ABOVE ? "Above" : "Below"));
-
     }
 
     break;

@@ -16,7 +16,6 @@ void initProcessData(HardwareSerial& mescSerial, HardwareSerial& compSerial, Asy
 void processData(void *parameter);
 void processLine(char *line);
 void processConfig(char *line); 
-int countCharOccurrences(const char* str, char ch);
 void remove_ansi_escape_sequences(char *data);
 void replace_pipe_with_tab(char *data);
 void sendESPNowString(const char* message);

@@ -7,7 +7,8 @@ password=thing123
 access_point=1
 
 # Device settings
-MAC=34:98:7A:B9:22:2C
+remote_IP=100.168.4.11
+local_IP=100.168.4.1
 
 #  all these settings are unused...
 device_name=ESP32_Device
