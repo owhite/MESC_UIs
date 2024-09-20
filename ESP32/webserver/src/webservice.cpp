@@ -118,6 +118,12 @@ void udpReceiveTask(void *pvParameter) {
 void udpSend(char *message) {
   // Serial.printf("Send UDP: %s to IP: %s, port: %d\n", message, remote_IP.toString().c_str(), remote_Port);
 
+  Serial.printf("Message size: %d\n", strlen(message));
+  if (strlen(message) > 1000) {
+    Serial.println("Message is too large for a single UDP packet.");
+    return;
+  }
+
   udpSender.beginPacket(remote_IP, remote_Port);
   udpSender.printf("%s", message);
   udpSender.endPacket();

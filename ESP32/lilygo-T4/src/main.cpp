@@ -15,6 +15,7 @@
 #include <Wire.h>
 #include "T4_V13.h"
 #include "udpService.h"
+// #include "tcpService.h"
 #include "processConfig.h"
 #include "global.h"
 #include "sd_card.h"
@@ -189,6 +190,7 @@ void setup() {
 
   initSDCard(compSerial, mescSerial);
   initUDPService();
+  // initTCPService();
 
   Wire.begin(I2C_SDA, I2C_SCL);
   btnscanT.attach_ms(30, button_loop);

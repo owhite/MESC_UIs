@@ -16,6 +16,9 @@ extern DynamicJsonDocument jsonDoc;
 
 extern int commState;
 extern int logState;
+
+// extern WiFiServer tcpServer;
+
 extern WiFiUDP udpReceiver;
 extern WiFiUDP udpSender;
 

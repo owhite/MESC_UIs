@@ -85,6 +85,11 @@ void processData(void *parameter) {
 	// One case for being here, we  may have completed receiving "get" results from user
 	//   if the user is logging, send the get results to udp
 	if (logState == LOG_GET) {
+	  g_compSerial->println("GET RESULTS OUTGOING");
+	  g_compSerial->write((char*)jsonString.c_str()); 
+	  g_compSerial->println();
+	  udpSend((char*)"GET RESULTS INCOMING"); 
+	  // this will choke on long strings :-( 
 	  udpSend((char*)jsonString.c_str()); 
 	  // sent the results so request to start gathering json
 	  logState = LOG_REQUEST_JSON; 
@@ -123,6 +128,7 @@ void processLine(char *line) {
     g_compSerial->printf("%d: LOG: %s\n", logState, line);
     // send to udp if user is logging
     if (logState == LOG_JSON) {
+      g_compSerial->printf("send\n", logState, line);
       udpSend(line);
     }
   }
