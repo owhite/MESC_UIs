@@ -37,9 +37,9 @@ void udpReceiveTask(void *pvParameter) {
   while (1) {
     int packetSize = udpReceiver.parsePacket();
     if (packetSize) {
-      char incomingPacket[255];
-      int len = udpReceiver.read(incomingPacket, 255);
+      char incomingPacket[2000];
       // This chokes on long strings
+      int len = udpReceiver.read(incomingPacket, 2000);
       if (len > 0) {
         incomingPacket[len] = 0;  // Null-terminate packet
         Serial.printf("Received UDP packet: %s\n", incomingPacket);

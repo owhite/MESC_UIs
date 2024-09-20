@@ -7,7 +7,7 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include <LittleFS.h>
-#include <AsyncTCP.h>
+// #include <AsyncTCP.h>
 #include <Button2.h>
 #include <SD.h>
 #include <SPI.h>
@@ -15,7 +15,6 @@
 #include <Wire.h>
 #include "T4_V13.h"
 #include "udpService.h"
-// #include "tcpService.h"
 #include "processConfig.h"
 #include "global.h"
 #include "sd_card.h"

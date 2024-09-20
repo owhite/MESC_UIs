@@ -25,9 +25,6 @@ extern int commState;
 
 String getLocalIPAddress();
 
-// extern WiFiUDP udp; 
-extern WiFiServer tcpServer;
-
 struct Config {
   char ssid[32];
   char password[32];
