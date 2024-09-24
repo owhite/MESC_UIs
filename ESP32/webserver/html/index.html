@@ -173,7 +173,7 @@
             </tr>
           </table>
           <div style="display: flex; align-items: center;">
-            <button id="updateButton" onclick="updateButtonPress()">UPDATE</button>
+            <button id="updateButton" onclick="updateButtonPress()">UPDATE</updateButton>
           </div>
           <br>
           <br>
@@ -555,7 +555,7 @@
           console.log('Update button pressed');
           showLoadingSpinner(); // Show loading state
           try {
-              const response = await fetch('/button');
+              const response = await fetch('/updateButton');
               const data = await response.text();
               console.log('Response from server:', data);
           } catch (error) {

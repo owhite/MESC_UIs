@@ -30,7 +30,8 @@ void initWebService(HardwareSerial& compSerial, HardwareSerial& mescSerial, Asyn
     IPAddress gateway(192,168,1,1);
     IPAddress subnet(255,255,255,0);
 
-  remote_IP = IPAddress(config.remote_IP_array[0], config.remote_IP_array[1], config.remote_IP_array[2], config.remote_IP_array[3]);
+  remote_IP = IPAddress(config.remote_IP_array[0], config.remote_IP_array[1],
+			config.remote_IP_array[2], config.remote_IP_array[3]);
 
     WiFi.softAPConfig(local_IP, gateway, subnet);
     WiFi.softAP((const char*)config.ssid, (const char*)config.password, 6);//
@@ -61,8 +62,8 @@ void initWebService(HardwareSerial& compSerial, HardwareSerial& mescSerial, Asyn
     handleRoot(request);
   });
 
-  server.on("/button", HTTP_GET, [](AsyncWebServerRequest *request) {
-    handleButtonPress(request);
+  server.on("/updateButton", HTTP_GET, [](AsyncWebServerRequest *request) {
+    updateButtonPress(request);
   });
 
   server.addHandler(&webSocket);  // Attach WebSocket to server
@@ -92,11 +93,47 @@ void initWebService(HardwareSerial& compSerial, HardwareSerial& mescSerial, Asyn
     }
   });
 
-  // Start a FreeRTOS task to manage the web server
   xTaskCreate(webServerTask, "Web Server Task", 8192, NULL, 1, NULL);
   xTaskCreate(udpReceiveTask, "UDP Send Task", 4096, NULL, 1, NULL);
 }
 
+// this is a looping task that handles state changes
+void webServerTask(void *pvParameter) {
+  while (1) {
+    if (commState == COMM_GRAPH) {
+      // Continuously update the graph -- should be optional.
+      if (comm_counter > 5) { 
+        g_mescSerial->write("log -fl\r\n");
+        comm_counter = 0;
+      }
+      comm_counter++;
+    }
+    // this switch helps deal with multiple methods that can
+    //   request logging. 
+    switch(logState)
+      {
+      case LOG_REQUEST_GET:
+	g_mescSerial->write("get\r\n");
+	logState = LOG_GET;
+	break;
+      case LOG_REQUEST_JSON:
+	g_mescSerial->write("status json\r\n");
+	logState = LOG_JSON;
+	break;
+      case LOG_REQUEST_IDLE:
+	g_mescSerial->write("status stop\r\n");
+	logState = LOG_IDLE;
+	break;
+      default:
+	break;
+      }
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+  }
+}
+
+// The ESP32 creates a wifi network, and application
+//   opens a udp service to get messages from the network
+//   results in changes to commState
 void udpReceiveTask(void *pvParameter) {
   udpReceiver.begin(localPort);
   Serial.printf("UDP Receiver listening on port %d\n", localPort);
@@ -109,6 +146,21 @@ void udpReceiveTask(void *pvParameter) {
       if (len > 0) {
         incomingPacket[len] = 0;  // Null-terminate packet
         Serial.printf("Received UDP packet: %s\n", incomingPacket);
+	if (strncmp(incomingPacket, "LOG_START:", 10) == 0) {
+	  g_compSerial->println("Start logging...");
+	  // pausing to let mesc communication work
+	  // no idea if this is realistic
+	  vTaskDelay(300 / portTICK_PERIOD_MS); 
+	  logState = LOG_REQUEST_GET;
+	}
+	else if (strncmp(incomingPacket, "LOG_STOP:", 9) == 0) {
+	  g_compSerial->println("...stop logging");
+	  logState = LOG_REQUEST_IDLE;
+	}
+	else {
+	  g_compSerial->print("unexpected udp message ");
+	  g_compSerial->println(incomingPacket);
+	}
       }
     }
     vTaskDelay(100 / portTICK_PERIOD_MS);
@@ -116,14 +168,14 @@ void udpReceiveTask(void *pvParameter) {
 }
 
 void udpSend(char *message) {
-  // Serial.printf("Send UDP: %s to IP: %s, port: %d\n", message, remote_IP.toString().c_str(), remote_Port);
-
   udpSender.beginPacket(remote_IP, remote_Port);
   udpSender.printf("%s", message);
   udpSender.endPacket();
 }
 
-// WebSocket message handler
+// websocket message handler
+//  application opens a webserver. user sends messages from the browswer
+//  results in (among other things) changing the commState
 void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t len) {
   data[len] = '\0';  // Null-terminate the string
   char* message = (char*)data;
@@ -159,8 +211,9 @@ void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t 
   }
   else if (strncmp(message, "LOG_START:", 10) == 0) {
     udpSend(message);
-    vTaskDelay(300 / portTICK_PERIOD_MS); // no idea if this is realistic
     g_compSerial->println("Start logging...");
+    // pausing to let mesc communication work, no idea if this is realistic
+    vTaskDelay(300 / portTICK_PERIOD_MS); 
     logState = LOG_REQUEST_GET;
   }
   else if (strncmp(message, "LOG_STOP:", 9) == 0) {
@@ -170,44 +223,15 @@ void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t 
   }
   else if (strncmp(message, "GRAPH_REQUEST:", 15) == 0) {
     g_compSerial->println("graphing");
-    commState = COMM_GRAPH;
+    if (commState != COMM_GRAPH) {
+      commState = COMM_GRAPH;
+    }
+    else {
+      commState = COMM_IDLE;
+    }
   }
   else {
-    g_compSerial->println("strange websocket message");
-  }
-}
-
-// Task to manage web server (runs in a FreeRTOS task)
-void webServerTask(void *pvParameter) {
-  while (1) {
-    if (commState == COMM_GRAPH) {
-      // Continuously update the graph -- should be optional.
-      if (comm_counter > 5) { 
-        g_mescSerial->write("log -fl\r\n");
-        comm_counter = 0;
-      }
-      comm_counter++;
-    }
-    // this switch helps deal with multiple methods that can
-    //   request logging. 
-    switch(logState)
-      {
-      case LOG_REQUEST_GET:
-	g_mescSerial->write("get\r\n");
-	logState = LOG_GET;
-	break;
-      case LOG_REQUEST_JSON:
-	g_mescSerial->write("status json\r\n");
-	logState = LOG_JSON;
-	break;
-      case LOG_REQUEST_IDLE:
-	g_mescSerial->write("status stop\r\n");
-	logState = LOG_IDLE;
-	break;
-      default:
-	break;
-      }
-    vTaskDelay(100 / portTICK_PERIOD_MS);
+    g_compSerial->println("unexpected websocket message");
   }
 }
 
@@ -216,8 +240,8 @@ void handleRoot(AsyncWebServerRequest *request) {
   request->send_P(200, "text/html", index_html);
 }
 
-// Handle button press
-void handleButtonPress(AsyncWebServerRequest *request) {
+// Handle web browser button press
+void updateButtonPress(AsyncWebServerRequest *request) {
   g_compSerial->println("Update requested");
   processButtonPress();
   request->send(200, "text/plain", "Update requested");

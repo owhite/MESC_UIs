@@ -11,7 +11,7 @@
 extern int bufferIndex;
 extern unsigned long lastReceiveTime;
 
-void initProcessData(HardwareSerial& mescSerial, HardwareSerial& compSerial, AsyncWebServer& webServer, AsyncWebSocket& webSocket);
+void initProcessData(HardwareSerial& compSerial, HardwareSerial& mescSerial, AsyncWebServer& webServer, AsyncWebSocket& webSocket);
 
 void processData(void *parameter);
 void processLine(char *line);

@@ -16,6 +16,7 @@ void udpSend(char *line);
 void handleRoot(AsyncWebServerRequest *request);
 void handleButtonPress(AsyncWebServerRequest *request);
 void processCommand(const char* command);
+void updateButtonPress(AsyncWebServerRequest *request);
 void processButtonPress();
 void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t len);
 

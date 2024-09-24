@@ -6,6 +6,11 @@
 Config config;
 char *serialInput = nullptr; 
 
+// manages operations with the config file 
+//   -gathers input from USB serial, in processConfig()
+//   -more sophisticated commands are possible, just a framework
+//      where commands like "set password" can be enabled
+
 void initESP32Config() {
   serialInput = (char *)malloc(BUFFER_SIZE * sizeof(char));
   g_compSerial->println("\nSwitching to ESP32 Configuration" );

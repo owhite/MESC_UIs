@@ -5,5 +5,6 @@
 
 void initUDPService();
 void udpReceiveTask(void *pvParameter);
+void udpSend(char *line);
 
 #endif // UDPSERVICE_H

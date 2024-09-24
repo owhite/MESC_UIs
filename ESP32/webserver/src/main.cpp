@@ -41,9 +41,8 @@ void setup() {
   g_mescSerial = &mescSerial;
   g_webSocket = &ws;
 
-
   readConfig();
-  initProcessData(mescSerial, compSerial, server, ws); 
+  initProcessData(compSerial, mescSerial, server, ws); 
   initWebService(compSerial, mescSerial, server, ws);
 }
 

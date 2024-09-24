@@ -5,17 +5,16 @@
 #include <HardwareSerial.h>
 #include <ESPAsyncWebServer.h>
 #include <WiFiUdp.h>
-
-extern float globalVar2;
-extern char globalArray[100];
+#include <TFT_eSPI.h>
+#include "sd_card.h"
 
 extern DynamicJsonDocument jsonDoc;
-
 extern int commState;
+
+extern TFT_eSPI tft;
 
 #define BUFFER_SIZE 526
 #define BIG_BUFFER_SIZE 10000
-
 
 #define COMM_IDLE      0
 #define COMM_GET       1
@@ -43,12 +42,14 @@ extern Config config;
 
 struct LoggingState {
     bool isLogging;
-    String fileName;
+    char fileName[32];
     File fileHandle;
     SemaphoreHandle_t mutex;  // Protect access to shared state
 };
 
+extern bool refreshDisplay;
 extern LoggingState sdLoggingState;
+extern LoggingRequest globalRequest;
 
 extern AsyncWebSocket* g_webSocket;
 extern HardwareSerial* g_mescSerial; 

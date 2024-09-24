@@ -21,7 +21,7 @@ unsigned long lastReceiveTime = 0;
 char *serialBuffer = nullptr; 
 char *localBuffer = nullptr; 
 
-void initProcessData(HardwareSerial& mescSerial, HardwareSerial& compSerial, AsyncWebServer& server, AsyncWebSocket& webSocket) {
+void initProcessData(HardwareSerial& compSerial, HardwareSerial& mescSerial, AsyncWebServer& server, AsyncWebSocket& webSocket) {
   g_mescSerial = &mescSerial;
   g_compSerial = &compSerial;
   g_webSocket = &webSocket;
@@ -84,6 +84,9 @@ void processData(void *parameter) {
 
 	// One case for being here, we  may have completed receiving "get" results from user
 	//   if the user is logging, send the get results to udp
+	g_compSerial->print("LOG STATE: ");
+	g_compSerial->println(logState);
+
 	if (logState == LOG_GET) {
 	  g_compSerial->write((char*)jsonString.c_str()); 
 	  g_compSerial->println();
@@ -123,7 +126,7 @@ void processLine(char *line) {
   }
   // mesc sent a string from the command 'status json'
   else if (strncmp(line, "{\"adc1\":", 8) == 0) { 
-    g_compSerial->printf("%d: LOG: %s\n", logState, line);
+    // g_compSerial->printf("%d: LOG: %s\n", logState, line);
     // send to udp if user is logging
     if (logState == LOG_JSON) {
       udpSend(line);

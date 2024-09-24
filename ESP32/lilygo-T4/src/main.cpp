@@ -7,7 +7,6 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include <LittleFS.h>
-// #include <AsyncTCP.h>
 #include <Button2.h>
 #include <SD.h>
 #include <SPI.h>
@@ -24,13 +23,16 @@
 TFT_eSPI tft = TFT_eSPI(); 
 
 SPIClass sdSPI(VSPI);
+LoggingRequest globalRequest;
 
 #define IP5306_ADDR 0X75
 #define IP5306_REG_SYS_CTL0 0x00
 
 #define ROW_HEIGHT 30
 
-uint8_t state = 1;
+bool refreshDisplay = true;
+uint8_t lastButton = 1; 
+
 Button2 *pBtns = nullptr;
 uint8_t g_btns[] = BUTTONS_MAP;
 char buff[512];
@@ -62,18 +64,37 @@ bool setPowerBoostKeepOn(int en) {
   return Wire.endTransmission() == 0;
 }
 
-void button_handle(uint8_t gpio) {
+void buttonHandle(uint8_t gpio) {
   switch (gpio) {
   case BUTTON_1: {
-    state = 1;
+    globalRequest.commandType = LOG_START;
+    
+    if (xQueueSend(loggingQueue, &globalRequest, portMAX_DELAY) != pdPASS) {
+      g_compSerial->println("Failed to send LOG_START request to queue.");
+    }
+    refreshDisplay = true;
+
+    lastButton = 1;
+    udpSend((char*) "LOG_START:");
+    refreshDisplay = true;
   } break;
 
   case BUTTON_2: {
-    state = 2;
+    globalRequest.commandType = LOG_STOP;
+
+    if (xQueueSend(loggingQueue, &globalRequest, portMAX_DELAY) != pdPASS) {
+      g_compSerial->println("Failed to send LOG_STOP request to queue.");
+    }
+
+    lastButton = 2;
+    udpSend((char*) "LOG_STOP:");
+    refreshDisplay = true;
   } break;
 
   case BUTTON_3: {
-    state = 3;
+    lastButton = 3;
+    udpSend((char*) "3");
+    refreshDisplay = true;
   } break;
 
   default:
@@ -81,21 +102,21 @@ void button_handle(uint8_t gpio) {
   }
 }
 
-void button_callback(Button2 &b) {
+void buttonCallback(Button2 &b) {
   for (int i = 0; i < sizeof(g_btns) / sizeof(g_btns[0]); ++i) {
     if (pBtns[i] == b) {
-      compSerial.printf("btn: %u press\n", pBtns[i].getAttachPin());
-      button_handle(pBtns[i].getAttachPin());
+      // compSerial.printf("btn: %u press\n", pBtns[i].getAttachPin());
+      buttonHandle(pBtns[i].getAttachPin());
     }
   }
 }
 
-void button_init() {
+void buttonInit() {
   uint8_t args = sizeof(g_btns) / sizeof(g_btns[0]);
   pBtns = new Button2[args];
   for (int i = 0; i < args; ++i) {
     pBtns[i] = Button2(g_btns[i]);
-    pBtns[i].setPressedHandler(button_callback);
+    pBtns[i].setPressedHandler(buttonCallback);
   }
 
   pBtns[0].setLongClickHandler([](Button2 &b) {
@@ -145,7 +166,55 @@ void spisd_test() {
       tft.setTextColor(TFT_GREEN, TFT_BLACK);
       tft.drawString(str, tft.width() / 2, tft.height() / 2);
     }
+    delay(1000);
   }
+}
+
+void updateDisplay() {
+  tft.setTextFont(2);
+  tft.setTextColor(TFT_GREEN, TFT_BLACK);
+  tft.fillScreen(TFT_BLACK);
+  tft.setTextDatum(MC_DATUM);
+
+  if (config.access_point) {
+    tft.println(WiFi.softAPIP());
+  }
+  else {
+    tft.setCursor(0, 0);
+    tft.print("REMOTE: ");
+    tft.print(config.remote_IP_array[0]);
+    tft.print(".");
+    tft.print(config.remote_IP_array[1]);
+    tft.print(".");
+    tft.print(config.remote_IP_array[2]);
+    tft.print(".");
+    tft.println(config.remote_IP_array[3]);
+
+  }
+  tft.print("LOCAL:  ");
+  tft.println(WiFi.localIP());
+
+  uint32_t cardSize = SD.cardSize() / (1024 * 1024);
+  String str = "SDCard Size: " + String(cardSize) + "MB";
+  tft.println(str);
+
+  tft.print("Last button press: ");
+  tft.println(lastButton);
+ 
+  if (sdLoggingState.isLogging) {
+    tft.println("LOGGING");
+  }
+  else {
+    tft.println("NO LOGGING");
+  }
+
+  tft.print("SD file name: ");
+  tft.println(getLogFileName());
+
+  tft.setCursor(0, 160);
+  tft.println("Button 1: log start");
+  tft.println("Button 2: log stop");
+  tft.println("Button 3: speedo");
 }
 
 void setup() {
@@ -170,77 +239,32 @@ void setup() {
   tft.fillScreen(TFT_BLACK);
   tft.setTextDatum(MC_DATUM);
   tft.setTextFont(2);
+  tft.setTextColor(TFT_GREEN, TFT_BLACK);
 
+  // this will flash up on the screen...
+  tft.drawString("SDCard MOUNT FAIL", tft.width() / 2, tft.height() / 2);
+  // and then this just locks up....
   sdSPI.begin(SD_SCLK, SD_MISO, SD_MOSI, SD_CS);
-
-  if (!SD.begin(SD_CS, sdSPI)) {
-    tft.setTextColor(TFT_GREEN, TFT_BLACK);
-    tft.drawString("SDCard MOUNT FAIL", tft.width() / 2,
-		   tft.height() / 2);
-  } else {
-    uint32_t cardSize = SD.cardSize() / (1024 * 1024);
-    String str = "SDCard Size: " + String(cardSize) + "MB";
-    tft.setTextColor(TFT_GREEN, TFT_BLACK);
-    tft.drawString(str, tft.width() / 2, tft.height() / 2);
+  if (!SD.begin(SD_CS, sdSPI)) { 
+    tft.drawString("SDCard MOUNT FAIL", tft.width() / 2, tft.height() / 2);
+  }
+  else {
+    tft.drawString("SDCard INIT:", tft.width() / 2, tft.height() / 2);
   }
 
-  button_init();
+  buttonInit();
   readConfig();
-
   initSDCard(compSerial, mescSerial);
+
   initUDPService();
-  // initTCPService();
 
   Wire.begin(I2C_SDA, I2C_SCL);
   btnscanT.attach_ms(30, button_loop);
 }
 
 void loop() {
-  switch (state) {
-  case 1:
-    state = 0;
-    tft.setTextFont(2);
-    tft.setTextColor(TFT_GREEN, TFT_BLACK);
-    tft.fillScreen(TFT_BLACK);
-    tft.setTextDatum(MC_DATUM);
-    tft.drawString("Button 1: status", 0, tft.height() - (3 * ROW_HEIGHT));
-    tft.drawString("Button 2: log", 0, tft.height() - (2 * ROW_HEIGHT));
-    tft.drawString("Button 3: speedo", 0, tft.height() - (1 * ROW_HEIGHT));
-
-    if (config.access_point) {
-      tft.println(WiFi.softAPIP());
-    }
-    else {
-      tft.setCursor(0, 0);
-      tft.print("REMOTE: ");
-      tft.print(config.remote_IP_array[0]);
-      tft.print(".");
-      tft.print(config.remote_IP_array[1]);
-      tft.print(".");
-      tft.print(config.remote_IP_array[2]);
-      tft.print(".");
-      tft.println(config.remote_IP_array[3]);
-
-      tft.print("LOCAL:  ");
-      tft.println(WiFi.localIP());
-    }
-
-    break;
-  case 2:
-    state = 0;
-    tft.setTextColor(TFT_GREEN, TFT_BLACK);
-    tft.fillScreen(TFT_BLACK);
-    tft.setTextDatum(MC_DATUM);
-    tft.drawString("Button 2", tft.width() / 2, tft.height() / 2);
-    break;
-  case 3:
-    state = 0;
-    tft.setTextColor(TFT_GREEN, TFT_BLACK);
-    tft.fillScreen(TFT_BLACK);
-    tft.setTextDatum(MC_DATUM);
-    tft.drawString("Button 3", tft.width() / 2, tft.height() / 2);
-    break;
-  default:
-    break;
+  if (refreshDisplay) {
+    updateDisplay();
+    refreshDisplay = false;
   }
 }
