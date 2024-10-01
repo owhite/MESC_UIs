@@ -9,8 +9,8 @@
 #include <TFT_eSPI.h>
 #include <lvgl.h>
 #include <lv_conf.h> 
-#include "log_button1.h"
-#include "log_button2.h"
+#include "button_on.h"
+#include "button_off.h"
 #include "data.h"
 #include "processConfig.h"
 #include "udpService.h"
@@ -27,13 +27,6 @@ TFT_eSPI tft = TFT_eSPI();
 static lv_disp_draw_buf_t draw_buf;
 static lv_color_t buf[HOR_PIXELS * 10];
 
-lv_obj_t * btn1;
-lv_obj_t * btn2;
-lv_obj_t * img1;
-lv_obj_t * img2;
-lv_obj_t * number_label;  // Label for the number display
-bool is_image1 = true;
-bool rlst = false;
 
 XPT2046 touch = XPT2046(SPI, TOUCHSCREEN_CS_PIN, TOUCHSCREEN_IRQ_PIN);
 touch_calibration_t calibration_data[4];
@@ -57,9 +50,15 @@ lv_obj_t * local_label;     // Label to display the local IP
 lv_obj_t * sdcard_label;    // Label to display SD card status
 lv_obj_t * btn_label;       // Info about buttons
 lv_obj_t * coord_label;     // Display coordinates
+lv_obj_t * log_label;
+lv_obj_t * imgbtn;
+lv_obj_t * number_label;  // Label for the number display
+bool is_image1 = true;
+bool rlst = false;
 
-LV_IMG_DECLARE(image1);  // Declare the image for the "on" state
-LV_IMG_DECLARE(image2); // Declare the image for the "off" state
+
+LV_IMG_DECLARE(button_on);  // Declare the image for the "on" state
+LV_IMG_DECLARE(button_off); // Declare the image for the "off" state
 
 
 // Task that updates the number every second
@@ -78,47 +77,34 @@ void numberUpdateTask(void * parameter) {
   }
 }
 
-static void btn_event_handler(lv_event_t * e) {
-    lv_obj_t * btn = lv_event_get_target(e);
-    
-    if (lv_obj_has_state(btn, LV_STATE_CHECKED)) {
-        // If the button is checked, set the "off" image
-      Serial.println("it was checked");
-      lv_imgbtn_set_src(btn, LV_IMGBTN_STATE_RELEASED, NULL, &image1, NULL);
-      lv_obj_clear_state(btn, LV_STATE_CHECKED);  // Clear the checked state
-    } else {
-      Serial.println("it was NOT checked");
-      lv_imgbtn_set_src(btn, LV_IMGBTN_STATE_RELEASED, NULL, &image2, NULL);
-      lv_obj_add_state(btn, LV_STATE_CHECKED);  // Set the checked state
-    }
-}
-
-static void eventCB(lv_event_t * e) {
-  LV_LOG_USER("Clicked");
-  Serial.println("event detected!");
-
-  lv_obj_t * btn = lv_event_get_target(e); 
+static void btnEventCB(lv_event_t * e) {
+  lv_obj_t * btn = lv_event_get_target(e);
+  lv_obj_t * label = lv_obj_get_child(btn, 0);
 
   static uint32_t cnt = 1;
   char buf[10];
 
-  if (btn == btn1) {
-    Serial.println("Button 1 was clicked!");
+  LV_LOG_USER("Clicked");
+  Serial.println("event detected!");
 
-    udpSend((char*) "3");
-
-    snprintf(buf, sizeof(buf), "BTN1: %d", cnt);
-    lv_label_set_text(btn_label, buf);
-  } else if (btn == btn2) {
-    Serial.println("Button 2 was clicked!");
-    snprintf(buf, sizeof(buf), "BTN2: %d", cnt);
-    lv_label_set_text(btn_label, buf);
+  if (lv_obj_has_state(btn, LV_STATE_CHECKED) == false) {
+    // If the button is checked, set the "off" image
+    Serial.println("going to on");
+    lv_imgbtn_set_src(btn, LV_IMGBTN_STATE_RELEASED, NULL, &button_on, NULL);
+    lv_obj_set_style_text_color(label, lv_color_hex(0x50ff7d), LV_PART_MAIN | LV_STATE_DEFAULT); 
+    lv_obj_add_state(btn, LV_STATE_CHECKED); 
+  } else { // set the checked state
+    Serial.println("going to off");
+    lv_imgbtn_set_src(btn, LV_IMGBTN_STATE_RELEASED, NULL, &button_off, NULL);
+    lv_obj_set_style_text_color(label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT); 
+    lv_obj_clear_state(btn, LV_STATE_CHECKED);
   }
 
-  // this is how you find the child label to button
-  //   not updating for now
-  // lv_obj_t * label = lv_obj_get_child(btn, 0); 
-  // lv_label_set_text_fmt(label, "%" LV_PRIu32, cnt);
+  if (btn == imgbtn) {
+    Serial.println("Button was clicked!");
+    snprintf(buf, sizeof(buf), "BTN: %d", cnt);
+    lv_label_set_text(btn_label, buf);
+  }
   cnt++;
 }
 
@@ -163,39 +149,29 @@ void displayNetworkInfo() {
 
 void setupGUI() {
   lv_obj_t * screen = lv_scr_act();  // Get the active screen object
-  lv_obj_set_style_bg_color(screen, lv_color_hex(0x3d3f4a), LV_PART_MAIN); // Set grey color
+  lv_obj_set_style_bg_color(screen, lv_color_hex(0x3d3f4a), LV_PART_MAIN);
   lv_obj_set_style_bg_opa(screen, LV_OPA_COVER, LV_PART_MAIN); 
 
-  lv_obj_t *imgbtn = lv_imgbtn_create(lv_scr_act());  // Create image button on the active screen
-  lv_obj_set_pos(imgbtn, 160, 10);  // Set position
+  imgbtn = lv_imgbtn_create(lv_scr_act());  // Create image button on the active screen
+  lv_obj_set_pos(imgbtn, 10, 10);  // Set position
   lv_obj_set_size(imgbtn, 66, 44);  
 
   // Set images for the different states (replace these with your actual image data or symbols)
-  lv_imgbtn_set_src(imgbtn, LV_IMGBTN_STATE_RELEASED, &image1, NULL, NULL);
-  lv_imgbtn_set_src(imgbtn, LV_IMGBTN_STATE_PRESSED, &image2, NULL, NULL);
-  // lv_imgbtn_set_src(imgbtn, LV_IMGBTN_STATE_CHECKED_RELEASED, &image1, NULL, NULL);
-  // lv_imgbtn_set_src(imgbtn, LV_IMGBTN_STATE_CHECKED_PRESSED, &image2, NULL, NULL);
+  lv_imgbtn_set_src(imgbtn, LV_IMGBTN_STATE_RELEASED, &button_off, NULL, NULL);
+  lv_imgbtn_set_src(imgbtn, LV_IMGBTN_STATE_PRESSED, &button_on, NULL, NULL);
+  lv_imgbtn_set_src(imgbtn, LV_IMGBTN_STATE_CHECKED_RELEASED, &button_off, NULL, NULL);
+  lv_imgbtn_set_src(imgbtn, LV_IMGBTN_STATE_CHECKED_PRESSED, &button_on, NULL, NULL);
+  lv_obj_clear_state(imgbtn, LV_STATE_CHECKED);
+
+  // Create child label of imgbtn
+  log_label = lv_label_create(imgbtn);  
+  lv_label_set_text(log_label, "LOG");   
+  lv_obj_set_style_text_color(log_label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);   
+  lv_obj_set_style_text_font(log_label, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT); 
+  lv_obj_align(log_label, LV_ALIGN_CENTER, 0, 0);
 
   // Add event callback for toggling the button state
-  lv_obj_add_event_cb(imgbtn, btn_event_handler, LV_EVENT_CLICKED, NULL);
-
-  btn1 = lv_btn_create(lv_scr_act());
-  lv_obj_set_size(btn1, 60, BTN_WIDTH);
-  lv_obj_set_pos(btn1, 10, 10);  
-  lv_obj_add_event_cb(btn1, eventCB, LV_EVENT_CLICKED, NULL);
-
-  lv_obj_t * label1 = lv_label_create(btn1);
-  lv_label_set_text(label1, "BTN1");
-  lv_obj_center(label1);
-
-  btn2 = lv_btn_create(lv_scr_act());
-  lv_obj_set_size(btn2, 60, BTN_WIDTH);
-  lv_obj_set_pos(btn2, 90, 10);  
-  lv_obj_add_event_cb(btn2, eventCB, LV_EVENT_CLICKED, NULL); 
-
-  lv_obj_t * label2 = lv_label_create(btn2);
-  lv_label_set_text(label2, "STAT");
-  lv_obj_center(label2);
+  lv_obj_add_event_cb(imgbtn, btnEventCB, LV_EVENT_CLICKED, NULL);
 
   // info about button
   btn_label = lv_label_create(lv_scr_act());

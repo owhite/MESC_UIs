@@ -3,7 +3,8 @@ import numpy as np
 from PIL import Image
 import os
 
-# $ python png_to_lvgl.py shadow_buttons_off.png output_image.h scrap2.png 66 34 110 74 60
+# python png_to_lvgl.py shadow_buttons.png button_off button_off.h scrap2.png 66 34 110 74 60;
+# python png_to_lvgl.py shadow_buttons.png button_on button_on.h scrap2.png 66 34 110 74 60;
 
 
 def rgb_to_rgb565(r, g, b):
