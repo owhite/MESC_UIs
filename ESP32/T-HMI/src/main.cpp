@@ -50,16 +50,21 @@ lv_obj_t * local_label;     // Label to display the local IP
 lv_obj_t * sdcard_label;    // Label to display SD card status
 lv_obj_t * btn_label;       // Info about buttons
 lv_obj_t * coord_label;     // Display coordinates
-lv_obj_t * log_label;
-lv_obj_t * imgbtn;
 lv_obj_t * number_label;  // Label for the number display
+
+lv_obj_t *btn_array[4];
+
+lv_obj_t * ehrz_btn;
+lv_obj_t * amp_btn;
+lv_obj_t * mph_btn;
+lv_obj_t * bat_btn;
+
+lv_obj_t * log_btn;
 bool is_image1 = true;
 bool rlst = false;
 
-
-LV_IMG_DECLARE(button_on);  // Declare the image for the "on" state
-LV_IMG_DECLARE(button_off); // Declare the image for the "off" state
-
+LV_IMG_DECLARE(button_on);
+LV_IMG_DECLARE(button_off);
 
 // Task that updates the number every second
 void numberUpdateTask(void * parameter) {
@@ -87,21 +92,34 @@ static void btnEventCB(lv_event_t * e) {
   LV_LOG_USER("Clicked");
   Serial.println("event detected!");
 
-  if (lv_obj_has_state(btn, LV_STATE_CHECKED) == false) {
-    // If the button is checked, set the "off" image
-    Serial.println("going to on");
-    lv_imgbtn_set_src(btn, LV_IMGBTN_STATE_RELEASED, NULL, &button_on, NULL);
-    lv_obj_set_style_text_color(label, lv_color_hex(0x50ff7d), LV_PART_MAIN | LV_STATE_DEFAULT); 
-    lv_obj_add_state(btn, LV_STATE_CHECKED); 
-  } else { // set the checked state
-    Serial.println("going to off");
-    lv_imgbtn_set_src(btn, LV_IMGBTN_STATE_RELEASED, NULL, &button_off, NULL);
-    lv_obj_set_style_text_color(label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT); 
-    lv_obj_clear_state(btn, LV_STATE_CHECKED);
+  int i;
+  // buttons will be have as mutually exclusive checkboxes
+  for(i = 0; i < 4; i++) {
+    if (btn == btn_array[i]) {
+      lv_imgbtn_set_src(btn_array[i], LV_IMGBTN_STATE_RELEASED, NULL, &button_on, NULL);
+      lv_obj_set_style_text_color(label, lv_color_hex(0x50ff7d), LV_PART_MAIN | LV_STATE_DEFAULT); 
+      lv_obj_add_state(btn_array[i], LV_STATE_CHECKED); 
+    }
+    else {
+      lv_imgbtn_set_src(btn_array[i], LV_IMGBTN_STATE_RELEASED, NULL, &button_off, NULL);
+      lv_obj_t * label = lv_obj_get_child(btn_array[i], 0);
+      lv_obj_set_style_text_color(label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT); 
+      lv_obj_clear_state(btn_array[i], LV_STATE_CHECKED);
+    }
   }
 
-  if (btn == imgbtn) {
+  if (btn == log_btn) {
     Serial.println("Button was clicked!");
+    snprintf(buf, sizeof(buf), "BTN: %d", cnt);
+    lv_label_set_text(btn_label, buf);
+  }
+  else if (btn == amp_btn) {
+    Serial.println("Amp was clicked!");
+    snprintf(buf, sizeof(buf), "BTN: %d", cnt);
+    lv_label_set_text(btn_label, buf);
+  }
+  if (btn == mph_btn) {
+    Serial.println("MPH was clicked!");
     snprintf(buf, sizeof(buf), "BTN: %d", cnt);
     lv_label_set_text(btn_label, buf);
   }
@@ -147,31 +165,52 @@ void displayNetworkInfo() {
   lv_label_set_text(sdcard_label, buffer);
 }
 
+lv_obj_t * create_button_with_img(int x, int y, int width, int height, const char *name, lv_event_cb_t btnEventCB) {
+    lv_obj_t *imgbtn;
+
+    // Create image button
+    imgbtn = lv_imgbtn_create(lv_scr_act());  // Create image button on active screen
+    lv_obj_set_pos(imgbtn, x, y);  // Set position
+    lv_obj_set_size(imgbtn, width, height);  // Set size
+
+    // Set button images for different states
+    lv_imgbtn_set_src(imgbtn, LV_IMGBTN_STATE_RELEASED, &button_off, NULL, NULL);
+    lv_imgbtn_set_src(imgbtn, LV_IMGBTN_STATE_PRESSED, &button_on, NULL, NULL);
+    lv_imgbtn_set_src(imgbtn, LV_IMGBTN_STATE_CHECKED_RELEASED, &button_off, NULL, NULL);
+    lv_imgbtn_set_src(imgbtn, LV_IMGBTN_STATE_CHECKED_PRESSED, &button_on, NULL, NULL);
+    lv_obj_clear_state(imgbtn, LV_STATE_CHECKED);  // Clear the checked state
+
+    // Create child label for imgbtn
+    lv_obj_t *label = lv_label_create(imgbtn);  
+    lv_label_set_text(label, name);  // Set label text to the name
+    lv_obj_set_style_text_color(label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);  // Set label text color
+    lv_obj_set_style_text_font(label, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);  // Set font style
+    lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);  // Center the label on the button
+
+    // Add event callback for button state toggle
+    lv_obj_add_event_cb(imgbtn, btnEventCB, LV_EVENT_CLICKED, NULL);
+
+    return imgbtn;  // Return the image button
+}
+
 void setupGUI() {
   lv_obj_t * screen = lv_scr_act();  // Get the active screen object
   lv_obj_set_style_bg_color(screen, lv_color_hex(0x3d3f4a), LV_PART_MAIN);
   lv_obj_set_style_bg_opa(screen, LV_OPA_COVER, LV_PART_MAIN); 
 
-  imgbtn = lv_imgbtn_create(lv_scr_act());  // Create image button on the active screen
-  lv_obj_set_pos(imgbtn, 10, 10);  // Set position
-  lv_obj_set_size(imgbtn, 66, 44);  
+  uint16_t width = button_off.header.w;
+  uint16_t height = button_off.header.h;
+  uint16_t bump = width + 10;
 
-  // Set images for the different states (replace these with your actual image data or symbols)
-  lv_imgbtn_set_src(imgbtn, LV_IMGBTN_STATE_RELEASED, &button_off, NULL, NULL);
-  lv_imgbtn_set_src(imgbtn, LV_IMGBTN_STATE_PRESSED, &button_on, NULL, NULL);
-  lv_imgbtn_set_src(imgbtn, LV_IMGBTN_STATE_CHECKED_RELEASED, &button_off, NULL, NULL);
-  lv_imgbtn_set_src(imgbtn, LV_IMGBTN_STATE_CHECKED_PRESSED, &button_on, NULL, NULL);
-  lv_obj_clear_state(imgbtn, LV_STATE_CHECKED);
+  ehrz_btn = create_button_with_img(10, 10, width, height, "EHRZ", btnEventCB);
+  amp_btn = create_button_with_img(10 + (bump * 1), 10, width, height, "AMP", btnEventCB);
+  mph_btn = create_button_with_img(10 + (bump * 2), 10, width, height, "MPH", btnEventCB);
+  bat_btn = create_button_with_img(10 + (bump * 3), 10, width, height, "BAT", btnEventCB);
 
-  // Create child label of imgbtn
-  log_label = lv_label_create(imgbtn);  
-  lv_label_set_text(log_label, "LOG");   
-  lv_obj_set_style_text_color(log_label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);   
-  lv_obj_set_style_text_font(log_label, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT); 
-  lv_obj_align(log_label, LV_ALIGN_CENTER, 0, 0);
-
-  // Add event callback for toggling the button state
-  lv_obj_add_event_cb(imgbtn, btnEventCB, LV_EVENT_CLICKED, NULL);
+  btn_array[0] = ehrz_btn;
+  btn_array[1] = amp_btn;
+  btn_array[2] = mph_btn;
+  btn_array[3] = bat_btn;
 
   // info about button
   btn_label = lv_label_create(lv_scr_act());
@@ -253,30 +292,32 @@ void setup() {
   indev_drv.read_cb = touchpadRead;
   lv_indev_t * my_indev = lv_indev_drv_register(&indev_drv);
 
-  readConfig();
-  initUDPService();
-  Serial.println("entering");
-  initSDCard();
-  Serial.println("exiting");
+  // readConfig();
+  // initUDPService();
+  // Serial.println("entering");
+  // initSDCard();
+  // Serial.println("exiting");
 
   setupGUI();
+  // basically selects one of the buttons
+  lv_event_send(ehrz_btn, LV_EVENT_CLICKED, NULL);
 
   // Create the FreeRTOS task for updating the number
   xTaskCreate(numberUpdateTask, "Number Update Task", 4096, NULL, 1, NULL);
 
-  if (config.access_point) {
-    WiFi.softAP("AP_NAME", "AP_PASSWORD");
-    IPAddress ip = WiFi.softAPIP();
-    Serial.print("AP IP address: ");
-    Serial.println(ip);
-  } else {
-    WiFi.begin(config.ssid, config.password);
-    while (WiFi.status() != WL_CONNECTED) {
-      delay(1000);
-      Serial.println("Connecting to WiFi...");
-    }
-    Serial.println("Connected to WiFi");
-  }
+  // if (config.access_point) {
+  //     WiFi.softAP("AP_NAME", "AP_PASSWORD");
+  //     IPAddress ip = WiFi.softAPIP();
+  //     Serial.print("AP IP address: ");
+  //     Serial.println(ip);
+  //   } else {
+  //     WiFi.begin(config.ssid, config.password);
+  //     while (WiFi.status() != WL_CONNECTED) {
+  //       delay(1000);
+  //       Serial.println("Connecting to WiFi...");
+  //     }
+  //     Serial.println("Connected to WiFi");
+  //   }
 }
 
 void loop() {

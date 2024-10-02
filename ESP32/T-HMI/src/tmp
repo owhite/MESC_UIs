@@ -1,0 +1,14 @@
+#include <lvgl.h>
+
+const uint16_t button_off_map[] = {
+};
+
+const lv_img_dsc_t button_off = {
+    .header = {
+        .cf = LV_IMG_CF_TRUE_COLOR,
+        .w = 66,
+        .h = 44
+    },
+    .data_size = sizeof(button_off_map),
+    .data = (const uint8_t *)button_off_map
+};
