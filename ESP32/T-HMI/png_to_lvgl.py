@@ -5,7 +5,8 @@ import os
 
 # python png_to_lvgl.py shadow_buttons.png button_off button_off.h scrap2.png 66 34 110 74 60;
 # python png_to_lvgl.py shadow_buttons.png button_on button_on.h scrap2.png 66 34 110 74 60;
-
+# python png_to_lvgl.py shadow_buttons.png controls controls.h scrap2.png 284 262 74 82 100;
+# python png_to_lvgl.py shadow_buttons.png temp_hi temp_hi.h scrap2.png 386 286 33 64 100; open scrap2.png 
 
 def rgb_to_rgb565(r, g, b):
     """
