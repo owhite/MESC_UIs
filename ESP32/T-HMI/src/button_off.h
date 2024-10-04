@@ -1,3 +1,6 @@
+#ifndef BUTTON_OFF_H
+#define BUTTON_OFF_H
+
 #include <lvgl.h>
 
 const uint16_t button_off_map[] = {
@@ -375,3 +378,5 @@ const lv_img_dsc_t button_off = {
     .data_size = sizeof(button_off_map),
     .data = (const uint8_t *)button_off_map
 };
+
+#endif // BUTTON_ON_H

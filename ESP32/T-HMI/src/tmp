@@ -1,65 +1,15 @@
-
-
-void displayNetworkInfo() {
-  char buffer[128];
-
-  // label for last button clicked
-  btn_label = lv_label_create(lv_scr_act());
-  lv_obj_set_pos(btn_label, 10, 144);
-  lv_label_set_text(btn_label, "");
-
-  // shows touchscreen coordinates 
-  coord_label = lv_label_create(lv_scr_act());
-  lv_obj_set_pos(coord_label, 10, 162);
-  lv_label_set_text(coord_label, "");
-
-  // info about IP addresses and SD card
-  ip_label = lv_label_create(lv_scr_act());
-  lv_obj_set_pos(ip_label, 10, 180);  // remote IP
-  local_label = lv_label_create(lv_scr_act());
-  lv_obj_set_pos(local_label, 10, 198);  // local IP
-  sdcard_label = lv_label_create(lv_scr_act());
-  lv_obj_set_pos(sdcard_label, 10, 216);  // SD card info
-
-  // shows output of numberUpdateTask()
-  number_label = lv_label_create(lv_scr_act());
-  lv_obj_set_pos(number_label, 280, 138);
-  lv_label_set_text(number_label, "0");
-
-  // brightness switch
-  brightness_sw = lv_switch_create(lv_scr_act());
-  lv_obj_set_pos(brightness_sw, 0, 110);  // Set position
-  lv_obj_t *lbl = lv_label_create(lv_scr_act()); // label
-  lv_label_set_text(lbl, "brightness");
-  lv_obj_set_pos(lbl, 58, 115);
-  lv_obj_add_state(brightness_sw, LV_STATE_CHECKED);
-  static lv_style_t style_switch;
-  lv_style_init(&style_switch);
-  lv_style_set_bg_color(&style_switch, lv_color_hex(0x3d3f4a));  // background default grey, off
-  lv_style_set_bg_color(&style_switch, lv_color_hex(0x50ff7d));  // electric green, on
-  lv_obj_add_style(brightness_sw, &style_switch, LV_PART_INDICATOR | LV_STATE_CHECKED);  // Checked state
-  lv_obj_add_style(brightness_sw, &style_switch, LV_PART_INDICATOR);   
-  lv_obj_add_event_cb(brightness_sw, brightnessCB, LV_EVENT_ALL, NULL);
-
-  // Create and set the IP or Remote IP label
-  if (config.access_point) {
-    snprintf(buffer, sizeof(buffer), "AP IP: %s", WiFi.softAPIP().toString().c_str());
-  } else {
-    snprintf(buffer, sizeof(buffer), "REMOTE: %d.%d.%d.%d",
-             config.remote_IP_array[0], config.remote_IP_array[1], 
-             config.remote_IP_array[2], config.remote_IP_array[3]);
+  // Handle specific button actions
+  if (imgbtn == log_btn) {
+    Serial.println("Log button clicked!");
+  } else if (imgbtn == amp_btn) {
+    segmentDisplayLetter = 'A';
+  } else if (imgbtn == mph_btn) {
+    segmentDisplayLetter = 'M';
+  } else if (imgbtn == ehrz_btn) {
+    segmentDisplayLetter = 'E';
+  } else if (imgbtn == bat_btn) {
+    segmentDisplayLetter = 'B';
   }
-  lv_label_set_text(ip_label, buffer);
-
-  snprintf(buffer, sizeof(buffer), "LOCAL: %s", WiFi.localIP().toString().c_str());
-  lv_label_set_text(local_label, buffer);
-
-  if (isSDCardStillMounted()) {
-    uint64_t cardSize = SD_MMC.cardSize() / (1024 * 1024);  // Convert to MB
-    snprintf(buffer, sizeof(buffer), "SDCard Size: %llu MB", cardSize);
-  } else {
-    snprintf(buffer, sizeof(buffer), "SD card not found");
-  }
-  lv_label_set_text(sdcard_label, buffer);
-}
-
+  snprintf(buf, sizeof(buf), "BTN: %d", cnt);
+  lv_label_set_text(btn_label, buf);
+  cnt++;    

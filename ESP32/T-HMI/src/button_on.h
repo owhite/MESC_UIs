@@ -1,3 +1,6 @@
+#ifndef BUTTON_ON_H
+#define BUTTON_ON_H
+
 #include <lvgl.h>
 
 const uint16_t button_on_map[] = {
@@ -375,3 +378,5 @@ const lv_img_dsc_t button_on = {
     .data_size = sizeof(button_on_map),
     .data = (const uint8_t *)button_on_map
 };
+
+#endif // BUTTON_ON_H

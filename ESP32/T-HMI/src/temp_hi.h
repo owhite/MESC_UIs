@@ -1,3 +1,6 @@
+#ifndef TEMP_HI_H
+#define TEMP_HI_H
+
 #include <lvgl.h>
 
 const uint16_t temp_hi_map[] = {
@@ -276,3 +279,5 @@ const lv_img_dsc_t temp_hi = {
     .data_size = sizeof(temp_hi_map),
     .data = (const uint8_t *)temp_hi_map
 };
+
+#endif // TEMP_HI_H

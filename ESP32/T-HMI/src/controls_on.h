@@ -1,3 +1,6 @@
+#ifndef CONTROLS_ON_H
+#define CONTROLS_ON_H
+
 #include <lvgl.h>
 
 const uint16_t controls_on_map[] = {
@@ -771,3 +774,5 @@ const lv_img_dsc_t controls_on = {
     .data_size = sizeof(controls_on_map),
     .data = (const uint8_t *)controls_on_map
 };
+
+#endif // CONTROLS_ON_H

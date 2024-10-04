@@ -9,7 +9,6 @@ def before_upload(source, target, env):
     # Upload the LittleFS filesystem image
     env.Execute("pio run --target uploadfs")
 
-env.Execute("python generate_header.py")
 env.AddPreAction("upload", before_build)
 env.AddPreAction("upload", before_upload)
 
