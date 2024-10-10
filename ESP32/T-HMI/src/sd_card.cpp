@@ -14,8 +14,10 @@ void initSDCard() {
   bool rlst = false;
   while (1) {
     delay(500);
+
     rlst = SD_MMC.begin("/sdcard", true);
     if (!rlst) {
+      tft.print("* ");
       Serial.println("SD init failed");
       Serial.println("➸ No detected SdCard");
     } else {
@@ -121,6 +123,9 @@ void clrLogFileName() {
 
 // this doesnt work on this lilygo
 bool isSDCardStillMounted() {
+
+  return true;
+
   // Attempt to open the root directory
   File testFile = SD_MMC.open("/");
   if (!testFile) {

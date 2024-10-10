@@ -11,16 +11,11 @@ IPAddress remote_IP;
 WiFiUDP udpReceiver;
 WiFiUDP udpSender;
 
+unsigned long last_udp_receive = 0; 
+
 void initUDPService() {
   WiFi.begin(config.ssid, config.password);
 
-  tft.setTextFont(2);
-  tft.setTextColor(TFT_GREEN, TFT_BLACK);
-  tft.fillScreen(TFT_BLACK);
-  tft.setTextDatum(MC_DATUM);
-  tft.setCursor(0, 0);
-
-  tft.print("joining internet: ");
   Serial.println("Connecting to WiFi...");
 
   while (WiFi.status() != WL_CONNECTED) {
@@ -31,7 +26,7 @@ void initUDPService() {
 
   // Set fixed IP address
   IPAddress local_IP(config.local_IP_array[0], config.local_IP_array[1], config.local_IP_array[2], config.local_IP_array[3]);
-  IPAddress gateway(192, 168, 1, 1);
+  IPAddress gateway(192, 168, 1, 1); // dunno how these work
   IPAddress subnet(255, 255, 255, 0);
 
   remote_IP = IPAddress(config.remote_IP_array[0], config.remote_IP_array[1],
@@ -48,6 +43,9 @@ void initUDPService() {
 }
 
 // ESP32 starts a wifi network, gets messages by udp
+//   this function doesnt send any requests to the host
+//   the code managing globalRequest.commandType are sent
+//   to the internal sdcard object
 void udpReceiveTask(void *pvParameter) {
   udpReceiver.begin(localPort);
   Serial.printf("UDP Receiver listening on port %d\n", localPort);
@@ -100,7 +98,11 @@ void udpReceiveTask(void *pvParameter) {
 	  }
 	  refreshDisplay = true;
 	}
+	else if (strncmp(message, "PULSE:", 6) == 0) {
+	  last_udp_receive = lv_tick_get(); // only reset this if pulse or if log data is received
+	}
 	else if (strncmp(message, "{\"adc1\":", 8) == 0) { 
+	  last_udp_receive = lv_tick_get(); // log data received, reset
 	  globalRequest.commandType = LOG_ADD_LINE;
 	  strncpy(globalRequest.logLine, message, sizeof(message) - 1);
 	  if (xQueueSend(loggingQueue, &globalRequest, portMAX_DELAY) != pdPASS) {
@@ -124,7 +126,9 @@ void udpReceiveTask(void *pvParameter) {
   }
 }
 
-// ESP32 starts a wifi network and sends messages by udp
+// ESP32 starts a wifi network and sends messages to host by udp
+//  right now it looks like it only manages requests for the
+//  host to start logging    
 void udpSend(char *message) {
   udpSender.beginPacket(remote_IP, remotePort);
   udpSender.printf("%s", message);

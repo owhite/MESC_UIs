@@ -50,9 +50,15 @@ void touchInit() {
                HOR_PIXELS, VER_PIXELS);
   touch.setRotation(1);
 
-  tft.begin();         
-  tft.setRotation(1);  
-  tft.setSwapBytes(true);
+  // tft.begin();         
+  // tft.setRotation(1);  
+  // tft.setSwapBytes(true);
+
+  tft.fillScreen(TFT_BLACK);
+  tft.setTextFont(2);
+  tft.setTextColor(TFT_GREEN, TFT_BLACK);
+  tft.setTextDatum(MC_DATUM);
+  tft.setCursor(0, 0);
 
   lv_disp_draw_buf_init(&draw_buf, buf, NULL, HOR_PIXELS * 10);
 

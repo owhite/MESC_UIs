@@ -99,6 +99,7 @@ void initWebService(HardwareSerial& compSerial, HardwareSerial& mescSerial, Asyn
 
 // this is a looping task that handles state changes
 void webServerTask(void *pvParameter) {
+  int count;
   while (1) {
     if (commState == COMM_GRAPH) {
       // Continuously update the graph -- should be optional.
@@ -127,6 +128,11 @@ void webServerTask(void *pvParameter) {
       default:
 	break;
       }
+    if (count > 10) {
+      udpSend("PULSE:");
+      count = 0;
+    }
+    count++;
     vTaskDelay(100 / portTICK_PERIOD_MS);
   }
 }

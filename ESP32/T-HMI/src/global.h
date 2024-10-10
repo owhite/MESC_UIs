@@ -35,9 +35,11 @@ extern lv_obj_t * ehrz_btn;
 extern lv_obj_t * amp_btn;
 extern lv_obj_t * mph_btn;
 extern lv_obj_t * bat_btn;
+extern lv_obj_t * log_btn;
 extern lv_obj_t * temp_btn;
 extern lv_obj_t * controls_btn;
 
+extern lv_obj_t * udpstatus_label;
 extern lv_obj_t * btn_label;
 extern lv_obj_t * coord_label;
 extern lv_obj_t * ip_label;
@@ -78,6 +80,8 @@ struct LoggingState {
     File fileHandle;
     SemaphoreHandle_t mutex;  // Protect access to shared state
 };
+
+extern unsigned long last_udp_receive; 
 
 extern bool refreshDisplay;
 extern LoggingState sdLoggingState;

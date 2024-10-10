@@ -12,6 +12,7 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_LEDBackpack.h>
 
+#include "GREAT_LAKES.c"
 #include "gui.h"
 #include "processConfig.h"
 #include "udpService.h"
@@ -69,11 +70,32 @@ void setup() {
   pinMode(PWR_EN_PIN, OUTPUT);
   digitalWrite(PWR_EN_PIN, HIGH);
 
-  touchInit();
-  initSDCard();
-  setupGUI();
+
+  tft.begin();         
+  tft.setRotation(1);  
+  tft.setSwapBytes(true);
+  tft.setTextFont(2);
+  tft.setTextColor(TFT_GREEN, TFT_BLACK);
+  tft.setTextDatum(MC_DATUM);
+
   readConfig();
 
+  tft.fillScreen(TFT_BLACK);
+  tft.setCursor(0, 0);
+  tft.print("touch init: ");
+  touchInit();
+
+  tft.fillScreen(TFT_BLACK);
+  tft.setCursor(0, 0);
+  tft.print("read SD: ");
+  initSDCard(); // this takes time which is a bit odd
+
+  tft.fillScreen(TFT_BLACK);
+  tft.setCursor(0, 0);
+  tft.print("start internet: ");
+  initUDPService();
+
+  setupGUI();
   // we <3 FreeRTOS tasks
  xTaskCreate(segmentTask, "Segment Task", 4096, NULL, 1, NULL);
 }

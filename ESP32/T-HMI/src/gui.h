@@ -13,6 +13,7 @@
 // Function declarations
 void setupGUI();
 void btnEventCB(lv_event_t * e);
+void logBtnCB(lv_event_t * e);
 void displayNetworkInfo(lv_obj_t * parent);
 void numberUpdateTask(void * parameter);
 void throbLedTask(void *parameter);

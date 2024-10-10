@@ -8,6 +8,7 @@
 #include "controls_off.h"
 #include "temp_hi.h"
 #include "temp_lo.h"
+#include "GREAT_LAKES.c"
 
 lv_disp_draw_buf_t draw_buf;
 lv_color_t buf[HOR_PIXELS * 10];
@@ -21,13 +22,14 @@ lv_obj_t * temp_btn;      // temperature
 lv_obj_t * log_btn;       // logging data
 lv_obj_t * controls_btn;  // the controls panel
 
-lv_obj_t * ip_label;       // display IP addresses and SD card status
-lv_obj_t * local_label;    // isplay the local IP
-lv_obj_t * sdcard_label;   // display SD card status
-lv_obj_t * btn_label;      // info about buttons
-lv_obj_t * coord_label;    // display touch screen coordinates 
-lv_obj_t * brightness_lbl; // brightness of 14-segment LED
-lv_obj_t * brightness_sw;  // switch for brightness
+lv_obj_t * udpstatus_label; // if a pulse came in
+lv_obj_t * ip_label;        // display IP addresses and SD card status
+lv_obj_t * local_label;     // isplay the local IP
+lv_obj_t * sdcard_label;    // display SD card status
+lv_obj_t * btn_label;       // info about buttons
+lv_obj_t * coord_label;     // display touch screen coordinates 
+lv_obj_t * brightness_lbl;  // brightness of 14-segment LED
+lv_obj_t * brightness_sw;   // switch for brightness
 
 lv_obj_t * led;            // throbbing dot on screen
 
@@ -49,16 +51,35 @@ LV_IMG_DECLARE(temp_lo);
 
 // supports createButtonWithImage()
 typedef struct {
-    const lv_img_dsc_t *img_on;
-    const lv_img_dsc_t *img_off;
+  const lv_img_dsc_t *img_on;
+  const lv_img_dsc_t *img_off;
 } button_image_t;
 
 // Function to handle button events
 void btnEventCB(lv_event_t * e) {
   lv_obj_t *btn = lv_event_get_target(e);
 
-  static uint32_t cnt = 1;
-  char buf[10];
+  char buffer[128];
+
+  if (config.access_point) {
+    snprintf(buffer, sizeof(buffer), "AP IP: %s", WiFi.softAPIP().toString().c_str());
+  } else {
+    snprintf(buffer, sizeof(buffer), "REMOTE: %d.%d.%d.%d",
+	     config.remote_IP_array[0], config.remote_IP_array[1], 
+	     config.remote_IP_array[2], config.remote_IP_array[3]);
+  }
+  lv_label_set_text(ip_label, buffer);
+
+  snprintf(buffer, sizeof(buffer), "LOCAL: %s", WiFi.localIP().toString().c_str());
+  lv_label_set_text(local_label, buffer);
+
+  if (isSDCardStillMounted()) {
+    uint64_t cardSize = SD_MMC.cardSize() / (1024 * 1024);  // Convert to MB
+    snprintf(buffer, sizeof(buffer), "SD Size: %llu MB", cardSize);
+  } else {
+    snprintf(buffer, sizeof(buffer), "SD card not found");
+  }
+  lv_label_set_text(sdcard_label, buffer);
 
   int i;
   // buttons will be have as mutually exclusive checkboxes
@@ -99,8 +120,11 @@ void btnEventCB(lv_event_t * e) {
   } else if (btn == bat_btn) {
     segmentDisplayLetter = 'B';
   }
-  snprintf(buf, sizeof(buf), "BTN: %d", cnt);
-  lv_label_set_text(btn_label, buf);
+
+  static uint32_t cnt = 1;
+
+  snprintf(buffer, sizeof(buffer), "BTN: %d", cnt);
+  lv_label_set_text(btn_label, buffer);
   cnt++;    
 }
 
@@ -118,8 +142,7 @@ static void brightnessCB(lv_event_t * e) {
 // Controls panel:
 //   displays network and SD card info
 //   allows user to change brightness
-void displayControlsPanel(lv_obj_t * parent) {
-  char buffer[128];
+void createControlsPanel(lv_obj_t * parent) {
 
   lv_obj_set_pos(parent, 0, 60);
   lv_obj_set_size(parent, PANEL_X_PIXELS, PANEL_Y_PIXELS);
@@ -132,32 +155,13 @@ void displayControlsPanel(lv_obj_t * parent) {
   btn_label = lv_label_create(parent);
   coord_label = lv_label_create(parent);
   ip_label = lv_label_create(parent);
+  udpstatus_label = lv_label_create(parent);
   local_label = lv_label_create(parent);
   sdcard_label = lv_label_create(parent);
   brightness_lbl = lv_label_create(parent);
 
   lv_obj_set_style_bg_color(brightness_sw, lv_color_hex(0xb3b3cc), LV_PART_KNOB | LV_STATE_DEFAULT);
   lv_obj_set_style_bg_color(brightness_sw, lv_color_hex(0xb3b3cc), LV_PART_KNOB | LV_STATE_CHECKED);
-
-  if (config.access_point) {
-    snprintf(buffer, sizeof(buffer), "AP IP: %s", WiFi.softAPIP().toString().c_str());
-  } else {
-    snprintf(buffer, sizeof(buffer), "REMOTE: %d.%d.%d.%d",
-	     config.remote_IP_array[0], config.remote_IP_array[1], 
-	     config.remote_IP_array[2], config.remote_IP_array[3]);
-  }
-  lv_label_set_text(ip_label, buffer);
-
-  snprintf(buffer, sizeof(buffer), "LOCAL: %s", WiFi.localIP().toString().c_str());
-  lv_label_set_text(local_label, buffer);
-
-  if (isSDCardStillMounted()) {
-    uint64_t cardSize = SD_MMC.cardSize() / (1024 * 1024);  // Convert to MB
-    snprintf(buffer, sizeof(buffer), "SD Size: %llu MB", cardSize);
-  } else {
-    snprintf(buffer, sizeof(buffer), "SD card not found");
-  }
-  lv_label_set_text(sdcard_label, buffer);
 
   // brightness switch and label
   lv_obj_set_pos(brightness_sw, 1, 10);  // Set position
@@ -183,7 +187,35 @@ void displayControlsPanel(lv_obj_t * parent) {
   // IP addresses and SD card
   lv_obj_set_pos(ip_label, 1, 80);
   lv_obj_set_pos(local_label, 1, 98);
-  lv_obj_set_pos(sdcard_label, 1, 116);
+  lv_obj_set_pos(udpstatus_label, 1, 116);
+  lv_obj_set_pos(sdcard_label, 1, 132);
+
+  // this button is on controls panel
+  //  click it, and it spawns logging
+  log_btn = lv_btn_create(parent);
+
+  lv_obj_add_event_cb(log_btn, logBtnCB, LV_EVENT_CLICKED, NULL);
+  lv_obj_align(log_btn, LV_ALIGN_CENTER, 0, 40);
+  lv_obj_add_flag(log_btn, LV_OBJ_FLAG_CHECKABLE);
+  lv_obj_set_height(log_btn, LV_SIZE_CONTENT);
+  lv_obj_set_pos(log_btn, 60, 40);
+
+  lv_obj_t * label = lv_label_create(log_btn);
+  lv_label_set_text(label, "LOG");
+  lv_obj_center(label);
+
+}
+
+void logBtnCB(lv_event_t * e)
+{
+  lv_obj_t * btn = lv_event_get_target(e);
+
+  if (lv_obj_has_state(btn, LV_STATE_CHECKED)) {
+    Serial.println("start logging");
+  }
+  else {
+    Serial.println("stop logging");
+  }
 }
 
 // creates toggle buttons with images
@@ -223,19 +255,34 @@ lv_obj_t * createButtonWithImage(int x, int y, int width, int height,
 
 // task changes appearances of LED/dot on the screen
 void throbLedTask(void *parameter) {
-    lv_obj_t *led = (lv_obj_t *)parameter; 
-    uint8_t i = 0;
-    uint32_t colors[10] = {
-      0x093162, 0x084c7c, 0x0582b0, 0x03a5d2, 0x02b5e1,
-      0x00d4ff, 0x02b5e1, 0x03a5d2, 0x0582b0, 0x084c7c};
+  char buffer[128];
 
-    while (true) {
-      // lv_led_set_brightness(led, i);
-      lv_led_set_color(led, lv_color_hex(colors[i]));
-      i++;
-      if(i > 9) {i = 0;}
-      vTaskDelay(100 / portTICK_PERIOD_MS);
+  lv_obj_t *led = (lv_obj_t *)parameter; 
+  uint8_t i = 0;
+  uint32_t colors_off[10] = {
+    0x093162, 0x084c7c, 0x0582b0, 0x03a5d2, 0x02b5e1,
+    0x00d4ff, 0x02b5e1, 0x03a5d2, 0x0582b0, 0x084c7c};
+
+  uint32_t colors_on[10] = {
+    0x625809, 0x7c6b08, 0xb08f05, 0xd2a503, 0xe1b502,
+    0xffd400, 0xe1b502, 0xd2a503, 0xb08f05, 0x7c6b08
+  };
+  while (true) {
+    if (lv_tick_get() - last_udp_receive <= 2000) {
+      snprintf(buffer, sizeof(buffer), "Udp pulse recvd");
+      lv_led_set_color(led, lv_color_hex(colors_on[i]));
     }
+    else {
+      snprintf(buffer, sizeof(buffer), "No udp pulse recvd");
+      lv_led_set_color(led, lv_color_hex(colors_off[i]));
+    }
+    lv_label_set_text(udpstatus_label, buffer);
+
+    i++;
+    if(i > 9) {i = 0;}
+
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+  }
 }
 
 void setupGUI() {
@@ -273,15 +320,21 @@ void setupGUI() {
   btn_array[5] = temp_btn;
 
   lv_obj_t *led = lv_led_create(lv_scr_act());
-  lv_obj_set_pos(led, 306, 55);
-  lv_obj_set_size(led, 8, 8);
-  xTaskCreate(throbLedTask, "Number Update Task", 4096, led, 1, NULL);
+  lv_obj_set_pos(led, 258, 155);
+  lv_obj_set_size(led, 40, 8);
 
   // create controls panel
   controls_parent = lv_obj_create(lv_scr_act());
-  displayControlsPanel(controls_parent);  
+  createControlsPanel(controls_parent);  
+
+  xTaskCreate(throbLedTask, "Number Update Task", 4096, led, 1, NULL);
 
   // turns on one of our buttons
   lv_event_send(ehrz_btn, LV_EVENT_CLICKED, NULL); 
+
+  lv_obj_t * label = lv_label_create(lv_scr_act());
+  lv_obj_set_style_text_font(label, &GREAT_LAKES, 0);
+  lv_label_set_text(label, "123");
+
 }
 
