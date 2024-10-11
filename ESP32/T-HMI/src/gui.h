@@ -17,6 +17,8 @@ void logBtnCB(lv_event_t * e);
 void displayNetworkInfo(lv_obj_t * parent);
 void numberUpdateTask(void * parameter);
 void throbLedTask(void *parameter);
+void createControlsPanel(lv_obj_t * parent);
+void dataControlsPanel(lv_obj_t * parent);
 lv_obj_t * createButtonWithImage(int x, int y, int width, int height, 
                                  const lv_img_dsc_t *img_on, const lv_img_dsc_t *img_off,
                                  const char *name,

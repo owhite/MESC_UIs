@@ -48,9 +48,13 @@ extern lv_obj_t * sdcard_label;
 extern lv_obj_t * brightness_sw;
 extern lv_obj_t * brightness_lbl;
 
+extern lv_obj_t * lg_digit_lbl[3];
+extern lv_obj_t * label_mph;
+
 extern lv_obj_t * led;
 
 extern lv_obj_t * controls_parent;
+extern lv_obj_t * data_controls_parent;
 
 extern Adafruit_AlphaNum4 alphaLED;
 extern int segmentDisplayInt;

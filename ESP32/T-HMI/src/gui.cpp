@@ -8,7 +8,7 @@
 #include "controls_off.h"
 #include "temp_hi.h"
 #include "temp_lo.h"
-#include "GREAT_LAKES.c"
+#include "GREAT_LAKES_130.c"
 
 lv_disp_draw_buf_t draw_buf;
 lv_color_t buf[HOR_PIXELS * 10];
@@ -31,12 +31,18 @@ lv_obj_t * coord_label;     // display touch screen coordinates
 lv_obj_t * brightness_lbl;  // brightness of 14-segment LED
 lv_obj_t * brightness_sw;   // switch for brightness
 
+lv_obj_t * lg_digit_lbl[3];
+lv_obj_t * label_mph;
+
 lv_obj_t * led;            // throbbing dot on screen
 
 // panel that shows controls
 lv_obj_t * controls_parent; 
 #define PANEL_X_PIXELS 240
 #define PANEL_Y_PIXELS 170
+
+lv_obj_t * data_controls_parent; 
+
 
 lv_obj_t *btn_array[6];
 
@@ -102,9 +108,13 @@ void btnEventCB(lv_event_t * e) {
 
     if (btn == controls_btn) {
       lv_obj_clear_flag(controls_parent, LV_OBJ_FLAG_HIDDEN);
+      lv_obj_add_flag(data_controls_parent, LV_OBJ_FLAG_HIDDEN);
+    }
+    else if (btn == ehrz_btn) {
+      lv_obj_add_flag(controls_parent, LV_OBJ_FLAG_HIDDEN);
+      lv_obj_clear_flag(data_controls_parent, LV_OBJ_FLAG_HIDDEN);
     }
     else {
-      lv_obj_add_flag(controls_parent, LV_OBJ_FLAG_HIDDEN);
     }
   }
 
@@ -139,72 +149,6 @@ static void brightnessCB(lv_event_t * e) {
   }
 }
 
-// Controls panel:
-//   displays network and SD card info
-//   allows user to change brightness
-void createControlsPanel(lv_obj_t * parent) {
-
-  lv_obj_set_pos(parent, 0, 60);
-  lv_obj_set_size(parent, PANEL_X_PIXELS, PANEL_Y_PIXELS);
-  lv_obj_set_style_pad_all(parent, 0, 0);
-  lv_obj_set_style_outline_width(parent, 0, 0);
-  lv_obj_set_style_border_width(parent, 2, 2);
-  lv_obj_set_style_bg_color(parent, lv_color_hex(0x000066), 0); 
-
-  brightness_sw = lv_switch_create(parent);
-  btn_label = lv_label_create(parent);
-  coord_label = lv_label_create(parent);
-  ip_label = lv_label_create(parent);
-  udpstatus_label = lv_label_create(parent);
-  local_label = lv_label_create(parent);
-  sdcard_label = lv_label_create(parent);
-  brightness_lbl = lv_label_create(parent);
-
-  lv_obj_set_style_bg_color(brightness_sw, lv_color_hex(0xb3b3cc), LV_PART_KNOB | LV_STATE_DEFAULT);
-  lv_obj_set_style_bg_color(brightness_sw, lv_color_hex(0xb3b3cc), LV_PART_KNOB | LV_STATE_CHECKED);
-
-  // brightness switch and label
-  lv_obj_set_pos(brightness_sw, 1, 10);  // Set position
-  lv_label_set_text(brightness_lbl, "brightness");
-  lv_obj_set_pos(brightness_lbl, 58, 12);
-  lv_obj_add_state(brightness_sw, LV_STATE_CHECKED);
-  static lv_style_t style_switch; // used to change appearance of switch-dot
-  lv_style_init(&style_switch);
-  lv_style_set_bg_color(&style_switch, lv_color_hex(0x3d3f4a));  // background default grey, off
-  lv_style_set_bg_color(&style_switch, lv_color_hex(0x50ff7d));  // electric green, on
-  lv_obj_add_style(brightness_sw, &style_switch, LV_PART_INDICATOR | LV_STATE_CHECKED);  // Checked state
-  lv_obj_add_style(brightness_sw, &style_switch, LV_PART_INDICATOR);   
-  lv_obj_add_event_cb(brightness_sw, brightnessCB, LV_EVENT_ALL, NULL);
-
-  // displays last button pressed
-  lv_obj_set_pos(btn_label, 1, 44);
-  lv_label_set_text(btn_label, "");
-
-  // display coordinates
-  lv_obj_set_pos(coord_label, 1, 62);
-  lv_label_set_text(coord_label, "");
-
-  // IP addresses and SD card
-  lv_obj_set_pos(ip_label, 1, 80);
-  lv_obj_set_pos(local_label, 1, 98);
-  lv_obj_set_pos(udpstatus_label, 1, 116);
-  lv_obj_set_pos(sdcard_label, 1, 132);
-
-  // this button is on controls panel
-  //  click it, and it spawns logging
-  log_btn = lv_btn_create(parent);
-
-  lv_obj_add_event_cb(log_btn, logBtnCB, LV_EVENT_CLICKED, NULL);
-  lv_obj_align(log_btn, LV_ALIGN_CENTER, 0, 40);
-  lv_obj_add_flag(log_btn, LV_OBJ_FLAG_CHECKABLE);
-  lv_obj_set_height(log_btn, LV_SIZE_CONTENT);
-  lv_obj_set_pos(log_btn, 60, 40);
-
-  lv_obj_t * label = lv_label_create(log_btn);
-  lv_label_set_text(label, "LOG");
-  lv_obj_center(label);
-
-}
 
 void logBtnCB(lv_event_t * e)
 {
@@ -285,6 +229,73 @@ void throbLedTask(void *parameter) {
   }
 }
 
+// Controls panel:
+//   displays network and SD card info
+//   allows user to change brightness
+void createControlsPanel(lv_obj_t * parent) {
+
+  lv_obj_set_pos(parent, 0, 60);
+  lv_obj_set_size(parent, PANEL_X_PIXELS, PANEL_Y_PIXELS);
+  lv_obj_set_style_pad_all(parent, 0, 0);
+  lv_obj_set_style_outline_width(parent, 0, 0);
+  lv_obj_set_style_border_width(parent, 2, 2);
+  lv_obj_set_style_bg_color(parent, lv_color_hex(0x000066), 0); 
+
+  brightness_sw = lv_switch_create(parent);
+  btn_label = lv_label_create(parent);
+  coord_label = lv_label_create(parent);
+  ip_label = lv_label_create(parent);
+  udpstatus_label = lv_label_create(parent);
+  local_label = lv_label_create(parent);
+  sdcard_label = lv_label_create(parent);
+  brightness_lbl = lv_label_create(parent);
+
+  lv_obj_set_style_bg_color(brightness_sw, lv_color_hex(0xb3b3cc), LV_PART_KNOB | LV_STATE_DEFAULT);
+  lv_obj_set_style_bg_color(brightness_sw, lv_color_hex(0xb3b3cc), LV_PART_KNOB | LV_STATE_CHECKED);
+
+  // brightness switch and label
+  lv_obj_set_pos(brightness_sw, 1, 10);  // Set position
+  lv_label_set_text(brightness_lbl, "brightness");
+  lv_obj_set_pos(brightness_lbl, 58, 12);
+  lv_obj_add_state(brightness_sw, LV_STATE_CHECKED);
+  static lv_style_t style_switch; // used to change appearance of switch-dot
+  lv_style_init(&style_switch);
+  lv_style_set_bg_color(&style_switch, lv_color_hex(0x3d3f4a));  // background default grey, off
+  lv_style_set_bg_color(&style_switch, lv_color_hex(0x50ff7d));  // electric green, on
+  lv_obj_add_style(brightness_sw, &style_switch, LV_PART_INDICATOR | LV_STATE_CHECKED);  // Checked state
+  lv_obj_add_style(brightness_sw, &style_switch, LV_PART_INDICATOR);   
+  lv_obj_add_event_cb(brightness_sw, brightnessCB, LV_EVENT_ALL, NULL);
+
+  // displays last button pressed
+  lv_obj_set_pos(btn_label, 1, 44);
+  lv_label_set_text(btn_label, "");
+
+  // display coordinates
+  lv_obj_set_pos(coord_label, 1, 62);
+  lv_label_set_text(coord_label, "");
+
+  // IP addresses and SD card
+  lv_obj_set_pos(ip_label, 1, 80);
+  lv_obj_set_pos(local_label, 1, 98);
+  lv_obj_set_pos(udpstatus_label, 1, 116);
+  lv_obj_set_pos(sdcard_label, 1, 132);
+
+  // this button is on controls panel
+  //  click it, and it spawns logging
+  log_btn = lv_btn_create(parent);
+
+  lv_obj_add_event_cb(log_btn, logBtnCB, LV_EVENT_CLICKED, NULL);
+  lv_obj_align(log_btn, LV_ALIGN_CENTER, 0, 40);
+  lv_obj_add_flag(log_btn, LV_OBJ_FLAG_CHECKABLE);
+  lv_obj_set_height(log_btn, LV_SIZE_CONTENT);
+  lv_obj_set_pos(log_btn, 60, 40);
+
+  lv_obj_t * label = lv_label_create(log_btn);
+  lv_label_set_text(label, "LOG");
+  lv_obj_center(label);
+
+}
+
 void setupGUI() {
   lv_obj_t * screen = lv_scr_act();  // Get the active screen object
   lv_obj_set_style_bg_color(screen, lv_color_hex(0x3d3f4a), LV_PART_MAIN);
@@ -327,14 +338,31 @@ void setupGUI() {
   controls_parent = lv_obj_create(lv_scr_act());
   createControlsPanel(controls_parent);  
 
+  data_controls_parent = lv_obj_create(lv_scr_act());
+  dataControlsPanel(data_controls_parent);  
+
   xTaskCreate(throbLedTask, "Number Update Task", 4096, led, 1, NULL);
 
   // turns on one of our buttons
   lv_event_send(ehrz_btn, LV_EVENT_CLICKED, NULL); 
 
-  lv_obj_t * label = lv_label_create(lv_scr_act());
-  lv_obj_set_style_text_font(label, &GREAT_LAKES, 0);
-  lv_label_set_text(label, "123");
 
 }
 
+// Data controls panel:
+//   displays ehrz, amps, mph, battery
+void dataControlsPanel(lv_obj_t * parent) {
+
+  lv_obj_set_pos(parent, 0, 60);
+  lv_obj_set_size(parent, PANEL_X_PIXELS, PANEL_Y_PIXELS);
+  lv_obj_set_style_pad_all(parent, 0, 0);
+  lv_obj_set_style_outline_width(parent, 0, 0);
+  lv_obj_set_style_border_width(parent, 2, 2);
+  lv_obj_set_style_bg_color(parent, lv_color_hex(0x000066), 0); 
+
+  label_mph = lv_label_create(parent);
+  lv_obj_set_style_text_font(label_mph, &GREAT_LAKES_130, 0);
+  lv_label_set_long_mode(label_mph, LV_LABEL_LONG_WRAP);
+  lv_obj_align(label_mph, LV_ALIGN_TOP_RIGHT, -40, -20);
+  lv_obj_set_style_text_color(label_mph, lv_color_hex(0xB0C4DE), LV_PART_MAIN | LV_STATE_DEFAULT); 
+}
