@@ -12,7 +12,8 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_LEDBackpack.h>
 
-#include "GREAT_LAKES.c"
+// #include "GREAT_LAKES_130px.c"
+// #include "DROID_130px.c"
 #include "gui.h"
 #include "processConfig.h"
 #include "udpService.h"

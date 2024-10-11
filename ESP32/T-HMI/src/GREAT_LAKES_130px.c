@@ -4,8 +4,11 @@
 
 #include "lvgl.h"
 
-#ifndef GREAT_LAKES_130_H
-#define GREAT_LAKES_130_H
+#ifndef GREAT_LAKES_130PX
+#define GREAT_LAKES_130PX 1
+#endif
+
+#if GREAT_LAKES_130PX
 
 /*Store the image of the glyphs*/
 static LV_ATTRIBUTE_LARGE_CONST const uint8_t glyph_bitmap[] = {
@@ -17025,9 +17028,9 @@ static lv_font_fmt_txt_dsc_t font_dsc = {
 
 /*Initialize a public general font descriptor*/
 #if LVGL_VERSION_MAJOR >= 8
-const lv_font_t GREAT_LAKES_130 = {
+const lv_font_t GREAT_LAKES_130px = {
 #else
-lv_font_t GREAT_LAKES_130 = {
+lv_font_t GREAT_LAKES_130px = {
 #endif
     .get_glyph_dsc = lv_font_get_glyph_dsc_fmt_txt,    /*Function pointer to get glyph's data*/
     .get_glyph_bitmap = lv_font_get_bitmap_fmt_txt,    /*Function pointer to get glyph's bitmap*/

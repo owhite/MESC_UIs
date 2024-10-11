@@ -3,7 +3,7 @@
 #include "data.h"
 #include "global.h"
 #include <SPI.h>
-#include "GREAT_LAKES_130.c"
+// #include "GREAT_LAKES_130px.c"
 
 // Initialize the touch object
 XPT2046 touch = XPT2046(SPI, TOUCHSCREEN_CS_PIN, TOUCHSCREEN_IRQ_PIN);

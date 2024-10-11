@@ -8,7 +8,8 @@
 #include "controls_off.h"
 #include "temp_hi.h"
 #include "temp_lo.h"
-#include "GREAT_LAKES_130.c"
+
+// LV_FONT_DECLARE(Ubuntu_16px); 
 
 lv_disp_draw_buf_t draw_buf;
 lv_color_t buf[HOR_PIXELS * 10];
@@ -353,15 +354,20 @@ void setupGUI() {
 //   displays ehrz, amps, mph, battery
 void dataControlsPanel(lv_obj_t * parent) {
 
+  // Panel styling
   lv_obj_set_pos(parent, 0, 60);
   lv_obj_set_size(parent, PANEL_X_PIXELS, PANEL_Y_PIXELS);
   lv_obj_set_style_pad_all(parent, 0, 0);
   lv_obj_set_style_outline_width(parent, 0, 0);
   lv_obj_set_style_border_width(parent, 2, 2);
-  lv_obj_set_style_bg_color(parent, lv_color_hex(0x000066), 0); 
+  lv_obj_set_style_bg_color(parent, lv_color_hex(0x000066), 0);
 
+  LV_FONT_DECLARE(GREAT_LAKES_130px); 
+  const lv_font_t *label_font;
+  label_font = &GREAT_LAKES_130px;
   label_mph = lv_label_create(parent);
-  lv_obj_set_style_text_font(label_mph, &GREAT_LAKES_130, 0);
+  lv_obj_set_style_text_font(label_mph, label_font, 0);
+
   lv_label_set_long_mode(label_mph, LV_LABEL_LONG_WRAP);
   lv_obj_align(label_mph, LV_ALIGN_TOP_RIGHT, -40, -20);
   lv_obj_set_style_text_color(label_mph, lv_color_hex(0xB0C4DE), LV_PART_MAIN | LV_STATE_DEFAULT); 

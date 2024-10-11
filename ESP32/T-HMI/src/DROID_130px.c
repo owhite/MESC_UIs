@@ -4,8 +4,11 @@
 
 #include "lvgl.h"
 
-#ifndef DROID_H
-#define DROID_H
+#ifndef DROID_130PX
+#define DROID_130PX 1
+#endif
+
+#if DROID_130PX
 
 /*Store the image of the glyphs*/
 static LV_ATTRIBUTE_LARGE_CONST const uint8_t glyph_bitmap[] = {
@@ -14825,8 +14828,6 @@ lv_font_t DROID = {
 #endif
     .user_data = NULL,
 };
-
-
 
 #endif /*#if DROID*/
 
