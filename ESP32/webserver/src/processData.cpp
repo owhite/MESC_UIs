@@ -10,8 +10,8 @@
 // manages serial data from the mesc controller and esp32's 
 //  -user connects to serial via ESP32 USB
 //  -ESP32 also receives serial data from MESC via UART
-//  -if user typed '>' sets state = COMM_ESP32 and updates the config file
-//  -if not in COMM_ESP32 state and user types commands, sends those to mesc
+//  -if user typed '>' sets state = CONFIG_ESP32 and updates the config file
+//  -if not in CONFIG_ESP32 state and user types commands, sends those to mesc
 //  -when data comes from MESC loads up jsonString, among other thigns
 //  -when appropriate data is is pumped to g_webSocket->textAll(jsonString); 
 //    and that stuff usually appears in the display of the webserver
@@ -41,7 +41,7 @@ void processData(void *parameter) {
   char ch;
 
   while (true) {
-    if (commState == COMM_ESP32) {
+    if (configState == CONFIG_ESP32) {
       // if we're in this state we are changing the
       //   config file of the ESP32
       handleESP32Config(localBuffer, localBufferIndex, serialBuffer, bufferIndex);
@@ -107,7 +107,7 @@ void processData(void *parameter) {
 	if (ch == '>') {
 	  bufferIndex = 0;
 	  localBufferIndex = 0;
-	  commState = COMM_ESP32;
+	  configState = CONFIG_ESP32;
 	  initESP32Config();
 	}
       }
@@ -128,8 +128,10 @@ void processLine(char *line) {
   else if (strncmp(line, "{\"adc1\":", 8) == 0) { 
     // g_compSerial->printf("%d: LOG: %s\n", logState, line);
     // send to udp if user is logging
+    udpSend(line);
+
     if (logState == LOG_JSON) {
-      udpSend(line);
+      // udpSend(line);
     }
   }
   else { // mesc has PROBABLY sent a string resulting from get

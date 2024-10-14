@@ -6,25 +6,22 @@
 #include <ESPAsyncWebServer.h>
 #include <WiFiUdp.h>
 
-extern float globalVar2;
-extern char globalArray[100];
-
 extern DynamicJsonDocument jsonDoc;
 
 #define BUFFER_SIZE 526
 #define BIG_BUFFER_SIZE 10000
 
-extern int commState;
+extern int configState;
 extern int logState;
+extern bool graphingState;
 
 extern WiFiUDP udpReceiver;
 extern WiFiUDP udpSender;
 
-#define COMM_IDLE      0
-#define COMM_GET       1
-#define COMM_SEND      2
-#define COMM_ESP32     3 // changing config of ESP32
-#define COMM_GRAPH     4 
+#define CONFIG_IDLE      0
+#define CONFIG_SEND      1
+#define CONFIG_ESP32     2 // changing config of ESP32
+#define CONFIG_GRAPH     3 
 
 #define LOG_IDLE          0 
 #define LOG_REQUEST_IDLE  1 // aka "stop logging"
@@ -48,11 +45,17 @@ struct Config {
   bool access_point;
   int log_interval;
 };
-
 extern Config config;
 
 extern AsyncWebSocket* g_webSocket;
 extern HardwareSerial* g_mescSerial; 
 extern HardwareSerial* g_compSerial;
+
+typedef struct {
+  char displayLine[5000];
+  int displayValue;
+  float Vd;
+  float Vq;
+} DisplayDataRequest;
 
 #endif // GLOBAL_H

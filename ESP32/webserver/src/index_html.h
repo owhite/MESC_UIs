@@ -496,11 +496,17 @@
 
       function onLoad(event) {
           initWebSocket();
-          document.getElementById('command_input').addEventListener('keydown', function(event) {
+          document.getElementById('send_command_input').addEventListener('keydown', function(event) {
               if (event.key === 'Enter') {
                   sendCommand();
               }
           });
+          document.getElementById('datetimeInput').addEventListener('keydown', function(event) {
+              if (event.key === 'Enter') {
+		  logTextBox();
+              }
+          });
+
           const tables = document.querySelectorAll('table');
           tables.forEach(table => {
               table.addEventListener('click', function(event) {
@@ -533,7 +539,7 @@
 
       function graphCommand() {
           console.log('Send graph_request:');
-          websocket.send("graph_request");
+          websocket.send("GRAPH_REQUEST:");
       }
 
       let isLogging = false;  

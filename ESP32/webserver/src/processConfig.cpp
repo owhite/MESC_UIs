@@ -14,7 +14,7 @@ char *serialInput = nullptr;
 void initESP32Config() {
   serialInput = (char *)malloc(BUFFER_SIZE * sizeof(char));
   g_compSerial->println("\nSwitching to ESP32 Configuration" );
-  commState = COMM_ESP32;
+  configState = CONFIG_ESP32;
 }
 
 void readConfig() {
@@ -215,11 +215,11 @@ void processConfig(char* line) {
     }
     else if (strncmp(line, "exit", 4) == 0) {
       g_compSerial->println("exit entered");
-      commState = COMM_IDLE;
+      configState = CONFIG_IDLE;
     }
     else if (strncmp(line, "quit", 4) == 0) {
       g_compSerial->println("quit entered");
-      commState = COMM_IDLE;
+      configState = CONFIG_IDLE;
     }
     else if (strncmp(line, "get", 3) == 0) {
       g_compSerial->println("get entered"); // should show all config variables

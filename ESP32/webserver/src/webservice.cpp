@@ -101,7 +101,7 @@ void initWebService(HardwareSerial& compSerial, HardwareSerial& mescSerial, Asyn
 void webServerTask(void *pvParameter) {
   int count;
   while (1) {
-    if (commState == COMM_GRAPH) {
+    if (graphingState) {
       // Continuously update the graph -- should be optional.
       if (comm_counter > 5) { 
         g_mescSerial->write("log -fl\r\n");
@@ -129,7 +129,8 @@ void webServerTask(void *pvParameter) {
 	break;
       }
     if (count > 10) {
-      udpSend("PULSE:");
+      // this should not need to be sent if it's sending json
+      udpSend((char*) "PULSE:");
       count = 0;
     }
     count++;
@@ -139,7 +140,7 @@ void webServerTask(void *pvParameter) {
 
 // The ESP32 creates a wifi network, and application
 //   opens a udp service to get messages from the network
-//   results in changes to commState
+//   results in changes to configState
 void udpReceiveTask(void *pvParameter) {
   udpReceiver.begin(localPort);
   Serial.printf("UDP Receiver listening on port %d\n", localPort);
@@ -181,7 +182,7 @@ void udpSend(char *message) {
 
 // websocket message handler
 //  application opens a webserver. user sends messages from the browswer
-//  results in (among other things) changing the commState
+//  results in (among other things) changing the configState
 void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t len) {
   data[len] = '\0';  // Null-terminate the string
   char* message = (char*)data;
@@ -228,12 +229,12 @@ void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t 
     udpSend(message);
   }
   else if (strncmp(message, "GRAPH_REQUEST:", 15) == 0) {
-    g_compSerial->println("graphing");
-    if (commState != COMM_GRAPH) {
-      commState = COMM_GRAPH;
+    graphingState = !graphingState;
+    if (graphingState) {
+      g_compSerial->println("graphing on");
     }
     else {
-      commState = COMM_IDLE;
+      g_compSerial->println("graphing off");
     }
   }
   else {
@@ -257,7 +258,5 @@ void updateButtonPress(AsyncWebServerRequest *request) {
 void processButtonPress() {
   g_compSerial->println("Running get.");
   g_mescSerial->write("get\r\n");
-
-  commState = COMM_GET;
 }
 

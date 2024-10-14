@@ -9,12 +9,11 @@
 #include "webservice.h"
 
 // Global variable definitions
-int commState = COMM_IDLE;
+int configState = CONFIG_IDLE;
 int logState = LOG_IDLE;
-DynamicJsonDocument jsonDoc(5024);
+bool graphingState = false;
 
-float globalVar2 = 0.0f;
-char globalArray[100] = {0};
+DynamicJsonDocument jsonDoc(5024);
 
 // Define global pointers
 HardwareSerial* g_compSerial = nullptr;

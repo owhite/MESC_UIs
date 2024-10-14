@@ -27,34 +27,12 @@ void touchpadRead(lv_indev_drv_t * indev_driver, lv_indev_data_t * data) {
     data->point.x = touch.X();
     data->point.y = touch.Y();
 
-    segmentDisplayInt = touch.X();
-
     char buf[20];
     snprintf(buf, sizeof(buf), "x: %d y: %d", touch.X(), touch.Y());
     lv_label_set_text(coord_label, buf);
-
-    snprintf(buf, sizeof(buf), "%d", touch.X());
-    lv_label_set_text(label_mph, buf);
   } else {
     data->state = LV_INDEV_STATE_REL;
   }
-}
-
-void display_right_justified_int(int num) {
-    char str[4]; // Buffer to hold up to 3 digits + null terminator
-    snprintf(str, sizeof(str), "%d", num); // Convert integer to string
-
-    int length = 3;
-    int total_width = 50 * length; // Each digit is 50 pixels wide
-    int screen_width = 240;        // Example screen width
-    int x_base = screen_width - total_width; // Base x position for right-aligning
-
-    // Loop through each digit and set the text and position
-    for (int i = 0; i < length; i++) {
-        char current_char[2] = {str[i], '\0'}; // Convert char to string
-        lv_label_set_text(lg_digit_lbl[i], current_char); // Set the label text
-        lv_obj_set_pos(lg_digit_lbl[i], x_base + (i * 80), 20); // Position the labels
-    }
 }
 
 // New touchInit function

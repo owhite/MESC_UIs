@@ -9,20 +9,31 @@
 #include <TFT_eSPI.h>
 #include <lvgl.h>
 #include "sd_card.h"
+#include "gui.h"
 
 extern DynamicJsonDocument jsonDoc;
-extern int commState;
 
 extern TFT_eSPI tft;
 
 #define BUFFER_SIZE 526
-#define BIG_BUFFER_SIZE 10000
 
+extern int commState;
 #define COMM_IDLE      0
 #define COMM_GET       1
 #define COMM_SEND      2
 #define COMM_LOG       3
 #define COMM_ESP32     4
+
+extern int displayState;
+#define DISPLAY_IDLE    0
+#define DISPLAY_EHRZ    1
+#define DISPLAY_MPH     2
+#define DISPLAY_ADC     3
+#define DISPLAY_AMP     4
+#define DISPLAY_BAT     5
+#define DISPLAY_TMOT    6
+#define DISPLAY_TMOS    7
+#define DISPLAY_ERR     8
 
 #define HOR_PIXELS 240
 #define VER_PIXELS 320
@@ -40,7 +51,6 @@ extern lv_obj_t * temp_btn;
 extern lv_obj_t * controls_btn;
 
 extern lv_obj_t * udpstatus_label;
-extern lv_obj_t * btn_label;
 extern lv_obj_t * coord_label;
 extern lv_obj_t * ip_label;
 extern lv_obj_t * local_label;
@@ -48,8 +58,7 @@ extern lv_obj_t * sdcard_label;
 extern lv_obj_t * brightness_sw;
 extern lv_obj_t * brightness_lbl;
 
-extern lv_obj_t * lg_digit_lbl[3];
-extern lv_obj_t * label_mph;
+extern lv_obj_t * data_label;
 
 extern lv_obj_t * led;
 
@@ -75,7 +84,6 @@ struct Config {
   bool access_point;
   int log_interval;
 };
-
 extern Config config;
 
 struct LoggingState {
@@ -84,13 +92,36 @@ struct LoggingState {
     File fileHandle;
     SemaphoreHandle_t mutex;  // Protect access to shared state
 };
+extern LoggingState sdLoggingState;
+
+// Struct for passing logging requests to the logging task
+typedef struct {
+  LoggingCommandType commandType;
+  char logLine[2000];
+} LoggingRequest;
+
+// Declare the queue handle for logging requests
+extern QueueHandle_t displayQueue; 
+extern QueueHandle_t loggingQueue; 
+extern SemaphoreHandle_t sdLoggingStateMutex;
+
+// Struct for passing logging requests to the logging task
+typedef struct {
+  char displayLine[5000];
+} DisplayRequest;
+
+typedef struct {
+  char displayLine[5000];
+  int displayValue;
+  float Vd;
+  float Vq;
+} DisplayDataRequest;
+
+extern LoggingRequest logRequest;
+extern DisplayRequest displayRequest;
+extern DisplayDataRequest displayDataRequest;
 
 extern unsigned long last_udp_receive; 
-
-extern bool refreshDisplay;
-extern LoggingState sdLoggingState;
-extern LoggingRequest globalRequest;
-
 extern AsyncWebSocket* g_webSocket;
 extern HardwareSerial* g_mescSerial; 
 extern HardwareSerial* g_compSerial;

@@ -1,19 +1,12 @@
 #include "pins.h"
 #include <SPI.h>
-#include <SD.h>
-#include <SD_MMC.h>
 #include <Arduino.h>
-#include <WiFi.h>
-#include <LittleFS.h>
-#include <xpt2046.h>
 #include <TFT_eSPI.h>
 #include <lvgl.h>
 #include <lv_conf.h> 
 #include <Adafruit_GFX.h>
 #include <Adafruit_LEDBackpack.h>
 
-// #include "GREAT_LAKES_130px.c"
-// #include "DROID_130px.c"
 #include "gui.h"
 #include "processConfig.h"
 #include "udpService.h"
@@ -23,27 +16,22 @@
 
 TFT_eSPI tft = TFT_eSPI();
 
-LoggingRequest globalRequest;
-int commState = 0;
-DynamicJsonDocument jsonDoc(5024);
-
-AsyncWebSocket* g_webSocket = nullptr;
-AsyncWebServer server(80);
-AsyncWebSocket ws("/ws");
+int commState = COMM_IDLE;
+int displayState = DISPLAY_IDLE;
 
 LoggingState sdLoggingState = {false, "", File(), NULL};
-bool refreshDisplay = true;
-
-int number = 0;  // Variable to store the current number
-
-bool is_image1 = true;
-int segmentDisplayInt = 123;
-int segmentDisplayLetter = 'E';
 
 bool rlst = false;
 
+int segmentDisplayInt = 123;
+int segmentDisplayLetter = 'E';
+
 Adafruit_AlphaNum4 alphaLED = Adafruit_AlphaNum4();
 TwoWire customWire = TwoWire(0);
+
+LoggingRequest logRequest;
+QueueHandle_t loggingQueue;
+QueueHandle_t displayQueue;
 
 void segmentTask(void * parameter) {
   customWire.begin(43, 44);
@@ -71,7 +59,6 @@ void setup() {
   pinMode(PWR_EN_PIN, OUTPUT);
   digitalWrite(PWR_EN_PIN, HIGH);
 
-
   tft.begin();         
   tft.setRotation(1);  
   tft.setSwapBytes(true);
@@ -89,7 +76,7 @@ void setup() {
   tft.fillScreen(TFT_BLACK);
   tft.setCursor(0, 0);
   tft.print("read SD: ");
-  initSDCard(); // this takes time which is a bit odd
+  // initSDCard(); // this takes time which is a bit odd
 
   tft.fillScreen(TFT_BLACK);
   tft.setCursor(0, 0);
@@ -97,8 +84,7 @@ void setup() {
   initUDPService();
 
   setupGUI();
-  // we <3 FreeRTOS tasks
- xTaskCreate(segmentTask, "Segment Task", 4096, NULL, 1, NULL);
+  xTaskCreate(segmentTask, "Segment Task", 4096, NULL, 1, NULL);
 }
 
 void loop() {

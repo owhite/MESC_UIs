@@ -15,16 +15,6 @@ typedef enum {
     LOG_ADD_LINE
 } LoggingCommandType;
 
-// Struct for passing logging requests to the logging task
-typedef struct {
-  LoggingCommandType commandType;
-  char logLine[2000];
-} LoggingRequest;
-
-// Declare the queue handle for logging requests
-extern QueueHandle_t loggingQueue; 
-extern SemaphoreHandle_t sdLoggingStateMutex;
-
 // Function prototypes
 void initSDCard();
 bool isSDCardStillMounted();

@@ -2,8 +2,6 @@
 #include "sd_card.h"
 #include "global.h"
 
-// Define the queue handle and semaphore
-QueueHandle_t loggingQueue;
 SemaphoreHandle_t sdLoggingStateMutex;
 
 void initSDCard() {
@@ -66,10 +64,10 @@ void initSDCard() {
 
 void sdLoggingTask(void* pvParameters) {
   while (true) {
-    if (xQueueReceive(loggingQueue, &globalRequest, portMAX_DELAY) == pdPASS) {
+    if (xQueueReceive(loggingQueue, &logRequest, portMAX_DELAY) == pdPASS) {
       xSemaphoreTake(sdLoggingStateMutex, portMAX_DELAY);
  
-      switch (globalRequest.commandType) {
+      switch (logRequest.commandType) {
       case LOG_START:
 	if (sdLoggingState.fileName[0] == '\0') {
 	  setLogFileName((char*) "log");
@@ -93,7 +91,7 @@ void sdLoggingTask(void* pvParameters) {
 
       case LOG_ADD_LINE:
 	if (sdLoggingState.isLogging && sdLoggingState.fileHandle) {
-	  sdLoggingState.fileHandle.println(globalRequest.logLine);
+	  sdLoggingState.fileHandle.println(logRequest.logLine);
 	}
 	break;
       }
