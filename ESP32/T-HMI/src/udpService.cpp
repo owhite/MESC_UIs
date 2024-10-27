@@ -13,12 +13,15 @@ WiFiUDP udpReceiver;
 WiFiUDP udpSender;
 
 unsigned long last_udp_receive = 0; 
+unsigned long last_data_receive = 0; 
+int count = 0;
 
 AsyncWebSocket* g_webSocket = nullptr;
 AsyncWebServer server(80);
 AsyncWebSocket ws("/ws");
 
-DisplayRequest displayRequest;
+DisplayDataRequest displayDataRequest;
+DynamicJsonDocument jsonDoc(2024);
 
 void initUDPService() {
   WiFi.begin(config.ssid, config.password);
@@ -46,7 +49,7 @@ void initUDPService() {
     Serial.println(WiFi.localIP());
   }
 
-  xTaskCreate(udpReceiveTask, "UDP Receive Task", 4096, NULL, 1, NULL);
+  xTaskCreate(udpReceiveTask, "UDP Receive Task", 8192, NULL, 1, NULL);
 }
 
 // ESP32 starts a wifi network, gets messages by udp
@@ -58,66 +61,122 @@ void udpReceiveTask(void *pvParameter) {
   Serial.printf("UDP Receiver listening on port %d\n", localPort);
 
   // Variables to handle the log name extraction
-  char my_str[100];  // Array to hold the extracted log name
-  char* spacePtr = NULL;
-  int spaceCount = 0;
-
-  char message[2000];
+  char *spacePtr;
+  char message[2001];
+  char my_str[100];
 
   while (1) {
     int packetSize = udpReceiver.parsePacket();
     if (packetSize) {
-      // This chokes on long strings
+      if (packetSize > 2000) {
+	// Handle large packet, if necessary
+	continue;  // Skip this packet
+      }
+
       int len = udpReceiver.read(message, 2000);
+
       if (len > 0) {
-        message[len] = 0;  // Null-terminate packet
 
-	if (strncmp(message, "PULSE:", 6) == 0) {
-	  // only reset this if pulse or if log data is received
-	  last_udp_receive = lv_tick_get(); 
-	}
-	else if (strncmp(message, "{\"adc1\":", 8) == 0) { 
-	  last_udp_receive = lv_tick_get(); // log data received, reset
-	  // logRequest.commandType = LOG_ADD_LINE;
+	last_udp_receive = lv_tick_get(); 
 
-	  strncpy(displayRequest.displayLine, message, sizeof(message) - 1);
-	  displayRequest.displayLine[sizeof(displayRequest.displayLine) - 1] = '\0'; 
-	  if (xQueueSend(displayQueue, &displayRequest, portMAX_DELAY) != pdPASS) {
-	    Serial.println("Failed to send display message.");
+        message[len] = '\0';  // Null-terminate packet
+	spacePtr = strstr(message, ": ");
+	if (spacePtr != NULL) {
+	  spacePtr += 2;
+	  strncpy(my_str, spacePtr, sizeof(my_str) - 1);
+	  my_str[sizeof(my_str) - 1] = '\0'; 
+	} 
+
+	if (strncmp(message, "{\"adc1\":", 8) == 0) { 
+	  last_data_receive = lv_tick_get(); 
+
+	  count++;
+	  if (count > 30) {
+	    Serial.printf("\n%s\n", message);
+	    count = 0;
+	  } else {
+	    Serial.print(".");
 	  }
+
+	  DeserializationError error = deserializeJson(jsonDoc, message);
+
+	  if (error) {
+	    Serial.printf("Failed to parse JSON: %s\n", error.f_str());
+	    continue;
+	  }
+
+	  float Vd;
+	  float Vq;
+	  if (jsonDoc.containsKey("ehz")) {
+	    displayDataRequest.ehz = jsonDoc["ehz"].as<int>();
+	    displayDataRequest.mph = displayDataRequest.ehz / 10;
+	    if (displayDataRequest.ehz > 999) {
+	      displayDataRequest.ehz = 999;
+	    }
+	    if (displayDataRequest.ehz < 0) {displayDataRequest.ehz = 0;}
+	  }
+
+	  if (jsonDoc.containsKey("vbus")) {
+	    displayDataRequest.bat = jsonDoc["vbus"].as<float>();
+	  }
+
+	  if (jsonDoc.containsKey("Vd") && jsonDoc.containsKey("Vq")) {
+	    Vd = jsonDoc["Vd"].as<float>();
+	    Vq = jsonDoc["Vq"].as<float>();
+	    displayDataRequest.amp = sqrt((Vd * Vd) + (Vq * Vq));
+	  }
+
+	  UBaseType_t stackHighWaterMark = uxTaskGetStackHighWaterMark(NULL);
+	  if (stackHighWaterMark < 4000) { // this is not good. 
+	    Serial.printf("Stack high water mark: %d bytes remaining\n", stackHighWaterMark);
+	  }
+        
+	  if (xQueueSend(displayQueue, &displayDataRequest, portMAX_DELAY) != pdPASS) {
+	    Serial.println("Failed to send display data message.");
+	  }
+	  // if (xQueueSend(loggingQueue, &logRequest, portMAX_DELAY) != pdPASS) {
+	  // Serial.println("Failed to send LOG_START request to queue.");
+	  // }
 	}
 	else if (strncmp(message, "{\"Parameter\":", 13) == 0) { 
-	  // logRequest.commandType = LOG_ADD_LINE;
-	  strncpy(displayRequest.displayLine, message, sizeof(message) - 1);
-	  displayRequest.displayLine[sizeof(displayRequest.displayLine) - 1] = '\0'; 
-	  if (xQueueSend(displayQueue, &displayRequest, portMAX_DELAY) != pdPASS) {
-	    Serial.println("Failed to send display message.");
-	  }
+	  last_data_receive = lv_tick_get(); 
+	  Serial.printf("\n%d :: %s :\n", strlen(message), message);
+
+	  // should send something to log task
+
 	}
 	else if (strncmp(message, "LOG_NAME:", 9) == 0 && spacePtr) {
-	  strcpy(my_str, spacePtr + 1); 
+	  strncpy(my_str, spacePtr, sizeof(my_str) - 1); 
 	  my_str[sizeof(my_str) - 1] = '\0'; 
 	  setLogFileName(my_str);
 	}
 	else if (strncmp(message, "LOG_START:", 10) == 0) {
-	  logRequest.commandType = LOG_START;
-
-	  if (xQueueSend(loggingQueue, &logRequest, portMAX_DELAY) != pdPASS) {
-	    Serial.println("Failed to send LOG_START request to queue.");
+	  Serial.printf("log start requested\n");
+	}
+	else if (strncmp(message, "PULSE:", 10) == 0) {
+	  Serial.printf("pulse received\n");
+	}
+	else if (strncmp(message, "TIME_STAMP:", 11) == 0) { // for now treating this as a pulse from host
+	  strncpy(my_str, spacePtr, sizeof(my_str) - 1); 
+	  my_str[sizeof(my_str) - 1] = '\0'; 
+	  if (lv_tick_get() - last_data_receive > 400) {
+	    Serial.printf("timestamp: %s, no json, requesting json\n", my_str);
+	    udpSend((char *) "JSON_START:");
 	  }
+	  else {
+	    Serial.printf("timestamp: %s\n", my_str);
+	  }
+	  setLogFileName(my_str);
 	}
 	else if (strncmp(message, "LOG_STOP:", 9) == 0) {
-	  logRequest.commandType = LOG_STOP;
-
-	  if (xQueueSend(loggingQueue, &logRequest, portMAX_DELAY) != pdPASS) {
-	    Serial.println("Failed to send LOG_STOP request to queue.");
-	  }
+	  Serial.printf("log stop requested\n");
 	}
 	else {
-	  Serial.println("strange websocket message");
+	  Serial.printf("unexpected websocket message: %s\n", message);
 	}
       }
     }
+    vTaskDelay(10 / portTICK_PERIOD_MS);
   }
 }
 

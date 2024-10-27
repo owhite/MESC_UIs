@@ -1,4 +1,5 @@
 #include <lvgl.h>
+#include "sd_card.h"
 #include "gui.h"
 #include "udpService.h"
 #include "global.h"
@@ -25,6 +26,7 @@ lv_obj_t * udpstatus_label; // if a pulse came in
 lv_obj_t * ip_label;        // display IP addresses and SD card status
 lv_obj_t * local_label;     // isplay the local IP
 lv_obj_t * sdcard_label;    // display SD card status
+lv_obj_t * logname_label;   // file name for log
 lv_obj_t * coord_label;     // display touch screen coordinates 
 lv_obj_t * brightness_lbl;  // brightness of 14-segment LED
 lv_obj_t * brightness_sw;   // switch for brightness
@@ -49,8 +51,6 @@ LV_IMG_DECLARE(controls_off);
 
 LV_IMG_DECLARE(temp_hi);
 LV_IMG_DECLARE(temp_lo);
-
-DynamicJsonDocument jsonDoc(5024);
 
 // supports createButtonWithImage()
 typedef struct {
@@ -93,16 +93,16 @@ void btnEventCB(lv_event_t * e) {
 
   // Handle specific button actions
   if (btn == amp_btn) {
-    Serial.println("amps");
+    // Serial.println("amps");
     displayState = DISPLAY_AMP;
   } else if (btn == mph_btn) {
-    Serial.println("mph");
+    // Serial.println("mph");
     displayState = DISPLAY_MPH;
   } else if (btn == ehrz_btn) {
-    Serial.println("mph");
+    // Serial.println("hrz");
     displayState = DISPLAY_EHRZ;
   } else if (btn == bat_btn) {
-    Serial.println("mph");
+    // Serial.println("bat");
     displayState = DISPLAY_BAT;
   }
 }
@@ -126,10 +126,12 @@ void logBtnCB(lv_event_t * e)
   if (lv_obj_has_state(btn, LV_STATE_CHECKED)) {
     udpSend((char *) "LOG_START:");
     Serial.println("start logging");
+    sdLoggingState.isLogging = true;
   }
   else {
     udpSend((char *) "LOG_STOP:");
     Serial.println("stop logging");
+    sdLoggingState.isLogging = false;
   }
 }
 
@@ -186,47 +188,44 @@ void createControlsPanel(lv_obj_t * parent) {
   udpstatus_label = lv_label_create(parent);
   local_label = lv_label_create(parent);
   sdcard_label = lv_label_create(parent);
+  logname_label = lv_label_create(parent);
   brightness_lbl = lv_label_create(parent);
+  log_btn = lv_btn_create(parent);
+  lv_obj_t * label = lv_label_create(log_btn);
+
+  // coordinates, IP addresses, status, SD card
+  lv_obj_set_pos(coord_label, 1, 4);
+  lv_label_set_text(coord_label, "");
+  lv_obj_set_pos(ip_label, 1, 22);
+  lv_obj_set_pos(local_label, 1, 40);
+  lv_obj_set_pos(udpstatus_label, 1, 58);
+  lv_obj_set_pos(sdcard_label, 1, 76);
+  lv_obj_set_pos(logname_label, 1, 94);
 
   lv_obj_set_style_bg_color(brightness_sw, lv_color_hex(0xb3b3cc), LV_PART_KNOB | LV_STATE_DEFAULT);
   lv_obj_set_style_bg_color(brightness_sw, lv_color_hex(0xb3b3cc), LV_PART_KNOB | LV_STATE_CHECKED);
 
+  // button on controls panel spawns logging
+  lv_obj_add_event_cb(log_btn, logBtnCB, LV_EVENT_CLICKED, NULL);
+  lv_obj_add_flag(log_btn, LV_OBJ_FLAG_CHECKABLE);
+  lv_obj_set_height(log_btn, LV_SIZE_CONTENT);
+  lv_obj_set_pos(log_btn, 170, 5);
+  lv_label_set_text(label, "LOG");
+  lv_obj_center(label);
+
   // brightness switch and label
-  lv_obj_set_pos(brightness_sw, 1, 10);  // Set position
+
+  lv_obj_set_pos(brightness_sw, 170, 40);  // Set position
   lv_label_set_text(brightness_lbl, "brightness");
-  lv_obj_set_pos(brightness_lbl, 58, 12);
+  lv_obj_set_pos(brightness_lbl, 150, 70);
   lv_obj_add_state(brightness_sw, LV_STATE_CHECKED);
   static lv_style_t style_switch; // used to change appearance of switch-dot
   lv_style_init(&style_switch);
   lv_style_set_bg_color(&style_switch, lv_color_hex(0x3d3f4a));  // background default grey, off
-  lv_style_set_bg_color(&style_switch, lv_color_hex(0x50ff7d));  // electric green, on
-  lv_obj_add_style(brightness_sw, &style_switch, LV_PART_INDICATOR | LV_STATE_CHECKED);  // Checked state
+  lv_style_set_bg_color(&style_switch, lv_color_hex(0xffd400));  // on
+  lv_obj_add_style(brightness_sw, &style_switch, LV_PART_INDICATOR | LV_STATE_CHECKED);
   lv_obj_add_style(brightness_sw, &style_switch, LV_PART_INDICATOR);   
   lv_obj_add_event_cb(brightness_sw, brightnessCB, LV_EVENT_ALL, NULL);
-
-  // display coordinates
-  lv_obj_set_pos(coord_label, 1, 44);
-  lv_label_set_text(coord_label, "");
-
-  // IP addresses and SD card
-  lv_obj_set_pos(ip_label, 1, 62);
-  lv_obj_set_pos(local_label, 1, 80);
-  lv_obj_set_pos(udpstatus_label, 1, 98);
-  lv_obj_set_pos(sdcard_label, 1, 116);
-
-  // this button is on controls panel
-  //  click it, and it spawns logging
-  log_btn = lv_btn_create(parent);
-
-  lv_obj_add_event_cb(log_btn, logBtnCB, LV_EVENT_CLICKED, NULL);
-  lv_obj_align(log_btn, LV_ALIGN_CENTER, 0, 40);
-  lv_obj_add_flag(log_btn, LV_OBJ_FLAG_CHECKABLE);
-  lv_obj_set_height(log_btn, LV_SIZE_CONTENT);
-  lv_obj_set_pos(log_btn, 60, 40);
-
-  lv_obj_t * label = lv_label_create(log_btn);
-  lv_label_set_text(label, "LOG");
-  lv_obj_center(label);
 
 }
 
@@ -275,12 +274,11 @@ void setupGUI() {
   data_controls_parent = lv_obj_create(lv_scr_act());
   dataControlsPanel(data_controls_parent);  
 
-
   // turns on one of our buttons
   lv_event_send(ehrz_btn, LV_EVENT_CLICKED, NULL); 
 
   // Create a queue for 10 requests
-  displayQueue = xQueueCreate(20, sizeof(DisplayRequest));  
+  displayQueue = xQueueCreate(20, sizeof(DisplayDataRequest));  
   if (displayQueue == NULL) {
     Serial.println("Failed to create display queue");
     return;
@@ -293,7 +291,6 @@ void setupGUI() {
 // Data controls panel:
 //   displays ehrz, amps, mph, battery
 void dataControlsPanel(lv_obj_t * parent) {
-
   // Panel styling
   lv_obj_set_pos(parent, 0, 60);
   lv_obj_set_size(parent, PANEL_X_PIXELS, PANEL_Y_PIXELS);
@@ -307,6 +304,7 @@ void dataControlsPanel(lv_obj_t * parent) {
   label_font = &GREAT_LAKES_130px;
   data_label = lv_label_create(parent);
   lv_obj_set_style_text_font(data_label, label_font, 0);
+  lv_label_set_text(data_label, "MESC");
 
   lv_label_set_long_mode(data_label, LV_LABEL_LONG_WRAP);
   lv_obj_align(data_label, LV_ALIGN_TOP_RIGHT, -10, -20);
@@ -317,7 +315,7 @@ void guiTask(void *parameter) {
   char buffer[128];
 
   lv_obj_t *led = (lv_obj_t *)parameter; 
-  uint8_t i = 0;
+  uint8_t i = 0; // counter for color cycling
   uint32_t colors_off[10] = {
     0x093162, 0x084c7c, 0x0582b0, 0x03a5d2, 0x02b5e1,
     0x00d4ff, 0x02b5e1, 0x03a5d2, 0x0582b0, 0x084c7c};
@@ -326,21 +324,27 @@ void guiTask(void *parameter) {
     0x625809, 0x7c6b08, 0xb08f05, 0xd2a503, 0xe1b502,
     0xffd400, 0xe1b502, 0xd2a503, 0xb08f05, 0x7c6b08
   };
+
   while (true) {
-    // section handles LED stuff
-    // test if getting messages from udp
-    if (lv_tick_get() - last_udp_receive <= 2000) {
+    // test if getting json from udp
+    if (lv_tick_get() - last_data_receive > 400) {
+      // not getting json data
+      zeroOutDisplay(); 
+      snprintf(buffer, sizeof(buffer), "Udp pulse recvd");
+      lv_led_set_color(led, lv_color_hex(colors_off[i]));
+    }
+    else if (lv_tick_get() - last_udp_receive <= 12000) {
+      // getting an occasional pulse, but no json
       snprintf(buffer, sizeof(buffer), "Udp pulse recvd");
       lv_led_set_color(led, lv_color_hex(colors_on[i]));
     }
     else {
-      snprintf(buffer, sizeof(buffer), "No udp pulse recvd");
+      snprintf(buffer, sizeof(buffer), "No udp pulse");
       lv_led_set_color(led, lv_color_hex(colors_off[i]));
     }
     lv_label_set_text(udpstatus_label, buffer);
 
-    i++;
-    if(i > 9) {i = 0;}
+    i++; if(i > 9) {i = 0;}
 
     // this section updates other parts of UI
     if (config.access_point) {
@@ -363,6 +367,9 @@ void guiTask(void *parameter) {
     }
     lv_label_set_text(sdcard_label, buffer);
 
+    snprintf(buffer, sizeof(buffer), "log name: %s", getLogFileName());
+    lv_label_set_text(logname_label, buffer);
+
     switch (displayState) {
     case DISPLAY_MPH:
       segmentDisplayLetter = 'M';
@@ -384,65 +391,42 @@ void guiTask(void *parameter) {
   }
 }
 
-// this is blocked unless a xQueueReceive() is received
+void zeroOutDisplay(void) {
+  char buffer[12];
+  segmentDisplayInt = 0;
+  snprintf(buffer, sizeof(buffer), "%d", (int) 0);
+  lv_label_set_text(data_label, buffer);
+}
+
 void queueTask(void *parameter) {
-  char buffer[128];
-  float displayValue;
-  float Vd;
-  float Vq;
-  int count = 0;
+  char buffer[12];
 
   while (true) {
-    if (xQueueReceive(displayQueue, &displayRequest, portMAX_DELAY) == pdPASS) {
-      if (count > 30) {
-	Serial.printf("Received queue: %s\n", displayRequest.displayLine);
-	count = 0;
-      }
-      else {
-	Serial.printf(".");
-      }
-      count++;
-      DeserializationError error = deserializeJson(jsonDoc, displayRequest.displayLine);
-
-      if (error) {
-	Serial.printf("Failed to parse JSON: %s\n", error.f_str());
-	Serial.printf(": %s :\n", displayRequest.displayLine);
-      }
-      else {
-	switch(displayState)
+    // this is blocked unless a xQueueReceive() is received
+    if (xQueueReceive(displayQueue, &displayDataRequest, portMAX_DELAY) == pdPASS) {
+      switch(displayState)
 	  {
 	  case DISPLAY_MPH:
-	    segmentDisplayLetter = 'M';
-	    Vd = jsonDoc["ehz"];
-	    displayValue = Vd / 10.0;
+	    snprintf(buffer, sizeof(buffer), "%d", (int) displayDataRequest.mph);
+	    segmentDisplayInt = (int) displayDataRequest.mph;
 	    break;
 	  case DISPLAY_AMP:
-	    segmentDisplayLetter = 'A';
-	    Vd = 0.0;
-	    Vq = 0.0;
-	    Vd = jsonDoc["Vd"];
-	    Vq = jsonDoc["Vq"];
-	    displayValue = sqrt((Vd * Vd) + (Vq * Vq));
-	    Serial.println(Vq);
+	    snprintf(buffer, sizeof(buffer), "%d", (int) displayDataRequest.amp);
+	    segmentDisplayInt = (int) displayDataRequest.amp;
 	    break;
 	  case DISPLAY_EHRZ:
-	    segmentDisplayLetter = 'E';
-	    displayValue = jsonDoc["ehz"];
+	    snprintf(buffer, sizeof(buffer), "%d", (int) displayDataRequest.ehz);
+	    segmentDisplayInt = (int) displayDataRequest.ehz;
 	    break;
 	  case DISPLAY_BAT:
-	    segmentDisplayLetter = 'B';
-	    displayValue = jsonDoc["vbus"];
+	    snprintf(buffer, sizeof(buffer), "%d", (int) displayDataRequest.bat);
+	    segmentDisplayInt = (int) displayDataRequest.bat;
 	    break;
 	  default:
 	    break;
 	  }
-	if (displayValue > 999.0) {displayValue = 999.0;}
-	segmentDisplayInt = (int) displayValue;
-	snprintf(buffer, sizeof(buffer), "%d", segmentDisplayInt);
-	lv_label_set_text(data_label, buffer);
-      }
-
-      vTaskDelay(100 / portTICK_PERIOD_MS);
+      lv_label_set_text(data_label, buffer);
     }
+    vTaskDelay(100 / portTICK_PERIOD_MS);
   }
 }

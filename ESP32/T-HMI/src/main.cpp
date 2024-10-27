@@ -17,13 +17,13 @@
 TFT_eSPI tft = TFT_eSPI();
 
 int commState = COMM_IDLE;
-int displayState = DISPLAY_IDLE;
+int displayState = DISPLAY_BAT;
 
 LoggingState sdLoggingState = {false, "", File(), NULL};
 
 bool rlst = false;
 
-int segmentDisplayInt = 123;
+int segmentDisplayInt;
 int segmentDisplayLetter = 'E';
 
 Adafruit_AlphaNum4 alphaLED = Adafruit_AlphaNum4();
@@ -33,6 +33,7 @@ LoggingRequest logRequest;
 QueueHandle_t loggingQueue;
 QueueHandle_t displayQueue;
 
+// run the LED segments
 void segmentTask(void * parameter) {
   customWire.begin(43, 44);
   alphaLED.begin(0x70, &customWire);
@@ -76,7 +77,7 @@ void setup() {
   tft.fillScreen(TFT_BLACK);
   tft.setCursor(0, 0);
   tft.print("read SD: ");
-  // initSDCard(); // this takes time which is a bit odd
+  // initSDCard(); 
 
   tft.fillScreen(TFT_BLACK);
   tft.setCursor(0, 0);
@@ -84,6 +85,7 @@ void setup() {
   initUDPService();
 
   setupGUI();
+
   xTaskCreate(segmentTask, "Segment Task", 4096, NULL, 1, NULL);
 }
 

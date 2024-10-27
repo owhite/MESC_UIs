@@ -12,8 +12,9 @@ IPAddress remote_IP;
 WiFiUDP udpReceiver;
 WiFiUDP udpSender;
 
-void initWebService(HardwareSerial& compSerial, HardwareSerial& mescSerial, AsyncWebServer& server, AsyncWebSocket& webSocket) {
+char strLogName[100];
 
+void initWebService(HardwareSerial& compSerial, HardwareSerial& mescSerial, AsyncWebServer& server, AsyncWebSocket& webSocket) {
   g_compSerial = &compSerial;
   g_mescSerial = &mescSerial;
   g_webSocket = &webSocket;
@@ -97,7 +98,8 @@ void initWebService(HardwareSerial& compSerial, HardwareSerial& mescSerial, Asyn
   xTaskCreate(udpReceiveTask, "UDP Send Task", 4096, NULL, 1, NULL);
 }
 
-// this is a looping task that handles state changes
+// this is a looping task that handles communicating to MESC
+//  -starts and stops logging
 void webServerTask(void *pvParameter) {
   int count;
   while (1) {
@@ -128,9 +130,9 @@ void webServerTask(void *pvParameter) {
       default:
 	break;
       }
-    if (count > 10) {
-      // this should not need to be sent if it's sending json
-      udpSend((char*) "PULSE:");
+    // if the browser is running it sends timestamps as a pulse, but..
+    if (count > 10) { 
+      udpSend((char*) "PULSE:"); // ... can also send these. 
       count = 0;
     }
     count++;
@@ -164,6 +166,10 @@ void udpReceiveTask(void *pvParameter) {
 	  g_compSerial->println("...stop logging");
 	  logState = LOG_REQUEST_IDLE;
 	}
+	else if (strncmp(incomingPacket, "JSON_START:", 9) == 0) {
+	  g_compSerial->println("...start json");
+	  logState = LOG_REQUEST_JSON;
+	}
 	else {
 	  g_compSerial->print("unexpected udp message ");
 	  g_compSerial->println(incomingPacket);
@@ -174,6 +180,8 @@ void udpReceiveTask(void *pvParameter) {
   }
 }
 
+// only works if another ESP32 is on the wifi network and
+//  is receiving udp messages
 void udpSend(char *message) {
   udpSender.beginPacket(remote_IP, remote_Port);
   udpSender.printf("%s", message);
@@ -181,8 +189,10 @@ void udpSend(char *message) {
 }
 
 // websocket message handler
-//  application opens a webserver. user sends messages from the browswer
-//  results in (among other things) changing the configState
+//  this application creates a webserver:
+//  -user sends messages from the browswer
+//  -results in (among other things) changing the configState, starting logging
+//  -the webserver also sends the time
 void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t len) {
   data[len] = '\0';  // Null-terminate the string
   char* message = (char*)data;
@@ -190,28 +200,20 @@ void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t 
   // Variables to handle the log name extraction
   char my_str[100];  // Array to hold the extracted log name
   char* spacePtr = NULL;
-  int spaceCount = 0;
-
-  // Count spaces and find the first space
-  for (char* p = (char*)message; *p != '\0'; p++) {
-    if (*p == ' ') {
-      spaceCount++;
-      if (spaceCount == 1) {
-        spacePtr = p;
-      }
-    }
-  }
+  spacePtr = strstr(message, ": ");
+  if (spacePtr != NULL) { spacePtr += 2; } 
 
   if (strncmp(message, "MESC:", 5) == 0 && spacePtr) {
-    strcpy(my_str, spacePtr + 1); 
+    strncpy(my_str, spacePtr, sizeof(my_str) - 1); 
     my_str[sizeof(my_str) - 1] = '\0'; 
 
     g_compSerial->printf("WebSocket to MESC: %s\n", my_str);
     g_mescSerial->write(my_str);
     g_mescSerial->write("\r\n");
   }
+  // xxx
   else if (strncmp(message, "LOG_NAME:", 9) == 0 && spacePtr) {
-    strcpy(my_str, spacePtr + 1); 
+    strncpy(my_str, spacePtr, sizeof(my_str) - 1); 
     my_str[sizeof(my_str) - 1] = '\0'; 
     g_compSerial->printf("Setting log name: %s\n", my_str);
     udpSend(message);
@@ -219,14 +221,19 @@ void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t 
   else if (strncmp(message, "LOG_START:", 10) == 0) {
     udpSend(message);
     g_compSerial->println("Start logging...");
-    // pausing to let mesc communication work, no idea if this is realistic
-    vTaskDelay(300 / portTICK_PERIOD_MS); 
+    vTaskDelay(300 / portTICK_PERIOD_MS); // pause needed?
     logState = LOG_REQUEST_GET;
   }
   else if (strncmp(message, "LOG_STOP:", 9) == 0) {
+    udpSend(message);
     g_compSerial->println("...stop logging");
     logState = LOG_REQUEST_IDLE;
+  }
+  else if (strncmp(message, "TIME_STAMP:", 11) == 0) {
     udpSend(message);
+    strncpy(my_str, spacePtr, sizeof(my_str) - 1); 
+    my_str[sizeof(my_str) - 1] = '\0'; 
+    g_compSerial->printf("rcvd: %s\n", my_str);
   }
   else if (strncmp(message, "GRAPH_REQUEST:", 15) == 0) {
     graphingState = !graphingState;
@@ -238,7 +245,7 @@ void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t 
     }
   }
   else {
-    g_compSerial->println("unexpected websocket message");
+    g_compSerial->printf("unexpected websocket message: %s\n", message);
   }
 }
 

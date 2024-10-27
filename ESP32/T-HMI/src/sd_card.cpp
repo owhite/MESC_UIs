@@ -63,6 +63,8 @@ void initSDCard() {
 }
 
 void sdLoggingTask(void* pvParameters) {
+  setLogFileName((char*) "default");
+
   while (true) {
     if (xQueueReceive(loggingQueue, &logRequest, portMAX_DELAY) == pdPASS) {
       xSemaphoreTake(sdLoggingStateMutex, portMAX_DELAY);
@@ -70,7 +72,7 @@ void sdLoggingTask(void* pvParameters) {
       switch (logRequest.commandType) {
       case LOG_START:
 	if (sdLoggingState.fileName[0] == '\0') {
-	  setLogFileName((char*) "log");
+	  setLogFileName((char*) "default");
 	}
 	sdLoggingState.fileHandle = SD.open(sdLoggingState.fileName, FILE_WRITE);
 	if (sdLoggingState.fileHandle) {
@@ -111,9 +113,11 @@ void setLoggingState(bool state) {
 
 void setLogFileName(char* name) {
   sdLoggingState.fileName[0] = '/';
-  strncpy(sdLoggingState.fileName + 1, name, sizeof(sdLoggingState.fileName) - 1);
+  strncpy(sdLoggingState.fileName + 1, name, sizeof(sdLoggingState.fileName) - 5);
+  sdLoggingState.fileName[sizeof(sdLoggingState.fileName) - 5] = '\0';
   strcat(sdLoggingState.fileName, ".txt");
 }
+
 
 void clrLogFileName() {
   sdLoggingState.fileName[0] = '\0';

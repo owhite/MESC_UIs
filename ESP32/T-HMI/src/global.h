@@ -55,6 +55,7 @@ extern lv_obj_t * coord_label;
 extern lv_obj_t * ip_label;
 extern lv_obj_t * local_label;
 extern lv_obj_t * sdcard_label;
+extern lv_obj_t * logname_label;
 extern lv_obj_t * brightness_sw;
 extern lv_obj_t * brightness_lbl;
 
@@ -105,23 +106,22 @@ extern QueueHandle_t displayQueue;
 extern QueueHandle_t loggingQueue; 
 extern SemaphoreHandle_t sdLoggingStateMutex;
 
-// Struct for passing logging requests to the logging task
+typedef struct {
+  float amp;
+  float bat;
+  int ehz;
+  int mph;
+} DisplayDataRequest;
+
 typedef struct {
   char displayLine[5000];
 } DisplayRequest;
 
-typedef struct {
-  char displayLine[5000];
-  int displayValue;
-  float Vd;
-  float Vq;
-} DisplayDataRequest;
-
 extern LoggingRequest logRequest;
-extern DisplayRequest displayRequest;
 extern DisplayDataRequest displayDataRequest;
 
 extern unsigned long last_udp_receive; 
+extern unsigned long last_data_receive; 
 extern AsyncWebSocket* g_webSocket;
 extern HardwareSerial* g_mescSerial; 
 extern HardwareSerial* g_compSerial;

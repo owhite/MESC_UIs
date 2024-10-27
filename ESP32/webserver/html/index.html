@@ -360,6 +360,8 @@
 
       function onOpen(event) {
           console.log('Log message: Connection opened');
+	  // Set interval to send date every 10 seconds
+	  setInterval(sendDateTime, 10000);
       }
 
       function onClose(event) {
@@ -401,6 +403,28 @@
 	  document.getElementById("datetimeInput").value = formattedDate;
       }
 
+      function sendDateTime() {
+	  const now = new Date();
+	  const months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sept", "oct", "nov", "dec"];
+	  const month = months[now.getMonth()];
+	  let hours = now.getHours();
+	  const minutes = now.getMinutes().toString().padStart(2, "0");
+	  const period = hours >= 12 ? "pm" : "am";
+	  hours = hours % 12 || 12;
+	  const formattedDate = `TIME_STAMP: ${month}_${now.getDate()}_${hours}:${minutes}${period}`;
+
+	  document.getElementById("datetimeInput").value = formattedDate;
+
+	  // Send WebSocket message if the connection is open
+	  if (websocket.readyState === WebSocket.OPEN) {
+              websocket.send(formattedDate);
+              console.log("WebSocket is open");
+              console.log(formattedDate);
+	  } else {
+              console.log("WebSocket is not open");
+	  }
+      }
+
       // handles websocket messages coming from webserver
       //  content is typically json. Look for calls like:
       //   g_webSocket->textAll(line);
@@ -431,7 +455,8 @@
 		  messagesDiv.appendChild(messageElement);
 	      }
 	  } catch (error) {
-	      console.error('Error parsing JSON: ', error);
+	      console.error('This expects JSON: ', error);
+	      console.error(event.data);
 	  }
       }
 
