@@ -84,8 +84,7 @@ void processData(void *parameter) {
 
 	// One case for being here, we  may have completed receiving "get" results from user
 	//   if the user is logging, send the get results to udp
-	g_compSerial->print("LOG STATE: ");
-	g_compSerial->println(logState);
+	g_compSerial->printf("LOG STATE: %d\n", logState);
 
 	if (logState == LOG_GET) {
 	  g_compSerial->write((char*)jsonString.c_str()); 
@@ -128,21 +127,29 @@ void processLine(char *line) {
   else if (strncmp(line, "{\"adc1\":", 8) == 0) { 
     // g_compSerial->printf("%d: LOG: %s\n", logState, line);
     // send to udp if user is logging
-    udpSend(line);
 
-    if (logState == LOG_JSON) {
-      // udpSend(line);
+    // BROKEN CODE:
+    // we're here because the user requested get, we collected all the parameters
+    //   but since "status json" was running the Jens terminal did not time out
+    //   so the program did not purge all the get results
+    if (logState == LOG_GET) {
+      g_compSerial->println("CLEAR GET RESULTS!?");
+      // g_compSerial->write((char*)jsonString.c_str()); 
+      // g_compSerial->println();
+      // udpSend((char*)jsonString.c_str()); 
+      logState = LOG_REQUEST_JSON; 
     }
+    udpSend(line);
   }
   else { // mesc has PROBABLY sent a string resulting from get
 
     remove_ansi_escape_sequences(line);
     replace_pipe_with_tab(line);
-    // g_compSerial->println(line);
+    g_compSerial->printf("PROCESS: %s\n", line);
 
     int count = countCharOccurrences(line, '\t');
     if (count == 4) { // more likely it came from get
-      g_compSerial->printf("TERM: %s\n", line);
+      // g_compSerial->printf("TERM: %s\n", line);
 
       char value1[20];
       char value2[20];

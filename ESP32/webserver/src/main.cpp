@@ -10,7 +10,7 @@
 
 // Global variable definitions
 int configState = CONFIG_IDLE;
-int logState = LOG_IDLE;
+int logState = LOG_REQUEST_IDLE;
 bool graphingState = false;
 
 DynamicJsonDocument jsonDoc(5024);

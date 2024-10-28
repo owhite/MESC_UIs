@@ -117,13 +117,15 @@ void webServerTask(void *pvParameter) {
       {
       case LOG_REQUEST_GET:
 	g_mescSerial->write("get\r\n");
+	g_compSerial->write("RUNNING: get\n");
+	// vTaskDelay(300 / portTICK_PERIOD_MS); // pause needed?
 	logState = LOG_GET;
 	break;
       case LOG_REQUEST_JSON:
 	g_mescSerial->write("status json\r\n");
 	logState = LOG_JSON;
 	break;
-      case LOG_REQUEST_IDLE:
+      case LOG_REQUEST_IDLE: // right now nothing gets to this state
 	g_mescSerial->write("status stop\r\n");
 	logState = LOG_IDLE;
 	break;
@@ -143,6 +145,7 @@ void webServerTask(void *pvParameter) {
 // The ESP32 creates a wifi network, and application
 //   opens a udp service to get messages from the network
 //   results in changes to configState
+// Receives data from LCD device
 void udpReceiveTask(void *pvParameter) {
   udpReceiver.begin(localPort);
   Serial.printf("UDP Receiver listening on port %d\n", localPort);
@@ -156,18 +159,19 @@ void udpReceiveTask(void *pvParameter) {
         incomingPacket[len] = 0;  // Null-terminate packet
         Serial.printf("Received UDP packet: %s\n", incomingPacket);
 	if (strncmp(incomingPacket, "LOG_START:", 10) == 0) {
-	  g_compSerial->println("Start logging...");
+	  g_compSerial->println("UDP wants to start logging...");
 	  // pausing to let mesc communication work
 	  // no idea if this is realistic
 	  vTaskDelay(300 / portTICK_PERIOD_MS); 
 	  logState = LOG_REQUEST_GET;
 	}
 	else if (strncmp(incomingPacket, "LOG_STOP:", 9) == 0) {
-	  g_compSerial->println("...stop logging");
-	  logState = LOG_REQUEST_IDLE;
+	  g_compSerial->println("UDP wants to stop logging");
+	  // not needed because this device can keep sending json
+	  // logState = LOG_REQUEST_IDLE; 
 	}
 	else if (strncmp(incomingPacket, "JSON_START:", 9) == 0) {
-	  g_compSerial->println("...start json");
+	  g_compSerial->println("UDP wants to start JSON");
 	  logState = LOG_REQUEST_JSON;
 	}
 	else {
@@ -186,6 +190,7 @@ void udpSend(char *message) {
   udpSender.beginPacket(remote_IP, remote_Port);
   udpSender.printf("%s", message);
   udpSender.endPacket();
+  g_compSerial->printf("UDP SEND: %s\n", message);
 }
 
 // websocket message handler
@@ -215,25 +220,25 @@ void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t 
   else if (strncmp(message, "LOG_NAME:", 9) == 0 && spacePtr) {
     strncpy(my_str, spacePtr, sizeof(my_str) - 1); 
     my_str[sizeof(my_str) - 1] = '\0'; 
-    g_compSerial->printf("Setting log name: %s\n", my_str);
+    g_compSerial->printf("Webserver setting log name: %s\n", my_str);
     udpSend(message);
   }
   else if (strncmp(message, "LOG_START:", 10) == 0) {
     udpSend(message);
-    g_compSerial->println("Start logging...");
-    vTaskDelay(300 / portTICK_PERIOD_MS); // pause needed?
+    g_compSerial->println("Web server starting log");
     logState = LOG_REQUEST_GET;
   }
   else if (strncmp(message, "LOG_STOP:", 9) == 0) {
     udpSend(message);
-    g_compSerial->println("...stop logging");
-    logState = LOG_REQUEST_IDLE;
+    g_compSerial->println("Web server requests to stop logging");
+    // not needed. let device do what it wants. 
+    // logState = LOG_REQUEST_IDLE;
   }
   else if (strncmp(message, "TIME_STAMP:", 11) == 0) {
     udpSend(message);
     strncpy(my_str, spacePtr, sizeof(my_str) - 1); 
     my_str[sizeof(my_str) - 1] = '\0'; 
-    g_compSerial->printf("rcvd: %s\n", my_str);
+    g_compSerial->printf("Web server rcvd: %s\n", my_str);
   }
   else if (strncmp(message, "GRAPH_REQUEST:", 15) == 0) {
     graphingState = !graphingState;
