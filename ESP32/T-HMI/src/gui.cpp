@@ -9,6 +9,9 @@
 #include "IMAGES/controls_off.h"
 #include "IMAGES/temp_hi.h"
 #include "IMAGES/temp_lo.h"
+#include "IMAGES/mesc.h"
+#include "IMAGES/mosfet.h"
+#include "IMAGES/motor.h"
 
 lv_disp_draw_buf_t draw_buf;
 lv_color_t buf[HOR_PIXELS * 10];
@@ -31,8 +34,10 @@ lv_obj_t * coord_label;     // display touch screen coordinates
 lv_obj_t * brightness_lbl;  // brightness of 14-segment LED
 lv_obj_t * brightness_sw;   // switch for brightness
 lv_obj_t * data_label;      // shows ehz, mph, amps on big display
+lv_obj_t * tmot_label;      // temp of motor
+lv_obj_t * tmos_label;      // temp of mosfets
 
-lv_obj_t * led;            // throbbing dot on screen
+lv_obj_t * led;            // glowing dot on screen
 
 // panel that shows controls
 lv_obj_t * controls_parent; 
@@ -40,6 +45,7 @@ lv_obj_t * controls_parent;
 #define PANEL_Y_PIXELS 140
 
 lv_obj_t * data_controls_parent; 
+lv_obj_t * mesc_parent; 
 
 lv_obj_t *btn_array[6];
 
@@ -51,6 +57,11 @@ LV_IMG_DECLARE(controls_off);
 
 LV_IMG_DECLARE(temp_hi);
 LV_IMG_DECLARE(temp_lo);
+
+LV_IMG_DECLARE(mesc);
+LV_IMG_DECLARE(mosfet);
+
+unsigned long guiStartTime = 0;
 
 // supports createButtonWithImage()
 typedef struct {
@@ -82,12 +93,19 @@ void btnEventCB(lv_event_t * e) {
     }
 
     if (btn == controls_btn) {
+      // show the controls widget with logname, 
+      //   coordinates and stuff
+      lv_obj_add_flag(mesc_parent, LV_OBJ_FLAG_HIDDEN);
       lv_obj_clear_flag(controls_parent, LV_OBJ_FLAG_HIDDEN);
       lv_obj_add_flag(data_controls_parent, LV_OBJ_FLAG_HIDDEN);
+      Serial.println("CLEAR CONTROLS");
+
     }
     else {
+      lv_obj_add_flag(mesc_parent, LV_OBJ_FLAG_HIDDEN);
       lv_obj_add_flag(controls_parent, LV_OBJ_FLAG_HIDDEN);
       lv_obj_clear_flag(data_controls_parent, LV_OBJ_FLAG_HIDDEN);
+      Serial.println("CLEAR DATAT");
     }
   }
 
@@ -274,8 +292,33 @@ void setupGUI() {
   data_controls_parent = lv_obj_create(lv_scr_act());
   dataControlsPanel(data_controls_parent);  
 
+  mesc_parent = lv_obj_create(lv_scr_act());
+  mescControlsPanel(mesc_parent);  
+
   // turns on one of our buttons
-  lv_event_send(ehrz_btn, LV_EVENT_CLICKED, NULL); 
+  // lv_event_send(ehrz_btn, LV_EVENT_CLICKED, NULL); 
+
+  LV_FONT_DECLARE(GREAT_LAKES_30px); 
+  const lv_font_t *temp_font;
+  temp_font = &GREAT_LAKES_30px;
+
+  lv_obj_t * mos_img = lv_img_create(lv_scr_act());
+  lv_img_set_src(mos_img, &motor);
+  lv_obj_set_pos(mos_img, 10, 204);
+
+  tmos_label = lv_label_create(lv_scr_act());
+  lv_obj_set_style_text_font(tmos_label, temp_font, 0);
+  lv_label_set_text(tmos_label, "20c");
+  lv_obj_set_pos(tmos_label, 46, 204);
+
+  lv_obj_t * mot_img = lv_img_create(lv_scr_act());
+  lv_img_set_src(mot_img, &mosfet);
+  lv_obj_set_pos(mot_img, 120, 204);
+
+  tmot_label = lv_label_create(lv_scr_act());
+  lv_obj_set_style_text_font(tmot_label, temp_font, 0);
+  lv_label_set_text(tmot_label, "20c");
+  lv_obj_set_pos(tmot_label, 152, 204);
 
   // Create a queue for 10 requests
   displayQueue = xQueueCreate(20, sizeof(DisplayDataRequest));  
@@ -304,11 +347,25 @@ void dataControlsPanel(lv_obj_t * parent) {
   label_font = &GREAT_LAKES_130px;
   data_label = lv_label_create(parent);
   lv_obj_set_style_text_font(data_label, label_font, 0);
-  lv_label_set_text(data_label, "MESC");
+  lv_label_set_text(data_label, "OPEN");
 
   lv_label_set_long_mode(data_label, LV_LABEL_LONG_WRAP);
   lv_obj_align(data_label, LV_ALIGN_TOP_RIGHT, -10, -20);
   lv_obj_set_style_text_color(data_label, lv_color_hex(0xB0C4DE), LV_PART_MAIN | LV_STATE_DEFAULT); 
+}
+
+// Splash screen display
+void mescControlsPanel(lv_obj_t * parent) {
+  lv_obj_set_pos(parent, 0, 60);
+  lv_obj_set_size(parent, PANEL_X_PIXELS, PANEL_Y_PIXELS);
+  lv_obj_set_style_pad_all(parent, 0, 0);
+  lv_obj_set_style_outline_width(parent, 0, 0);
+  lv_obj_set_style_border_width(parent, 2, 2);
+  lv_obj_set_style_bg_color(parent, lv_color_hex(0x000066), 0);
+
+  lv_obj_t * img = lv_img_create(parent);
+  lv_img_set_src(img, &mesc);
+  lv_obj_center(img);
 }
 
 void guiTask(void *parameter) {
@@ -324,6 +381,9 @@ void guiTask(void *parameter) {
     0x625809, 0x7c6b08, 0xb08f05, 0xd2a503, 0xe1b502,
     0xffd400, 0xe1b502, 0xd2a503, 0xb08f05, 0x7c6b08
   };
+
+  bool splashScreenFlag = true;
+  guiStartTime = millis();
 
   while (true) {
     // test if getting json from udp
@@ -385,6 +445,20 @@ void guiTask(void *parameter) {
       break;
     default:
       break;
+    }
+
+    if ((millis() - guiStartTime) < 2000) {
+      // start with the mesc splash screen
+      lv_obj_clear_flag(mesc_parent, LV_OBJ_FLAG_HIDDEN);
+      lv_obj_add_flag(controls_parent, LV_OBJ_FLAG_HIDDEN);
+      lv_obj_add_flag(data_controls_parent, LV_OBJ_FLAG_HIDDEN);
+      Serial.println("CLEAR MESC");
+    }
+    else { // then stop
+      if (splashScreenFlag) {
+	lv_event_send(ehrz_btn, LV_EVENT_CLICKED, NULL);
+      }
+      splashScreenFlag = false;
     }
 
     vTaskDelay(100 / portTICK_PERIOD_MS);

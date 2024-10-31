@@ -61,16 +61,22 @@ extern lv_obj_t * brightness_lbl;
 
 extern lv_obj_t * data_label;
 
+extern lv_obj_t * tmos_label;
+extern lv_obj_t * tmot_label;
+
 extern lv_obj_t * led;
 
 extern lv_obj_t * controls_parent;
 extern lv_obj_t * data_controls_parent;
+extern lv_obj_t * mesc_parent;
 
 extern Adafruit_AlphaNum4 alphaLED;
 extern int segmentDisplayInt;
 extern int segmentDisplayLetter;
 
 String getLocalIPAddress();
+
+extern unsigned long guiStartTime;
 
 struct Config {
   char ssid[32];

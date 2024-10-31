@@ -21,6 +21,7 @@ void guiTask(void *parameter);
 void createControlsPanel(lv_obj_t * parent);
 void zeroOutDisplay();
 void dataControlsPanel(lv_obj_t * parent);
+void mescControlsPanel(lv_obj_t * parent);
 void udpTask(void *parameter);
 void queueTask(void *parameter);
 lv_obj_t * createButtonWithImage(int x, int y, int width, int height, 

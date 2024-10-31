@@ -6,7 +6,10 @@ import os
 # python png_to_lvgl.py shadow_buttons.png button_off button_off.h scrap2.png 66 34 110 74 60;
 # python png_to_lvgl.py shadow_buttons.png button_on button_on.h scrap2.png 66 34 110 74 60;
 # python png_to_lvgl.py shadow_buttons.png controls controls.h scrap2.png 284 262 74 82 100;
-# python png_to_lvgl.py shadow_buttons.png temp_hi temp_hi.h scrap2.png 386 286 33 64 100; open scrap2.png 
+# python png_to_lvgl.py shadow_buttons.png temp_hi temp_hi.h scrap2.png 386 286 33 64 100; open scrap2.png
+# python3 png_to_lvgl.py shadow_buttons.png mesc mesc.h scrap2.png 40 252 216 88 100; open scrap2.png
+# python3 png_to_lvgl.py shadow_buttons.png mosfet mosfet.h scrap2.png 324 46 34 30 100; open scrap2.png
+# python3 png_to_lvgl.py shadow_buttons.png moter moter.h scrap2.png 368 44 38 30 100; open scrap2.png
 
 def rgb_to_rgb565(r, g, b):
     """
@@ -18,7 +21,10 @@ def generate_lvgl_header(image_data, image_name, width, height, output_file):
     """
     Generate a C header file for LVGL from the extracted 16-bit RGB565 image data.
     """
-    header = f'#include <lvgl.h>\n\n'
+    header = f'#ifndef {image_name.upper()}_H\n'
+    header += f'#define {image_name.upper()}_H\n\n'
+
+    header += f'#include <lvgl.h>\n\n'
     header += f'const uint16_t {image_name}_map[] = {{\n    '
 
     # Convert each pixel to RGB565 format and add it to the header
@@ -40,6 +46,8 @@ def generate_lvgl_header(image_data, image_name, width, height, output_file):
     header += f'    .data_size = sizeof({image_name}_map),\n'
     header += f'    .data = (const uint8_t *){image_name}_map\n'
     header += f'}};\n'
+
+    header += f'\n#endif //{image_name.upper()}_H\n'
 
     # Write to file
     with open(output_file, 'w') as f:
