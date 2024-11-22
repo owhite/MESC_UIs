@@ -82,7 +82,7 @@ void setup() {
   tft.fillScreen(TFT_BLACK);
   tft.setCursor(0, 0);
   tft.print("start internet: ");
-  // initUDPService();
+  initUDPService();
 
   setupGUI();
 

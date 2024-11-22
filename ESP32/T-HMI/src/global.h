@@ -115,6 +115,8 @@ extern SemaphoreHandle_t sdLoggingStateMutex;
 typedef struct {
   float amp;
   float bat;
+  float TMOS;
+  float TMOT;
   int ehz;
   int mph;
 } DisplayDataRequest;

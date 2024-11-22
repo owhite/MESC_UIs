@@ -216,7 +216,6 @@ void handleWebSocketMessage(AsyncWebSocketClient* client, uint8_t *data, size_t 
     g_mescSerial->write(my_str);
     g_mescSerial->write("\r\n");
   }
-  // xxx
   else if (strncmp(message, "LOG_NAME:", 9) == 0 && spacePtr) {
     strncpy(my_str, spacePtr, sizeof(my_str) - 1); 
     my_str[sizeof(my_str) - 1] = '\0'; 

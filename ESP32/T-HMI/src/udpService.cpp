@@ -119,6 +119,12 @@ void udpReceiveTask(void *pvParameter) {
 	  if (jsonDoc.containsKey("vbus")) {
 	    displayDataRequest.bat = jsonDoc["vbus"].as<float>();
 	  }
+	  if (jsonDoc.containsKey("TMOT")) {
+	    displayDataRequest.TMOT = jsonDoc["TMOT"].as<float>();
+	  }
+	  if (jsonDoc.containsKey("TMOS")) {
+	    displayDataRequest.TMOS = jsonDoc["TMOS"].as<float>();
+	  }
 
 	  if (jsonDoc.containsKey("Vd") && jsonDoc.containsKey("Vq")) {
 	    Vd = jsonDoc["Vd"].as<float>();

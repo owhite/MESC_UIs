@@ -7,8 +7,8 @@
 #include "IMAGES/button_off.h"
 #include "IMAGES/controls_on.h"
 #include "IMAGES/controls_off.h"
-#include "IMAGES/temp_hi.h"
-#include "IMAGES/temp_lo.h"
+// #include "IMAGES/temp_hi.h" // deprecated
+// #include "IMAGES/temp_lo.h"
 #include "IMAGES/mesc.h"
 #include "IMAGES/mosfet.h"
 #include "IMAGES/motor.h"
@@ -21,7 +21,7 @@ lv_obj_t * ehrz_btn;      // ehrz
 lv_obj_t * amp_btn;       // amperage
 lv_obj_t * mph_btn;       // miles per hour
 lv_obj_t * bat_btn;       // battery
-lv_obj_t * temp_btn;      // temperature
+// lv_obj_t * temp_btn;      // temperature, deactivated
 lv_obj_t * log_btn;       // logging data
 lv_obj_t * controls_btn;  // the controls panel
 
@@ -47,7 +47,7 @@ lv_obj_t * controls_parent;
 lv_obj_t * data_controls_parent; 
 lv_obj_t * mesc_parent; 
 
-lv_obj_t *btn_array[6];
+lv_obj_t *btn_array[5];
 
 LV_IMG_DECLARE(button_on);
 LV_IMG_DECLARE(button_off);
@@ -55,8 +55,8 @@ LV_IMG_DECLARE(button_off);
 LV_IMG_DECLARE(controls_on);
 LV_IMG_DECLARE(controls_off);
 
-LV_IMG_DECLARE(temp_hi);
-LV_IMG_DECLARE(temp_lo);
+// LV_IMG_DECLARE(temp_hi);
+// LV_IMG_DECLARE(temp_lo);
 
 LV_IMG_DECLARE(mesc);
 LV_IMG_DECLARE(mosfet);
@@ -75,7 +75,7 @@ void btnEventCB(lv_event_t * e) {
 
   int i;
   // buttons will be have as mutually exclusive checkboxes
-  for(i = 0; i < 6; i++) {
+  for(i = 0; i < 5; i++) {
     lv_obj_t * imgbtn = btn_array[i];
     lv_obj_t * label = lv_obj_get_child(imgbtn, 0);
     button_image_t *btn_images = (button_image_t *)lv_obj_get_user_data(imgbtn);
@@ -269,17 +269,16 @@ void setupGUI() {
   height = controls_off.header.h;
   controls_btn  = createButtonWithImage(240, 64, width, height,
 					&controls_on, &controls_off, "", btnEventCB);
-  width = temp_lo.header.w;
-  height = temp_lo.header.h;
-  temp_btn  = createButtonWithImage(270, 174, width, height,
-				    &temp_hi, &temp_lo, "", btnEventCB);
+  // width = temp_lo.header.w;
+  //   height = temp_lo.header.h;
+  // temp_btn  = createButtonWithImage(270, 174, width, height, &temp_hi, &temp_lo, "", btnEventCB);
 
   btn_array[0] = ehrz_btn;
   btn_array[1] = amp_btn;
   btn_array[2] = mph_btn;
   btn_array[3] = bat_btn;
   btn_array[4] = controls_btn;
-  btn_array[5] = temp_btn;
+  // btn_array[5] = temp_btn;
 
   lv_obj_t *led = lv_led_create(lv_scr_act());
   lv_obj_set_pos(led, 258, 155);
@@ -500,6 +499,10 @@ void queueTask(void *parameter) {
 	    break;
 	  }
       lv_label_set_text(data_label, buffer);
+      snprintf(buffer, sizeof(buffer), "%dC", (int) (displayDataRequest.TMOT - 273.15));
+      lv_label_set_text(tmot_label, buffer);
+      snprintf(buffer, sizeof(buffer), "%dC", (int) (displayDataRequest.TMOS - 273.15));
+      lv_label_set_text(tmos_label, buffer);
     }
     vTaskDelay(100 / portTICK_PERIOD_MS);
   }
